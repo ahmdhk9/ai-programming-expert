@@ -1,0 +1,38 @@
+name: Deploy Agent Platform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy to Firebase Hosting
+        run: |
+          npm install -g firebase-tools
+          firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Deploy to Fly.io
+        run: |
+          curl -L https://fly.io/install.sh | sh
+          flyctl auth token ${{ secrets.FLY_API_TOKEN }}
+          flyctl deploy --remote-only
