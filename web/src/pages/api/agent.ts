@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "../../../lib/firebase";
+import { db } from "../../../lib/firebase"; // تأكد من المسار الصحيح
 import { collection, addDoc } from "firebase/firestore";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -9,7 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       timestamp: new Date(),
     });
     res.status(200).json({ success: true, id: docRef.id });
-  } catch (error) {
-    res.status(500).json({ success: false, error });
+  } catch (error: any) {
+    console.error("Firebase error:", error);
+    res.status(500).json({ success: false, error: error.message || error });
   }
 }
