@@ -1,8 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { db } from "../../lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.status(200).json({
-    message: "Hello from Agent API 🚀",
-    status: "ok",
-  });
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const docRef = await addDoc(collection(db, "agents"), {
+      message: "Hello from Firebase!",
+      timestamp: new Date(),
+    });
+    res.status(200).json({ success: true, id: docRef.id });
+  } catch (error) {
+    res.status(500).json({ success: false, error });
+  }
 }
