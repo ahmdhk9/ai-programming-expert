@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "../../../lib/firebase"; // تأكد من المسار الصحيح
+import { db } from "../../lib/firebase"; // ✅ المسار الصحيح من pages/api إلى lib
 import { collection, addDoc } from "firebase/firestore";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
