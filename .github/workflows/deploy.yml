@@ -23,7 +23,7 @@ jobs:
       - name: Clean npm cache & node_modules
         run: |
           cd web
-          echo "Cleaning old node_modules and cache..."
+          echo "Cleaning old node_modules and npm cache..."
           rm -rf node_modules package-lock.json
           npm cache clean --force
 
@@ -34,21 +34,35 @@ jobs:
           echo "Installing dependencies..."
           npm install
 
-      # 5️⃣ اختبار build قبل export
-      - name: Test build only
+      # 5️⃣ اختبار build مع عرض الأخطاء بالتفصيل
+      - name: Build project (Next.js)
         run: |
           cd web
-          echo "Testing next build..."
-          npx next build || { echo "Build failed! Check your code or TypeScript settings"; exit 1; }
+          echo "Building project..."
+          npx next build || { echo "❌ Build failed!"; exit 1; }
 
-      # 6️⃣ تصدير static files
-      - name: Build and export project
+      # 6️⃣ تصدير static files مع لوج مفصل
+      - name: Export project (Next.js)
         run: |
           cd web
-          echo "Running next export..."
-          npm run export || { echo "Export failed! Check next.config.js, pages, or TypeScript"; exit 1; }
+          echo "Exporting static files..."
+          npx next export || {
+            echo "❌ Export failed! Possible issues:";
+            echo "- Check next.config.js for output: 'export'";
+            echo "- Ensure all pages exist (index.js or index.tsx)";
+            echo "- Check TypeScript or ESLint errors";
+            exit 1;
+          }
+          echo "✅ Export complete"
 
-      # 7️⃣ نشر على Firebase Hosting
+      # 7️⃣ التحقق من مجلد out قبل النشر
+      - name: List output folder
+        run: |
+          cd web/out || { echo "❌ out folder not found! Export failed"; exit 1; }
+          echo "Contents of out folder:"
+          ls -la
+
+      # 8️⃣ نشر على Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -57,9 +71,3 @@ jobs:
           channelId: live
           projectId: agent-platfrom
           entryPoint: ./web
-
-      # 8️⃣ إخراج مجلد out للتأكد
-      - name: List output folder
-        run: |
-          cd web/out || echo "out folder not found!"
-          ls -la
