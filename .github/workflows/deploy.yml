@@ -48,5 +48,4 @@ jobs:
           channelId: live
           projectId: agent-platfrom
           entryPoint: ./web
-          # رسالة نجاح
         run: echo "✅ Firebase deployment finished"
