@@ -2,7 +2,6 @@ app = "agent-backend-ahmd1"
 
 [build]
   builder = "heroku/buildpacks:20"
-  buildpacks = ["heroku/nodejs"]
 
 [env]
   NODE_ENV = "production"
