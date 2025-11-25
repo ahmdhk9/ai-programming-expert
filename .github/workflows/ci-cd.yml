@@ -1,11 +1,15 @@
-name: CI/CD
+name: CI/CD (Frontend + Vercel)
 
 on:
   push:
+    paths:
+      - 'web/**'
     branches:
       - main
       - feature/**
   pull_request:
+    paths:
+      - 'web/**'
     branches:
       - main
 
@@ -21,11 +25,11 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: web/package-lock.json   # ✅ تحديد مكان ملف القفل
+          cache-dependency-path: web/package-lock.json
 
       - name: Install dependencies
         working-directory: web
-        run: npm install                                # ✅ بدل npm ci لتجنب مشاكل lockfile
+        run: npm install
 
       - name: Lint
         working-directory: web
@@ -52,13 +56,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: web/package-lock.json   # ✅ نفس التحديث هنا
+          cache-dependency-path: web/package-lock.json
 
       - name: Install dependencies
         working-directory: web
-        run: npm install                                # ✅ بدل npm ci
+        run: npm install
 
-      - name: Vercel Deploy (Preview for non-main, Production for main)
+      - name: Vercel Deploy
         working-directory: web
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -69,3 +73,4 @@ jobs:
           npx vercel pull --yes --environment=$ENVIRONMENT --token=$VERCEL_TOKEN --project=$VERCEL_PROJECT_ID --scope=$VERCEL_ORG_ID
           npx vercel build --token=$VERCEL_TOKEN
           npx vercel deploy --prebuilt --token=$VERCEL_TOKEN
+          echo "✅ Vercel deployment finished"
