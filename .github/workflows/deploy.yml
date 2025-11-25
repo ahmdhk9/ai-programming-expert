@@ -10,52 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ سحب المشروع
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      # 2️⃣ تفعيل Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 3️⃣ تنظيف الحزم القديمة
-      - name: Clean npm cache & node_modules
-      run: |
-          cd web
-          echo "Cleaning old node_modules and cache..."
-          rm -rf node_modules package-lock.json
-          npm cache clean --force
-
-      # 4️⃣ تثبيت الحزم
       - name: Install dependencies
         run: |
           cd web
-          echo "Installing dependencies..."
           npm install
 
-      # 5️⃣ بناء المشروع Next.js
-      - name: Build project (Next.js)
+      - name: Build & Export
         run: |
           cd web
-          echo "Building Next.js static export..."
-          npx next build || { 
-            echo "❌ Build failed! Fix your pages or TypeScript errors."; 
-            exit 1; 
-          }
+          npx next build
+          npx next export
 
-      # 6️⃣ التحقق من وجود مجلد out
-      - name: Verify output folder
-        run: |
-          if [ ! -d "web/out" ]; then
-            echo "❌ No out folder found! Did you set output: 'export' in next.config.js?"
-            exit 1
-          fi
-          echo "✔ out folder generated successfully"
-          ls -la web/out
-
-      # 7️⃣ نشر على Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
