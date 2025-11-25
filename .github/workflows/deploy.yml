@@ -19,6 +19,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: web
+
+      - name: Build project
+        run: npm run build
+        working-directory: web
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
@@ -33,6 +38,7 @@ jobs:
 
       - name: Deploy to Firebase Hosting
         run: firebase deploy --only hosting
+        working-directory: web
 
   backend:
     runs-on: ubuntu-latest
