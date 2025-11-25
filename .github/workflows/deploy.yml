@@ -8,22 +8,23 @@ on:
 jobs:
   frontend:
     runs-on: ubuntu-latest
+
     steps:
-      # 1️⃣ استنساخ المشروع
+      # 1️⃣ سحب المشروع
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ إعداد Node.js
+      # 2️⃣ تفعيل Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 3️⃣ تنظيف الحزم القديمة و cache
+      # 3️⃣ تنظيف الحزم القديمة
       - name: Clean npm cache & node_modules
-        run: |
+      run: |
           cd web
-          echo "Cleaning old node_modules and npm cache..."
+          echo "Cleaning old node_modules and cache..."
           rm -rf node_modules package-lock.json
           npm cache clean --force
 
@@ -34,35 +35,27 @@ jobs:
           echo "Installing dependencies..."
           npm install
 
-      # 5️⃣ اختبار build مع عرض الأخطاء بالتفصيل
+      # 5️⃣ بناء المشروع Next.js
       - name: Build project (Next.js)
         run: |
           cd web
-          echo "Building project..."
-          npx next build || { echo "❌ Build failed!"; exit 1; }
-
-      # 6️⃣ تصدير static files مع لوج مفصل
-      - name: Export project (Next.js)
-        run: |
-          cd web
-          echo "Exporting static files..."
-          npx next export || {
-            echo "❌ Export failed! Possible issues:";
-            echo "- Check next.config.js for output: 'export'";
-            echo "- Ensure all pages exist (index.js or index.tsx)";
-            echo "- Check TypeScript or ESLint errors";
-            exit 1;
+          echo "Building Next.js static export..."
+          npx next build || { 
+            echo "❌ Build failed! Fix your pages or TypeScript errors."; 
+            exit 1; 
           }
-          echo "✅ Export complete"
 
-      # 7️⃣ التحقق من مجلد out قبل النشر
-      - name: List output folder
+      # 6️⃣ التحقق من وجود مجلد out
+      - name: Verify output folder
         run: |
-          cd web/out || { echo "❌ out folder not found! Export failed"; exit 1; }
-          echo "Contents of out folder:"
-          ls -la
+          if [ ! -d "web/out" ]; then
+            echo "❌ No out folder found! Did you set output: 'export' in next.config.js?"
+            exit 1
+          fi
+          echo "✔ out folder generated successfully"
+          ls -la web/out
 
-      # 8️⃣ نشر على Firebase Hosting
+      # 7️⃣ نشر على Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
