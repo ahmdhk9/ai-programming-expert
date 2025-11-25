@@ -1,17 +1,10 @@
 app = "agent-backend-ahmd1"
 
 [build]
-  builder = "heroku/buildpacks:20"
-  buildpacks = ["heroku/nodejs"]
+  dockerfile = "Dockerfile"
 
 [env]
   NODE_ENV = "production"
-
-[deploy]
-  release_command = "npm install"
-
-[processes]
-  app = "npm start"
 
 [[services]]
   internal_port = 3000
