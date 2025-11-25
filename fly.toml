@@ -2,12 +2,13 @@ app = "agent-backend-ahmd1"
 
 [build]
   builder = "heroku/buildpacks:20"
+  buildpacks = ["heroku/nodejs"]
 
 [env]
   NODE_ENV = "production"
 
 [deploy]
-  release_command = "npm install --prefix backend && npm run start --prefix backend"
+  release_command = "npm install --prefix backend"
 
 [[services]]
   internal_port = 3000
@@ -20,3 +21,6 @@ app = "agent-backend-ahmd1"
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
+
+[processes]
+  app = "npm start --prefix backend"
