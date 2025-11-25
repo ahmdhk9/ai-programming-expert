@@ -1,5 +1,6 @@
 name: Deploy Backend to Fly.io
 
+# يشغّل عند كل Push على الفرع main داخل مجلد backend
 on:
   push:
     paths:
@@ -10,16 +11,49 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
+      # خطوة ١: سحب الكود من GitHub
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # خطوة ٢: تثبيت Flyctl
       - name: Install Flyctl
-        run: curl -L https://fly.io/install.sh | sh
+        run: |
+          echo "Installing Flyctl..."
+          curl -L https://fly.io/install.sh | sh
+          export PATH=$HOME/.fly/bin:$PATH
+          flyctl version  # للتأكد أن Flyctl اشتغل
+        shell: bash
 
+      # خطوة ٣: التحقق من مجلد backend موجود
+      - name: Check backend folder
+        run: |
+          if [ ! -d "backend" ]; then
+            echo "❌ Error: backend folder not found!"
+            exit 1
+          else
+            echo "✅ backend folder found"
+          fi
+        shell: bash
+
+      # خطوة ٤: نشر الـ backend على Fly.io
       - name: Deploy to Fly.io
         run: |
           cd backend
+          echo "Deploying to Fly.io..."
           flyctl deploy --app agent-backend-ahmd1 --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        shell: bash
+
+      # خطوة ٥: التحقق من نجاح النشر
+      - name: Verify Deployment
+        run: |
+          if [ $? -ne 0 ]; then
+            echo "❌ Deployment failed!"
+            exit 1
+          else
+            echo "✅ Deployment succeeded!"
+          fi
+        shell: bash
