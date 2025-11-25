@@ -3,7 +3,7 @@ const morgan = require("morgan"); // لمتابعة الطلبات
 const helmet = require("helmet"); // لأمان الـ headers
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Middleware للأمان واللوج
 app.use(helmet());

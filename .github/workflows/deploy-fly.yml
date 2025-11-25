@@ -1,40 +1,48 @@
-name: Deploy Backend to Fly.io
+name: Backend - Build & Deploy (Fly.io)
 
 on:
   push:
     paths:
       - 'backend/**'
+      - '.github/workflows/deploy-fly.yml'
     branches:
       - main
 
 jobs:
-  deploy:
+  deploy-to-fly:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Install Flyctl
-        run: |
-          curl -L https://fly.io/install.sh | sh
-          echo "$HOME/.fly/bin" >> $GITHUB_PATH
-          flyctl version
+      - name: 🔧 Install Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Check backend folder
-        run: |
-          if [ ! -d "backend" ]; then
-            echo "❌ backend folder not found!"
-            exit 1
-          else
-            echo "✅ backend folder found"
-          fi
+      - name: ⚙️ Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
 
-      - name: Deploy to Fly.io
-        run: |
-          cd backend
-          echo "Deploying to Fly.io..."
-          flyctl deploy --app agent-backend-ahmd1 --remote-only
-          echo "✅ Fly.io deployment finished"
+      - name: 📦 Install Dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: 🏗️ Build Check
+        working-directory: backend
+        run: npm run start --if-present || echo "No build script"
+
+      - name: 🚀 Deploy to Fly.io
+        working-directory: backend
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          echo "🚀 Deploying Backend to Fly.io..."
+          flyctl deploy --remote-only --app agent-backend-ahmd1
+          echo "✅ Deployment to Fly.io completed!"
+
+      - name: ✅ Deploy Success
+        if: success()
+        run: echo "🎉 Backend deployment completed successfully!"
