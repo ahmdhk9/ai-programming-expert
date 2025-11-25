@@ -3,7 +3,7 @@ const morgan = require("morgan"); // لمتابعة الطلبات
 const helmet = require("helmet"); // لأمان الـ headers
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Middleware للأمان واللوج
 app.use(helmet());
@@ -27,6 +27,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, "localhost", () => {
+  console.log(`Server running on localhost:${PORT}`);
 });

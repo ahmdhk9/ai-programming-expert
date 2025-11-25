@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 0.0.0.0 -p 5000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0 -p 5000",
     "lint": "next lint",
-    "test": "echo \"No tests configured\" && exit 0",
-    "export": "next build && next export"
+    "test": "echo \"No tests configured\" && exit 0"
   },
   "dependencies": {
     "next": "14.2.3",
