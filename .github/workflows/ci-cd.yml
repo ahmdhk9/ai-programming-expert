@@ -21,17 +21,22 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: web/package-lock.json   # ✅ تحديد مكان ملف القفل
 
       - name: Install dependencies
-        run: npm ci
+        working-directory: web
+        run: npm install                                # ✅ بدل npm ci لتجنب مشاكل lockfile
 
       - name: Lint
+        working-directory: web
         run: npm run lint --if-present
 
       - name: Test
+        working-directory: web
         run: npm test --if-present
 
       - name: Build
+        working-directory: web
         run: npm run build
 
   deploy-vercel:
@@ -47,11 +52,14 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: web/package-lock.json   # ✅ نفس التحديث هنا
 
       - name: Install dependencies
-        run: npm ci
+        working-directory: web
+        run: npm install                                # ✅ بدل npm ci
 
       - name: Vercel Deploy (Preview for non-main, Production for main)
+        working-directory: web
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
