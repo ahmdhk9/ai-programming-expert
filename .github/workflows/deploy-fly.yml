@@ -17,21 +17,18 @@ jobs:
 
       - name: Install Flyctl
         run: |
-          echo "Installing Flyctl..."
           curl -L https://fly.io/install.sh | sh
-          export PATH=$HOME/.fly/bin:$PATH
+          echo "$HOME/.fly/bin" >> $GITHUB_PATH
           flyctl version
-        shell: bash
 
       - name: Check backend folder
         run: |
           if [ ! -d "backend" ]; then
-            echo "❌ Error: backend folder not found!"
+            echo "❌ backend folder not found!"
             exit 1
           else
             echo "✅ backend folder found"
           fi
-        shell: bash
 
       - name: Deploy to Fly.io
         run: |
@@ -41,4 +38,3 @@ jobs:
           echo "✅ Fly.io deployment finished"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        shell: bash
