@@ -2,6 +2,8 @@ name: Deploy Frontend to Firebase Hosting
 
 on:
   push:
+    paths:
+      - 'web/**'
     branches:
       - main
 
@@ -10,29 +12,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ سحب المشروع
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ تفعيل Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 3️⃣ تثبيت الحزم
       - name: Install dependencies
         run: |
           cd web
           npm install
 
-      # 4️⃣ بناء المشروع
       - name: Build project (Next.js)
         run: |
           cd web
           npx next build
 
-      # 5️⃣ التأكد من وجود ملفات static
       - name: Verify .next folder
         run: |
           cd web
@@ -43,7 +40,6 @@ jobs:
           echo "✔ .next folder exists"
           ls -la .next
 
-      # 6️⃣ نشر على Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -52,3 +48,5 @@ jobs:
           channelId: live
           projectId: agent-platfrom
           entryPoint: ./web
+          # رسالة نجاح
+        run: echo "✅ Firebase deployment finished"
