@@ -18,9 +18,13 @@ jobs:
           node-version: '20'
           cache: "npm"
 
+      - name: Clean npm cache          # <<== إضافة تنظيف الكاش
+        run: npm cache clean --force
+        working-directory: web
+
       - name: Install dependencies
         working-directory: web
-        run: npm ci
+        run: npm install               # <<== بدل npm ci لتجنب مشاكل lockfile
 
       - name: Build project
         working-directory: web
