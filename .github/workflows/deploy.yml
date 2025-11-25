@@ -10,25 +10,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # 1️⃣ سحب المشروع
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ تفعيل Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # 3️⃣ تثبيت الحزم
       - name: Install dependencies
         run: |
           cd web
           npm install
 
-      - name: Build & Export
+      # 4️⃣ بناء المشروع
+      - name: Build project (Next.js)
         run: |
           cd web
           npx next build
-          npx next export
 
+      # 5️⃣ التأكد من وجود ملفات static
+      - name: Verify .next folder
+        run: |
+          cd web
+          if [ ! -d ".next" ]; then
+            echo "❌ .next folder not found! Build failed?"
+            exit 1
+          fi
+          echo "✔ .next folder exists"
+          ls -la .next
+
+      # 6️⃣ نشر على Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
