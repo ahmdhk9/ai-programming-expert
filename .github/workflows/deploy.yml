@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20'
           cache: "npm"
 
       - name: Install dependencies
@@ -24,7 +24,7 @@ jobs:
 
       - name: Build project
         working-directory: web
-        run: npm run tests
+        run: npm run build
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
