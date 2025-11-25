@@ -9,28 +9,46 @@ jobs:
   frontend:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      # 1️⃣ استنساخ المشروع
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ إعداد Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: "npm"
-          cache-dependency-path: web/package-lock.json
 
-      - name: Clean npm cache
-        run: npm cache clean --force
-        working-directory: web
+      # 3️⃣ تنظيف الحزم القديمة و cache
+      - name: Clean npm cache & node_modules
+        run: |
+          cd web
+          echo "Cleaning old node_modules and cache..."
+          rm -rf node_modules package-lock.json
+          npm cache clean --force
 
+      # 4️⃣ تثبيت الحزم
       - name: Install dependencies
-        working-directory: web
-        run: npm install
+        run: |
+          cd web
+          echo "Installing dependencies..."
+          npm install
 
-      - name: Build project (static export)
-        working-directory: web
-        run: npm run export
+      # 5️⃣ اختبار build قبل export
+      - name: Test build only
+        run: |
+          cd web
+          echo "Testing next build..."
+          npx next build || { echo "Build failed! Check your code or TypeScript settings"; exit 1; }
 
+      # 6️⃣ تصدير static files
+      - name: Build and export project
+        run: |
+          cd web
+          echo "Running next export..."
+          npm run export || { echo "Export failed! Check next.config.js, pages, or TypeScript"; exit 1; }
+
+      # 7️⃣ نشر على Firebase Hosting
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -39,3 +57,9 @@ jobs:
           channelId: live
           projectId: agent-platfrom
           entryPoint: ./web
+
+      # 8️⃣ إخراج مجلد out للتأكد
+      - name: List output folder
+        run: |
+          cd web/out || echo "out folder not found!"
+          ls -la
