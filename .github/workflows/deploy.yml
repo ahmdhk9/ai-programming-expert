@@ -27,9 +27,9 @@ jobs:
         working-directory: web
         run: npm install
 
-      - name: Build project
+      - name: Build project (static export)
         working-directory: web
-        run: npm run build
+        run: npm run export
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -38,4 +38,4 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           channelId: live
           projectId: agent-platfrom
-          entryPoint: ./web   # ✅ يحدد مكان firebase.json
+          entryPoint: ./web
