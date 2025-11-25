@@ -1,10 +1,11 @@
 app = "agent-backend-ahmd1"
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = "Dockerfile"  # نحتاج Dockerfile جاهز لتشغيل السيرفر
 
 [env]
   NODE_ENV = "production"
+  PORT = "3000"  # نحدد port بشكل صريح عشان Express يشتغل صح
 
 [[services]]
   internal_port = 3000
