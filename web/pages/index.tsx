@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1>Helloتجربه ddالهوستنك, Agent 👋</h1>
+      <h1>Helloتجربه اddالهوستنك, Agent 👋</h1>
       <p>Welcome to the AI Programming Expert project.</p>
       <nav style={{ marginTop: "1rem" }}>
         <ul style={{ listStyle: "none", padding: 0 }}>
