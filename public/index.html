@@ -314,6 +314,35 @@
       </div>
     </div>
 
+    <!-- Voice Chat Page - Dedicated Voice Only -->
+    <div id="voice-chat-page" class="tab-pane" style="display: none;">
+      <div class="voice-chat-container">
+        <div class="voice-header">
+          <h2>🎙️ محادثة صوتية</h2>
+          <p>تحدث بحرية - سأستمع وأرد عليك صوتياً</p>
+        </div>
+        <div class="voice-display">
+          <div class="listening-indicator">
+            <div class="listening-dot"></div>
+            <span id="listening-text">اضغط للاستماع...</span>
+          </div>
+          <div id="voice-transcript" class="voice-transcript">
+            <p style="color: var(--text-muted); text-align: center; font-size: 14px;">سيظهر النص هنا...</p>
+          </div>
+        </div>
+        <div class="voice-messages">
+          <div id="voice-chat-log"></div>
+        </div>
+        <div class="voice-controls">
+          <button id="voice-listen-btn" class="voice-btn-large" onclick="startVoiceListening()">
+            <span class="mic-icon">🎤</span>
+            <span>اضغط للاستماع</span>
+          </button>
+          <button onclick="setTab('ai-chat-page')" class="voice-btn-secondary">إغلاق</button>
+        </div>
+      </div>
+    </div>
+
     <!-- AI Chat Page Tab -->
     <div id="ai-chat-page" class="tab-pane ai-chat-tab active">
       <div class="chat-messages-full" id="chat-messages-full">

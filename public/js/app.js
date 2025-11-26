@@ -203,6 +203,113 @@ let silenceTimer = null;
 let recognitionInstance = null;
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+function startVoiceListening() {
+  // الانتقال لصفحة الاستماع الصوتي المخصصة
+  setTab('voice-chat-page');
+  setTimeout(() => {
+    listenAndRespond();
+  }, 300);
+}
+
+function listenAndRespond() {
+  if (!SpeechRecognition) {
+    alert('التحدث الصوتي غير مدعوم');
+    return;
+  }
+
+  const listenBtn = document.getElementById('voice-listen-btn');
+  const listeningText = document.getElementById('listening-text');
+  const voiceTranscript = document.getElementById('voice-transcript');
+  const voiceChatLog = document.getElementById('voice-chat-log');
+
+  listenBtn.classList.add('listening');
+  listenBtn.textContent = '🛑 جاري الاستماع...';
+  listeningText.textContent = 'يستمع...';
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'ar-SA';
+  recognition.continuous = false;
+  recognition.interimResults = true;
+
+  let finalTranscript = '';
+
+  recognition.onresult = (event) => {
+    let interimTranscript = '';
+    
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript.trim();
+      if (event.results[i].isFinal) {
+        finalTranscript = transcript;
+      } else {
+        interimTranscript = transcript;
+      }
+    }
+    
+    voiceTranscript.innerHTML = `<p>${finalTranscript || interimTranscript}</p>`;
+  };
+
+  recognition.onend = async () => {
+    listenBtn.classList.remove('listening');
+    listenBtn.textContent = '🎤 اضغط للاستماع';
+    
+    if (finalTranscript.trim()) {
+      // أضف رسالة المستخدم
+      voiceChatLog.innerHTML += `<div class="voice-message user"><strong>أنت:</strong> ${finalTranscript}</div>`;
+      
+      // احصل على رد من الـ AI
+      try {
+        listeningText.textContent = 'جاري الرد...';
+        const response = await fetch('/api/ai/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: finalTranscript })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          const aiResponse = data.response;
+          voiceChatLog.innerHTML += `<div class="voice-message ai"><strong>الذكي:</strong> ${aiResponse}</div>`;
+          voiceTranscript.innerHTML = `<p>${aiResponse}</p>`;
+          listeningText.textContent = 'جاري الرد الصوتي...';
+          
+          // رد صوتي فوري
+          speakTextVoice(aiResponse);
+        }
+      } catch (error) {
+        voiceChatLog.innerHTML += `<div class="voice-message ai" style="color: #ff4757;"><strong>خطأ:</strong> ${error.message}</div>`;
+        listeningText.textContent = 'حدث خطأ - حاول مجدداً';
+      }
+    } else {
+      listeningText.textContent = 'لم أسمع شيء - حاول مجدداً';
+    }
+  };
+
+  recognition.start();
+}
+
+function speakTextVoice(text) {
+  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@]/g, '').trim();
+  
+  if (!cleanText) return;
+
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = 'ar-SA';
+  utterance.rate = 1.2;
+  utterance.pitch = 0.9;
+  utterance.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const arabicVoice = voices.find(v => v.lang.includes('ar-SA') || v.lang.includes('ar')) || voices[0];
+  if (arabicVoice) utterance.voice = arabicVoice;
+
+  utterance.onend = () => {
+    document.getElementById('listening-text').textContent = 'الرد انتهى - اضغط للاستماع مجدداً';
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
 function toggleVoiceInput() {
   if (!SpeechRecognition) {
     alert('التحدث الصوتي غير مدعوم في متصفحك');
