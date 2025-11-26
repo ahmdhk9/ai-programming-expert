@@ -1,65 +1,55 @@
-// Tab Switching
 function switchTab(tabName) {
-  // Hide all tabs
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
-
-  // Show selected tab
-  const tabId = tabName + '-tab';
-  const tab = document.getElementById(tabId);
-  if (tab) {
-    tab.classList.add('active');
-  }
-
-  // Mark buttons as active
-  const navBtn = document.querySelector(`[data-tab="${tabName}"]`);
-  if (navBtn) {
-    navBtn.classList.add('active');
-  }
-
-  const bottomBtn = document.querySelector(`.bottom-tab[onclick="switchTab('${tabName}')"]`);
-  if (bottomBtn) {
-    bottomBtn.classList.add('active');
-  }
+  const navBtns = document.querySelectorAll('.nav-btn');
+  navBtns.forEach((btn, idx) => {
+    btn.classList.remove('active');
+    if ((tabName === 'chat' && idx === 0) ||
+        (tabName === 'design' && idx === 1) ||
+        (tabName === 'tools' && idx === 2) ||
+        (tabName === 'code' && idx === 3) ||
+        (tabName === 'more' && idx === 4)) {
+      btn.classList.add('active');
+    }
+  });
 }
 
-// Send Message
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('messageInput');
+  
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+});
+
 function sendMessage() {
   const input = document.getElementById('messageInput');
   const msg = input.value.trim();
   
   if (!msg) return;
 
-  const messagesDiv = document.querySelector('.chat-messages');
+  const container = document.querySelector('.messages-container');
   
   // User message
   const userMsg = document.createElement('div');
-  userMsg.className = 'msg-user';
-  userMsg.textContent = msg;
-  messagesDiv.appendChild(userMsg);
+  userMsg.className = 'message-block';
+  userMsg.innerHTML = `
+    <div class="message-time">now</div>
+    <div class="message-box" style="background: var(--primary); color: var(--bg); align-self: flex-end;">${msg}</div>
+  `;
+  container.appendChild(userMsg);
 
   // AI response
   const aiMsg = document.createElement('div');
-  aiMsg.className = 'msg-ai';
-  aiMsg.innerHTML = `<span>🤖</span><div>تم استقبال طلبك: ${msg}</div>`;
-  messagesDiv.appendChild(aiMsg);
+  aiMsg.className = 'message-block ai-block';
+  aiMsg.innerHTML = `
+    <div class="message-time">1 second ago</div>
+    <div class="message-box ai-message">تم استقبال طلبك: ${msg}</div>
+  `;
+  container.appendChild(aiMsg);
 
   input.value = '';
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  container.scrollTop = container.scrollHeight;
 }
-
-// Use Tool
-function useTool(toolName) {
-  const messagesDiv = document.querySelector('.chat-messages');
-  const aiMsg = document.createElement('div');
-  aiMsg.className = 'msg-ai';
-  aiMsg.innerHTML = `<span>🔧</span><div>تم استخدام أداة: ${toolName}</div>`;
-  messagesDiv.appendChild(aiMsg);
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-  switchTab('chat');
-});
