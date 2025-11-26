@@ -644,7 +644,6 @@ function speakText(text) {
   // تحديد الصوت قبل التحدث
   selectVoice();
   
-  currentSpeech = utterance;
   try {
     window.speechSynthesis.speak(utterance);
     console.log('📢 تم إرسال الكلام للنظام');
