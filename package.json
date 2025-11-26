@@ -42,5 +42,8 @@
   },
   "bugs": {
     "url": "https://github.com/AIExpert/platform/issues"
+  },
+  "dependencies": {
+    "openai": "^6.9.1"
   }
 }

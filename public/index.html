@@ -187,6 +187,14 @@
       </div>
 
       <div class="section">
+        <h2>💬 الدردشة مع AI</h2>
+        <button class="ai-chat-btn" onclick="setTab('ai-chat')">
+          <span style="font-size: 24px;">🤖</span>
+          <span>فتح محادثة AI</span>
+        </button>
+      </div>
+
+      <div class="section">
         <h2>📊 الإحصائيات</h2>
         <div class="stats-grid">
           <div class="stat-card">
@@ -216,8 +224,8 @@
             <span class="status-text">APIs متصلة</span>
           </div>
           <div class="status-item">
-            <span class="status-dot pending"></span>
-            <span class="status-text">قاعدة البيانات</span>
+            <span class="status-dot active"></span>
+            <span class="status-text">ذكاء صناعي مفعّل</span>
           </div>
         </div>
       </div>
@@ -300,6 +308,28 @@
             <span>🚀</span>
             <span>قائد الفريق</span>
             <span>2024</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Chat Tab -->
+    <div id="ai-chat" class="tab-pane">
+      <div class="section">
+        <h2>💬 الدردشة الذكية مع AI</h2>
+        <div class="ai-chat-container">
+          <div class="chat-messages" id="chat-messages">
+            <div class="message ai-message">
+              <span class="message-icon">🤖</span>
+              <div class="message-content">مرحباً! أنا مساعدك الذكي. اسألني عن أي شيء برمجي وسأساعدك! 🚀</div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="اسأل الذكاء الصناعي...">
+            <button class="chat-send-btn" onclick="sendChatMessage()">إرسال</button>
+          </div>
+          <div class="chat-loading" id="chat-loading" style="display: none;">
+            <span>⏳ جاري التفكير...</span>
           </div>
         </div>
       </div>
@@ -433,11 +463,12 @@
     <button class="bottom-tab active" onclick="setTab('features')">💬 مميزات</button>
     <button class="bottom-tab" onclick="setTab('tools')">⚙️ أدوات</button>
     <button class="bottom-tab" onclick="setTab('projects')">📦 مشاريع</button>
+    <button class="bottom-tab" onclick="setTab('ai-chat')">🤖 AI</button>
     <button class="bottom-tab" onclick="setTab('profile')">👤 ملفي</button>
-    <button class="bottom-tab" onclick="setTab('settings')">⚡ إعدادات</button>
   </nav>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.0/dist/transformers.min.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>
