@@ -45,3 +45,8 @@ credentials/
 .cache/
 .turbo/
 
+# Email & Notifications
+*.log
+backend/email-config.js
+backend/nodemailer-config.js
+.env.email

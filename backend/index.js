@@ -1342,3 +1342,21 @@ app.get('/api/instant/ai-search', (req, res) => {
   res.json(instant.aiSearching());
 });
 
+
+const email = require('./email-notification-system');
+
+app.post('/api/email/send-instant-alert', async (req, res) => {
+  const alert = await email.instantEarningsAlert(req.body.amount);
+  res.json({ sent: true, message: 'إشعار الأرباح أُرسل', alert });
+});
+
+app.post('/api/email/daily-report', async (req, res) => {
+  const report = await email.dailyEarningsReport(req.body.stats);
+  res.json({ sent: true, report });
+});
+
+app.post('/api/email/opportunity', async (req, res) => {
+  const alert = await email.opportunityAlert(req.body.opportunity);
+  res.json({ sent: true, alert });
+});
+
