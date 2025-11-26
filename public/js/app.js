@@ -71,7 +71,7 @@ socket.on('user-found', (data) => {
 });
 
 socket.on('receive-message', (msgRecord) => {
-  addSocialMessage(`${msgRecord.content}`, 'other', msgRecord.from.username);
+  addSocialMessage(`${msgRecord.content}`, 'other', msgRecord.from.username, msgRecord.id);
   socket.emit('mark-delivered', msgRecord.id);
   playNotificationSound();
 
@@ -79,6 +79,14 @@ socket.on('receive-message', (msgRecord) => {
   setTimeout(() => {
     socket.emit('mark-read', msgRecord.id);
   }, 1000);
+});
+
+socket.on('message-delivered', (data) => {
+  updateMessageStatus(data.msgId, '✓');
+});
+
+socket.on('message-read', (data) => {
+  updateMessageStatus(data.msgId, '✓✓');
 });
 
 socket.on('message-sent', (data) => {
@@ -293,22 +301,52 @@ function stopSocialVoiceChat() {
   }
 }
 
-function addSocialMessage(text, type, fromUser = null) {
+function addSocialMessage(text, type, fromUser = null, msgId = null) {
   const messagesDiv = document.getElementById('social-messages');
   if (!messagesDiv) return;
 
+  const now = new Date();
+  const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                  now.getMinutes().toString().padStart(2, '0');
+
   const messageEl = document.createElement('div');
   messageEl.className = `social-message ${type}`;
+  messageEl.id = `msg-${msgId || 'local-' + Date.now()}`;
   
   if (type === 'other' && fromUser) {
-    messageEl.innerHTML = `<strong>${fromUser}:</strong> ${text}`;
+    messageEl.innerHTML = `
+      <div class="msg-header">
+        <strong>${fromUser}</strong>
+        <span class="msg-time">${timeStr}</span>
+      </div>
+      <div class="msg-content">${text}</div>
+    `;
   } else {
-    messageEl.textContent = text;
+    messageEl.innerHTML = `
+      <div class="msg-content">${text}</div>
+      <div class="msg-footer">
+        <span class="msg-time">${timeStr}</span>
+        <span class="msg-status" id="status-${msgId}">⏱️</span>
+      </div>
+    `;
   }
   
   messageEl.style.animation = 'slideIn 0.3s ease';
   messagesDiv.appendChild(messageEl);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function updateMessageStatus(msgId, status) {
+  const statusEl = document.getElementById(`status-${msgId}`);
+  if (statusEl) {
+    if (status === '✓') {
+      statusEl.textContent = '✓';
+      statusEl.style.color = '#00d4ff';
+    } else if (status === '✓✓') {
+      statusEl.textContent = '✓✓';
+      statusEl.style.color = '#10b981';
+    }
+  }
 }
 
 function showNotification(message, type = 'info') {
