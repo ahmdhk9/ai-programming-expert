@@ -6,6 +6,11 @@ function setTab(tabName) {
   event.target.classList.add('active');
 }
 
+function selectStage(el) {
+  document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+
 function selectTool(el) {
   document.querySelectorAll('.tool').forEach(t => {
     t.style.borderColor = 'var(--border)';
@@ -14,3 +19,13 @@ function selectTool(el) {
   el.style.borderColor = 'var(--primary)';
   el.style.backgroundColor = 'var(--primary)';
 }
+
+// Initialize stages when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.stage').forEach(stage => {
+    stage.addEventListener('click', function() {
+      selectStage(this);
+    });
+  });
+  console.log('Stages initialized');
+});
