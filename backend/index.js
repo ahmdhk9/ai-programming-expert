@@ -399,3 +399,70 @@ backupManager.startAutoBackup();
 
 console.log('✅ Security Systems Initialized');
 
+
+// Import Revenue Systems
+const subscriptionSystem = require('./subscription-system');
+const earningsTracker = require('./earnings-tracker');
+
+// Subscription Routes
+app.get('/api/plans', (req, res) => {
+  res.json(subscriptionSystem.getPlans());
+});
+
+app.post('/api/subscribe', (req, res) => {
+  const { userId, planId } = req.body;
+  try {
+    const subscription = subscriptionSystem.createSubscription(userId, planId);
+    res.json(subscription);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Earnings Routes
+app.get('/api/dev/revenue-stats', (req, res) => {
+  const userId = req.user?.id || 'demo';
+  const predictions = earningsTracker.predictEarnings(userId);
+  res.json(predictions);
+});
+
+app.get('/api/dev/my-earnings', (req, res) => {
+  const userId = req.user?.id || 'demo';
+  const stats = earningsTracker.getUserStats(userId);
+  res.json(stats);
+});
+
+app.post('/api/dev/record-ad-revenue', (req, res) => {
+  const { userId, amount, adProvider } = req.body;
+  const transaction = earningsTracker.recordAdRevenue(userId, amount, adProvider);
+  res.json(transaction);
+});
+
+app.post('/api/dev/request-withdrawal', (req, res) => {
+  const { userId, amount, method } = req.body;
+  const withdrawal = earningsTracker.requestWithdrawal(userId, amount, method);
+  res.json(withdrawal);
+});
+
+// AI Assistant Route
+app.post('/api/dev/ai-assistant', (req, res) => {
+  const { message } = req.body;
+  
+  const responses = {
+    'طرق الدفع': '📱 يمكنك إضافة طرق دفع من خلال لوحة التحكم:\n1. اذهب إلى الإعدادات\n2. اختر طرق الدفع\n3. أضف Stripe, PayPal, أو Telecom\n4. أدخل بيانات اعتمادك\nسيبدأ قبول الدفع تلقائياً!',
+    'الأرباح': '💰 أرباحك تأتي من:\n• الإعلانات: على كل ظهور\n• الاشتراكات: عند اشتراك المستخدم\n• الخدمات: عند شراء خدمة\nكل شيء تلقائي، تحقق من Dashboard!',
+    'إضافة إعلانات': '📢 لإضافة إعلانات:\n1. اذهب إلى Monetization\n2. اختر Google AdSense\n3. انسخ الكود\n4. ألصقه في تطبيقك\nسيبدأ الكسب فوراً!',
+    'مساعدة': '👋 يمكنني مساعدتك في:\n• إضافة طرق الدفع\n• زيادة الأرباح\n• إدارة الاشتراكات\n• حل المشاكل التقنية'
+  };
+
+  let response = responses['مساعدة'];
+  for (const [key, value] of Object.entries(responses)) {
+    if (message.includes(key)) {
+      response = value;
+      break;
+    }
+  }
+
+  res.json({ response });
+});
+
