@@ -1201,3 +1201,24 @@ app.post('/api/ai/revenue-recommendations', (req, res) => {
   res.json(recommendations);
 });
 
+
+const payment = require('./payment-gateway');
+
+app.post('/api/payment/process', async (req, res) => {
+  const result = await payment.processPayment(req.body.appId, req.body.amount, req.body.method);
+  res.json(result);
+});
+
+app.post('/api/subscriptions/create', (req, res) => {
+  const sub = payment.createRecurringBilling(req.body.appId, req.body.plan, req.body.card);
+  res.json(sub);
+});
+
+app.get('/api/referral/program/:appId', (req, res) => {
+  res.json(payment.referralProgram(req.params.appId));
+});
+
+app.get('/api/analytics/advanced/:appId', (req, res) => {
+  res.json(payment.advancedAnalytics(req.params.appId));
+});
+

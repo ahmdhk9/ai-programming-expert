@@ -11,18 +11,21 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
 
   const menuItems = [
     { icon: "🎯", label: "التحكم", href: "/developer/unified-panel" },
-    { icon: "📝", label: "Editor", href: "/dev/editor/myproject" },
-    { icon: "👁️", label: "Preview", href: "/dev/preview/myproject" },
+    { icon: "📝", label: "محرر", href: "/dev/editor/myproject" },
+    { icon: "👁️", label: "معاينة", href: "/dev/preview/myproject" },
     { icon: "🔗", label: "GitHub", href: "/dev/connect-github" },
-    { icon: "📱", label: "النشر", href: "/dev/publishing-stages" },
-    { icon: "💰", label: "أرباحي", href: "/dev/dashboard-earnings" },
-    { icon: "📦", label: "الخطط", href: "/dev/subscription-plans" },
-    { icon: "🔒", label: "الأمان", href: "/dev/security-dashboard" },
-    { icon: "🌐", label: "محلل الويب", href: "/dev/web-analyzer" },
-    { icon: "🔎", label: "البحث", href: "/dev/search-engine" },
-    { icon: "🚀", label: "الأرباح الذكية", href: "/dev/smart-earnings" },
-    { icon: "🛠️", label: "Builder", href: "/developer/dynamic-builder" },
-    { icon: "🖥️", label: "Replit", href: "/developer/replit-ide" }
+    { icon: "📱", label: "تطبيقات", href: "/developer/app-generator" },
+    { icon: "🚀", label: "النشر", href: "/dev/publishing-stages" },
+    { icon: "💰", label: "أرباح", href: "/dev/dashboard-earnings" },
+    { icon: "📦", label: "خطط", href: "/dev/subscription-plans" },
+    { icon: "💳", label: "الدفع", href: "/dev/payment-integration" },
+    { icon: "🔄", label: "الاشتراكات", href: "/dev/subscriptions-engine" },
+    { icon: "🤝", label: "إحالات", href: "/dev/referral-marketing" },
+    { icon: "📊", label: "تحليلات", href: "/dev/analytics-advanced" },
+    { icon: "🚀", label: "ذكية", href: "/dev/smart-earnings" },
+    { icon: "🔒", label: "أمان", href: "/dev/security-dashboard" },
+    { icon: "🌐", label: "ويب", href: "/dev/web-analyzer" },
+    { icon: "🔎", label: "بحث", href: "/dev/search-engine" }
   ];
 
   if (!mounted) return null;
@@ -33,7 +36,6 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
         width: sidebarOpen ? "260px" : "0",
         backgroundColor: "#fff",
         borderRight: "1px solid #e0e0e0",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
         transition: "width 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
         overflow: "hidden",
         position: "fixed",
@@ -44,11 +46,10 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
         flexDirection: "column"
       }}>
         <div style={{ padding: "2rem 1.5rem", borderBottom: "1px solid #f0f0f0" }}>
-          <h2 style={{ margin: 0, color: "#667eea", fontSize: "1.2rem" }}>AI Pro</h2>
+          <h2 style={{ margin: 0, color: "#667eea" }}>AI Pro</h2>
         </div>
-
         <nav style={{ flex: 1, overflow: "auto", padding: "0.5rem" }}>
-          {menuItems.map((item, idx) => (
+          {menuItems.map(item => (
             <Link key={item.href} href={item.href} style={{
               display: "flex",
               alignItems: "center",
@@ -56,45 +57,28 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
               margin: "0.25rem 0",
               color: "#555",
               borderRadius: "8px",
-              transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-              fontSize: "14px",
+              transition: "all 0.25s",
+              fontSize: "13px",
               cursor: "pointer"
             }} onMouseEnter={(e) => {
               (e.currentTarget as any).style.backgroundColor = "#f0f4ff";
               (e.currentTarget as any).style.color = "#667eea";
-              (e.currentTarget as any).style.paddingLeft = "1.25rem";
             }} onMouseLeave={(e) => {
               (e.currentTarget as any).style.backgroundColor = "transparent";
               (e.currentTarget as any).style.color = "#555";
-              (e.currentTarget as any).style.paddingLeft = "1rem";
             }}>
-              <span style={{ fontSize: "1.2rem", marginRight: "0.75rem", minWidth: "24px" }}>{item.icon}</span>
+              <span style={{ fontSize: "1rem", marginRight: "0.5rem" }}>{item.icon}</span>
               {sidebarOpen && <span>{item.label}</span>}
             </Link>
           ))}
         </nav>
       </div>
 
-      <div style={{
-        marginLeft: sidebarOpen ? "260px" : "0",
-        flex: 1,
-        transition: "margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden"
-      }}>
-        <header style={{
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          color: "white",
-          padding: "2rem",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center"
-        }}>
+      <div style={{ marginLeft: sidebarOpen ? "260px" : "0", flex: 1, display: "flex", flexDirection: "column", transition: "margin-left 0.35s" }}>
+        <header style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", color: "white", padding: "2rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
-            <h1 style={{ margin: 0, fontSize: "2rem" }}>{title}</h1>
-            {subtitle && <p style={{ margin: "0.5rem 0 0 0", opacity: 0.9 }}>{subtitle}</p>}
+            <h1 style={{ margin: 0, fontSize: "1.8rem" }}>{title}</h1>
+            {subtitle && <p style={{ margin: "0.5rem 0 0 0", opacity: 0.9, fontSize: "0.95rem" }}>{subtitle}</p>}
           </div>
           <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{
             background: "rgba(255,255,255,0.2)",
@@ -103,24 +87,12 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
             fontSize: "1.5rem",
             cursor: "pointer",
             padding: "0.5rem 1rem",
-            borderRadius: "8px",
-            transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)"
-          }} onMouseEnter={(e) => {
-            (e.currentTarget as any).style.backgroundColor = "rgba(255,255,255,0.3)";
-            (e.currentTarget as any).style.transform = "scale(1.05)";
-          }} onMouseLeave={(e) => {
-            (e.currentTarget as any).style.backgroundColor = "rgba(255,255,255,0.2)";
-            (e.currentTarget as any).style.transform = "scale(1)";
+            borderRadius: "6px"
           }}>
             {sidebarOpen ? "✕" : "☰"}
           </button>
         </header>
-
-        <main style={{
-          flex: 1,
-          overflow: "auto",
-          padding: "2rem"
-        }}>
+        <main style={{ flex: 1, overflow: "auto", padding: "2rem" }}>
           {children}
         </main>
       </div>
