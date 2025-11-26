@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// @ts-ignore
 
 export default function AIFactory() {
   const [stats, setStats] = useState(null);

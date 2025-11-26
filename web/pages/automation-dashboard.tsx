@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+// @ts-ignore
 
 export default function AutomationDashboard() {
   const [status, setStatus] = useState(null);
