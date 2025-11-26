@@ -1,83 +1,32 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Generation</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <div class="container">
-    <aside class="sidebar">
-      <div class="logo"><h2>🚀 AI Expert</h2><p>منصة ذكية</p></div>
-      <nav><ul class="nav-menu">
-        <div class="nav-section"><div class="nav-section-title">الرئيسية</div>
-          <li class="nav-item"><a href="/" class="nav-link">🏠 الرئيسية</a></li>
-          <li class="nav-item"><a href="/chat.html" class="nav-link">💬 دردشة</a></li></div>
-        <div class="nav-section"><div class="nav-section-title">الميزات</div>
-          <li class="nav-item"><a href="/code-generation.html" class="nav-link active">💻 Code Gen</a></li>
-          <li class="nav-item"><a href="/auto-fixing.html" class="nav-link">🔧 Auto Fix</a></li>
-          <li class="nav-item"><a href="/ui-generation.html" class="nav-link">🎨 UI Gen</a></li>
-          <li class="nav-item"><a href="/database-auto.html" class="nav-link">🗄️ Database</a></li>
-          <li class="nav-item"><a href="/deployment.html" class="nav-link">🚀 Deploy</a></li></div>
-        <div class="nav-section"><div class="nav-section-title">آخرى</div>
-          <li class="nav-item"><a href="/marketplace.html" class="nav-link">🏪 Marketplace</a></li>
-          <li class="nav-item"><a href="/admin.html" class="nav-link">👨‍💻 Admin</a></li></div>
-      </ul></nav>
-    </aside>
-    <main class="main-content">
-      <div class="header">
-        <h1>💻 Code Generation</h1>
-        <p>كتابة كود احترافي في ثوان معدودة</p>
-      </div>
-      <div class="cards-grid">
-        <div class="card" onclick="scrollToForm()">
-          <div class="card-icon">⚡</div>
-          <h3>سريع جداً</h3>
-          <p>إنشاء كود كامل في أقل من 5 ثواني</p>
-          <ul class="card-features"><li>معالجة فورية</li><li>بدون تأخير</li><li>محسّن الأداء</li></ul>
-        </div>
-        <div class="card" onclick="scrollToForm()">
-          <div class="card-icon">🎯</div>
-          <h3>دقيق 100%</h3>
-          <p>كود خالي من الأخطاء</p>
-          <ul class="card-features"><li>مراجعة ذكية</li><li>اختبار تلقائي</li><li>معايير عالية</li></ul>
-        </div>
-        <div class="card" onclick="scrollToForm()">
-          <div class="card-icon">🌍</div>
-          <h3>تعدد اللغات</h3>
-          <p>دعم 50+ لغة برمجة</p>
-          <ul class="card-features"><li>Python, JavaScript</li><li>Java, C++, Go</li><li>والمزيد...</li></ul>
-        </div>
-      </div>
-      <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
-        <h2 style="color: #667eea; margin-bottom: 20px;">اختبر الآن</h2>
-        <form onsubmit="generateCode(event)">
-          <div class="form-group">
-            <label for="description">وصف ما تريده:</label>
-            <textarea id="description" placeholder="مثال: دالة حساب الفيبوناتشي..." required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="language">اختر اللغة:</label>
-            <select id="language" required>
-              <option>Python</option><option>JavaScript</option><option>Java</option><option>C++</option><option>Go</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">🚀 إنشاء الكود</button>
-        </form>
-        <div id="result"></div>
-      </div>
-    </main>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء الكود</title><link rel="stylesheet" href="/style.css"></head>
+<body><div class="container">
+  <aside class="sidebar"><div class="logo"><h2>🚀 AI Expert</h2><p>منصة ذكية</p></div><nav><ul class="nav-menu">
+    <div class="nav-section"><div class="nav-section-title">الأساسية</div>
+      <li class="nav-item"><a href="/" class="nav-link">🏠 الرئيسية</a></li></div>
+    <div class="nav-section"><div class="nav-section-title">الميزات</div>
+      <li class="nav-item"><a href="/code-generation.html" class="nav-link active">💻 إنشاء الكود</a></li>
+      <li class="nav-item"><a href="/auto-fixing.html" class="nav-link">🔧 إصلاح الأخطاء</a></li>
+      <li class="nav-item"><a href="/ui-generation.html" class="nav-link">🎨 تصميم</a></li></div>
+  </ul></nav></aside>
+  <main class="main-content"><div class="header"><h1>💻 إنشاء الكود</h1><p>اكتب كودك تلقائياً بجودة عالية</p></div>
+  <div class="cards-grid">
+    <div class="card"><div class="card-icon">⚡</div><h3>سريع</h3><p>إنشاء فوري في ثواني</p></div>
+    <div class="card"><div class="card-icon">🎯</div><h3>دقيق</h3><p>كود بدون أخطاء</p></div>
+    <div class="card"><div class="card-icon">🌍</div><h3>50+ لغة</h3><p>كل لغات البرمجة</p></div>
   </div>
+  <div class="section"><h2>اكتب وصفك</h2>
+    <form onsubmit="generate(event)">
+      <div class="form-group"><label>ماذا تريد أن تصنع؟</label>
+        <textarea placeholder="مثال: دالة حساب الفيبوناتشي..." required></textarea></div>
+      <div class="form-group"><label>اختر اللغة</label>
+        <select required><option>Python</option><option>JavaScript</option><option>Java</option><option>C++</option></select></div>
+      <button type="submit" class="btn btn-primary btn-block">إنشاء الكود</button>
+    </form>
+    <div id="result"></div>
+  </div></main></div>
   <script src="/app.js"></script>
-  <script>
-    function scrollToForm() { document.querySelector('form').scrollIntoView({behavior: 'smooth'}); }
-    function generateCode(e) {
-      e.preventDefault();
-      const desc = document.getElementById('description').value;
-      const lang = document.getElementById('language').value;
-      document.getElementById('result').innerHTML = `<div class="alert alert-success" style="margin-top: 20px;">✅ تم إنشاء الكود!</div>`;
-    }
-  </script>
-</body>
-</html>
+  <script>function generate(e){e.preventDefault();document.getElementById('result').innerHTML='<div class="alert alert-success">✅ تم إنشاء الكود بنجاح!</div>';}</script>
+</body></html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🚀 AI Programming Expert - منصة ذكية خارقة</title>
+  <title>AI Programming Expert</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -11,27 +11,27 @@
     <aside class="sidebar">
       <div class="logo">
         <h2>🚀 AI Expert</h2>
-        <p>منصة ذكية خارقة</p>
+        <p>منصة ذكية</p>
       </div>
       <nav>
         <ul class="nav-menu">
           <div class="nav-section">
-            <div class="nav-section-title">الرئيسية</div>
+            <div class="nav-section-title">الأساسية</div>
             <li class="nav-item"><a href="/" class="nav-link active">🏠 الرئيسية</a></li>
-            <li class="nav-item"><a href="/chat.html" class="nav-link">💬 دردشة ذكية</a></li>
+            <li class="nav-item"><a href="/chat.html" class="nav-link">💬 الدردشة</a></li>
           </div>
           <div class="nav-section">
-            <div class="nav-section-title">الميزات الرئيسية</div>
-            <li class="nav-item"><a href="/code-generation.html" class="nav-link">💻 Code Gen</a></li>
-            <li class="nav-item"><a href="/auto-fixing.html" class="nav-link">🔧 Auto Fix</a></li>
-            <li class="nav-item"><a href="/ui-generation.html" class="nav-link">🎨 UI Gen</a></li>
-            <li class="nav-item"><a href="/database-auto.html" class="nav-link">🗄️ Database</a></li>
-            <li class="nav-item"><a href="/deployment.html" class="nav-link">🚀 Deploy</a></li>
+            <div class="nav-section-title">الميزات</div>
+            <li class="nav-item"><a href="/code-generation.html" class="nav-link">💻 إنشاء الكود</a></li>
+            <li class="nav-item"><a href="/auto-fixing.html" class="nav-link">🔧 إصلاح الأخطاء</a></li>
+            <li class="nav-item"><a href="/ui-generation.html" class="nav-link">🎨 تصميم الواجهات</a></li>
+            <li class="nav-item"><a href="/database-auto.html" class="nav-link">🗄️ قاعدة البيانات</a></li>
+            <li class="nav-item"><a href="/deployment.html" class="nav-link">🚀 النشر</a></li>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">آخرى</div>
-            <li class="nav-item"><a href="/marketplace.html" class="nav-link">🏪 Marketplace</a></li>
-            <li class="nav-item"><a href="/admin.html" class="nav-link">👨‍💻 Admin</a></li>
+            <li class="nav-item"><a href="/marketplace.html" class="nav-link">🏪 المتجر</a></li>
+            <li class="nav-item"><a href="/admin.html" class="nav-link">👨‍💻 الإدارة</a></li>
           </div>
         </ul>
       </nav>
@@ -39,151 +39,86 @@
 
     <main class="main-content">
       <div class="header">
-        <h1>🚀 AI Programming Expert</h1>
-        <p>منصة ذكية متطورة - كل ما تحتاجه للبرمجة الاحترافية</p>
+        <h1>🚀 منصة AI للبرمجة</h1>
+        <p>منصة ذكية تساعدك في البرمجة الاحترافية</p>
       </div>
 
       <div class="cards-grid">
-        <div class="card" onclick="navigateTo('/code-generation.html')" style="cursor: pointer;">
-          <div class="card-icon">💻</div>
-          <h3>60+</h3>
-          <p>ميزة ذكية</p>
-          <ul class="card-features">
-            <li>Code Generation</li>
-            <li>Auto Fixing</li>
-            <li>UI Design</li>
-          </ul>
+        <div class="card" onclick="go('/code-generation.html')">
+          <div class="card-icon">60</div>
+          <h3>ميزة ذكية</h3>
+          <p>تقنيات متقدمة للبرمجة</p>
         </div>
-        <div class="card" onclick="navigateTo('/chat.html')" style="cursor: pointer;">
-          <div class="card-icon">📄</div>
-          <h3>23</h3>
-          <p>صفحة احترافية</p>
-          <ul class="card-features">
-            <li>تصاميم حديثة</li>
-            <li>متجاوبة</li>
-            <li>محسّنة</li>
-          </ul>
+        <div class="card" onclick="go('/chat.html')">
+          <div class="card-icon">23</div>
+          <h3>صفحة</h3>
+          <p>واجهات احترافية</p>
         </div>
-        <div class="card" onclick="navigateTo('/deployment.html')" style="cursor: pointer;">
-          <div class="card-icon">🔄</div>
-          <h3>3</h3>
-          <p>أنماط عمل</p>
-          <ul class="card-features">
-            <li>Online Mode</li>
-            <li>Offline Mode</li>
-            <li>Hybrid Mode</li>
-          </ul>
+        <div class="card" onclick="go('/deployment.html')">
+          <div class="card-icon">3</div>
+          <h3>أنماط عمل</h3>
+          <p>Online و Offline و Hybrid</p>
         </div>
-        <div class="card" onclick="navigateTo('/marketplace.html')" style="cursor: pointer;">
-          <div class="card-icon">📱</div>
-          <h3>6</h3>
-          <p>منصات</p>
-          <ul class="card-features">
-            <li>PWA</li>
-            <li>Desktop</li>
-            <li>Mobile</li>
-          </ul>
+        <div class="card" onclick="go('/marketplace.html')">
+          <div class="card-icon">6</div>
+          <h3>منصات</h3>
+          <p>Web و Desktop و Mobile</p>
         </div>
       </div>
 
-      <div style="background: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
-        <h2 style="color: #667eea; text-align: center; margin-bottom: 30px; font-size: 28px;">🌐 أنماط العمل الثلاثة</h2>
+      <div class="section">
+        <h2>أنماط العمل</h2>
         <div class="cards-grid">
-          <div class="card" onclick="navigateTo('/code-generation.html')">
+          <div class="card" onclick="go('/code-generation.html')">
             <div class="card-icon">🌐</div>
             <h3>Online Mode</h3>
-            <p>اتصل بالسحابة للوصول لجميع الخدمات</p>
-            <ul class="card-features">
-              <li>خدمات سحابية</li>
-              <li>قاعدة بيانات</li>
-              <li>نشر فوري</li>
-            </ul>
+            <p>اتصل بالسحابة واستمتع بجميع الخدمات</p>
           </div>
-          <div class="card" onclick="navigateTo('/auto-fixing.html')">
+          <div class="card" onclick="go('/auto-fixing.html')">
             <div class="card-icon">📱</div>
             <h3>Offline Mode</h3>
-            <p>عمل محلي بدون الحاجة للإنترنت</p>
-            <ul class="card-features">
-              <li>عمل بدون إنترنت</li>
-              <li>سرعة فائقة</li>
-              <li>خصوصية</li>
-            </ul>
+            <p>اعمل بدون إنترنت بكل سهولة</p>
           </div>
-          <div class="card" onclick="navigateTo('/ui-generation.html')">
+          <div class="card" onclick="go('/ui-generation.html')">
             <div class="card-icon">🔄</div>
             <h3>Hybrid Mode</h3>
-            <p>مزامنة ذكية تلقائية بين الأنماط</p>
-            <ul class="card-features">
-              <li>أفضل الاثنين</li>
-              <li>مزامنة تلقائية</li>
-              <li>مرونة</li>
-            </ul>
+            <p>مزامنة ذكية تلقائية</p>
           </div>
         </div>
       </div>
 
-      <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
-        <h2 style="color: #667eea; text-align: center; margin-bottom: 30px; font-size: 28px;">✨ الميزات الرئيسية</h2>
+      <div class="section">
+        <h2>الميزات الرئيسية</h2>
         <div class="cards-grid">
-          <div class="card" onclick="navigateTo('/code-generation.html')" style="cursor: pointer;">
+          <div class="card" onclick="go('/code-generation.html')">
             <div class="card-icon">💻</div>
-            <h3>Code Generation</h3>
-            <p>كتابة كود احترافي بسرعة</p>
-            <ul class="card-features">
-              <li>50+ لغة برمجة</li>
-              <li>كود محسّن</li>
-              <li>بدون أخطاء</li>
-            </ul>
+            <h3>إنشاء الكود</h3>
+            <p>اكتب كودك تلقائياً في ثواني</p>
           </div>
-          <div class="card" onclick="navigateTo('/auto-fixing.html')" style="cursor: pointer;">
+          <div class="card" onclick="go('/auto-fixing.html')">
             <div class="card-icon">🔧</div>
-            <h3>Auto Fixing</h3>
-            <p>اكتشاف وإصلاح الأخطاء</p>
-            <ul class="card-features">
-              <li>اكتشاف ذكي</li>
-              <li>شرح تفصيلي</li>
-              <li>إصلاح فوري</li>
-            </ul>
+            <h3>إصلاح الأخطاء</h3>
+            <p>اكتشف وأصلح الأخطاء تلقائياً</p>
           </div>
-          <div class="card" onclick="navigateTo('/ui-generation.html')" style="cursor: pointer;">
+          <div class="card" onclick="go('/ui-generation.html')">
             <div class="card-icon">🎨</div>
-            <h3>UI Generation</h3>
-            <p>تصميم واجهات احترافية</p>
-            <ul class="card-features">
-              <li>تصاميم مجانية</li>
-              <li>محسّنة</li>
-              <li>متجاوبة</li>
-            </ul>
+            <h3>تصميم الواجهات</h3>
+            <p>انشئ تصاميم احترافية فوراً</p>
           </div>
-          <div class="card" onclick="navigateTo('/database-auto.html')" style="cursor: pointer;">
+          <div class="card" onclick="go('/database-auto.html')">
             <div class="card-icon">🗄️</div>
-            <h3>Database Auto</h3>
-            <p>إنشاء قواعد بيانات ذكية</p>
-            <ul class="card-features">
-              <li>تصميم ذكي</li>
-              <li>تحسين تلقائي</li>
-              <li>أمان عالي</li>
-            </ul>
+            <h3>قاعدة البيانات</h3>
+            <p>اهياكل قواعد البيانات تلقائياً</p>
           </div>
-          <div class="card" onclick="navigateTo('/deployment.html')" style="cursor: pointer;">
+          <div class="card" onclick="go('/deployment.html')">
             <div class="card-icon">🚀</div>
-            <h3>Deployment</h3>
-            <p>نشر فوري على السحابة</p>
-            <ul class="card-features">
-              <li>نشر بسيط</li>
-              <li>دعم عالمي</li>
-              <li>SSL مجاني</li>
-            </ul>
+            <h3>النشر</h3>
+            <p>انشر تطبيقك على السحابة الآن</p>
           </div>
-          <div class="card" onclick="navigateTo('/marketplace.html')" style="cursor: pointer;">
+          <div class="card" onclick="go('/marketplace.html')">
             <div class="card-icon">🏪</div>
-            <h3>Marketplace</h3>
-            <p>50+ مشروع جاهز</p>
-            <ul class="card-features">
-              <li>قوالب مجانية</li>
-              <li>مشاريع كاملة</li>
-              <li>أكواد جاهزة</li>
-            </ul>
+            <h3>المتجر</h3>
+            <p>50+ مشروع جاهز مجاناً</p>
           </div>
         </div>
       </div>
@@ -191,5 +126,6 @@
   </div>
 
   <script src="/app.js"></script>
+  <script>function go(url) { window.location.href = url; }</script>
 </body>
 </html>
