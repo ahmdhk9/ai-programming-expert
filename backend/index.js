@@ -1262,3 +1262,21 @@ app.get('/api/account/earnings/:userId', (req, res) => {
   res.json(earnings);
 });
 
+
+const viral = require('./viral-marketing-engine');
+
+app.get('/api/marketing/secret', (req, res) => {
+  const promo = viral.secretPromotion('user', 'app_123');
+  res.json(promo);
+});
+
+app.get('/api/marketing/public', (req, res) => {
+  const promo = viral.publicPromotion({});
+  res.json(promo);
+});
+
+app.get('/api/marketing/splits/:revenue', (req, res) => {
+  const splits = viral.commissionSplit(parseFloat(req.params.revenue));
+  res.json(splits);
+});
+
