@@ -340,7 +340,6 @@ window.addEventListener('appinstalled', () => {
   isAppInstalled = true;
   installBtn.classList.add('hidden');
   deferredPrompt = null;
-  showInstallMessage('تم تنصيب التطبيق بنجاح! يمكنك الآن فتحه من قائمة التطبيقات 📱✅');
 });
 
 // Check if PWA is running as installed app
@@ -352,61 +351,18 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
 
 function installApp() {
   if (deferredPrompt) {
-    // Native install prompt
+    // Native install prompt - no messages
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === 'accepted') {
         console.log('✅ User accepted PWA installation');
-        showInstallMessage('🎉 جاري التنصيب... سيظهر التطبيق في قائمة تطبيقاتك قريباً!');
       }
       deferredPrompt = null;
       installBtn.classList.add('hidden');
     });
   } else {
-    // Manual install instructions
-    showManualInstallGuide();
-  }
-}
-
-function showManualInstallGuide() {
-  const messagesDiv = document.getElementById('chat-messages-full');
-  if (messagesDiv) {
-    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const guide = isIos ? 
-      `<strong>📱 iOS: تنصيب التطبيق</strong><br>
-1. اضغط على زر المشاركة (Share) في أسفل المتصفح
-2. اختر "إضافة إلى الشاشة الرئيسية" (Add to Home Screen)
-3. اختر الاسم وانقر على "إضافة"
-<br>✅ تم!` 
-      : 
-      `<strong>📱 Android/Chrome: تنصيب التطبيق</strong><br>
-1. اضغط على قائمة المتصفح (⋮) في الأعلى
-2. اختر "تثبيت التطبيق" (Install app)
-3. انقر "تثبيت" (Install)
-<br>✅ سيظهر التطبيق في قائمة تطبيقاتك!`;
-
-    const msgEl = document.createElement('div');
-    msgEl.className = 'message ai-message';
-    msgEl.innerHTML = `
-      <span class="message-icon">📱</span>
-      <div class="message-content">${guide}</div>
-    `;
-    messagesDiv.appendChild(msgEl);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-}
-
-function showInstallMessage(message) {
-  const messagesDiv = document.getElementById('chat-messages-full');
-  if (messagesDiv) {
-    const msgEl = document.createElement('div');
-    msgEl.className = 'message ai-message';
-    msgEl.innerHTML = `
-      <span class="message-icon">📱</span>
-      <div class="message-content">${message}</div>
-    `;
-    messagesDiv.appendChild(msgEl);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    // Fallback for browsers without native prompt
+    console.log('⬇️ تنصيب التطبيق: نسخ الرابط وفتحه في متصفح محدث');
   }
 }
 
