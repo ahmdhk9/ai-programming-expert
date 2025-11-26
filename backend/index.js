@@ -1135,3 +1135,25 @@ app.get('/api/dev/preview/:projectId', (req, res) => {
   res.json(link);
 });
 
+
+const monetization = require('./monetization-engine');
+
+app.get('/api/monetization/stages', (req, res) => {
+  res.json(monetization.publishingStages());
+});
+
+app.get('/api/monetization/plans', (req, res) => {
+  res.json(monetization.subscriptionPlans());
+});
+
+app.post('/api/monetization/earnings/:appId', (req, res) => {
+  const earnings = monetization.calculateEarnings(req.params.appId, req.body);
+  res.json(earnings);
+});
+
+app.post('/api/monetization/withdraw', (req, res) => {
+  const { developer, amount, account } = req.body;
+  const result = monetization.withdrawFunds(developer, amount, account);
+  res.json(result);
+});
+
