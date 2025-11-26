@@ -1,3 +1,23 @@
+function switchPage(pageName) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  // Show selected page
+  document.getElementById(`page-${pageName}`).style.display = 'flex';
+  
+  // Mark button as active
+  event.target.closest('.nav-btn').classList.add('active');
+
+  // Focus input if chat page
+  if (pageName === 'chat') {
+    setTimeout(() => {
+      const input = document.getElementById('input-chat');
+      if (input) input.focus();
+    }, 100);
+  }
+}
+
 function sendMessage() {
   const input = document.getElementById('input-chat');
   const msg = input.value.trim();
