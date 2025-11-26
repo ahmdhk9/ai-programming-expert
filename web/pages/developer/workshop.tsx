@@ -51,7 +51,7 @@ export default function DeveloperWorkshop() {
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
       <header style={{ backgroundColor: "white", padding: "1.5rem 2rem", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
-        <Link href="/developer/dashboard" style={{ color: "#667eea", textDecoration: "none", display: "inline-block", marginBottom: "1rem" }}>
+        <Link href="/developer/unified-panel" style={{ color: "#667eea", textDecoration: "none", display: "inline-block", marginBottom: "1rem" }}>
           ← رجوع
         </Link>
         <h1 style={{ margin: "0.5rem 0 0 0", color: "#667eea" }}>🏗️ ورشة التطوير</h1>

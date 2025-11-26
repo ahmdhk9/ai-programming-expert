@@ -1038,3 +1038,19 @@ app.get('/api/integrations/available', (req, res) => {
   res.json(integrations.getAvailableIntegrations());
 });
 
+
+app.post('/api/dev/quick-action/:action', (req, res) => {
+  const { action } = req.params;
+  
+  const actions = {
+    deploy: { status: 'deploying', message: 'النشر جاري...' },
+    check: { status: 'checking', message: 'فحص الأخطاء...' },
+    sync: { status: 'syncing', message: 'المزامنة جارية...' },
+    stats: { status: 'loading', message: 'تحميل الإحصائيات...' },
+    settings: { status: 'settings', message: 'فتح الإعدادات...' },
+    backup: { status: 'backing_up', message: 'نسخة احتياطية جارية...' }
+  };
+
+  res.json(actions[action as keyof typeof actions] || { error: 'Unknown action' });
+});
+

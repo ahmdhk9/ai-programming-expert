@@ -32,7 +32,7 @@ export default function MigrationCenter() {
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#1a1a2e" }}>
       <header style={{ backgroundColor: "#16213e", padding: "2rem", color: "white" }}>
-        <Link href="/developer/dashboard" style={{ color: "#00d4ff", textDecoration: "none" }}>
+        <Link href="/developer/unified-panel" style={{ color: "#00d4ff", textDecoration: "none" }}>
           ← رجوع
         </Link>
         <h1 style={{ margin: "0.5rem 0 0 0" }}>🚀 مركز الهجرة والنشر</h1>

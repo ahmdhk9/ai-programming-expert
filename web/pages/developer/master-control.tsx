@@ -77,7 +77,7 @@ export default function MasterControl() {
     <div style={styles.container}>
       <header style={styles.header}>
         <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-          <Link href="/developer/dashboard" style={{ color: "rgba(255,255,255,0.8)", textDecoration: "none", fontSize: "14px" }}>
+          <Link href="/developer/unified-panel" style={{ color: "rgba(255,255,255,0.8)", textDecoration: "none", fontSize: "14px" }}>
             ← رجوع
           </Link>
           <h1 style={{ margin: "1rem 0 0.5rem 0", fontSize: "2.5rem" }}>🎮 غرفة التحكم الرئيسية</h1>
