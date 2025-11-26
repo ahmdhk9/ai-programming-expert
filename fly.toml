@@ -1,39 +1,15 @@
-app = "agent-backend-ahmd1"
-primary_region = "ams"
+app = "ai-platform"
+primary_region = "iad"
 
 [build]
-  dockerfile = "backend/Dockerfile"
-  
-[build.args]
-  NODE_ENV = "production"
-
-[env]
-  NODE_ENV = "production"
-  PORT = "3000"
+builder = "heroku"
 
 [[services]]
-  internal_port = 3000
-  protocol = "tcp"
-  auto_stop_machines = true
-  auto_start_machines = true
-  
-  [services.concurrency]
-    type = "connections"
-    hard_limit = 1000
-    soft_limit = 100
+internal_port = 5000
+protocol = "tcp"
 
-  [[services.ports]]
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
+[env]
+NODE_ENV = "production"
 
 [deploy]
-  release_command = "node -e \"console.log('Deployed successfully')\""
-
-[[vm]]
-  memory = "512mb"
-  cpu_kind = "shared"
-  cpus = 1
+strategy = "rolling"
