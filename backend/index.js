@@ -1280,3 +1280,18 @@ app.get('/api/marketing/splits/:revenue', (req, res) => {
   res.json(splits);
 });
 
+
+const growth = require('./auto-growth-engine');
+
+app.get('/api/growth/opportunities', (req, res) => {
+  res.json(growth.discoverOpportunities());
+});
+
+app.get('/api/growth/projects', (req, res) => {
+  res.json(growth.miniProjects());
+});
+
+app.get('/api/growth/report', (req, res) => {
+  res.json(growth.growthReport());
+});
+
