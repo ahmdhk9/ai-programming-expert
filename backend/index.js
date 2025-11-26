@@ -1101,3 +1101,12 @@ app.get('/api/github/branches', (req, res) => {
   res.json(githubAdvanced.manageBranches());
 });
 
+
+const appGenerator = require('./app-generator');
+
+app.post('/api/dev/generate-app-complete', (req, res) => {
+  const { description, name } = req.body;
+  const app = appGenerator.generateCompleteApp(description, { name });
+  res.json(app);
+});
+
