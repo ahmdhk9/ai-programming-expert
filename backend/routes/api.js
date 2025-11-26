@@ -268,3 +268,34 @@ router.get('/continuous/current', async (req, res) => {
   });
 });
 
+
+const infiniteDiscovery = require('../services/infinite-source-discovery');
+
+// توليد آلاف المصادر
+router.get('/discovery/generate-thousands', (req, res) => {
+  const sources = infiniteDiscovery.generateThousandsSources();
+  res.json({ 
+    generated: sources.length,
+    sources: sources.slice(0, 100) 
+  });
+});
+
+// إحصائيات البحث المستمر
+router.get('/discovery/stats', (req, res) => {
+  res.json(infiniteDiscovery.getDiscoveryStats());
+});
+
+// عينة من المصادر المكتشفة
+router.get('/discovery/sample/:limit', (req, res) => {
+  const limit = Math.min(parseInt(req.params.limit) || 100, 1000);
+  const sources = infiniteDiscovery.getSampleSources(limit);
+  res.json({ count: sources.length, sources });
+});
+
+// البحث عن مصادر محددة
+router.post('/discovery/search', (req, res) => {
+  const { category, keyword } = req.body;
+  const results = infiniteDiscovery.searchSources({ category, keyword });
+  res.json({ results: results.length, sources: results });
+});
+
