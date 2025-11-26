@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>AI DEV & CREATE PLATFORM</title>
+  <title>🤖 AI Programming Expert Platform</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -12,184 +12,243 @@
   <!-- Header -->
   <div class="header">
     <button class="header-btn back">‹</button>
-    <h1 class="header-title">AI DEV & CREATE PLATFORM</h1>
+    <h1 class="header-title">🤖 AI Programming Expert</h1>
     <button class="header-btn menu">⋮</button>
   </div>
 
   <!-- Top Navigation -->
   <nav class="top-nav">
-    <button class="nav-tab active" onclick="setTab('appdev')">APP DEV</button>
-    <button class="nav-tab" onclick="setTab('gamedev')">GAME DEV</button>
-    <button class="nav-tab" onclick="setTab('toolbox')">TOOLBOX</button>
+    <button class="nav-tab active" onclick="setTab('features')">المميزات</button>
+    <button class="nav-tab" onclick="setTab('tools')">الأدوات</button>
+    <button class="nav-tab" onclick="setTab('projects')">المشاريع</button>
   </nav>
 
   <!-- Content -->
   <div class="content-wrapper">
 
-    <!-- APP DEV Tab -->
-    <div id="appdev" class="tab-pane active">
-      <!-- Stages -->
+    <!-- Features Tab -->
+    <div id="features" class="tab-pane active">
+      
+      <!-- Main Features Grid -->
       <div class="section">
-        <div class="stages">
-          <div class="stage" onclick="selectStage(this)">
-            <div class="stage-num">1</div>
-            <div class="stage-text">Concept</div>
+        <h2>🎯 المميزات الأساسية</h2>
+        <div class="features-grid">
+          
+          <!-- 1. Generate Code -->
+          <div class="feature-card" onclick="selectFeature(this, 'generate')">
+            <div class="feature-icon">💻</div>
+            <div class="feature-name">إنشاء الكود</div>
+            <div class="feature-desc">اكتب وصف واحصل على كود جاهز</div>
           </div>
-          <div class="stage" onclick="selectStage(this)">
-            <div class="stage-num">2</div>
-            <div class="stage-text">Disony & Ulo</div>
+
+          <!-- 2. Fix Errors -->
+          <div class="feature-card" onclick="selectFeature(this, 'fix')">
+            <div class="feature-icon">🔧</div>
+            <div class="feature-name">إصلاح الأخطاء</div>
+            <div class="feature-desc">أصلح أخطاء الكود تلقائياً</div>
           </div>
-          <div class="stage active" onclick="selectStage(this)">
-            <div class="stage-num">3</div>
-            <div class="stage-text">Video/Image</div>
+
+          <!-- 3. Design UI -->
+          <div class="feature-card" onclick="selectFeature(this, 'design')">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-name">تصميم الواجهات</div>
+            <div class="feature-desc">أنشئ واجهات احترافية</div>
           </div>
-          <div class="stage" onclick="selectStage(this)">
-            <div class="stage-num">4</div>
-            <div class="stage-text">Videng & Integrate</div>
+
+          <!-- 4. Explain -->
+          <div class="feature-card" onclick="selectFeature(this, 'explain')">
+            <div class="feature-icon">📚</div>
+            <div class="feature-name">شرح المفاهيم</div>
+            <div class="feature-desc">فهم شامل لأي مفهوم برمجي</div>
           </div>
-        </div>
-        <div class="stage-labels">
-          <span>1 CREATION</span>
-          <span>CODE/BUILD</span>
-          <span>4 DEPLOY</span>
-          <span>5 DEPLOY</span>
-          <span>MONITOR</span>
+
+          <!-- 5. Understand Intent -->
+          <div class="feature-card" onclick="selectFeature(this, 'understand')">
+            <div class="feature-icon">🧠</div>
+            <div class="feature-name">فهم النية</div>
+            <div class="feature-desc">تحليل احتياجاتك والسياق</div>
+          </div>
+
+          <!-- 6. Smart Deploy -->
+          <div class="feature-card" onclick="selectFeature(this, 'deploy')">
+            <div class="feature-icon">🚀</div>
+            <div class="feature-name">النشر الذكي</div>
+            <div class="feature-desc">نشر التطبيق بضغطة واحدة</div>
+          </div>
+
         </div>
       </div>
 
-      <!-- AI Creative Chat -->
+      <!-- Feature Details -->
       <div class="section">
-        <h2>AI CREative CHAT</h2>
-        <div class="chat-box">
-          <div class="chat-left">
-            <div class="task-card">
-              <div class="task-header">Task Tasker</div>
-              <div class="task-body">
-                <div>🎯 Task 1 - Tasker</div>
-                <div>📝 Task 2 - Main</div>
-              </div>
-            </div>
-            <button class="msg-btn">أنت تحدث عن شئ متعلق</button>
-          </div>
-          <div class="chat-right">
-            <div class="msg-group">
-              <div class="msg-ai">
-                <span>🤖</span>
-                <div>استشاره فني في أي شي متعلق فيه...</div>
-              </div>
-            </div>
-            <div class="msg-group">
-              <div class="msg-user">Create Firebase API for طلبي</div>
-            </div>
-            <div class="msg-group">
-              <div class="msg-ai">
-                <span>🤖</span>
-                <div>جواب فني شامل...</div>
-              </div>
-            </div>
+        <h2>📋 تفاصيل المميزة</h2>
+        <div id="feature-details" class="feature-details">
+          <div class="detail-card">
+            <h3>💻 إنشاء الكود</h3>
+            <p>أصف ما تريد، واحصل على كود احترافي جاهز للاستخدام بلغات متعددة:</p>
+            <ul>
+              <li>JavaScript / TypeScript</li>
+              <li>Python</li>
+              <li>Java</li>
+              <li>C++</li>
+              <li>PHP</li>
+              <li>Rust / Go</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <!-- AI Code -->
+      <!-- AI Chat Section -->
       <div class="section">
-        <h2>AI Code</h2>
-        <div class="code-box">
-          <code>// JS @options تحديد Limit
-53 scoop @sessionStorage format, obj–1 > execute
-51 function useData()
-21 return &lt;config
-71 import data from 'config.api'</code>
+        <h2>💬 استشير الـ AI</h2>
+        <div class="chat-input-box">
+          <input type="text" placeholder="اسأل عن أي شيء برمجي..." class="chat-input">
+          <button class="chat-send-btn">إرسال</button>
         </div>
       </div>
 
-      <!-- Project Health -->
-      <div class="section">
-        <h2>Project Health</h2>
-        <div class="health-tabs">
-          <button class="health-tab active">💬 AI Chat</button>
-          <button class="health-tab">🎨 Design</button>
-          <button class="health-tab">💻 Code</button>
-          <button class="health-tab">🚀 Deploy</button>
-          <button class="health-tab">📊 Monitor</button>
-        </div>
-      </div>
     </div>
 
-    <!-- TOOLBOX Tab -->
-    <div id="toolbox" class="tab-pane">
+    <!-- Tools Tab -->
+    <div id="tools" class="tab-pane">
       <div class="section">
-        <h2>AI-POWERED TOOLBOX</h2>
+        <h2>⚙️ أدوات مساعدة ذكية</h2>
         <div class="toolbox">
           <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🎯</div>
-            <div class="tool-name">Mesh Refle</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
             <div class="tool-icon">🔄</div>
-            <div class="tool-name">Code Refactoring</div>
+            <div class="tool-name">إعادة هيكلة الكود</div>
           </div>
           <div class="tool" onclick="selectTool(this)">
             <div class="tool-icon">⚛️</div>
-            <div class="tool-name">React Logic</div>
+            <div class="tool-name">منطق React</div>
           </div>
           <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🖼️</div>
-            <div class="tool-name">SVG Raster</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">✨</div>
-            <div class="tool-name">Advanced Design</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🔀</div>
-            <div class="tool-name">DB Sync</div>
+            <div class="tool-icon">🗄️</div>
+            <div class="tool-name">قواعد البيانات</div>
           </div>
           <div class="tool" onclick="selectTool(this)">
             <div class="tool-icon">🔌</div>
-            <div class="tool-name">API Creator</div>
+            <div class="tool-name">إنشاء APIs</div>
           </div>
           <div class="tool" onclick="selectTool(this)">
             <div class="tool-icon">☁️</div>
             <div class="tool-name">Cloud Functions</div>
           </div>
           <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🔗</div>
-            <div class="tool-name">Mesh Sync</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">⚙️</div>
-            <div class="tool-name">Cloud Function</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🗄️</div>
-            <div class="tool-name">DB Sync</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
             <div class="tool-icon">🔐</div>
-            <div class="tool-name">Readiness Sync</div>
+            <div class="tool-name">الأمان والمصادقة</div>
           </div>
         </div>
+      </div>
 
-        <div class="toolitem">
-          <h3>AI-POWERED TOOLITEM</h3>
-          <div class="toolitem-box">
-            <p>🔧 ACME NUMBER OUM</p>
-            <p class="small">بام معلومات مسجود بات محفوظ كود تالي جمود</p>
-          </div>
-          <div class="toolitem-box">
-            <p>📊 NOOB HATENA</p>
-            <p class="small">محصحة محفوظة قبل على المحتوى و بات</p>
-          </div>
+      <!-- Quick Actions -->
+      <div class="section">
+        <h2>🚀 إجراءات سريعة</h2>
+        <div class="quick-actions">
+          <button class="action-btn">
+            <span class="action-icon">📝</span>
+            <span>تحليل الكود</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-icon">🧪</span>
+            <span>اختبار الكود</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-icon">📊</span>
+            <span>التحسينات</span>
+          </button>
+          <button class="action-btn">
+            <span class="action-icon">📖</span>
+            <span>التوثيق</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- GAME DEV Tab -->
-    <div id="gamedev" class="tab-pane">
-      <div class="section" style="text-align: center; padding: 40px 20px;">
-        <h2>GAME DEV</h2>
-        <p style="color: #888; margin-top: 20px;">قادم قريباً...</p>
+    <!-- Projects Tab -->
+    <div id="projects" class="tab-pane">
+      <div class="section">
+        <h2>📦 إدارة المشاريع</h2>
+        
+        <!-- Create New Project -->
+        <div class="project-actions">
+          <button class="create-project-btn">+ مشروع جديد</button>
+        </div>
+
+        <!-- Projects List -->
+        <div class="projects-list">
+          <div class="project-item">
+            <div class="project-header">
+              <h3>📱 تطبيق ويب</h3>
+              <span class="status-badge active">نشط</span>
+            </div>
+            <div class="project-info">
+              <div class="info-row">
+                <span>الحالة:</span>
+                <span>قيد التطوير</span>
+              </div>
+              <div class="info-row">
+                <span>النوع:</span>
+                <span>React + Node.js</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-item">
+            <div class="project-header">
+              <h3>🎮 لعبة ويب</h3>
+              <span class="status-badge pending">قادم</span>
+            </div>
+            <div class="project-info">
+              <div class="info-row">
+                <span>الحالة:</span>
+                <span>في التخطيط</span>
+              </div>
+              <div class="info-row">
+                <span>النوع:</span>
+                <span>JavaScript/Canvas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Stats -->
+      <div class="section">
+        <h2>📊 الإحصائيات</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">7</div>
+            <div class="stat-label">مميزات رئيسية</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">6+</div>
+            <div class="stat-label">لغات برمجية</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">سرعة الاستجابة</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deploy Status -->
+      <div class="section">
+        <h2>🚀 حالة النشر</h2>
+        <div class="deploy-status">
+          <div class="status-item">
+            <span class="status-dot active"></span>
+            <span class="status-text">الخادم يعمل بكفاءة</span>
+          </div>
+          <div class="status-item">
+            <span class="status-dot active"></span>
+            <span class="status-text">جميع APIs متصلة</span>
+          </div>
+          <div class="status-item">
+            <span class="status-dot pending"></span>
+            <span class="status-text">قاعدة البيانات معلقة</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -197,11 +256,9 @@
 
   <!-- Bottom Nav -->
   <nav class="bottom-nav">
-    <button class="bottom-tab active">💬 AI Chat</button>
-    <button class="bottom-tab">🎨 Design</button>
-    <button class="bottom-tab">💻 Code</button>
-    <button class="bottom-tab">🚀 Deploy</button>
-    <button class="bottom-tab">📊 Monitor</button>
+    <button class="bottom-tab active" onclick="setTab('features')">💬 مميزات</button>
+    <button class="bottom-tab" onclick="setTab('tools')">⚙️ أدوات</button>
+    <button class="bottom-tab" onclick="setTab('projects')">📦 مشاريع</button>
   </nav>
 </div>
 
