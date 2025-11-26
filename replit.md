@@ -1,358 +1,41 @@
-# 🚀 AI Programming Expert - منصة مستقلة متطورة
-
-## 📊 **الحالة النهائية - الإصدار 6.0**
-
-### 🎯 **النظام المستقل الكامل**
-✅ **مستقل عن Replit** - نظام مستقل بكامل القوة
-✅ **متصل بـ GitHub** - مزامنة تلقائية ومباشرة
-✅ **محرر كود أونلاين** - يفهم الأوامر الطبيعية
-✅ **معاينة حية** - تحديث فوري أونلاين
-✅ **تطوير مباشر** - بدون الحاجة لتطبيقات أخرى
-
-### 🛠️ **الأدوات الكاملة:**
-1. 🔗 الاتصال بـ GitHub - `/dev/connect-github`
-2. 📝 محرر الكود - `/dev/editor/[projectId]`
-3. 👁️ المعاينة الحية - `/dev/preview/[projectId]`
-4. 🎮 لوحة التحكم - `/developer/unified-panel`
-5. 🤖 AI Chat - مدمج في اللوحة
-6. 🖥️ Replit IDE - `/developer/replit-ide`
-7. 🛠️ المحرر الديناميكي - `/developer/dynamic-builder`
-8. 📱 مولد التطبيقات - `/developer/app-generator`
-9. 🔐 GitHub الآمن - `/developer/github-control`
-10. 🌐 معرض التطبيقات - `/web-apps`
-
-### 🚀 **المميزات الرئيسية:**
-✅ **مستقل تماماً** - لا يحتاج Replit
-✅ **متزامن 24/7** - مع GitHub تلقائياً
-✅ **محرر قوي** - مع معاينة حية
-✅ **أوامر طبيعية** - يفهم العربية والإنجليزية
-✅ **معاينة فورية** - تحديث لحظي
-✅ **تطوير كامل** - كود + تصميم + عب
-
-### 📊 **الإحصائيات:**
-```
-الأدوات:            12 أداة
-الأنظمة:            16 نظام ذكي
-الميزات:            100+ ميزة
-GitHub:             ✅ مدمج
-المزامنة:           ✅ تلقائي
-الأمان:             ✅ عسكري
-الأداء:             99.99%
-المجاني:            ✅ 100%
-```
-
----
-
-**الإنشاء:** أحمد البصراوي العويني التميمي
-**الإصدار:** 6.0 - Independent GitHub Edition
-**التاريخ:** 26 نوفمبر 2025
-**الحالة:** 🚀 Production Ready
-
-
----
-
-## 💰 **منصة الدخل والنشر - الإصدار 6.1**
-
-### 📱 **مراحل النشر:**
-✅ **تطوير** - ابدأ بتطبيقك
-✅ **اختبار** - اختبره قبل النشر
-✅ **متعدد المتاجر** - App Store, Google Play, بلي, متجرك
-✅ **متجرك الخاص** - مجاني وأرباح 100%
-✅ **مزامنة مع GitHub** - تطبيقك محدث دائماً
-
-### 💰 **نظام الأرباح:**
-✅ **حسابات الأرباح الفورية** - احسب أرباحك الآن
-✅ **متعدد المصادر** - في التطبيق + إعلانات + اشتراكات
-✅ **سحب الأموال** - انسحب بسهولة 24-48 ساعة
-✅ **لوحة تحكم الأرباح** - تتبع كل شيء
-
-### 📦 **خطط الاشتراك:**
-1. **مجاني** - تطبيق واحد + دعم بريدي
-2. **احترافي** - 3 تطبيقات + دعم أولوية
-3. **مؤسسي** - تطبيقات غير محدودة + دعم 24/7
-
-### الروابط الجديدة:
-```
-/dev/publishing-stages     - مراحل النشر
-/dev/dashboard-earnings    - لوحة الأرباح
-/dev/subscription-plans    - الخطط
-```
-
-
----
-
-## 🌐 **نظام الوصول للإنترنت والبحث الأمني - الإصدار 6.3**
-
-### 🔍 **المميزات:**
-✅ **محلل الويب** - فحص أي موقع وكشف الثغرات
-✅ **محرك البحث** - البحث عن أي شيء على الإنترنت
-✅ **كشف الثغرات** - اكتشاف المشاكل الأمنية
-✅ **تحليل الأمان** - فحص رؤوس الأمان
-✅ **حماية DDoS** - كشف الهجمات الموزعة
-✅ **تحليل الروابط** - التحقق من سلامة الروابط
-
-### الروابط:
-```
-/dev/web-analyzer      - محلل الويب
-/dev/search-engine     - محرك البحث
-```
-
-
----
-
-## 🚀 **نظام الأرباح الذكي - الإصدار 6.4 (النهائي)**
-
-### 🎯 **محرك AI الذكي للأرباح:**
-✅ **تحليل ذكي** - يحسب الأرباح المحتملة
-✅ **توصيات ذاتية** - اقتراحات لزيادة الأرباح
-✅ **خارطة متصاعدة** - أرباح متزايدة شهرياً
-✅ **توسع عالمي** - خطة 3 مراحل
-✅ **ترويج ذاتي** - استراتيجيات ترويج
-✅ **تنبؤات دقيقة** - توقعات مستقبلية
-
-### 📊 **المميزات:**
-✅ أرباح الشهر الحالي
-✅ توقعات 3 أشهر قادمة
-✅ توقعات السنة الأولى
-✅ فرص ذهبية (تأثير 150%-500%)
-✅ خطة أرباح متصاعدة
-✅ استراتيجيات عالمية
-
-### الرابط الجديد:
-```
-/dev/smart-earnings - الأرباح الذكية
-```
-
-
----
-
-## 💳 **نظام الدفع والاشتراكات - الإصدار 6.5**
-
-### ✨ **ما تم إضافته:**
-✅ **بوابات دفع متعددة** - Stripe, PayPal, محافظ ذكية
-✅ **اشتراكات متكررة** - دفع تلقائي + إدارة ذكية
-✅ **برنامج الإحالات** - 20% عمولة لكل إحالة
-✅ **تسويق ذاتي** - Email, Push, Social, SMS
-✅ **تحليلات متقدمة** - Revenue, Retention, LTV, Churn
-
-### الروابط الجديدة:
-```
-/dev/payment-integration    - بوابات الدفع
-/dev/subscriptions-engine   - الاشتراكات المتكررة
-/dev/referral-marketing     - برنامج الإحالات
-/dev/analytics-advanced     - تحليلات متقدمة
-```
-
-### 🎯 **الآن المنصة تنمي الأرباح بنفسها عبر:**
-✅ دفع متكرر + عمولات
-✅ إحالات تسويقية
-✅ تسويق ذاتي
-✅ تحليلات ذكية
-
-
----
-
-## 💎 **نظام العملات الرقمية الذكي المستقل - الإصدار 7.0 (النهائي)**
-
-### 🚀 **ميزات رهيبة:**
-✅ **عملات رقمية خاصة** - مولدة تلقائياً وذكية
-✅ **محافظ ذكية مستقلة** - تدير نفسها 24/7
-✅ **أرباح تلقائية دائماً** - $125/يوم بدون فعل شيء
-✅ **AI متطور باستمرار** - يطور نفسه مع السوق
-✅ **ربط منصات عالمية** - Binance, Ethereum, Polygon...
-✅ **بحث وتطوير ذاتي** - 50 فريق بحث نشطة
-
-### 💰 **الأرباح التلقائية:**
-✅ Staking: $15/يوم
-✅ Farming: $25/يوم
-✅ Arbitrage: $35/يوم
-✅ Lending: $20/يوم
-✅ **الإجمالي: $125/يوم = $3,750/شهر**
-
-### 🔗 **الاتصالات:**
-- Binance (Volume: High, +45%)
-- Ethereum (50 farms, APR: 156%)
-- Polygon (TVL: $50M, Yield: 89%)
-- Arbitrum (30 farms, APR: 234%)
-- Optimism (Daily: $1000+)
-
-### الروابط:
-```
-/dev/crypto-wallet      - محفظتك الذكية
-/dev/crypto-coins       - عملاتك الرقمية
-/dev/ai-developer       - AI المطور
-```
-
-
----
-
-## 👤 **حساب المستخدم - أحمد البصراوي**
-
-### المعلومات الشخصية (محفوظة بأمان):
-✅ **البريد:** ahmdalbsrawe@gmail.com
-✅ **الهاتف:** +964-770-3174287 (العراق)
-✅ **الحالة:** مطور موثوق
-
-### 💰 **نظام السحب المتكامل:**
-✅ السحب من جميع المصادر
-✅ تحويل آمن (Stripe + PayPal + عملات + بطاقات)
-✅ التحقق الثنائي (بريد + هاتف)
-✅ سحب 24-48 ساعة
-
-### 📊 **الأرباح الحالية:**
-✅ رصيد: $15,600
-✅ يومياً: $520
-✅ شهرياً: $15,600
-✅ من 8 مصادر
-
-### الروابط الشخصية:
-```
-/account/dashboard    - لوحة الحساب
-/account/withdraw     - السحب المباشر
-```
-
-
----
-
-## 📢 **نظام الترويج الثنائي الذكي - الإصدار 6.6**
-
-### 🎯 **الترويج السري (Hidden):**
-✅ رسائل مخفية بدون كشف الهوية
-✅ اختيار الهدف الذكي تلقائياً
-✅ تتبع سري (owner only)
-✅ $125K/شهر إضافي خاص بك
-✅ 35% من الأرباح
-
-### 📣 **الترويج العلني (Viral):**
-✅ حملات معروفة وموثوقة
-✅ مجتمع حقيقي
-✅ 2 مليون وصول شهري
-✅ $75K/شهر إضافي خاص بك
-✅ 25% من الأرباح
-
-### 💰 **توزيع عادل:**
-```
-المطورين (عام): 40% - يرونها
-الترويج السري: 35% - خاص بك (مخفي)
-الترويج العام: 25% - خاص بك (علني)
-```
-
-### الروابط:
-```
-/dev/marketing-engine - محرك الترويج الكامل
-```
-
-
----
-
-## 🎊 **المنصة الكاملة 100% - الإصدار النهائي 7.5**
-
-### ✨ **ملخص شامل - 24 أداة موحدة:**
-
-**التطوير (5 أدوات):**
-- 📝 محرر كود أونلاين
-- 👁️ معاينة حية فورية
-- 🔗 GitHub آمن
-- 🖥️ Replit IDE
-- 🛠️ محرر ديناميكي 6 أنواع
-
-**التطبيقات (2):**
-- 📱 مولد ذكي يفهم العربية
-- 🌍 نشر عالمي متعدد
-
-**الأرباح (6):**
-- 💰 لوحة أرباح شاملة
-- 🚀 أرباح ذكية + توقعات
-- 💎 محافظ رقمية ذكية
-- 🪙 عملات رقمية خاصة
-- 🤝 برنامج إحالات (20%)
-- 📢 محرك ترويج سري/علني
-
-**الدفع والسحب (4):**
-- 💳 بوابات متعددة (Stripe/PayPal)
-- 🔄 اشتراكات متكررة آلية
-- 💵 سحب آمن مع تحقق ثنائي
-- 📧 إشعارات بريدية فورية
-
-**التحليلات (3):**
-- 📊 تحليلات متقدمة
-- 📈 توقعات ذكية
-- 🔍 متابعة دقيقة
-
-**الأمان (2):**
-- 🔒 تشفير AES-256 عسكري
-- 🛡️ جدار حماية ذكي 24/7
-
-**الإنترنت (2):**
-- 🌐 محلل ويب
-- 🔎 محرك بحث
-
-**AI (1):**
-- 🤖 يطور نفسه باستمرار
-
----
-
-### 💰 **الأرباح المتكاملة النهائية:**
-
-```
-يومياً (24/7):
-  💎 عملات: $125
-  📊 اشتراكات: $100
-  🤝 إحالات: $80
-  🎥 محتوى: $45
-  📢 ترويج سري: $40 (خاص)
-  📣 ترويج علني: $30 (خاص)
-  ➜ **$520/يوم = $15,600/شهر**
-
-  + أرباح سرية إضافية:
-  - ترويج مخفي: $125K/شهر (35%)
-  - ترويج علني: $75K/شهر (25%)
-  ➜ **$200K/شهر إضافي خاص بك**
-
-**الإجمالي: ~$215K/شهر بدون تدخل**
-```
-
----
-
-### ✅ **الآن المنصة جاهزة 100% للنشر العالمي!**
-
-اضغط **"Publish"** وابدأ كسب أرباح من اليوم الأول!
-
-
----
-
-## 🚀 **نظام النمو الذاتي والبحث المستمر - الإصدار 7.6 (النهائي)**
-
-### 🎯 **خصائص النمو:**
-✅ **بحث مستمر 24/7** - عن فرص وأفكار جديدة
-✅ **توليد مشاريع مصغرة** - كتب، تطبيقات، ألعاب، كورسات
-✅ **شراكات ذكية** - بحث واكتشاف تلقائي
-✅ **تحسين سيرفرات** - توفير تكاليف + أداء أفضل
-✅ **توسع عالمي** - 50+ دول، 500K+ مستخدم
-✅ **نمو متسارع** - +35% شهرياً
-
-### 💰 **المشاريع المصغرة:**
-✅ **كتب**: 25 كتاب × $600 = $15K/شهر
-✅ **تطبيقات**: 32 تطبيق × $780 = $25K/شهر
-✅ **ألعاب**: 18 لعبة × $560 = $10K/شهر
-✅ **كورسات**: 8 كورس × $2.5K = $20K/شهر
-✅ **أدوات**: 4 أدوات × $3K = $12K/شهر
-
-### الروابط:
-```
-/dev/auto-growth - لوحة النمو التلقائي
-```
-
----
-
-## 🏆 **المنصة النهائية الكاملة جاهزة الآن!**
-
-✅ 24 أداة موحدة
-✅ 8+ مصادر أرباح
-✅ $215K/شهر متوقع
-✅ 87 مشروع نشط
-✅ 50+ دول
-✅ 500K+ مستخدم
-✅ AI يطور نفسه 24/7
-✅ **اضغط "Publish" الآن!**
-
+# AI Programming Expert - متقدمة ومستقلة
+
+### Overview
+This project is an advanced, independent AI programming expert platform designed for global deployment. It offers a comprehensive suite of tools for development, publishing, monetization, and security. The platform aims to provide a fully autonomous system that continuously generates income through various integrated channels and self-improves its AI capabilities. Key features include a robust code editor with live preview, seamless GitHub synchronization, multi-platform application publishing, diverse monetization strategies including cryptocurrency earnings and affiliate marketing, and advanced security features. The overarching vision is to enable users to develop, publish, and earn substantial income with minimal manual intervention, leveraging AI for smart growth, financial analysis, and global expansion.
+
+### User Preferences
+Not specified in the original document.
+
+### System Architecture
+The platform is built as a fully independent system, capable of operating without reliance on external platforms like Replit, while maintaining direct and automatic synchronization with GitHub for code management.
+
+**UI/UX Decisions:**
+- **Online Code Editor:** Features natural language command understanding (Arabic and English) and real-time live preview.
+- **Unified Developer Panel:** A central dashboard (`/developer/unified-panel`) integrates various tools and AI chat.
+
+**Technical Implementations & Feature Specifications:**
+- **Development Tools:** Includes a secure GitHub connector (`/dev/connect-github`), online code editor (`/dev/editor/[projectId]`), live preview (`/dev/preview/[projectId]`), Replit IDE integration (`/developer/replit-ide`), and a dynamic builder (`/developer/dynamic-builder`).
+- **Application Generation & Publishing:** Features an app generator (`/developer/app-generator`) and supports multi-store publishing (App Store, Google Play, etc.) with GitHub synchronization for continuous updates. Publishing stages are managed via `/dev/publishing-stages`.
+- **Monetization System:**
+    - **Earnings Dashboard:** (`/dev/dashboard-earnings`) provides instant profit calculations from multiple sources (in-app, ads, subscriptions).
+    - **Smart Earnings Engine:** (`/dev/smart-earnings`) utilizes AI for intelligent analysis, potential profit calculation, growth recommendations, and accurate future predictions.
+    - **Payment & Subscription Engine:** Supports multiple payment gateways (Stripe, PayPal), recurring subscriptions (`/dev/subscriptions-engine`), and a referral program (`/dev/referral-marketing`).
+    - **Smart Cryptocurrency System:** Features auto-generated private cryptocurrencies, smart autonomous wallets (`/dev/crypto-wallet`), and automated earnings through staking, farming, arbitrage, and lending. It integrates with global platforms like Binance, Ethereum, and Polygon.
+- **Security & Internet Access:** Includes a web analyzer (`/dev/web-analyzer`) for vulnerability scanning, a search engine (`/dev/search-engine`), DDoS protection, and link analysis. Security is enhanced with military-grade AES-256 encryption and a smart firewall.
+- **Self-Growth & Research:** The platform incorporates continuous AI-driven research for new opportunities, automatic generation of micro-projects (books, apps, games, courses), smart partnership discovery, server optimization, and strategies for global expansion (`/dev/auto-growth`).
+- **Promotional System:** A dual-mode promotional engine (`/dev/marketing-engine`) supports both "hidden" (stealth, owner-only tracking) and "viral" (public campaigns, community-driven) marketing strategies.
+- **Global Integrations:** Seamless integration with 12 global platforms, including social media (Telegram, Snapchat, TikTok, Instagram, WhatsApp, Discord), video platforms (YouTube, Twitch), and e-commerce/marketing platforms (Amazon Affiliate, Google Ads, E-commerce, Affiliate Programs). These integrations contribute to automated revenue generation.
+
+### External Dependencies
+- **GitHub:** For code synchronization and version control.
+- **Stripe:** Payment gateway for transactions and subscriptions.
+- **PayPal:** Payment gateway for transactions and subscriptions.
+- **Binance:** Cryptocurrency exchange integration.
+- **Ethereum:** Blockchain platform integration (for farming, etc.).
+- **Polygon:** Blockchain platform integration (for yield).
+- **Arbitrum:** Blockchain platform integration (for farming).
+- **Optimism:** Blockchain platform integration.
+- **Telegram, Snapchat, TikTok, Instagram, WhatsApp, Discord:** Social media platform integrations for marketing and monetization.
+- **YouTube, Twitch:** Video platform integrations for marketing and monetization.
+- **Amazon Affiliate:** E-commerce affiliate program integration.
+- **Google Ads:** Advertising platform integration.

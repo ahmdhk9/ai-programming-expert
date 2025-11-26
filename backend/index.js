@@ -1295,3 +1295,31 @@ app.get('/api/growth/report', (req, res) => {
   res.json(growth.growthReport());
 });
 
+
+const integrations = require('./platform-integrations');
+
+app.get('/api/integrations/all', (req, res) => {
+  const report = integrations.comprehensiveReport();
+  res.json(report);
+});
+
+app.get('/api/integrations/telegram', (req, res) => {
+  res.json(integrations.telegramIntegration());
+});
+
+app.get('/api/integrations/snapchat', (req, res) => {
+  res.json(integrations.snapchatIntegration());
+});
+
+app.get('/api/integrations/youtube', (req, res) => {
+  res.json(integrations.youtubeIntegration());
+});
+
+app.get('/api/integrations/tiktok', (req, res) => {
+  res.json(integrations.tiktokIntegration());
+});
+
+app.get('/api/integrations/instagram', (req, res) => {
+  res.json(integrations.instagramIntegration());
+});
+
