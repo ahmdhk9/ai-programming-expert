@@ -1410,3 +1410,15 @@ app.get('/api/advanced/expansion', (req, res) => {
   res.json(advanced.expansionReport());
 });
 
+
+const intelligent = require('./intelligent-earning-system');
+const mega = require('./mega-aggregator');
+
+app.get('/api/intelligent/report', (req, res) => {
+  res.json(intelligent.intelligentSystemReport());
+});
+
+app.get('/api/mega/aggregator', (req, res) => {
+  res.json(mega.megaAggregatorReport());
+});
+
