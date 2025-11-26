@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat</title><link rel="stylesheet" href="/style.css"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Chat</title><link rel="stylesheet" href="/style.css"></head>
 <body><div class="container"><aside class="sidebar">
-  <div class="logo"><h2>🚀 AI Expert</h2></div>
-  <nav><ul class="nav-menu"><li><a href="/" class="nav-link">🏠 الرئيسية</a></li>
-    <li><a href="/chat.html" class="nav-link active">💬 Chat</a></li></ul></nav></aside>
-  <main class="main-content"><div class="header"><h1>💬 دردشة ذكية</h1>
-    <p>تحدث مع الـ AI واحصل على إجابات فورية</p></div>
-    <div style="background:white;padding:30px;border-radius:12px;height:600px;display:flex;flex-direction:column;">
-      <div style="flex:1;overflow:auto;margin-bottom:15px;background:#f7fafc;padding:15px;border-radius:8px;">
-        <p style="color:#718096;">ابدأ محادثتك...</p></div>
-      <input type="text" placeholder="اكتب رسالتك..." style="padding:12px;border:1px solid #e2e8f0;border-radius:8px;">
-    </div></main></div></body></html>
+  <div class="logo"><h2>🚀 AI Expert</h2><p>منصة ذكية</p></div>
+  <nav><ul class="nav-menu"><div class="nav-section"><div class="nav-section-title">الرئيسية</div>
+    <li class="nav-item"><a href="/" class="nav-link">🏠 الرئيسية</a></li>
+    <li class="nav-item"><a href="/chat.html" class="nav-link active">💬 Chat</a></li></div></ul></nav></aside>
+  <main class="main-content"><div class="header"><h1>💬 دردشة ذكية</h1><p>تحدث مع الـ AI واحصل على إجابات فورية</p></div>
+  <div style="background:white;padding:30px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.1);border:1px solid #e2e8f0;height:600px;display:flex;flex-direction:column;">
+    <div style="flex:1;overflow:auto;margin-bottom:15px;background:#f7fafc;padding:15px;border-radius:8px;border:1px solid #e2e8f0;">
+      <p style="color:#718096;text-align:center;padding:20px;">ابدأ محادثتك مع الـ AI...</p></div>
+    <div style="display:flex;gap:10px;"><input type="text" id="chat-input" placeholder="اكتب رسالتك..." style="flex:1;padding:12px;border:2px solid #e2e8f0;border-radius:10px;">
+    <button onclick="sendMessage()" class="btn btn-primary">📤 إرسال</button></div></div></main></div>
+  <script src="/app.js"></script><script>function sendMessage(){const msg=document.getElementById('chat-input').value;if(msg)document.getElementById('chat-input').value='';}</script>
+</body></html>

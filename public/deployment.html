@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deployment</title><link rel="stylesheet" href="/style.css"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Deployment</title><link rel="stylesheet" href="/style.css"></head>
 <body><div class="container"><aside class="sidebar">
-  <div class="logo"><h2>🚀 AI Expert</h2></div>
-  <nav><ul class="nav-menu"><li><a href="/" class="nav-link">🏠 الرئيسية</a></li>
-    <li><a href="/deployment.html" class="nav-link active">🚀 Deploy</a></li></ul></nav></aside>
-  <main class="main-content"><div class="header"><h1>🚀 النشر الفوري</h1>
-    <p>انشر تطبيقك في ثانية واحدة على السحابة</p></div>
-    <div class="cards-grid"><div class="card"><h3>نشر بسيط</h3></div>
-      <div class="card"><h3>دعم عالمي</h3></div></div></main></div></body></html>
+  <div class="logo"><h2>🚀 AI Expert</h2><p>منصة ذكية</p></div>
+  <nav><ul class="nav-menu"><div class="nav-section"><div class="nav-section-title">الرئيسية</div>
+    <li class="nav-item"><a href="/" class="nav-link">🏠 الرئيسية</a></li></div>
+    <div class="nav-section"><div class="nav-section-title">الميزات</div>
+    <li class="nav-item"><a href="/deployment.html" class="nav-link active">🚀 Deploy</a></li></div></ul></nav></aside>
+  <main class="main-content"><div class="header"><h1>🚀 النشر الفوري</h1><p>انشر تطبيقك على السحابة في ثانية واحدة</p></div>
+  <div class="cards-grid"><div class="card" onclick="scrollToForm()"><div class="card-icon">⚡</div><h3>نشر بسيط</h3><p>بضع نقرات فقط</p></div>
+    <div class="card" onclick="scrollToForm()"><div class="card-icon">🌍</div><h3>دعم عالمي</h3><p>السحابة العالمية</p></div></div>
+  <div style="background:white;padding:30px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.1);border:1px solid #e2e8f0;">
+    <form onsubmit="deploy(event)"><div class="form-group"><label>رابط المشروع:</label><input type="text" placeholder="GitHub URL" required></div>
+    <button type="submit" class="btn btn-primary btn-block">🚀 نشر الآن</button></form><div id="deploy-result"></div></div></main></div>
+  <script src="/app.js"></script><script>function scrollToForm(){document.querySelector('form').scrollIntoView({behavior:'smooth'});}
+  function deploy(e){e.preventDefault();document.getElementById('deploy-result').innerHTML='<div class="alert alert-success" style="margin-top:20px;">✅ تم نشر المشروع بنجاح!</div>';}</script>
+</body></html>

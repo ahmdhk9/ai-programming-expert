@@ -22,11 +22,11 @@
           </div>
           <div class="nav-section">
             <div class="nav-section-title">الميزات الرئيسية</div>
-            <li class="nav-item"><a href="/code-generation.html" class="nav-link">💻 Code Generation</a></li>
-            <li class="nav-item"><a href="/auto-fixing.html" class="nav-link">🔧 Auto Fixing</a></li>
-            <li class="nav-item"><a href="/ui-generation.html" class="nav-link">🎨 UI Generation</a></li>
-            <li class="nav-item"><a href="/database-auto.html" class="nav-link">🗄️ Database Auto</a></li>
-            <li class="nav-item"><a href="/deployment.html" class="nav-link">🚀 Deployment</a></li>
+            <li class="nav-item"><a href="/code-generation.html" class="nav-link">💻 Code Gen</a></li>
+            <li class="nav-item"><a href="/auto-fixing.html" class="nav-link">🔧 Auto Fix</a></li>
+            <li class="nav-item"><a href="/ui-generation.html" class="nav-link">🎨 UI Gen</a></li>
+            <li class="nav-item"><a href="/database-auto.html" class="nav-link">🗄️ Database</a></li>
+            <li class="nav-item"><a href="/deployment.html" class="nav-link">🚀 Deploy</a></li>
           </div>
           <div class="nav-section">
             <div class="nav-section-title">آخرى</div>
@@ -39,120 +39,133 @@
 
     <main class="main-content">
       <div class="header">
-        <h1>🚀 AI Programming Expert v4.0</h1>
-        <p>منصة ذكية متطورة تصنع أي شيء فوراً - عبر الويب، محلياً، أو هجين</p>
+        <h1>🚀 AI Programming Expert</h1>
+        <p>منصة ذكية متطورة - كل ما تحتاجه للبرمجة الاحترافية</p>
       </div>
 
       <div class="cards-grid">
-        <div class="card">
-          <div class="card-icon">📊</div>
-          <div class="card-icon" style="font-size: 32px;">60</div>
-          <h3>ميزة ذكية</h3>
-          <p>60+ ميزة متطورة وقوية</p>
+        <div class="card" onclick="navigateTo('/code-generation.html')" style="cursor: pointer;">
+          <div class="card-icon">💻</div>
+          <h3>60+</h3>
+          <p>ميزة ذكية</p>
+          <ul class="card-features">
+            <li>Code Generation</li>
+            <li>Auto Fixing</li>
+            <li>UI Design</li>
+          </ul>
         </div>
-        <div class="card">
+        <div class="card" onclick="navigateTo('/chat.html')" style="cursor: pointer;">
           <div class="card-icon">📄</div>
-          <div class="card-icon" style="font-size: 32px;">23</div>
-          <h3>صفحة React</h3>
-          <p>23 صفحة احترافية</p>
+          <h3>23</h3>
+          <p>صفحة احترافية</p>
+          <ul class="card-features">
+            <li>تصاميم حديثة</li>
+            <li>متجاوبة</li>
+            <li>محسّنة</li>
+          </ul>
         </div>
-        <div class="card">
+        <div class="card" onclick="navigateTo('/deployment.html')" style="cursor: pointer;">
           <div class="card-icon">🔄</div>
-          <div class="card-icon" style="font-size: 32px;">3</div>
-          <h3>أنماط عمل</h3>
-          <p>Online, Offline, Hybrid</p>
+          <h3>3</h3>
+          <p>أنماط عمل</p>
+          <ul class="card-features">
+            <li>Online Mode</li>
+            <li>Offline Mode</li>
+            <li>Hybrid Mode</li>
+          </ul>
         </div>
-        <div class="card">
+        <div class="card" onclick="navigateTo('/marketplace.html')" style="cursor: pointer;">
           <div class="card-icon">📱</div>
-          <div class="card-icon" style="font-size: 32px;">6</div>
-          <h3>منصات</h3>
-          <p>PWA, Desktop, Mobile</p>
+          <h3>6</h3>
+          <p>منصات</p>
+          <ul class="card-features">
+            <li>PWA</li>
+            <li>Desktop</li>
+            <li>Mobile</li>
+          </ul>
         </div>
       </div>
 
-      <div style="background: white; padding: 40px; border-radius: 12px; margin-bottom: 30px;">
-        <h2 style="color: var(--primary); text-align: center; margin-bottom: 30px; font-size: 28px;">🌐 أنماط العمل الثلاثة</h2>
+      <div style="background: white; padding: 40px; border-radius: 16px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
+        <h2 style="color: #667eea; text-align: center; margin-bottom: 30px; font-size: 28px;">🌐 أنماط العمل الثلاثة</h2>
         <div class="cards-grid">
-          <div class="card">
+          <div class="card" onclick="navigateTo('/code-generation.html')">
             <div class="card-icon">🌐</div>
             <h3>Online Mode</h3>
-            <p>اتصل بالسحابة للوصول لجميع الخدمات بكامل طاقتها</p>
+            <p>اتصل بالسحابة للوصول لجميع الخدمات</p>
             <ul class="card-features">
-              <li>خدمات سحابية متطورة</li>
-              <li>قاعدة بيانات عملاقة</li>
+              <li>خدمات سحابية</li>
+              <li>قاعدة بيانات</li>
               <li>نشر فوري</li>
-              <li>AI المتقدم</li>
             </ul>
           </div>
-          <div class="card">
+          <div class="card" onclick="navigateTo('/auto-fixing.html')">
             <div class="card-icon">📱</div>
             <h3>Offline Mode</h3>
-            <p>عمل محلي 100% بدون الحاجة للإنترنت</p>
+            <p>عمل محلي بدون الحاجة للإنترنت</p>
             <ul class="card-features">
               <li>عمل بدون إنترنت</li>
               <li>سرعة فائقة</li>
-              <li>خصوصية كاملة</li>
-              <li>استقلالية تامة</li>
+              <li>خصوصية</li>
             </ul>
           </div>
-          <div class="card">
+          <div class="card" onclick="navigateTo('/ui-generation.html')">
             <div class="card-icon">🔄</div>
             <h3>Hybrid Mode</h3>
-            <p>مزامنة ذكية تلقائية بين الأنمات</p>
+            <p>مزامنة ذكية تلقائية بين الأنماط</p>
             <ul class="card-features">
-              <li>أفضل الاثنين معاً</li>
+              <li>أفضل الاثنين</li>
               <li>مزامنة تلقائية</li>
-              <li>أداء محسّن</li>
-              <li>مرونة كاملة</li>
+              <li>مرونة</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div style="background: white; padding: 40px; border-radius: 12px;">
-        <h2 style="color: var(--primary); text-align: center; margin-bottom: 30px; font-size: 28px;">✨ الميزات الرئيسية</h2>
+      <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
+        <h2 style="color: #667eea; text-align: center; margin-bottom: 30px; font-size: 28px;">✨ الميزات الرئيسية</h2>
         <div class="cards-grid">
-          <a href="/code-generation.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+          <div class="card" onclick="navigateTo('/code-generation.html')" style="cursor: pointer;">
             <div class="card-icon">💻</div>
             <h3>Code Generation</h3>
-            <p>كتابة كود احترافي في أقل من 5 ثواني</p>
+            <p>كتابة كود احترافي بسرعة</p>
             <ul class="card-features">
               <li>50+ لغة برمجة</li>
               <li>كود محسّن</li>
               <li>بدون أخطاء</li>
             </ul>
-          </a>
-          <a href="/auto-fixing.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+          </div>
+          <div class="card" onclick="navigateTo('/auto-fixing.html')" style="cursor: pointer;">
             <div class="card-icon">🔧</div>
             <h3>Auto Fixing</h3>
-            <p>اكتشاف وإصلاح الأخطاء تلقائياً</p>
+            <p>اكتشاف وإصلاح الأخطاء</p>
             <ul class="card-features">
               <li>اكتشاف ذكي</li>
               <li>شرح تفصيلي</li>
               <li>إصلاح فوري</li>
             </ul>
-          </a>
-          <a href="/ui-generation.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+          </div>
+          <div class="card" onclick="navigateTo('/ui-generation.html')" style="cursor: pointer;">
             <div class="card-icon">🎨</div>
             <h3>UI Generation</h3>
-            <p>تصميم واجهات احترافية جاهزة</p>
+            <p>تصميم واجهات احترافية</p>
             <ul class="card-features">
               <li>تصاميم مجانية</li>
-              <li>محسّنة للأداء</li>
+              <li>محسّنة</li>
               <li>متجاوبة</li>
             </ul>
-          </a>
-          <a href="/database-auto.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+          </div>
+          <div class="card" onclick="navigateTo('/database-auto.html')" style="cursor: pointer;">
             <div class="card-icon">🗄️</div>
             <h3>Database Auto</h3>
-            <p>إنشاء قواعد بيانات احترافية</p>
+            <p>إنشاء قواعد بيانات ذكية</p>
             <ul class="card-features">
               <li>تصميم ذكي</li>
               <li>تحسين تلقائي</li>
               <li>أمان عالي</li>
             </ul>
-          </a>
-          <a href="/deployment.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+          </div>
+          <div class="card" onclick="navigateTo('/deployment.html')" style="cursor: pointer;">
             <div class="card-icon">🚀</div>
             <h3>Deployment</h3>
             <p>نشر فوري على السحابة</p>
@@ -161,8 +174,8 @@
               <li>دعم عالمي</li>
               <li>SSL مجاني</li>
             </ul>
-          </a>
-          <a href="/marketplace.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+          </div>
+          <div class="card" onclick="navigateTo('/marketplace.html')" style="cursor: pointer;">
             <div class="card-icon">🏪</div>
             <h3>Marketplace</h3>
             <p>50+ مشروع جاهز</p>
@@ -171,23 +184,12 @@
               <li>مشاريع كاملة</li>
               <li>أكواد جاهزة</li>
             </ul>
-          </a>
+          </div>
         </div>
-      </div>
-
-      <div style="text-align: center; margin-top: 40px;">
-        <h2 style="color: var(--primary); margin-bottom: 20px;">ابدأ الآن</h2>
-        <button onclick="goToChat()" class="btn btn-primary" style="margin: 10px;">💬 دردشة ذكية</button>
-        <button onclick="goToCode()" class="btn btn-primary" style="margin: 10px;">💻 إنشاء كود</button>
-        <button onclick="goToMarketplace()" class="btn btn-primary" style="margin: 10px;">🏪 المتجر</button>
       </div>
     </main>
   </div>
 
-  <script>
-    function goToChat() { window.location.href = '/chat.html'; }
-    function goToCode() { window.location.href = '/code-generation.html'; }
-    function goToMarketplace() { window.location.href = '/marketplace.html'; }
-  </script>
+  <script src="/app.js"></script>
 </body>
 </html>

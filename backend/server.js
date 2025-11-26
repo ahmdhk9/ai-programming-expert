@@ -26,7 +26,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Cache Control
+// Cache Control & Security Headers
 app.use((req, res, next) => {
   res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.header('Pragma', 'no-cache');
@@ -34,11 +34,17 @@ app.use((req, res, next) => {
   res.header('X-Content-Type-Options', 'nosniff');
   res.header('X-Frame-Options', 'SAMEORIGIN');
   res.header('X-XSS-Protection', '1; mode=block');
+  res.header('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.header('Permissions-Policy', 'geolocation=()');
   next();
 });
 
-// Static Files
-app.use(express.static(path.join(__dirname, '../public')));
+// Static Files with versioning
+app.use(express.static(path.join(__dirname, '../public'), {
+  maxAge: '1h',
+  etag: true,
+  lastModified: true
+}));
 
 // API Routes
 
@@ -48,7 +54,8 @@ app.get('/api/health', (req, res) => {
     status: 'healthy',
     platform: 'AI Programming Expert v4.0',
     timestamp: new Date().toISOString(),
-    uptime: process.uptime()
+    uptime: Math.round(process.uptime()),
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
@@ -76,7 +83,7 @@ app.get('/api/features', (req, res) => {
 app.get('/api/pages', (req, res) => {
   res.json({
     success: true,
-    total: 23,
+    total: 9,
     pages: [
       { id: 1, name: 'Home', route: '/', status: 'active' },
       { id: 2, name: 'Chat', route: '/chat.html', status: 'active' },
@@ -86,8 +93,7 @@ app.get('/api/pages', (req, res) => {
       { id: 6, name: 'Database Auto', route: '/database-auto.html', status: 'active' },
       { id: 7, name: 'Deployment', route: '/deployment.html', status: 'active' },
       { id: 8, name: 'Marketplace', route: '/marketplace.html', status: 'active' },
-      { id: 9, name: 'Admin Panel', route: '/admin.html', status: 'active' },
-      { id: 10, name: 'Features List', route: '/features', status: 'active' }
+      { id: 9, name: 'Admin Panel', route: '/admin.html', status: 'active' }
     ]
   });
 });
@@ -178,5 +184,6 @@ app.listen(PORT, () => {
   console.log(`📍 Server running on port ${PORT}`);
   console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`✅ All 9 pages loaded and ready`);
+  console.log(`🎨 Design: Fully responsive and animated`);
   console.log(`🔗 Visit: http://localhost:${PORT}`);
 });

@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Database Auto</title><link rel="stylesheet" href="/style.css"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Database Auto</title><link rel="stylesheet" href="/style.css"></head>
 <body><div class="container"><aside class="sidebar">
-  <div class="logo"><h2>🚀 AI Expert</h2></div>
-  <nav><ul class="nav-menu"><li><a href="/" class="nav-link">🏠 الرئيسية</a></li>
-    <li><a href="/database-auto.html" class="nav-link active">🗄️ Database</a></li></ul></nav></aside>
-  <main class="main-content"><div class="header"><h1>🗄️ قاعدة البيانات التلقائية</h1>
-    <p>إنشاء قواعد بيانات احترافية فوراً</p></div>
-    <div class="cards-grid"><div class="card"><h3>إنشاء تلقائي</h3></div>
-      <div class="card"><h3>تحسين ذكي</h3></div></div></main></div></body></html>
+  <div class="logo"><h2>🚀 AI Expert</h2><p>منصة ذكية</p></div>
+  <nav><ul class="nav-menu"><div class="nav-section"><div class="nav-section-title">الرئيسية</div>
+    <li class="nav-item"><a href="/" class="nav-link">🏠 الرئيسية</a></li></div>
+    <div class="nav-section"><div class="nav-section-title">الميزات</div>
+    <li class="nav-item"><a href="/database-auto.html" class="nav-link active">🗄️ Database</a></li></div></ul></nav></aside>
+  <main class="main-content"><div class="header"><h1>🗄️ قاعدة البيانات الذكية</h1><p>إنشاء قواعد بيانات احترافية تلقائياً</p></div>
+  <div class="cards-grid"><div class="card" onclick="scrollToForm()"><div class="card-icon">⚡</div><h3>إنشاء تلقائي</h3><p>إنشاء الهيكل بذكاء</p></div>
+    <div class="card" onclick="scrollToForm()"><div class="card-icon">🎯</div><h3>تحسين ذكي</h3><p>تحسين الأداء تلقائياً</p></div></div>
+  <div style="background:white;padding:30px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.1);border:1px solid #e2e8f0;">
+    <form onsubmit="createDB(event)"><div class="form-group"><label>اسم قاعدة البيانات:</label><input type="text" placeholder="مثال: users_db" required></div>
+    <button type="submit" class="btn btn-primary btn-block">🗄️ إنشاء</button></form><div id="db-result"></div></div></main></div>
+  <script src="/app.js"></script><script>function scrollToForm(){document.querySelector('form').scrollIntoView({behavior:'smooth'});}
+  function createDB(e){e.preventDefault();document.getElementById('db-result').innerHTML='<div class="alert alert-success" style="margin-top:20px;">✅ تم إنشاء قاعدة البيانات!</div>';}</script>
+</body></html>

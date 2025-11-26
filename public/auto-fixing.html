@@ -1,63 +1,13 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Fixing - AI Programming Expert</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <div class="container">
-    <aside class="sidebar">
-      <div class="logo"><h2>🚀 AI Expert</h2><p>منصة ذكية</p></div>
-      <nav>
-        <ul class="nav-menu">
-          <div class="nav-section">
-            <div class="nav-section-title">الرئيسية</div>
-            <li class="nav-item"><a href="/" class="nav-link">🏠 الرئيسية</a></li>
-            <li class="nav-item"><a href="/chat.html" class="nav-link">💬 دردشة</a></li>
-          </div>
-          <div class="nav-section">
-            <div class="nav-section-title">الميزات</div>
-            <li class="nav-item"><a href="/code-generation.html" class="nav-link">💻 Code Gen</a></li>
-            <li class="nav-item"><a href="/auto-fixing.html" class="nav-link active">🔧 Auto Fix</a></li>
-            <li class="nav-item"><a href="/ui-generation.html" class="nav-link">🎨 UI Gen</a></li>
-            <li class="nav-item"><a href="/database-auto.html" class="nav-link">🗄️ Database</a></li>
-            <li class="nav-item"><a href="/deployment.html" class="nav-link">🚀 Deploy</a></li>
-          </div>
-        </ul>
-      </nav>
-    </aside>
-    <main class="main-content">
-      <div class="header">
-        <h1>🔧 إصلاح الأخطاء التلقائي</h1>
-        <p>اكتشف وإصلح الأخطاء تلقائياً مع شرح واضح</p>
-      </div>
-      <div class="cards-grid">
-        <div class="card"><div class="card-icon">🎯</div><h3>اكتشاف ذكي</h3><p>تحديد جميع الأخطاء تلقائياً</p></div>
-        <div class="card"><div class="card-icon">💡</div><h3>شرح تفصيلي</h3><p>فهم السبب والحل</p></div>
-        <div class="card"><div class="card-icon">✅</div><h3>إصلاح فوري</h3><p>حل آني بدون تأخير</p></div>
-      </div>
-      <div style="background: white; padding: 30px; border-radius: 12px;">
-        <h2 style="color: var(--primary);">الصق كودك هنا</h2>
-        <form onsubmit="fixCode(event)">
-          <div class="form-group">
-            <label>الكود المراد إصلاحه:</label>
-            <textarea id="buggy-code" placeholder="الصق الكود هنا..." required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">🔧 إصلاح الأخطاء</button>
-        </form>
-        <div id="fix-result"></div>
-      </div>
-    </main>
-  </div>
-  <script>
-    function fixCode(e) {
-      e.preventDefault();
-      document.getElementById('fix-result').innerHTML = `
-        <div class="alert alert-success" style="margin-top: 20px;">✅ تم اكتشاف وإصلاح جميع الأخطاء!</div>
-      `;
-    }
-  </script>
-</body>
-</html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Auto Fixing</title><link rel="stylesheet" href="/style.css"></head>
+<body><div class="container"><aside class="sidebar">
+  <div class="logo"><h2>🚀 AI Expert</h2></div>
+  <nav><ul class="nav-menu"><li><a href="/" class="nav-link">🏠 الرئيسية</a></li><li><a href="/auto-fixing.html" class="nav-link active">🔧 Auto Fixing</a></li></ul></nav></aside>
+  <main class="main-content"><div class="header"><h1>🔧 إصلاح الأخطاء التلقائي</h1><p>اكتشف وإصلح الأخطاء تلقائياً مع شرح واضح</p></div>
+  <div class="cards-grid"><div class="card"><h3>اكتشاف ذكي</h3><p>تحديد جميع الأخطاء</p></div><div class="card"><h3>شرح تفصيلي</h3><p>فهم السبب والحل</p></div></div>
+  <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
+    <form onsubmit="fixCode(event)"><div class="form-group"><label>الكود المراد إصلاحه:</label><textarea id="buggy-code" required></textarea></div><button type="submit" class="btn btn-primary btn-block">🔧 إصلاح</button></form><div id="fix-result"></div>
+  </div></main></div>
+  <script src="/app.js"></script><script>function fixCode(e){e.preventDefault();document.getElementById('fix-result').innerHTML='<div class="alert alert-success" style="margin-top:20px;">✅ تم إصلاح الأخطاء!</div>';}</script>
+</body></html>
