@@ -771,3 +771,34 @@ app.get('/api/dev/recommendations', (req, res) => {
 
 console.log('✅ Ideas Vault loaded');
 
+
+const masterControl = require('./developer-master-control');
+
+// Master Control - Execute Any Command
+app.post('/api/dev/execute-command', (req, res) => {
+  const { command } = req.body;
+  const result = masterControl.executeCommand(command);
+  res.json(result);
+});
+
+// Master Control - Full Status
+app.get('/api/dev/master-status', (req, res) => {
+  res.json(masterControl.getFullStatus());
+});
+
+// Master Control - Edit File
+app.post('/api/dev/edit-file', (req, res) => {
+  const { projectId, path, content } = req.body;
+  const result = masterControl.editFile(projectId, path, content);
+  res.json(result);
+});
+
+// Master Control - Create Project
+app.post('/api/dev/create-project', (req, res) => {
+  const { name, config } = req.body;
+  const result = masterControl.createProject(name, config);
+  res.json(result);
+});
+
+console.log('✅ Developer Master Control loaded');
+
