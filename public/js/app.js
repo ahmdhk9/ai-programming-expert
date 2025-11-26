@@ -142,21 +142,53 @@ async function sendChatMessage() {
   
   loadingDiv.style.display = 'block';
   
-  // Simulate AI thinking
-  setTimeout(() => {
+  try {
+    // Call real Groq API via backend
+    const response = await fetch('/api/ai/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message })
+    });
+    
+    const data = await response.json();
+    
     loadingDiv.style.display = 'none';
     
-    const aiResponse = generateAIResponse(message);
+    if (data.success) {
+      const aiResponse = data.response;
+      
+      const aiMessageEl = document.createElement('div');
+      aiMessageEl.className = 'message ai-message';
+      aiMessageEl.innerHTML = `
+        <span class="message-icon">🤖</span>
+        <div class="message-content">${aiResponse}</div>
+      `;
+      messagesDiv.appendChild(aiMessageEl);
+    } else {
+      const errorEl = document.createElement('div');
+      errorEl.className = 'message ai-message';
+      errorEl.innerHTML = `
+        <span class="message-icon">⚠️</span>
+        <div class="message-content">عذراً، حدث خطأ: ${data.error}</div>
+      `;
+      messagesDiv.appendChild(errorEl);
+    }
     
-    const aiMessageEl = document.createElement('div');
-    aiMessageEl.className = 'message ai-message';
-    aiMessageEl.innerHTML = `
-      <span class="message-icon">🤖</span>
-      <div class="message-content">${aiResponse}</div>
-    `;
-    messagesDiv.appendChild(aiMessageEl);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }, 500);
+  } catch (error) {
+    loadingDiv.style.display = 'none';
+    
+    const errorEl = document.createElement('div');
+    errorEl.className = 'message ai-message';
+    errorEl.innerHTML = `
+      <span class="message-icon">⚠️</span>
+      <div class="message-content">خطأ في الاتصال: ${error.message}</div>
+    `;
+    messagesDiv.appendChild(errorEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
 }
 
 // Initialize on page load

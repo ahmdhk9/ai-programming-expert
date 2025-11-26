@@ -1,12 +1,60 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const Groq = require('groq-sdk').default;
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
+
+// Initialize Groq client
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY
+});
+
+// AI Chat with Real Groq
+app.post('/api/ai/chat', async (req, res) => {
+  try {
+    const { message } = req.body;
+    
+    if (!message) {
+      return res.status(400).json({ error: 'رسالة مفقودة' });
+    }
+
+    const response = await groq.chat.completions.create({
+      messages: [
+        {
+          role: 'system',
+          content: 'أنت مساعد ذكي متخصص في البرمجة واللغات. تجيب باللغة العربية بطريقة واضحة ومختصرة ومفيدة. تركز على الإجابات العملية والأمثلة الحقيقية.'
+        },
+        {
+          role: 'user',
+          content: message
+        }
+      ],
+      model: 'llama-3.3-70b-versatile',
+      temperature: 0.7,
+      max_tokens: 1024,
+      top_p: 1
+    });
+
+    const aiResponse = response.choices[0].message.content;
+    
+    res.json({ 
+      success: true, 
+      response: aiResponse,
+      model: 'Llama 3.3 70B'
+    });
+  } catch (error) {
+    console.error('Groq API Error:', error);
+    res.status(500).json({ 
+      error: 'خطأ في الذكاء الصناعي',
+      details: error.message 
+    });
+  }
+});
 
 // API الذكي الموحد
 app.post('/api/ai/understand', (req, res) => {
@@ -124,8 +172,8 @@ function generateSuggestion(text) {
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
-    platform: 'AI Programming Expert v5.0 - Smart UX Edition',
-    ai_engine: 'unified',
+    platform: 'AI Programming Expert v5.0 - Real AI Edition',
+    ai_engine: 'Groq - Llama 3.3 70B',
     pages: 1,
     features: '60+',
     response_time: '< 100ms'
@@ -140,7 +188,12 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 منصة AI Programming Expert v5.0`);
-  console.log(`💡 نظام AI ذكي موحد يفهم اللغة البشرية`);
-  console.log(`🎯 تركيز على تجربة المستخدم المميزة`);
+  console.log(`💡 الذكاء الصناعي: Groq - Llama 3.3 70B (حقيقي وقوي!)`);
+  console.log(`🎯 تركيز على تجربة المستخدم المميزة والسلسة`);
   console.log(`📍 Server: http://localhost:${PORT}`);
+  if (process.env.GROQ_API_KEY) {
+    console.log(`✅ مفتاح Groq API متصل بنجاح`);
+  } else {
+    console.log(`⚠️  تحذير: لم يتم العثور على مفتاح Groq API`);
+  }
 });
