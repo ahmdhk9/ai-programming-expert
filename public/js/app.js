@@ -128,13 +128,13 @@ function handleChatKeypress(event) {
 }
 
 async function sendChatMessage() {
-  const input = document.getElementById('chat-input-full');
+  const input = document.getElementById('chat-input');
   const message = input.value.trim();
   
   if (!message) return;
   
-  const messagesDiv = document.getElementById('chat-messages-full');
-  const loadingDiv = document.getElementById('chat-loading-full');
+  const messagesDiv = document.getElementById('chat-messages');
+  const loadingDiv = document.getElementById('chat-loading');
   
   // Add user message
   const userMessageEl = document.createElement('div');
@@ -210,12 +210,8 @@ let voiceRecognition = null;
 let voiceIsListening = false;
 
 function startVoiceListening() {
-  console.log('🎤 فتح صفحة الصوت والبدء مباشرة...');
-  setTab('voice-chat-page');
-  
-  setTimeout(() => {
-    startListening();
-  }, 200);
+  console.log('🎤 بدء الاستماع...');
+  startListening();
 }
 
 function startListening() {
@@ -224,17 +220,12 @@ function startListening() {
     return;
   }
 
-  const listenBtn = document.getElementById('voice-listen-btn');
-  const listeningText = document.getElementById('listening-text');
-  const voiceTranscript = document.getElementById('voice-transcript');
-  const voiceChatLog = document.getElementById('voice-chat-log');
+  const input = document.getElementById('chat-input');
+  const messagesDiv = document.getElementById('chat-messages');
 
-  if (!listenBtn || !listeningText || !voiceTranscript || !voiceChatLog) return;
+  if (!input || !messagesDiv) return;
 
   voiceIsListening = true;
-  listenBtn.textContent = '🛑 استمع...';
-  listeningText.textContent = '🎤 يستمع إليك...';
-  listenBtn.onclick = stopVoiceListening;
 
   voiceRecognition = new SpeechRecognition();
   voiceRecognition.lang = 'ar-SA';
@@ -253,24 +244,28 @@ function startListening() {
         interim = transcript;
       }
     }
-    voiceTranscript.innerHTML = `<p>${finalText || interim}</p>`;
+    input.value = finalText || interim;
   };
 
   voiceRecognition.onend = async () => {
     voiceIsListening = false;
-    listenBtn.textContent = '🎤 استمع';
-    listenBtn.onclick = startVoiceListening;
 
     if (!finalText.trim()) {
-      listeningText.textContent = '⚠️ لم أسمع شيء';
       return;
     }
 
     // إضافة رسالة المستخدم
-    voiceChatLog.innerHTML += `<div class="voice-message user"><strong>أنت:</strong> ${finalText}</div>`;
-    listeningText.textContent = '⏳ معالجة...';
-    voiceTranscript.innerHTML = '<p style="color: var(--primary);">جاري الرد...</p>';
+    const userMessageEl = document.createElement('div');
+    userMessageEl.className = 'message user-message';
+    userMessageEl.innerHTML = `
+      <span class="message-icon">👤</span>
+      <div class="message-content">${finalText}</div>
+    `;
+    messagesDiv.appendChild(userMessageEl);
+    input.value = '';
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
+    // إرسال الرسالة
     try {
       const res = await fetch('/api/ai/chat', {
         method: 'POST',
@@ -280,21 +275,23 @@ function startListening() {
 
       const data = await res.json();
       if (data.success) {
-        voiceChatLog.innerHTML += `<div class="voice-message ai"><strong>الذكي:</strong> ${data.response}</div>`;
-        voiceTranscript.innerHTML = `<p>${data.response}</p>`;
-        listeningText.textContent = '🔊 رد صوتي...';
-        
-        // تشغيل الرد الصوتي
-        playVoiceResponse(data.response);
+        const aiMessageEl = document.createElement('div');
+        aiMessageEl.className = 'message ai-message';
+        aiMessageEl.innerHTML = `
+          <span class="message-icon">🤖</span>
+          <div class="message-content">${data.response}</div>
+        `;
+        messagesDiv.appendChild(aiMessageEl);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
       }
     } catch (err) {
-      listeningText.textContent = '❌ خطأ في الاتصال';
+      console.error('خطأ:', err);
     }
   };
 
   voiceRecognition.onerror = (e) => {
     console.error('خطأ الصوت:', e.error);
-    listeningText.textContent = `❌ خطأ: ${e.error}`;
+    voiceIsListening = false;
   };
 
   voiceRecognition.start();
