@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>🤖 AI Programming Expert Platform</title>
   <link rel="stylesheet" href="/style.css">
+  <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
 </head>
 <body>
 
@@ -314,6 +315,11 @@
           <div class="message-content">مرحباً! 👋 أنا مساعدك الذكي المتخصص في البرمجة. اسألني عن أي موضوع برمجي وسأساعدك بردود حقيقية ومفيدة! 🚀</div>
         </div>
       </div>
+      <div class="chat-controls">
+        <div class="audio-visualizer" id="audio-visualizer">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+      </div>
       <div class="chat-input-full">
         <input type="text" id="chat-input-full" class="chat-input-full-field" placeholder="اسأل عن أي شيء برمجي..." onkeypress="handleChatKeypress(event)">
         <button class="chat-voice-btn" id="voice-btn" onclick="toggleVoiceInput()" title="تحدث">🎤</button>
@@ -321,6 +327,26 @@
       </div>
       <div class="chat-loading-full" id="chat-loading-full" style="display: none;">
         <span>⏳ جاري التفكير...</span>
+      </div>
+      <div class="voice-control-panel" id="voice-control-panel" style="display: none;">
+        <div class="control-item">
+          <label>السرعة:</label>
+          <input type="range" id="voice-rate" min="0.5" max="2" step="0.1" value="1.1" onchange="updateVoiceSettings()">
+          <span id="rate-value">1.1x</span>
+        </div>
+        <div class="control-item">
+          <label>النبرة:</label>
+          <input type="range" id="voice-pitch" min="0.5" max="2" step="0.1" value="0.95" onchange="updateVoiceSettings()">
+          <span id="pitch-value">0.95</span>
+        </div>
+        <div class="control-item">
+          <label>الصوت:</label>
+          <select id="voice-select" onchange="updateVoiceSettings()">
+            <option value="Arabic Female">أنثى عربية</option>
+            <option value="Arabic Male">ذكر عربي</option>
+            <option value="Google Arabic">Google عربي</option>
+          </select>
+        </div>
       </div>
     </div>
 

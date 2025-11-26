@@ -209,79 +209,117 @@ function toggleVoiceInput() {
 
   const btn = document.getElementById('voice-btn');
   const input = document.getElementById('chat-input-full');
+  const controlPanel = document.getElementById('voice-control-panel');
   
   if (isListening) {
     isListening = false;
     btn.classList.remove('listening');
+    controlPanel.style.display = 'none';
     return;
   }
 
+  // عرض لوحة التحكم
+  controlPanel.style.display = 'block';
+  
   isListening = true;
   btn.classList.add('listening');
-  btn.textContent = '🎤 يستمع...';
+  btn.textContent = '🎤 اسمع...';
 
   const recognition = new SpeechRecognition();
   recognition.lang = 'ar-SA';
-  recognition.continuous = false;
-  recognition.interimResults = false;
+  recognition.continuous = true;
+  recognition.interimResults = true;
 
   recognition.onstart = () => {
     btn.classList.add('listening');
+    document.getElementById('audio-visualizer').classList.add('active');
   };
 
   recognition.onresult = (event) => {
-    let transcript = '';
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      transcript += event.results[i][0].transcript;
-    }
-    input.value = transcript;
-    btn.classList.remove('listening');
-    btn.textContent = '🎤';
-    isListening = false;
+    let interimTranscript = '';
+    let finalTranscript = '';
     
-    // إرسال الرسالة تلقائياً
-    setTimeout(() => sendChatMessage(), 300);
-  };
-
-  recognition.onerror = () => {
-    btn.classList.remove('listening');
-    btn.textContent = '🎤';
-    isListening = false;
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        finalTranscript += transcript + ' ';
+      } else {
+        interimTranscript += transcript;
+      }
+    }
+    
+    input.value = finalTranscript || interimTranscript;
   };
 
   recognition.onend = () => {
     btn.classList.remove('listening');
     btn.textContent = '🎤';
+    document.getElementById('audio-visualizer').classList.remove('active');
+    isListening = false;
+    controlPanel.style.display = 'none';
+    
+    // إرسال الرسالة تلقائياً
+    if (input.value.trim()) {
+      setTimeout(() => sendChatMessage(), 300);
+    }
+  };
+
+  recognition.onerror = () => {
+    btn.classList.remove('listening');
+    btn.textContent = '🎤';
+    document.getElementById('audio-visualizer').classList.remove('active');
     isListening = false;
   };
 
   recognition.start();
 }
 
-// Text-to-Speech - Natural & Fast
+// 🎙️ Advanced Text-to-Speech with Premium Quality
+let voiceSettings = {
+  rate: 1.1,
+  pitch: 0.95,
+  voice: 'Arabic Female'
+};
+
+function updateVoiceSettings() {
+  voiceSettings.rate = parseFloat(document.getElementById('voice-rate')?.value || 1.1);
+  voiceSettings.pitch = parseFloat(document.getElementById('voice-pitch')?.value || 0.95);
+  voiceSettings.voice = document.getElementById('voice-select')?.value || 'Arabic Female';
+  
+  document.getElementById('rate-value').textContent = voiceSettings.rate + 'x';
+  document.getElementById('pitch-value').textContent = voiceSettings.pitch.toFixed(2);
+}
+
 function speakText(text) {
-  if (!('speechSynthesis' in window)) {
-    console.log('التحدث الصوتي غير مدعوم');
+  const btn = document.getElementById('voice-btn');
+  const visualizer = document.getElementById('audio-visualizer');
+  
+  if (!responsiveVoice) {
+    console.log('Advanced voice service initializing...');
     return;
   }
 
   // إيقاف أي كلام قديم
-  window.speechSynthesis.cancel();
+  responsiveVoice.cancel();
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'ar-SA';
-  utterance.rate = 1.1; // أسرع قليلاً للطبيعية
-  utterance.pitch = 0.95; // أخفض قليلاً للطبيعية
-  utterance.volume = 1;
+  // تحديث الواجهة
+  btn.classList.add('speaking');
+  visualizer.classList.add('active');
 
-  // حدد أفضل صوت عربي متاح
-  const voices = window.speechSynthesis.getVoices();
-  const arabicVoice = voices.find(v => v.lang.includes('ar')) || voices[0];
-  if (arabicVoice) {
-    utterance.voice = arabicVoice;
-  }
-
-  window.speechSynthesis.speak(utterance);
+  // استخدام مكتبة عالية الجودة
+  responsiveVoice.speak(text, voiceSettings.voice, {
+    rate: voiceSettings.rate,
+    pitch: voiceSettings.pitch,
+    volume: 1,
+    onstart: () => {
+      btn.classList.add('speaking');
+      visualizer.classList.add('active');
+    },
+    onend: () => {
+      btn.classList.remove('speaking');
+      visualizer.classList.remove('active');
+    }
+  });
 }
 
 // Initialize on page load
