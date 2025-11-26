@@ -249,3 +249,22 @@ router.post('/unlimited/withdraw', (req, res) => {
   res.json({ success: true, withdrawal });
 });
 
+
+const continuous = require('../services/continuous-income');
+
+router.get('/continuous/status', (req, res) => {
+  res.json(continuous.getCurrentStatus());
+});
+
+router.get('/continuous/sources', (req, res) => {
+  res.json(continuous.getSourcesList());
+});
+
+router.get('/continuous/current', async (req, res) => {
+  const sources = await continuous.getAllSources();
+  res.json({ 
+    sources,
+    total: sources.reduce((s, x) => s + parseFloat(x.earning), 0).toFixed(2)
+  });
+});
+
