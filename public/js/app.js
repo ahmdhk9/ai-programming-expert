@@ -17,6 +17,20 @@ let currentUsername = null;
 let isConnected = false;
 let reconnectAttempts = 0;
 let socialRecognitionInstance = null;
+let sessionStartTime = null;
+let messageCount = 0;
+const pinnedMessages = new Map();
+const emojis = ['😀', '😂', '😍', '🔥', '💯', '👍', '✨', '🎉', '💪', '🚀', '👏', '🎊', '💖', '👌', '😎', '🙌'];
+
+// Session timer
+setInterval(() => {
+  if (sessionStartTime && document.getElementById('profile-time')) {
+    const duration = Math.floor((Date.now() - sessionStartTime) / 1000);
+    const mins = Math.floor(duration / 60);
+    const secs = duration % 60;
+    document.getElementById('profile-time').textContent = `<strong>المدة:</strong> ${mins}د ${secs}ث`;
+  }
+}, 1000);
 
 // Socket Events
 socket.on('connect', () => {
@@ -59,6 +73,8 @@ socket.on('user-found', (data) => {
   connectedUserId = data.connectedUserId;
   connectedUserName = data.username;
   currentSessionId = data.sessionId;
+  sessionStartTime = Date.now();
+  messageCount = 0;
 
   document.getElementById('social-loading').style.display = 'none';
   document.getElementById('social-chat').style.display = 'flex';
@@ -67,7 +83,16 @@ socket.on('user-found', (data) => {
   document.getElementById('social-input').value = '';
   document.getElementById('social-input').focus();
 
-  showNotification(`✅ متصل مع ${connectedUserName} - جلسة: ${data.sessionId.substr(5, 5)}...`, 'success');
+  // Update profile
+  document.getElementById('profile-name').textContent = connectedUserName;
+  document.getElementById('profile-session').textContent = data.sessionId;
+  document.getElementById('profile-msg-count').textContent = '0';
+
+  // Initialize emoji panel
+  const emojiGrid = document.getElementById('emoji-grid');
+  emojiGrid.innerHTML = emojis.map(e => `<button onclick="insertEmoji('${e}')">${e}</button>`).join('');
+
+  showNotification(`✅ متصل مع ${connectedUserName}`, 'success');
 });
 
 socket.on('receive-message', (msgRecord) => {
@@ -301,6 +326,85 @@ function stopSocialVoiceChat() {
   }
 }
 
+function toggleUserProfile() {
+  const panel = document.getElementById('profile-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleEmojiPanel() {
+  const panel = document.getElementById('emoji-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleQuickReactions() {
+  const panel = document.getElementById('quick-reactions');
+  panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+}
+
+function toggleSearchMessages() {
+  const bar = document.getElementById('search-bar');
+  bar.style.display = bar.style.display === 'none' ? 'block' : 'none';
+  if (bar.style.display === 'block') {
+    document.getElementById('search-input').focus();
+  }
+}
+
+function insertEmoji(emoji) {
+  const input = document.getElementById('social-input');
+  input.value += emoji;
+  input.focus();
+}
+
+function sendQuickReaction(reaction) {
+  const input = document.getElementById('social-input');
+  input.value = reaction;
+  sendSocialMessage();
+  document.getElementById('quick-reactions').style.display = 'none';
+}
+
+function searchMessages(query) {
+  const messagesDiv = document.getElementById('social-messages');
+  const messages = messagesDiv.querySelectorAll('.social-message');
+  const resultsDiv = document.getElementById('search-results');
+  
+  if (!query.trim()) {
+    resultsDiv.innerHTML = '';
+    messages.forEach(m => m.style.opacity = '1');
+    return;
+  }
+
+  resultsDiv.innerHTML = '';
+  let found = 0;
+
+  messages.forEach(msg => {
+    const content = msg.textContent.toLowerCase();
+    if (content.includes(query.toLowerCase())) {
+      msg.style.opacity = '1';
+      found++;
+      const snippet = msg.textContent.substr(0, 50) + '...';
+      const result = document.createElement('div');
+      result.className = 'search-result';
+      result.textContent = snippet;
+      result.onclick = () => msg.scrollIntoView({ behavior: 'smooth' });
+      resultsDiv.appendChild(result);
+    } else {
+      msg.style.opacity = '0.3';
+    }
+  });
+
+  if (found === 0) {
+    resultsDiv.innerHTML = '<div class="search-result">لا توجد نتائج</div>';
+  }
+}
+
+function pinMessage(msgId) {
+  const msg = document.getElementById(`msg-${msgId}`);
+  if (msg) {
+    pinnedMessages.set(msgId, msg.textContent);
+    showNotification('📌 تم تثبيت الرسالة', 'success');
+  }
+}
+
 function addSocialMessage(text, type, fromUser = null, msgId = null) {
   const messagesDiv = document.getElementById('social-messages');
   if (!messagesDiv) return;
@@ -332,8 +436,18 @@ function addSocialMessage(text, type, fromUser = null, msgId = null) {
   }
   
   messageEl.style.animation = 'slideIn 0.3s ease';
+  messageEl.onmouseenter = () => {
+    const actions = document.createElement('span');
+    actions.style.cssText = 'cursor: pointer; color: var(--primary); font-size: 11px;';
+    actions.textContent = ' 📌';
+    actions.onclick = () => pinMessage(msgId);
+  };
   messagesDiv.appendChild(messageEl);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  messageCount++;
+  if (document.getElementById('profile-msg-count')) {
+    document.getElementById('profile-msg-count').textContent = messageCount;
+  }
 }
 
 function updateMessageStatus(msgId, status) {
