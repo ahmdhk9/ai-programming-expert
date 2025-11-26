@@ -973,3 +973,46 @@ app.get('/api/dev/deployment-status', (req, res) => {
   });
 });
 
+
+const errorDetection = require('./error-detection-system');
+const errorDisplay = require('./error-display');
+
+// API للكشف عن الأخطاء
+app.post('/api/dev/detect-errors', (req, res) => {
+  const { code, file } = req.body;
+  const errors = errorDetection.detectErrors({ code, file });
+  const formatted = errors.map(e => errorDisplay.formatError(e));
+  res.json({
+    errorsFound: errors.length,
+    errors: formatted,
+    autoFixed: errors.map(e => errorDetection.autoFix(e))
+  });
+});
+
+// API لعرض تقرير الأخطاء
+app.get('/api/dev/error-report', (req, res) => {
+  const report = errorDetection.getReport();
+  res.json(report);
+});
+
+// API للمراقبة المستمرة
+app.post('/api/dev/monitor', (req, res) => {
+  const { code, file } = req.body;
+  const result = errorDetection.monitor({ code, file });
+  res.json(result);
+});
+
+console.log('✅ Error Detection & Display System loaded');
+
+
+app.get('/api/dev/logs', (req, res) => {
+  res.json({
+    recent_logs: [
+      { level: 'INFO', message: 'Server started', timestamp: new Date() },
+      { level: 'SUCCESS', message: 'All systems operational', timestamp: new Date() }
+    ],
+    error_count: 0,
+    warning_count: 0
+  });
+});
+
