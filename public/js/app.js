@@ -322,10 +322,12 @@ function speakText(text) {
   });
 }
 
-// 📱 PWA Installation Handler
+// 📱 PWA Installation Handler - Advanced
 let deferredPrompt;
 const installBtn = document.getElementById('install-btn');
+let isAppInstalled = false;
 
+// Check if app is already installed
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
@@ -335,24 +337,62 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 window.addEventListener('appinstalled', () => {
   console.log('✅ App installed successfully!');
+  isAppInstalled = true;
   installBtn.classList.add('hidden');
   deferredPrompt = null;
-  showInstallMessage('تم تنصيب التطبيق بنجاح! ✅');
+  showInstallMessage('تم تنصيب التطبيق بنجاح! يمكنك الآن فتحه من قائمة التطبيقات 📱✅');
 });
+
+// Check if PWA is running as installed app
+if (window.matchMedia('(display-mode: standalone)').matches) {
+  isAppInstalled = true;
+  installBtn.classList.add('hidden');
+  console.log('✅ App is running as installed PWA');
+}
 
 function installApp() {
   if (deferredPrompt) {
+    // Native install prompt
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === 'accepted') {
         console.log('✅ User accepted PWA installation');
+        showInstallMessage('🎉 جاري التنصيب... سيظهر التطبيق في قائمة تطبيقاتك قريباً!');
       }
       deferredPrompt = null;
       installBtn.classList.add('hidden');
     });
   } else {
-    // Fallback for browsers that don't support beforeinstallprompt
-    showInstallMessage('جاري تنصيب التطبيق... يرجى اتباع تعليمات المتصفح 📱');
+    // Manual install instructions
+    showManualInstallGuide();
+  }
+}
+
+function showManualInstallGuide() {
+  const messagesDiv = document.getElementById('chat-messages-full');
+  if (messagesDiv) {
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const guide = isIos ? 
+      `<strong>📱 iOS: تنصيب التطبيق</strong><br>
+1. اضغط على زر المشاركة (Share) في أسفل المتصفح
+2. اختر "إضافة إلى الشاشة الرئيسية" (Add to Home Screen)
+3. اختر الاسم وانقر على "إضافة"
+<br>✅ تم!` 
+      : 
+      `<strong>📱 Android/Chrome: تنصيب التطبيق</strong><br>
+1. اضغط على قائمة المتصفح (⋮) في الأعلى
+2. اختر "تثبيت التطبيق" (Install app)
+3. انقر "تثبيت" (Install)
+<br>✅ سيظهر التطبيق في قائمة تطبيقاتك!`;
+
+    const msgEl = document.createElement('div');
+    msgEl.className = 'message ai-message';
+    msgEl.innerHTML = `
+      <span class="message-icon">📱</span>
+      <div class="message-content">${guide}</div>
+    `;
+    messagesDiv.appendChild(msgEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
 }
 
@@ -393,8 +433,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
-  // Hide install button initially
-  installBtn.classList.add('hidden');
+  // Show install button if not already installed
+  if (!isAppInstalled) {
+    // Always show the button for manual installation
+    setTimeout(() => {
+      if (!deferredPrompt) {
+        installBtn.classList.remove('hidden');
+      }
+    }, 2000);
+  } else {
+    installBtn.classList.add('hidden');
+  }
   
   console.log('✅ Platform initialized successfully');
   console.log('🤖 AI Programming Expert Platform v5.0');
@@ -402,4 +451,5 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('🎤 Voice input enabled!');
   console.log('🔊 Text-to-Speech ready!');
   console.log('📱 PWA ready for installation!');
+  console.log('⬇️ زر التنصيب متاح - يمكنك تثبيت التطبيق على جهازك!');
 });
