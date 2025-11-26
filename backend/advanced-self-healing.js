@@ -160,7 +160,9 @@ class AdvancedSelfHealing {
     setInterval(() => {
       const predictions = this.predictiveDetection();
       
-      Object.entries(predictions).forEach(([key, value]: any) => {
+      Object.entries(predictions).forEach(entry => {
+        const key = entry[0];
+        const value = entry[1];
         if (value.risk === 'high') {
           this.applyAutoFix({ type: key });
         }
