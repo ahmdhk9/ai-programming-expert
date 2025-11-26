@@ -843,3 +843,42 @@ app.post('/api/dev/generate-config', (req, res) => {
 
 console.log('✅ Deployment Manager loaded');
 
+
+const advancedContent = require('./advanced-content-creator');
+const storageAdvisor = require('./storage-advisor');
+const selfHealing = require('./advanced-healing');
+
+app.post('/api/create-movie', (req, res) => {
+  const movie = advancedContent.createMovieProject(req.body);
+  res.json(movie);
+});
+
+app.post('/api/dubbing', (req, res) => {
+  const result = advancedContent.dubbing(req.body);
+  res.json(result);
+});
+
+app.post('/api/translate', (req, res) => {
+  const result = advancedContent.translate(req.body.content, req.body.languages);
+  res.json(result);
+});
+
+app.get('/api/storage-analysis', (req, res) => {
+  res.json(storageAdvisor.analyzeStorage());
+});
+
+app.post('/api/storage-optimize', (req, res) => {
+  res.json(storageAdvisor.optimizeStorage());
+});
+
+console.log('✅ Advanced Content Creator, Storage Advisor, and Self-Healing loaded');
+
+
+const finalActivation = require('./final-activation');
+
+app.get('/api/system-status', (req, res) => {
+  res.json(finalActivation.getSystemStatus());
+});
+
+console.log('✅ Platform Fully Activated!');
+
