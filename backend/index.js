@@ -1054,3 +1054,29 @@ app.post('/api/dev/quick-action/:action', (req, res) => {
   res.json(actions[action as keyof typeof actions] || { error: 'Unknown action' });
 });
 
+
+const generator = require('./dynamic-generator');
+
+app.post('/api/dev/generate-app', (req, res) => {
+  const { type, theme, description } = req.body;
+  const app = generator.generateApp(type, theme, description);
+  res.json({
+    success: true,
+    app,
+    html: generator.generateHTML(app)
+  });
+});
+
+app.get('/api/dev/templates', (req, res) => {
+  res.json({
+    templates: [
+      { id: "website", name: "موقع ويب", icon: "🌐" },
+      { id: "dashboard", name: "لوحة تحكم", icon: "📊" },
+      { id: "ecommerce", name: "متجر", icon: "🛍️" },
+      { id: "app", name: "تطبيق", icon: "📱" },
+      { id: "portfolio", name: "محفظة", icon: "🎨" },
+      { id: "blog", name: "مدونة", icon: "📝" }
+    ]
+  });
+});
+
