@@ -416,6 +416,113 @@ function speakTextVoice(text) {
   }
 }
 
+// ========== SOCIAL CHAT SYSTEM ==========
+let currentSocialUser = null;
+let socialVoiceActive = false;
+let socialChatMessages = [];
+
+function connectToUser(userName) {
+  currentSocialUser = userName;
+  socialChatMessages = [];
+  document.getElementById('users-list').style.display = 'none';
+  document.getElementById('social-chat').style.display = 'flex';
+  document.getElementById('active-user-name').textContent = userName;
+  document.getElementById('social-messages').innerHTML = '';
+  document.getElementById('end-call-btn').style.display = 'none';
+}
+
+function closeSocialChat() {
+  currentSocialUser = null;
+  document.getElementById('users-list').style.display = 'block';
+  document.getElementById('social-chat').style.display = 'none';
+  endSocialVoiceChat();
+}
+
+function startSocialVoiceChat() {
+  if (!SpeechRecognition) {
+    alert('الصوت غير مدعوم');
+    return;
+  }
+
+  socialVoiceActive = true;
+  document.getElementById('end-call-btn').style.display = 'flex';
+  const voiceBtn = document.querySelector('.voice-btn');
+  voiceBtn.textContent = '🎤 استمع...';
+  voiceBtn.onclick = null;
+
+  let finalText = '';
+  const socialRecognition = new SpeechRecognition();
+  socialRecognition.lang = 'ar-SA';
+  socialRecognition.continuous = false;
+  socialRecognition.interimResults = true;
+
+  socialRecognition.onresult = (e) => {
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) {
+        finalText = e.results[i][0].transcript;
+      }
+    }
+  };
+
+  socialRecognition.onend = () => {
+    if (finalText.trim()) {
+      addSocialMessage(finalText, 'user');
+      
+      // محاكاة رد المستخدم الآخر
+      setTimeout(() => {
+        const responses = ['ممتاز! 👍', 'أتفق معك 💯', 'فكرة رائعة! 🚀', 'صحيح تماماً! ✅', 'أحب ذلك! ❤️'];
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        addSocialMessage(randomResponse, 'other');
+        
+        // محاكاة الرد الصوتي
+        speakArabic(randomResponse);
+      }, 500);
+    }
+    
+    if (socialVoiceActive) {
+      setTimeout(() => {
+        socialRecognition.start();
+      }, 1000);
+    }
+  };
+
+  socialRecognition.start();
+}
+
+function endSocialVoiceChat() {
+  socialVoiceActive = false;
+  document.getElementById('end-call-btn').style.display = 'none';
+  const voiceBtn = document.querySelector('.voice-btn');
+  voiceBtn.textContent = '🎤 تحدث';
+  voiceBtn.onclick = startSocialVoiceChat;
+}
+
+function addSocialMessage(text, type) {
+  const messagesDiv = document.getElementById('social-messages');
+  const messageEl = document.createElement('div');
+  messageEl.className = `social-message ${type}`;
+  messageEl.textContent = text;
+  messagesDiv.appendChild(messageEl);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function speakArabic(text) {
+  if (!('speechSynthesis' in window)) return;
+  
+  window.speechSynthesis.cancel();
+  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@\>\<]/g, '').trim();
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = 'ar-SA';
+  utterance.volume = 1;
+  utterance.rate = 1.0;
+  
+  const voices = window.speechSynthesis.getVoices();
+  const arabicVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
+  if (arabicVoice) utterance.voice = arabicVoice;
+  
+  window.speechSynthesis.speak(utterance);
+}
+
 function toggleVoiceInput() {
   if (!SpeechRecognition) {
     alert('التحدث الصوتي غير مدعوم في متصفحك');
