@@ -92,3 +92,39 @@ router.get('/reports/monthly', (req, res) => {
   res.json(reporting.getMonthlyReport());
 });
 
+
+const walletConnector = require('../services/wallet-connector');
+
+// إضافة محفظة جديدة
+router.post('/wallets/add', (req, res) => {
+  const { email, address, type, name } = req.body;
+  const result = walletConnector.addWallet(email, address, type, name);
+  res.json(result);
+});
+
+// الحصول على محافظ المستخدم
+router.get('/wallets/:email', (req, res) => {
+  const wallets = walletConnector.getUserWallets(req.params.email);
+  res.json(wallets);
+});
+
+// تحويل أموال إلى محفظة
+router.post('/wallets/transfer', (req, res) => {
+  const { fromUserId, walletId, amount } = req.body;
+  walletConnector.transferToWallet(fromUserId, walletId, amount).then(result => {
+    res.json(result);
+  });
+});
+
+// سجل التحويلات
+router.get('/wallets/:walletId/transfers', (req, res) => {
+  const transfers = walletConnector.getTransferHistory(req.params.walletId);
+  res.json(transfers);
+});
+
+// فحص رصيد المحفظة
+router.get('/wallets/balance/:address/:type', async (req, res) => {
+  const balance = await walletConnector.checkBalance(req.params.address, req.params.type);
+  res.json(balance);
+});
+
