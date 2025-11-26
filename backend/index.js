@@ -802,3 +802,44 @@ app.post('/api/dev/create-project', (req, res) => {
 
 console.log('✅ Developer Master Control loaded');
 
+
+const deploymentManager = require('./deployment-manager');
+
+// Create Deployment
+app.post('/api/dev/create-deployment', (req, res) => {
+  const config = req.body;
+  const deployment = deploymentManager.createDeployment(config);
+  res.json(deployment);
+});
+
+// Start Migration
+app.post('/api/dev/start-migration', async (req, res) => {
+  const { deploymentId, projectConfig } = req.body;
+  const migration = await deploymentManager.startMigration(deploymentId, projectConfig);
+  res.json(migration);
+});
+
+// Get Server Options
+app.get('/api/dev/server-options', (req, res) => {
+  res.json(deploymentManager.getServerOptions());
+});
+
+// Get Deployment Status
+app.get('/api/dev/deployment/:id', (req, res) => {
+  const status = deploymentManager.getDeploymentStatus(req.params.id);
+  res.json(status);
+});
+
+// Get All Deployments
+app.get('/api/dev/deployments', (req, res) => {
+  res.json(deploymentManager.getAllDeployments());
+});
+
+// Generate Config
+app.post('/api/dev/generate-config', (req, res) => {
+  const config = deploymentManager.generateConfigFile(req.body);
+  res.json(config);
+});
+
+console.log('✅ Deployment Manager loaded');
+
