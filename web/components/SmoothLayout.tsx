@@ -10,18 +10,16 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
   }, []);
 
   const menuItems = [
+    { icon: "👤", label: "حسابي", href: "/account/dashboard" },
+    { icon: "💰", label: "سحب", href: "/account/withdraw" },
     { icon: "🎯", label: "التحكم", href: "/developer/unified-panel" },
     { icon: "📝", label: "محرر", href: "/dev/editor/myproject" },
-    { icon: "👁️", label: "معاينة", href: "/dev/preview/myproject" },
     { icon: "💎", label: "محفظة", href: "/dev/crypto-wallet" },
     { icon: "🪙", label: "عملات", href: "/dev/crypto-coins" },
     { icon: "🤖", label: "AI", href: "/dev/ai-developer" },
-    { icon: "💳", label: "دفع", href: "/dev/payment-integration" },
-    { icon: "🔄", label: "اشتراكات", href: "/dev/subscriptions-engine" },
     { icon: "📊", label: "تحليلات", href: "/dev/analytics-advanced" },
     { icon: "🚀", label: "أرباح", href: "/dev/smart-earnings" },
-    { icon: "🔒", label: "أمان", href: "/dev/security-dashboard" },
-    { icon: "🌐", label: "ويب", href: "/dev/web-analyzer" }
+    { icon: "🔒", label: "أمان", href: "/dev/security-dashboard" }
   ];
 
   if (!mounted) return null;

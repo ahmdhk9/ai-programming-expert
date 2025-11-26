@@ -1244,3 +1244,21 @@ app.get('/api/crypto/ai', (req, res) => {
     platforms: cryptoEngine.connectMultiplePlatforms()
   });
 });
+
+const accounts = require('./user-account-system');
+
+app.post('/api/account/create', (req, res) => {
+  const result = accounts.createAccount(req.body.email, req.body.phone, req.body.password);
+  res.json(result);
+});
+
+app.post('/api/account/withdrawal', (req, res) => {
+  const result = accounts.requestWithdrawal(req.body.userId, req.body.amount, req.body.methodId);
+  res.json(result);
+});
+
+app.get('/api/account/earnings/:userId', (req, res) => {
+  const earnings = accounts.aggregateEarnings(req.params.userId);
+  res.json(earnings);
+});
+
