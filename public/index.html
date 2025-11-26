@@ -3,166 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>AI Programming Expert</title>
+  <title>AI DEV & CREATE PLATFORM</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<!-- عنوان التطبيق البسيط -->
+<!-- عنوان التطبيق -->
 <header class="app-header">
   <div class="header-content">
-    <h1 class="app-title">🚀 AI Expert</h1>
-    <p class="app-subtitle">مساعدك الذكي للبرمجة</p>
+    <h1 class="app-title">🚀 AI DEV</h1>
+    <p class="app-subtitle">منصة الإنشاء الذكية</p>
   </div>
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <button class="menu-toggle" onclick="toggleMenu()">⋮</button>
 </header>
 
-<!-- التنقل العلوي البسيط -->
-<nav class="bottom-nav">
-  <button class="nav-item active" data-page="chat" onclick="goToPage('chat')">💬 الدردشة</button>
-  <button class="nav-item" data-page="code" onclick="goToPage('code')">💻 الكود</button>
-  <button class="nav-item" data-page="templates" onclick="goToPage('templates')">🎯 قوالس</button>
-  <button class="nav-item" data-page="settings" onclick="goToPage('settings')">⚙️ الإعدادات</button>
+<!-- التنقل العلوي للأقسام الرئيسية -->
+<nav class="tabs-nav">
+  <button class="tab-btn active" onclick="switchTab('app-dev')">💻 APP DEV</button>
+  <button class="tab-btn" onclick="switchTab('game-dev')">🎮 GAME DEV</button>
+  <button class="tab-btn" onclick="switchTab('tools')">🛠️ TOOLS</button>
 </nav>
 
 <!-- المحتوى الرئيسي -->
 <main class="app-main">
 
-  <!-- صفحة الدردشة -->
-  <section id="chat" class="page active">
-    <div class="section-header">
-      <h2>💬 الدردشة الذكية</h2>
-      <p>أخبرني ماذا تريد وسأساعدك</p>
-    </div>
-
-    <div class="chat-box">
-      <div id="messages" class="messages-container">
-        <div class="ai-msg">
-          <p>👋 مرحباً! أنا هنا لمساعدتك</p>
-          <p class="msg-hint">جرب: "اكتب دالة فيبوناتشي بـ Python"</p>
+  <!-- قسم APP DEV -->
+  <section id="app-dev" class="tab-content active">
+    
+    <!-- مراحل التطوير -->
+    <div class="dev-stages">
+      <h3>مراحل المشروع</h3>
+      <div class="stages-container">
+        <div class="stage" onclick="goToStage('concept')">
+          <div class="stage-num">1</div>
+          <div class="stage-name">تصور</div>
+        </div>
+        <div class="stage" onclick="goToStage('design')">
+          <div class="stage-num">2</div>
+          <div class="stage-name">تصميم</div>
+        </div>
+        <div class="stage active" onclick="goToStage('dev')">
+          <div class="stage-num">3</div>
+          <div class="stage-name">تطوير</div>
+        </div>
+        <div class="stage" onclick="goToStage('deploy')">
+          <div class="stage-num">4</div>
+          <div class="stage-name">نشر</div>
         </div>
       </div>
+    </div>
 
-      <div class="input-area">
-        <div class="input-wrapper">
-          <textarea id="input" placeholder="اكتب طلبك هنا..." rows="2"></textarea>
-          <button class="send-btn" onclick="sendMsg()">➤</button>
+    <!-- الدردشة الذكية -->
+    <div class="ai-chat-section">
+      <h3>💬 الدردشة الذكية</h3>
+      <div class="chat-box">
+        <div id="messages" class="messages">
+          <div class="ai-msg">
+            <span class="avatar">🤖</span>
+            <p>مرحباً! أنا هنا لمساعدتك في تطوير مشروعك</p>
+          </div>
         </div>
-        
-        <div class="quick-btns">
-          <button class="quick" onclick="quickMsg('اكتب كود')">💻</button>
-          <button class="quick" onclick="quickMsg('أصلح الأخطاء')">🔧</button>
-          <button class="quick" onclick="quickMsg('صمم واجهة')">🎨</button>
-          <button class="quick" onclick="quickMsg('شرح الكود')">📖</button>
+        <div class="input-area">
+          <textarea id="input" placeholder="اكتب طلبك..."></textarea>
+          <button class="send-btn" onclick="sendMessage()">➤</button>
         </div>
+      </div>
+    </div>
+
+    <!-- عرض الكود -->
+    <div class="code-section">
+      <h3>💻 الكود</h3>
+      <textarea id="code" placeholder="الكود يظهر هنا..."></textarea>
+    </div>
+
+    <!-- صحة المشروع -->
+    <div class="project-health">
+      <h3>📊 صحة المشروع</h3>
+      <div class="health-tabs">
+        <button class="health-btn active">💬 الدردشة</button>
+        <button class="health-btn">🎨 التصميم</button>
+        <button class="health-btn">💻 الكود</button>
+        <button class="health-btn">🚀 النشر</button>
+        <button class="health-btn">📈 المراقبة</button>
       </div>
     </div>
   </section>
 
-  <!-- صفحة محرر الكود -->
-  <section id="code" class="page">
-    <div class="section-header">
-      <h2>💻 محرر الكود</h2>
-      <p>اكتب أو الصق كودك هنا</p>
-    </div>
-
-    <div class="editor-box">
-      <div class="editor-toolbar">
-        <button class="tool-btn" onclick="saveCode()">💾 حفظ</button>
-        <button class="tool-btn" onclick="runCode()">▶️ تشغيل</button>
-        <button class="tool-btn" onclick="fixCode()">🔧 إصلاح</button>
-      </div>
-      <textarea id="editor" placeholder="اكتب أو الصق الكود..." rows="10"></textarea>
-      <div id="output" class="code-output">
-        <p class="placeholder">الإخراج سيظهر هنا...</p>
-      </div>
-    </div>
+  <!-- قسم GAME DEV -->
+  <section id="game-dev" class="tab-content">
+    <h3>تطوير الألعاب</h3>
+    <p>قسم تطوير الألعاب - قريباً</p>
   </section>
 
-  <!-- صفحة القوالس -->
-  <section id="templates" class="page">
-    <div class="section-header">
-      <h2>🎯 قوالس جاهزة</h2>
-      <p>اختر قالب وابدأ فوراً</p>
-    </div>
-
-    <div class="templates-grid">
-      <div class="template-item" onclick="loadTemplate('todo')">
-        <div class="template-icon">📝</div>
-        <h3>تطبيق Todo</h3>
-        <p>إدارة المهام</p>
+  <!-- قسم TOOLS -->
+  <section id="tools" class="tab-content">
+    <h3>🛠️ صندوق الأدوات الذكية</h3>
+    <div class="toolbox-grid">
+      <div class="tool-card" onclick="useTool('mesh-refine')">
+        <div class="tool-icon">🎯</div>
+        <p class="tool-name">Mesh Refine</p>
       </div>
-      <div class="template-item" onclick="loadTemplate('calc')">
-        <div class="template-icon">🧮</div>
-        <h3>آلة حاسبة</h3>
-        <p>عمليات حسابية</p>
+      <div class="tool-card" onclick="useTool('code-refactor')">
+        <div class="tool-icon">🔄</div>
+        <p class="tool-name">Code Refactoring</p>
       </div>
-      <div class="template-item" onclick="loadTemplate('blog')">
-        <div class="template-icon">📰</div>
-        <h3>مدونة</h3>
-        <p>منصة نشر</p>
+      <div class="tool-card" onclick="useTool('react-logic')">
+        <div class="tool-icon">⚛️</div>
+        <p class="tool-name">React Logic</p>
       </div>
-      <div class="template-item" onclick="loadTemplate('ecommerce')">
-        <div class="template-icon">🛒</div>
-        <h3>متجر</h3>
-        <p>متجر إلكتروني</p>
+      <div class="tool-card" onclick="useTool('svg-raster')">
+        <div class="tool-icon">🖼️</div>
+        <p class="tool-name">SVG Raster</p>
       </div>
-      <div class="template-item" onclick="loadTemplate('dashboard')">
-        <div class="template-icon">📊</div>
-        <h3>لوحة تحكم</h3>
-        <p>عرض البيانات</p>
+      <div class="tool-card" onclick="useTool('advanced-design')">
+        <div class="tool-icon">✨</div>
+        <p class="tool-name">Advanced Design</p>
       </div>
-      <div class="template-item" onclick="loadTemplate('api')">
-        <div class="template-icon">🔌</div>
-        <h3>API</h3>
-        <p>واجهة برمجية</p>
+      <div class="tool-card" onclick="useTool('db-sync')">
+        <div class="tool-icon">🔀</div>
+        <p class="tool-name">DB Sync</p>
       </div>
-    </div>
-  </section>
-
-  <!-- صفحة الإعدادات -->
-  <section id="settings" class="page">
-    <div class="section-header">
-      <h2>⚙️ الإعدادات</h2>
-      <p>خيارات التطبيق</p>
-    </div>
-
-    <div class="settings-list">
-      <div class="setting-item">
-        <div class="setting-label">
-          <span>🌙 الوضع الليلي</span>
-          <input type="checkbox" onchange="toggleDark()">
-        </div>
+      <div class="tool-card" onclick="useTool('api-create')">
+        <div class="tool-icon">🔌</div>
+        <p class="tool-name">API Creator</p>
       </div>
-      <div class="setting-item">
-        <div class="setting-label">
-          <span>🔔 الإشعارات</span>
-          <input type="checkbox" checked>
-        </div>
+      <div class="tool-card" onclick="useTool('cloud-func')">
+        <div class="tool-icon">☁️</div>
+        <p class="tool-name">Cloud Functions</p>
       </div>
-      <div class="setting-item">
-        <div class="setting-label">
-          <span>💾 الحفظ التلقائي</span>
-          <input type="checkbox" checked>
-        </div>
+      <div class="tool-card" onclick="useTool('analytics')">
+        <div class="tool-icon">📈</div>
+        <p class="tool-name">Analytics</p>
       </div>
-      <div class="setting-item">
-        <label>🌍 اللغة</label>
-        <select>
-          <option>العربية</option>
-          <option>English</option>
-        </select>
+      <div class="tool-card" onclick="useTool('security')">
+        <div class="tool-icon">🔒</div>
+        <p class="tool-name">Security Audit</p>
       </div>
-    </div>
-
-    <div class="about-section">
-      <h3>📌 عن التطبيق</h3>
-      <p>منصة ذكية للبرمجة مع AI متقدم</p>
-      <p class="version">الإصدار 5.0</p>
+      <div class="tool-card" onclick="useTool('performance')">
+        <div class="tool-icon">⚡</div>
+        <p class="tool-name">Performance</p>
+      </div>
+      <div class="tool-card" onclick="useTool('ai-assist')">
+        <div class="tool-icon">🤖</div>
+        <p class="tool-name">AI Assistant</p>
+      </div>
     </div>
   </section>
 
 </main>
+
+<!-- التنقل السفلي -->
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="switchTab('app-dev')">💻 التطوير</button>
+  <button class="nav-item" onclick="switchTab('tools')">🛠️ الأدوات</button>
+  <button class="nav-item" onclick="goToPage('settings')">⚙️ الإعدادات</button>
+</nav>
 
 <script src="/js/ai-engine.js"></script>
 </body>

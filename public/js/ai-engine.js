@@ -1,8 +1,10 @@
-// SmartAI Engine - نظام ذكي موحد
+// Advanced AI Engine with Smart Features
 
-class SmartAI {
+class AdvancedAI {
   constructor() {
     this.history = [];
+    this.currentStage = 'dev';
+    this.tools = {};
     this.init();
   }
 
@@ -17,66 +19,84 @@ class SmartAI {
       input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
-          sendMsg();
+          sendMessage();
         }
       });
     }
   }
 
-  understand(text) {
+  analyzeRequest(text) {
     const lower = text.toLowerCase();
     
-    if (lower.includes('اكتب') || lower.includes('انشئ') || lower.includes('كود')) 
-      return { action: 'code', keyword: 'code' };
+    if (lower.includes('اكتب') || lower.includes('انشئ') || lower.includes('كود'))
+      return { action: 'generate', icon: '💻' };
     if (lower.includes('أصلح') || lower.includes('خطأ') || lower.includes('bug'))
-      return { action: 'fix', keyword: 'fix' };
-    if (lower.includes('تصميم') || lower.includes('واجهة') || lower.includes('ui'))
-      return { action: 'ui', keyword: 'ui' };
-    if (lower.includes('شرح'))
-      return { action: 'explain', keyword: 'explain' };
+      return { action: 'fix', icon: '🔧' };
+    if (lower.includes('تصميم') || lower.includes('واجهة'))
+      return { action: 'design', icon: '🎨' };
+    if (lower.includes('شرح') || lower.includes('كيف'))
+      return { action: 'explain', icon: '📖' };
     
-    return { action: 'help', keyword: 'help' };
+    return { action: 'help', icon: '💡' };
   }
 
   generateResponse(msg) {
-    const analysis = this.understand(msg);
+    const analysis = this.analyzeRequest(msg);
     
     const responses = {
-      code: `✨ كود احترافي:\n\n\`\`\`javascript\nfunction example() {\n  // كود جاهز للاستخدام\n  return "نجح";\n}\n\`\`\``,
-      fix: `🔧 تم إصلاح الأخطاء:\n✅ تم إزالة الأخطاء\n✅ تحسين الأداء\n✅ إضافة تعليقات`,
-      ui: `🎨 واجهة احترافية:\n\`\`\`html\n<div class="container">\n  <h1>عنوان جميل</h1>\n</div>\n\`\`\``,
-      explain: `📖 شرح مفصل:\nهذا مفهوم برمجي مهم يُستخدم في...`,
-      help: `👋 يمكنك أن تطلب:\n• اكتب كود\n• أصلح الأخطاء\n• صمم واجهة\n• شرح مفهوم`
+      generate: `${analysis.icon} تم توليد الكود:\n\nfunction solution() {\n  return "جاهز!";\n}`,
+      fix: `${analysis.icon} تم إصلاح الأخطاء:\n✅ إزالة أخطاء\n✅ تحسين الأداء\n✅ إضافة تعليقات`,
+      design: `${analysis.icon} تم تصميم الواجهة:\n<div class="ui">\n  <h1>تصميم احترافي</h1>\n</div>`,
+      explain: `${analysis.icon} شرح مفصل:\nهذا مفهوم برمجي مهم...`,
+      help: `${analysis.icon} كيف يمكنني مساعدتك؟\n• توليد الكود\n• إصلاح الأخطاء\n• تصميم الواجهات`
     };
     
-    return responses[analysis.action] || responses.help;
+    return responses[analysis.action];
   }
 
   saveState() {
-    localStorage.setItem('aiHistory', JSON.stringify(this.history));
+    localStorage.setItem('aiState', JSON.stringify({
+      history: this.history,
+      currentStage: this.currentStage
+    }));
   }
 
   loadState() {
-    const saved = localStorage.getItem('aiHistory');
-    if (saved) this.history = JSON.parse(saved);
+    const saved = localStorage.getItem('aiState');
+    if (saved) {
+      const state = JSON.parse(saved);
+      this.history = state.history;
+      this.currentStage = state.currentStage;
+    }
   }
 }
 
-// إنشاء نسخة من AI
-const ai = new SmartAI();
+const ai = new AdvancedAI();
 
-// دوال واجهة المستخدم
-function goToPage(page) {
-  // إخفاء جميع الصفحات
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+// دوال التحكم
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   
-  // إظهار الصفحة المختارة
-  document.getElementById(page).classList.add('active');
-  document.querySelector(`[data-page="${page}"]`).classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
 }
 
-function sendMsg() {
+function switchTab(tabId) {
+  const content = document.getElementById(tabId);
+  if (!content) return;
+  
+  document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  
+  content.classList.add('active');
+  
+  document.querySelector(`[onclick="switchTab('${tabId}')"]`)?.classList.add('active');
+  document.querySelector(`.nav-item[onclick="switchTab('${tabId}')"]`)?.classList.add('active');
+}
+
+function sendMessage() {
   const input = document.getElementById('input');
   const msg = input.value.trim();
   
@@ -86,7 +106,7 @@ function sendMsg() {
   
   // رسالة المستخدم
   const userDiv = document.createElement('div');
-  userDiv.className = 'user-msg';
+  userDiv.style.cssText = 'align-self: flex-end; background: #7c3aed; color: white; padding: 12px; border-radius: 8px; max-width: 80%;';
   userDiv.textContent = msg;
   messages.appendChild(userDiv);
   
@@ -94,7 +114,7 @@ function sendMsg() {
   const response = ai.generateResponse(msg);
   const aiDiv = document.createElement('div');
   aiDiv.className = 'ai-msg';
-  aiDiv.innerHTML = response.replace(/\n/g, '<br>').replace(/```(.*?)\n(.*?)```/gs, '<pre><code>$2</code></pre>');
+  aiDiv.innerHTML = `<span class="avatar">🤖</span><p>${response.replace(/\n/g, '<br>')}</p>`;
   messages.appendChild(aiDiv);
   
   input.value = '';
@@ -104,65 +124,28 @@ function sendMsg() {
   ai.saveState();
 }
 
-function quickMsg(msg) {
-  document.getElementById('input').value = msg;
-  sendMsg();
+function goToStage(stage) {
+  document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
+  event.target.closest('.stage')?.classList.add('active');
+  ai.currentStage = stage;
+  ai.saveState();
 }
 
-function saveCode() {
-  const code = document.getElementById('editor').value;
-  alert('✅ تم الحفظ!');
+function useTool(toolId) {
+  const messages = document.getElementById('messages');
+  const aiDiv = document.createElement('div');
+  aiDiv.className = 'ai-msg';
+  aiDiv.innerHTML = `<span class="avatar">🔧</span><p>تم استخدام أداة: ${toolId}\nجاري المعالجة...</p>`;
+  messages.appendChild(aiDiv);
+  messages.scrollTop = messages.scrollHeight;
 }
 
-function runCode() {
-  const code = document.getElementById('editor').value;
-  if (!code) {
-    alert('⚠️ لا يوجد كود');
-    return;
-  }
-  document.getElementById('output').innerHTML = '▶️ جاري التشغيل...';
-  setTimeout(() => {
-    document.getElementById('output').innerHTML = '✅ تم التشغيل بنجاح!';
-  }, 500);
+function goToPage(page) {
+  switchTab(page);
 }
 
-function fixCode() {
-  const code = document.getElementById('editor').value;
-  if (!code) return;
-  
-  document.getElementById('output').innerHTML = '🔧 جاري الإصلاح...';
-  setTimeout(() => {
-    document.getElementById('output').innerHTML = '✅ تم إصلاح الأخطاء!';
-  }, 500);
-}
-
-function loadTemplate(name) {
-  const templates = {
-    todo: '// تطبيق Todo\nconst todos = [];',
-    calc: '// آلة حاسبة\nfunction calc() {}',
-    blog: '// مدونة\nconst posts = [];',
-    ecommerce: '// متجر\nconst products = [];',
-    dashboard: '// لوحة تحكم\nconst stats = {};',
-    api: '// API\nconst endpoints = {};'
-  };
-  
-  document.getElementById('editor').value = templates[name] || '';
-  goToPage('code');
-}
-
-function toggleDark() {
-  document.body.classList.toggle('dark-mode');
-  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-}
-
-function toggleMenu() {
-  document.querySelector('.bottom-nav').style.display = 
-    document.querySelector('.bottom-nav').style.display === 'none' ? 'flex' : 'none';
-}
-
-// تحميل الإعدادات المحفوظة
+// تحميل الحالة عند الفتح
 window.addEventListener('load', () => {
-  if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-  }
+  const input = document.getElementById('input');
+  if (input) input.focus();
 });
