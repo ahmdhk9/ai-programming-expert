@@ -18,13 +18,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-// ========== ADVANCED REAL-TIME SOCIAL CHAT ==========
-const users = new Map();
+// ========== ADVANCED SESSION MANAGEMENT ==========
+const users = new Map(); // socketId -> {username, searching, sessionId, partner, timestamp}
+const sessions = new Map(); // sessionId -> {user1, user2, messages[], created_at}
 const waitingQueue = [];
-const messageHistory = new Map();
+const usernames = ['محمد', 'فاطمة', 'علي', 'أحمد', 'ليلى', 'سارة', 'حسن', 'مريم', 'عمر', 'نور'];
+const emojis = ['🌟', '💻', '🚀', '🎯', '🔥', '💡', '⭐', '🎨'];
 
-const usernames = ['محمد', 'فاطمة', 'علي', 'أحمد', 'ليلى', 'سارة', 'حسن', 'مريم', 'عمر', 'نور', 'يوسف', 'هناء'];
-const emojis = ['🌟', '💻', '🚀', '🎯', '🔥', '💡', '⭐', '🎨', '🏆', '💎', '🎭', '🎪'];
+function generateSessionId() {
+  return 'sess_' + Math.random().toString(36).substr(2, 12);
+}
 
 function getRandomUsername() {
   const name = usernames[Math.floor(Math.random() * usernames.length)];
@@ -33,7 +36,7 @@ function getRandomUsername() {
 }
 
 io.on('connection', (socket) => {
-  console.log(`✅ متصل جديد: ${socket.id}`);
+  console.log(`✅ اتصال جديد: ${socket.id}`);
 
   socket.on('register', (username) => {
     if (!username || username.trim().length === 0) {
@@ -43,16 +46,14 @@ io.on('connection', (socket) => {
     users.set(socket.id, {
       username,
       searching: false,
-      connectedWith: null,
+      sessionId: null,
+      partner: null,
       socket,
-      connected_at: Date.now(),
-      last_active: Date.now()
+      joinedAt: Date.now()
     });
 
     socket.emit('registered', { username, userId: socket.id });
     console.log(`📝 تسجيل: ${username} (${socket.id})`);
-
-    // Broadcast online count
     io.emit('online-count', users.size);
   });
 
@@ -64,120 +65,201 @@ io.on('connection', (socket) => {
     }
 
     currentUser.searching = true;
-    currentUser.last_active = Date.now();
 
-    // Find waiting user
-    let connectedUserSocketId = null;
+    // Search for waiting user
+    let partnerSocketId = null;
     for (let [id, user] of users) {
-      if (id !== socket.id && user.searching && !user.connectedWith) {
-        connectedUserSocketId = id;
+      if (id !== socket.id && user.searching && !user.sessionId) {
+        partnerSocketId = id;
         break;
       }
     }
 
-    if (!connectedUserSocketId) {
+    if (!partnerSocketId) {
       waitingQueue.push(socket.id);
       socket.emit('searching');
-      console.log(`⏳ في قائمة الانتظار: ${currentUser.username}`);
+      console.log(`⏳ في انتظار: ${currentUser.username}`);
       return;
     }
 
-    // Connect both users
-    const connectedUser = users.get(connectedUserSocketId);
-    if (!connectedUser) {
-      socket.emit('error', 'حدث خطأ، حاول مجدداً');
-      return;
-    }
+    // Create new session
+    const partnerUser = users.get(partnerSocketId);
+    const sessionId = generateSessionId();
+    
+    // Create session record
+    sessions.set(sessionId, {
+      id: sessionId,
+      user1: { id: socket.id, username: currentUser.username },
+      user2: { id: partnerSocketId, username: partnerUser.username },
+      messages: [],
+      createdAt: Date.now(),
+      status: 'active'
+    });
 
-    currentUser.connectedWith = connectedUserSocketId;
-    connectedUser.connectedWith = socket.id;
+    // Update users
+    currentUser.sessionId = sessionId;
+    currentUser.partner = partnerSocketId;
     currentUser.searching = false;
-    connectedUser.searching = false;
+    
+    partnerUser.sessionId = sessionId;
+    partnerUser.partner = socket.id;
+    partnerUser.searching = false;
 
     // Remove from queue
-    const idx = waitingQueue.indexOf(connectedUserSocketId);
+    const idx = waitingQueue.indexOf(partnerSocketId);
     if (idx !== -1) waitingQueue.splice(idx, 1);
 
-    // Initialize message history
-    const roomId = [socket.id, connectedUserSocketId].sort().join('-');
-    if (!messageHistory.has(roomId)) {
-      messageHistory.set(roomId, []);
-    }
-
-    console.log(`🔗 ربط: ${currentUser.username} ↔ ${connectedUser.username}`);
+    console.log(`🔗 جلسة جديدة: ${currentUser.username} ↔ ${partnerUser.username}`);
+    console.log(`📌 معرف الجلسة: ${sessionId}`);
 
     // Notify both users
     socket.emit('user-found', {
-      username: connectedUser.username,
-      connectedUserId: connectedUserSocketId
+      username: partnerUser.username,
+      connectedUserId: partnerSocketId,
+      sessionId: sessionId
     });
 
-    io.to(connectedUserSocketId).emit('user-found', {
+    io.to(partnerSocketId).emit('user-found', {
       username: currentUser.username,
-      connectedUserId: socket.id
+      connectedUserId: socket.id,
+      sessionId: sessionId
     });
   });
 
-  socket.on('send-message', (message) => {
-    const user = users.get(socket.id);
-    if (!user || !user.connectedWith) {
-      socket.emit('error', 'لا يوجد اتصال نشط');
+  socket.on('send-message', (data) => {
+    const sender = users.get(socket.id);
+    if (!sender || !sender.sessionId || !sender.partner) {
+      socket.emit('error', 'لا يوجد جلسة نشطة');
       return;
     }
 
+    const message = typeof data === 'string' ? data : data.message;
     if (!message || message.trim().length === 0) return;
 
-    user.last_active = Date.now();
-    const msgData = {
-      from: user.username,
-      message: message.trim(),
-      timestamp: Date.now(),
-      type: 'text'
-    };
+    const session = sessions.get(sender.sessionId);
+    const recipient = users.get(sender.partner);
 
-    io.to(user.connectedWith).emit('receive-message', msgData);
-
-    // Save to history
-    const roomId = [socket.id, user.connectedWith].sort().join('-');
-    if (messageHistory.has(roomId)) {
-      messageHistory.get(roomId).push(msgData);
+    if (!session || !recipient) {
+      socket.emit('error', 'فشل إرسال الرسالة');
+      return;
     }
 
-    console.log(`💬 ${user.username} → ${messageHistory.get(roomId) ? 'محفوظة' : 'مرسلة'}`);
+    // Create message record
+    const msgRecord = {
+      id: 'msg_' + Math.random().toString(36).substr(2, 9),
+      from: {
+        id: socket.id,
+        username: sender.username
+      },
+      to: {
+        id: sender.partner,
+        username: recipient.username
+      },
+      content: message.trim(),
+      timestamp: Date.now(),
+      delivered: false,
+      read: false
+    };
+
+    // Save to session
+    session.messages.push(msgRecord);
+
+    console.log(`💬 رسالة من ${sender.username} إلى ${recipient.username}`);
+    console.log(`   المحتوى: ${message.trim()}`);
+    console.log(`   الجلسة: ${sender.sessionId}`);
+
+    // Send to recipient ONLY
+    io.to(sender.partner).emit('receive-message', msgRecord);
+
+    // Send confirmation to sender
+    socket.emit('message-sent', {
+      msgId: msgRecord.id,
+      timestamp: msgRecord.timestamp
+    });
+  });
+
+  socket.on('mark-delivered', (msgId) => {
+    const user = users.get(socket.id);
+    if (!user || !user.sessionId) return;
+
+    const session = sessions.get(user.sessionId);
+    if (!session) return;
+
+    const msg = session.messages.find(m => m.id === msgId);
+    if (msg) {
+      msg.delivered = true;
+      console.log(`✅ تسليم: ${msg.id}`);
+      
+      // Notify sender
+      io.to(msg.from.id).emit('message-delivered', { msgId });
+    }
+  });
+
+  socket.on('mark-read', (msgId) => {
+    const user = users.get(socket.id);
+    if (!user || !user.sessionId) return;
+
+    const session = sessions.get(user.sessionId);
+    if (!session) return;
+
+    const msg = session.messages.find(m => m.id === msgId);
+    if (msg) {
+      msg.read = true;
+      console.log(`👁️ قراءة: ${msg.id}`);
+      
+      // Notify sender
+      io.to(msg.from.id).emit('message-read', { msgId });
+    }
   });
 
   socket.on('end-call', () => {
     const user = users.get(socket.id);
     if (!user) return;
 
-    if (user.connectedWith) {
-      const connectedUser = users.get(user.connectedWith);
-      if (connectedUser) {
-        connectedUser.connectedWith = null;
-        io.to(user.connectedWith).emit('call-ended', { reason: 'user-ended' });
+    if (user.sessionId && user.partner) {
+      const session = sessions.get(user.sessionId);
+      if (session) {
+        session.status = 'ended';
+        session.endedAt = Date.now();
+        console.log(`⏹️ إنهاء الجلسة: ${session.id}`);
+      }
+
+      const partner = users.get(user.partner);
+      if (partner) {
+        partner.sessionId = null;
+        partner.partner = null;
+        io.to(user.partner).emit('session-ended', { reason: 'user-ended' });
       }
     }
 
-    user.connectedWith = null;
+    user.sessionId = null;
+    user.partner = null;
     user.searching = false;
 
-    // Remove from queue
     const idx = waitingQueue.indexOf(socket.id);
     if (idx !== -1) waitingQueue.splice(idx, 1);
 
-    console.log(`❌ إنهاء: ${user.username}`);
-    socket.emit('call-ended');
+    socket.emit('session-ended');
   });
 
-  socket.on('typing', () => {
+  socket.on('typing', (data) => {
     const user = users.get(socket.id);
-    if (user && user.connectedWith) {
-      io.to(user.connectedWith).emit('user-typing', { username: user.username });
+    if (user && user.partner) {
+      io.to(user.partner).emit('user-typing', {
+        username: user.username,
+        sessionId: user.sessionId
+      });
     }
   });
 
-  socket.on('ping', () => {
-    socket.emit('pong');
+  socket.on('get-session', () => {
+    const user = users.get(socket.id);
+    if (user && user.sessionId) {
+      const session = sessions.get(user.sessionId);
+      if (session) {
+        socket.emit('session-info', session);
+      }
+    }
   });
 
   socket.on('disconnect', () => {
@@ -186,11 +268,18 @@ io.on('connection', (socket) => {
 
     console.log(`❌ قطع: ${user.username}`);
 
-    if (user.connectedWith) {
-      const connectedUser = users.get(user.connectedWith);
-      if (connectedUser) {
-        connectedUser.connectedWith = null;
-        io.to(user.connectedWith).emit('user-disconnected', { username: user.username });
+    if (user.sessionId && user.partner) {
+      const session = sessions.get(user.sessionId);
+      if (session) {
+        session.status = 'disconnected';
+        console.log(`🔌 قطع الاتصال في الجلسة: ${session.id}`);
+      }
+
+      const partner = users.get(user.partner);
+      if (partner) {
+        partner.sessionId = null;
+        partner.partner = null;
+        io.to(user.partner).emit('partner-disconnected', { username: user.username });
       }
     }
 
@@ -200,18 +289,11 @@ io.on('connection', (socket) => {
     users.delete(socket.id);
     io.emit('online-count', users.size);
   });
-
-  socket.on('error', (err) => {
-    console.error(`❌ خطأ Socket: ${err}`);
-  });
 });
 
-// Initialize Groq
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY
-});
+// AI Chat
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// AI Chat API
 app.post('/api/ai/chat', async (req, res) => {
   try {
     const { message } = req.body;
@@ -219,47 +301,19 @@ app.post('/api/ai/chat', async (req, res) => {
       return res.status(400).json({ error: 'رسالة مفقودة' });
     }
 
-    const systemPrompt = `أنت مساعد ذكي احترافي في منصة "AI Programming Expert" - متخصص في البرمجة والتقنية.
-🎯 تحدث بشكل طبيعي جداً كأنك إنسان حقيقي - بدون تكلف أو رسميات زائدة.
-
-⚡ **ردود متوازنة - مختصرة لكن مفيدة (2-3 جمل قصيرة):**
-- تجنب الفقرات الطويلة جداً والحشو
-- كن مباشراً وعملياً وودياً
-- ركز على الإجابة الأساسية فقط
-
-⚡ الفهم الذكي:
-- إذا سُئلت عن المطور/المُنشِئ (أي صيغة)، رد: "تم تطويرها بواسطة احمد العويني التميمي البصراوي"
-- في أسئلة البرمجة: أعط حلولاً عملية قصيرة فوراً
-- كن مختصراً وذكياً - تجنب التكرار والملل
-
-💡 أسلوب الحوار:
-- ردود طبيعية وسلسة وودية
-- فهم السياق بذكاء - لا تسأل أسئلة واضحة
-- استخدم كلمات قليلة فقط
-- سرعة في الرد والفهم`;
-
     const response = await groq.chat.completions.create({
       messages: [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: `أنت مساعد ذكي احترافي - رد قصير (2-3 جمل). إذا سُئلت عن المطور: "تم تطويرها بواسطة احمد العويني التميمي البصراوي"` },
         { role: 'user', content: message }
       ],
       model: 'llama-3.3-70b-versatile',
       temperature: 0.6,
-      max_tokens: 250,
-      top_p: 0.95
+      max_tokens: 250
     });
 
-    res.json({
-      success: true,
-      response: response.choices[0].message.content,
-      model: 'Llama 3.3 70B'
-    });
+    res.json({ success: true, response: response.choices[0].message.content });
   } catch (error) {
-    console.error('API Error:', error.message);
-    res.status(500).json({
-      error: 'خطأ في الذكاء الصناعي',
-      message: error.message
-    });
+    res.status(500).json({ error: 'خطأ في الذكاء الصناعي' });
   }
 });
 
@@ -267,11 +321,9 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
     platform: 'AI Programming Expert v5.0',
-    ai: 'Groq Llama 3.3 70B',
-    social: 'Real-time WebSocket',
-    users: users.size,
-    waiting: waitingQueue.length,
-    uptime: process.uptime()
+    activeSessions: sessions.size,
+    activeUsers: users.size,
+    waitingUsers: waitingQueue.length
   });
 });
 
@@ -282,7 +334,6 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`\n🚀 منصة AI Programming Expert v5.0`);
-  console.log(`💡 الذكاء الصناعي: Groq - Llama 3.3 70B`);
-  console.log(`👥 التواصل: WebSocket + REST API`);
+  console.log(`👥 نظام جلسات متقدم مع تأكيد التسليم`);
   console.log(`📍 الخادم: http://localhost:${PORT}\n`);
 });

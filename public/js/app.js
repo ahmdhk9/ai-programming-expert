@@ -1,4 +1,4 @@
-// ========== REAL-TIME SOCIAL CHAT WITH ADVANCED FEATURES ==========
+// ========== ADVANCED SESSION-BASED REAL-TIME CHAT ==========
 const socket = io({
   reconnection: true,
   reconnectionDelay: 1000,
@@ -10,6 +10,7 @@ const socket = io({
 let currentUserId = null;
 let connectedUserId = null;
 let connectedUserName = null;
+let currentSessionId = null;
 let socialVoiceActive = false;
 let searchInProgress = false;
 let currentUsername = null;
@@ -17,14 +18,13 @@ let isConnected = false;
 let reconnectAttempts = 0;
 let socialRecognitionInstance = null;
 
-// Auto-reconnect handler
+// Socket Events
 socket.on('connect', () => {
   console.log('✅ متصل بالخادم');
   isConnected = true;
   reconnectAttempts = 0;
   currentUserId = socket.id;
 
-  // Register user
   const names = ['محمد', 'فاطمة', 'علي', 'أحمد', 'ليلى', 'سارة', 'حسن', 'مريم', 'عمر', 'نور'];
   const emojis = ['🌟', '💻', '🚀', '🎯', '🔥', '💡', '⭐', '🎨'];
   currentUsername = names[Math.floor(Math.random() * names.length)] +
@@ -44,14 +44,6 @@ socket.on('reconnect', () => {
   showNotification('✅ تم استعادة الاتصال', 'success');
 });
 
-socket.on('connect_error', (error) => {
-  console.error('❌ خطأ في الاتصال:', error);
-  reconnectAttempts++;
-  if (reconnectAttempts > 3) {
-    showNotification('⚠️ مشكلة في الاتصال، تحقق من الإنترنت', 'error');
-  }
-});
-
 socket.on('registered', (data) => {
   currentUsername = data.username;
   currentUserId = data.userId;
@@ -66,6 +58,7 @@ socket.on('searching', () => {
 socket.on('user-found', (data) => {
   connectedUserId = data.connectedUserId;
   connectedUserName = data.username;
+  currentSessionId = data.sessionId;
 
   document.getElementById('social-loading').style.display = 'none';
   document.getElementById('social-chat').style.display = 'flex';
@@ -74,12 +67,30 @@ socket.on('user-found', (data) => {
   document.getElementById('social-input').value = '';
   document.getElementById('social-input').focus();
 
-  showNotification(`✅ متصل مع ${connectedUserName}`, 'success');
+  showNotification(`✅ متصل مع ${connectedUserName} - جلسة: ${data.sessionId.substr(5, 5)}...`, 'success');
 });
 
-socket.on('receive-message', (data) => {
-  addSocialMessage(data.message, 'other');
+socket.on('receive-message', (msgRecord) => {
+  addSocialMessage(`${msgRecord.content}`, 'other', msgRecord.from.username);
+  socket.emit('mark-delivered', msgRecord.id);
   playNotificationSound();
+
+  // Auto mark as read after 1 second
+  setTimeout(() => {
+    socket.emit('mark-read', msgRecord.id);
+  }, 1000);
+});
+
+socket.on('message-sent', (data) => {
+  console.log('✅ تم إرسال الرسالة');
+});
+
+socket.on('message-delivered', (data) => {
+  console.log('✅ تم التسليم:', data.msgId);
+});
+
+socket.on('message-read', (data) => {
+  console.log('👁️ تمت القراءة:', data.msgId);
 });
 
 socket.on('user-typing', (data) => {
@@ -100,25 +111,20 @@ socket.on('user-typing', (data) => {
   }, 2000);
 });
 
-socket.on('call-ended', (data) => {
+socket.on('session-ended', (data) => {
   resetSocialChat();
-  showNotification(data?.reason === 'user-ended' ? '📞 أنهى الطرف الآخر الاتصال' : '❌ تم إنهاء الاتصال', 'info');
+  showNotification(data?.reason === 'user-ended' ? '📞 أنهى الطرف الآخر الاتصال' : '❌ تم إنهاء الجلسة', 'info');
 });
 
-socket.on('user-disconnected', (data) => {
+socket.on('partner-disconnected', (data) => {
   resetSocialChat();
   showNotification(`❌ ${data.username} قطع الاتصال`, 'error');
-});
-
-socket.on('error', (error) => {
-  console.error('❌ خطأ Socket:', error);
-  showNotification(`❌ ${error}`, 'error');
 });
 
 socket.on('online-count', (count) => {
   const statusEl = document.getElementById('search-status');
   if (statusEl && !searchInProgress) {
-    statusEl.textContent = `👥 ${count} مستخدم متصل حالياً`;
+    statusEl.textContent = `👥 ${count} مستخدم متصل`;
   }
 });
 
@@ -150,12 +156,14 @@ function endConnection() {
 function handleSocialKeypress(event) {
   if (event.key === 'Enter') {
     sendSocialMessage();
+  } else if (event.type === 'input') {
+    socket.emit('typing');
   }
 }
 
 function sendSocialMessage() {
-  if (!isConnected || !connectedUserId) {
-    showNotification('❌ لا يوجد اتصال نشط', 'error');
+  if (!isConnected || !connectedUserId || !currentSessionId) {
+    showNotification('❌ لا يوجد جلسة نشطة', 'error');
     return;
   }
 
@@ -173,6 +181,7 @@ function sendSocialMessage() {
 function resetSocialChat() {
   connectedUserId = null;
   connectedUserName = null;
+  currentSessionId = null;
   socialVoiceActive = false;
   searchInProgress = false;
 
@@ -186,7 +195,7 @@ function resetSocialChat() {
 
 function toggleSocialVoiceChat() {
   if (!connectedUserId) {
-    showNotification('❌ لا يوجد اتصال نشط', 'error');
+    showNotification('❌ لا يوجد جلسة نشطة', 'error');
     return;
   }
 
@@ -204,7 +213,7 @@ function startSocialVoiceChat() {
   }
 
   if (!SpeechRecognition) {
-    showNotification('❌ الصوت غير مدعوم في متصفحك', 'error');
+    showNotification('❌ الصوت غير مدعوم', 'error');
     return;
   }
 
@@ -222,7 +231,6 @@ function startSocialVoiceChat() {
   socialRecognitionInstance.interimResults = true;
 
   socialRecognitionInstance.onstart = () => {
-    console.log('🎤 بدء الاستماع');
     showNotification('🎤 جاري الاستماع...', 'info');
   };
 
@@ -256,7 +264,6 @@ function startSocialVoiceChat() {
   };
 
   socialRecognitionInstance.onerror = (event) => {
-    console.error('❌ خطأ الصوت:', event.error);
     if (event.error !== 'aborted') {
       showNotification(`⚠️ ${event.error}`, 'error');
     }
@@ -265,7 +272,6 @@ function startSocialVoiceChat() {
   try {
     socialRecognitionInstance.start();
   } catch (e) {
-    console.error('خطأ في بدء الاستماع:', e);
     showNotification('❌ خطأ في تفعيل الصوت', 'error');
   }
 }
@@ -285,17 +291,21 @@ function stopSocialVoiceChat() {
       console.log('خطأ في إيقاف الاستماع');
     }
   }
-  
-  showNotification('⏹️ تم إيقاف الاستماع', 'info');
 }
 
-function addSocialMessage(text, type) {
+function addSocialMessage(text, type, fromUser = null) {
   const messagesDiv = document.getElementById('social-messages');
   if (!messagesDiv) return;
 
   const messageEl = document.createElement('div');
   messageEl.className = `social-message ${type}`;
-  messageEl.textContent = text;
+  
+  if (type === 'other' && fromUser) {
+    messageEl.innerHTML = `<strong>${fromUser}:</strong> ${text}`;
+  } else {
+    messageEl.textContent = text;
+  }
+  
   messageEl.style.animation = 'slideIn 0.3s ease';
   messagesDiv.appendChild(messageEl);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -305,7 +315,6 @@ function showNotification(message, type = 'info') {
   const color = type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#00d4ff';
   console.log(message);
 
-  // Toast notification
   const toast = document.createElement('div');
   toast.style.cssText = `
     position: fixed;
@@ -326,26 +335,30 @@ function showNotification(message, type = 'info') {
 }
 
 function playNotificationSound() {
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
+  try {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
 
-  oscillator.frequency.value = 800;
-  oscillator.type = 'sine';
+    oscillator.frequency.value = 800;
+    oscillator.type = 'sine';
 
-  gain.gain.setValueAtTime(0.3, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
 
-  oscillator.start(audioContext.currentTime);
-  oscillator.stop(audioContext.currentTime + 0.1);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  } catch (e) {
+    console.log('خطأ في الصوت');
+  }
 }
 
 // Heartbeat
 setInterval(() => {
-  if (isConnected) {
+  if (isConnected && currentSessionId) {
     socket.emit('ping');
   }
 }, 30000);
@@ -366,13 +379,9 @@ async function sendChatMessage() {
   const messagesDiv = document.getElementById('chat-messages');
   const loadingDiv = document.getElementById('chat-loading');
 
-  // Add user message
   const userMessageEl = document.createElement('div');
   userMessageEl.className = 'message user-message';
-  userMessageEl.innerHTML = `
-    <span class="message-icon">👤</span>
-    <div class="message-content">${message}</div>
-  `;
+  userMessageEl.innerHTML = `<span class="message-icon">👤</span><div class="message-content">${message}</div>`;
   messagesDiv.appendChild(userMessageEl);
 
   input.value = '';
@@ -392,18 +401,12 @@ async function sendChatMessage() {
     if (data.success) {
       const aiMessageEl = document.createElement('div');
       aiMessageEl.className = 'message ai-message';
-      aiMessageEl.innerHTML = `
-        <span class="message-icon">🤖</span>
-        <div class="message-content">${data.response}</div>
-      `;
+      aiMessageEl.innerHTML = `<span class="message-icon">🤖</span><div class="message-content">${data.response}</div>`;
       messagesDiv.appendChild(aiMessageEl);
     } else {
       const errorEl = document.createElement('div');
       errorEl.className = 'message ai-message';
-      errorEl.innerHTML = `
-        <span class="message-icon">⚠️</span>
-        <div class="message-content">خطأ: ${data.error}</div>
-      `;
+      errorEl.innerHTML = `<span class="message-icon">⚠️</span><div class="message-content">خطأ: ${data.error}</div>`;
       messagesDiv.appendChild(errorEl);
     }
 
@@ -412,10 +415,7 @@ async function sendChatMessage() {
     loadingDiv.style.display = 'none';
     const errorEl = document.createElement('div');
     errorEl.className = 'message ai-message';
-    errorEl.innerHTML = `
-      <span class="message-icon">❌</span>
-      <div class="message-content">خطأ في الاتصال</div>
-    `;
+    errorEl.innerHTML = `<span class="message-icon">❌</span><div class="message-content">خطأ في الاتصال</div>`;
     messagesDiv.appendChild(errorEl);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
@@ -432,24 +432,15 @@ function setTab(tabName) {
       btn.classList.add('active');
     }
   });
-
-  if (tabName === 'chat') {
-    setTimeout(() => {
-      const input = document.getElementById('chat-input');
-      if (input) input.focus();
-    }, 100);
-  }
 }
 
-// Initialize app
 window.addEventListener('load', () => {
   console.log('✅ تم تحميل التطبيق');
 });
 
-// Prevent accidental page close
 window.addEventListener('beforeunload', (e) => {
   if (connectedUserId) {
     e.preventDefault();
-    e.returnValue = 'لديك اتصال نشط. هل أنت متأكد من الخروج؟';
+    e.returnValue = 'لديك جلسة نشطة. هل أنت متأكد؟';
   }
 });
