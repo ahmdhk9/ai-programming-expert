@@ -4,7 +4,7 @@ WORKDIR /app
 
 # نسخ ملفات الـ package وتثبيت الاعتماديات
 COPY package*.json ./
-RUN npm install --production
+RUN npm ci --only=production && npm cache clean --force
 
 # نسخ باقي الملفات
 COPY . .
