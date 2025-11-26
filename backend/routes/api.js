@@ -175,3 +175,21 @@ router.get('/earnings/real-status', (req, res) => {
   res.json(realEarnings.getRealEarnings());
 });
 
+
+const autoDiscovery = require('../services/auto-income-discovery');
+
+// اكتشاف جميع مصادر الدخل
+router.get('/discovery/all-sources', (req, res) => {
+  res.json(autoDiscovery.discoverAllSources());
+});
+
+// الأرباح المتوقعة من جميع المصادر
+router.get('/discovery/earnings', (req, res) => {
+  res.json(autoDiscovery.calculateAutoEarnings());
+});
+
+// بدء البحث التلقائي
+router.post('/discovery/start', (req, res) => {
+  res.json(autoDiscovery.startAutoSearch());
+});
+
