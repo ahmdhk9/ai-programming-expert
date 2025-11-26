@@ -20,7 +20,11 @@ let socialRecognitionInstance = null;
 let sessionStartTime = null;
 let messageCount = 0;
 const pinnedMessages = new Map();
+const savedMessages = new Map();
 const emojis = ['😀', '😂', '😍', '🔥', '💯', '👍', '✨', '🎉', '💪', '🚀', '👏', '🎊', '💖', '👌', '😎', '🙌'];
+let recentEmojis = JSON.parse(localStorage.getItem('recentEmojis') || '[]');
+let customTemplates = JSON.parse(localStorage.getItem('customTemplates') || '[]');
+const quickTemplates = ['مرحباً 👋', 'كيف حالك؟', 'أنا بخير شكراً 😊', 'ممتاز! 🎉', 'هل أنت متاح الآن؟', 'نتكلم بعدين 👋'];
 
 // Session timer
 setInterval(() => {
@@ -341,6 +345,27 @@ function toggleQuickReactions() {
   panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
 }
 
+function toggleTemplates() {
+  const panel = document.getElementById('templates-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleSavedMessages() {
+  const panel = document.getElementById('saved-panel');
+  if (panel.style.display === 'none') {
+    updateSavedList();
+  }
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleRecentEmojis() {
+  const panel = document.getElementById('recent-emoji-panel');
+  if (panel.style.display === 'none') {
+    updateRecentEmojiGrid();
+  }
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
 function toggleSearchMessages() {
   const bar = document.getElementById('search-bar');
   bar.style.display = bar.style.display === 'none' ? 'block' : 'none';
@@ -353,6 +378,70 @@ function insertEmoji(emoji) {
   const input = document.getElementById('social-input');
   input.value += emoji;
   input.focus();
+  addToRecentEmojis(emoji);
+}
+
+function addToRecentEmojis(emoji) {
+  if (!recentEmojis.includes(emoji)) {
+    recentEmojis.unshift(emoji);
+    if (recentEmojis.length > 16) recentEmojis.pop();
+    localStorage.setItem('recentEmojis', JSON.stringify(recentEmojis));
+  }
+}
+
+function updateRecentEmojiGrid() {
+  const grid = document.getElementById('recent-emoji-grid');
+  grid.innerHTML = (recentEmojis.length > 0 ? recentEmojis : emojis).slice(0, 16)
+    .map(e => `<button onclick="insertEmoji('${e}')">${e}</button>`).join('');
+}
+
+function sendTemplate(template) {
+  const input = document.getElementById('social-input');
+  input.value = template;
+  sendSocialMessage();
+  document.getElementById('templates-panel').style.display = 'none';
+}
+
+function addCustomTemplate() {
+  const template = prompt('أدخل رسالة سريعة:');
+  if (template && template.trim()) {
+    customTemplates.push(template.trim());
+    localStorage.setItem('customTemplates', JSON.stringify(customTemplates));
+    updateTemplatesPanel();
+    showNotification('✅ تم إضافة الرسالة السريعة', 'success');
+  }
+}
+
+function updateTemplatesPanel() {
+  const grid = document.querySelector('.templates-grid');
+  const allTemplates = [...quickTemplates, ...customTemplates];
+  grid.innerHTML = allTemplates.map((t, i) => 
+    `<button onclick="sendTemplate('${t}')">${t.substr(0, 12)}</button>`
+  ).join('') + '<button onclick="addCustomTemplate()">➕ إضافة</button>';
+}
+
+function saveMessage(msgId) {
+  const msg = document.getElementById(`msg-${msgId}`);
+  if (msg) {
+    const content = msg.textContent.trim();
+    savedMessages.set(msgId, { content, timestamp: new Date().toLocaleString('ar-SA') });
+    showNotification('💾 تم حفظ الرسالة', 'success');
+  }
+}
+
+function updateSavedList() {
+  const list = document.getElementById('saved-list');
+  if (savedMessages.size === 0) {
+    list.innerHTML = '<p style="text-align: center; color: var(--text-muted); font-size: 12px;">لا توجد رسائل محفوظة</p>';
+    return;
+  }
+  
+  list.innerHTML = Array.from(savedMessages.values()).map((msg, i) => `
+    <div class="saved-item">
+      <div class="saved-content">${msg.content.substr(0, 40)}</div>
+      <div class="saved-time">${msg.timestamp}</div>
+    </div>
+  `).join('');
 }
 
 function sendQuickReaction(reaction) {

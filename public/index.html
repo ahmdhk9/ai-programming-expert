@@ -169,7 +169,7 @@
 
           <div class="social-input-area">
             <div class="social-input-wrapper">
-              <button class="input-icon-btn" onclick="toggleQuickReactions()" title="ردود سريعة">👍</button>
+              <button class="input-icon-btn" onclick="toggleTemplates()" title="رسائل سريعة">⚡</button>
               <input type="text" id="social-input" class="social-input-field" placeholder="اكتب رسالة..." onkeypress="handleSocialKeypress(event)" oninput="emitTyping()">
               <button class="search-btn" onclick="toggleSearchMessages()" title="بحث">🔍</button>
             </div>
@@ -193,6 +193,32 @@
           <div id="search-bar" class="search-bar" style="display: none;">
             <input type="text" id="search-input" placeholder="ابحث في الرسائل..." onkeyup="searchMessages(this.value)">
             <div id="search-results"></div>
+          </div>
+
+          <!-- Quick Templates Panel -->
+          <div id="templates-panel" class="quick-templates" style="display: none;">
+            <h5>رسائل سريعة</h5>
+            <div class="templates-grid">
+              <button onclick="sendTemplate('مرحباً 👋')">مرحباً</button>
+              <button onclick="sendTemplate('كيف حالك؟')">كيف حالك؟</button>
+              <button onclick="sendTemplate('أنا بخير شكراً 😊')">بخير</button>
+              <button onclick="sendTemplate('ممتاز! 🎉')">ممتاز</button>
+              <button onclick="sendTemplate('هل أنت متاح الآن؟')">متاح؟</button>
+              <button onclick="sendTemplate('نتكلم بعدين 👋')">بعدين</button>
+              <button onclick="addCustomTemplate()">➕ إضافة</button>
+            </div>
+          </div>
+
+          <!-- Saved Messages Panel -->
+          <div id="saved-panel" class="saved-messages" style="display: none;">
+            <h5>الرسائل المحفوظة</h5>
+            <div id="saved-list" class="saved-list"></div>
+          </div>
+
+          <!-- Recent Emojis Panel -->
+          <div id="recent-emoji-panel" class="recent-emoji" style="display: none;">
+            <h5>الإيموجي الأخيرة</h5>
+            <div id="recent-emoji-grid" class="emoji-grid"></div>
           </div>
         </div>
       </div>
