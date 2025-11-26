@@ -127,16 +127,36 @@
         <!-- Chat State -->
         <div class="social-chat" id="social-chat" style="display: none;">
           <div class="active-user-header">
-            <h3 id="active-user-name"></h3>
-            <button onclick="endConnection()" class="end-btn">📞 إنهاء</button>
+            <div class="user-info">
+              <div class="user-avatar" id="partner-avatar"></div>
+              <div class="user-details">
+                <h3 id="active-user-name"></h3>
+                <p id="user-status" class="user-status">🟢 متصل</p>
+              </div>
+            </div>
+            <div class="header-actions">
+              <button class="header-icon-btn" title="معلومات">ℹ️</button>
+              <button class="header-icon-btn" title="إيموجي">😊</button>
+              <button onclick="endConnection()" class="end-btn" title="إنهاء الاتصال">📞</button>
+            </div>
           </div>
           <div class="social-messages" id="social-messages"></div>
+          <div class="typing-indicator-area" id="typing-area" style="display: none;">
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span id="typing-user"></span>
+          </div>
           <div class="social-input-area">
             <div class="social-input-wrapper">
-              <input type="text" id="social-input" class="social-input-field" placeholder="اكتب رسالة..." onkeypress="handleSocialKeypress(event)">
-              <button class="social-send-btn" onclick="sendSocialMessage()" title="إرسال رسالة نصية">📤 إرسال</button>
+              <button class="input-icon-btn" title="إضافة">➕</button>
+              <input type="text" id="social-input" class="social-input-field" placeholder="اكتب رسالة..." onkeypress="handleSocialKeypress(event)" oninput="emitTyping()">
+              <button class="emoji-btn" title="إيموجي">😊</button>
             </div>
-            <button class="voice-btn" id="voice-chat-btn" onclick="toggleSocialVoiceChat()" title="تحدث بالصوت">🎤 صوت</button>
+            <div class="action-buttons">
+              <button class="voice-btn" id="voice-chat-btn" onclick="toggleSocialVoiceChat()" title="تحدث بالصوت">🎤</button>
+              <button class="social-send-btn" onclick="sendSocialMessage()" title="إرسال رسالة">📤</button>
+            </div>
           </div>
         </div>
       </div>
