@@ -164,8 +164,12 @@ async function sendChatMessage() {
       aiMessageEl.innerHTML = `
         <span class="message-icon">🤖</span>
         <div class="message-content">${aiResponse}</div>
+        <button class="speak-btn" onclick="speakText('${aiResponse.replace(/'/g, "\\'")}')">🔊</button>
       `;
       messagesDiv.appendChild(aiMessageEl);
+      
+      // تشغيل الكلام تلقائياً
+      speakText(aiResponse);
     } else {
       const errorEl = document.createElement('div');
       errorEl.className = 'message ai-message';
@@ -191,6 +195,86 @@ async function sendChatMessage() {
   }
 }
 
+// Speech Recognition
+let isListening = false;
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+function toggleVoiceInput() {
+  if (!SpeechRecognition) {
+    alert('التحدث الصوتي غير مدعوم في متصفحك');
+    return;
+  }
+
+  const btn = document.getElementById('voice-btn');
+  const input = document.getElementById('chat-input-full');
+  
+  if (isListening) {
+    isListening = false;
+    btn.classList.remove('listening');
+    return;
+  }
+
+  isListening = true;
+  btn.classList.add('listening');
+  btn.textContent = '🎤 يستمع...';
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'ar-SA';
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => {
+    btn.classList.add('listening');
+  };
+
+  recognition.onresult = (event) => {
+    let transcript = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      transcript += event.results[i][0].transcript;
+    }
+    input.value = transcript;
+    btn.classList.remove('listening');
+    btn.textContent = '🎤';
+    isListening = false;
+    
+    // إرسال الرسالة تلقائياً
+    setTimeout(() => sendChatMessage(), 300);
+  };
+
+  recognition.onerror = () => {
+    btn.classList.remove('listening');
+    btn.textContent = '🎤';
+    isListening = false;
+  };
+
+  recognition.onend = () => {
+    btn.classList.remove('listening');
+    btn.textContent = '🎤';
+    isListening = false;
+  };
+
+  recognition.start();
+}
+
+// Text-to-Speech
+function speakText(text) {
+  if (!('speechSynthesis' in window)) {
+    console.log('التحدث الصوتي غير مدعوم');
+    return;
+  }
+
+  // إيقاف أي كلام قديم
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'ar-SA';
+  utterance.rate = 1;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  window.speechSynthesis.speak(utterance);
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
   const firstFeature = document.querySelector('.feature-card');
@@ -208,4 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('✅ Platform initialized successfully');
   console.log('🤖 AI Programming Expert Platform v5.0');
   console.log('💬 AI Chat ready with real responses!');
+  console.log('🎤 Voice input enabled!');
+  console.log('🔊 Text-to-Speech ready!');
 });
