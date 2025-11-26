@@ -197,8 +197,10 @@ async function sendChatMessage() {
   }
 }
 
-// Speech Recognition
+// Speech Recognition - Advanced Smart Listening
 let isListening = false;
+let silenceTimer = null;
+let recognitionInstance = null;
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 function toggleVoiceInput() {
@@ -215,6 +217,10 @@ function toggleVoiceInput() {
     isListening = false;
     btn.classList.remove('listening');
     controlPanel.style.display = 'none';
+    clearTimeout(silenceTimer);
+    if (recognitionInstance) {
+      recognitionInstance.abort();
+    }
     return;
   }
 
@@ -224,54 +230,96 @@ function toggleVoiceInput() {
   isListening = true;
   btn.classList.add('listening');
   btn.textContent = '🎤 اسمع...';
+  input.value = '';
 
-  const recognition = new SpeechRecognition();
-  recognition.lang = 'ar-SA';
-  recognition.continuous = true;
-  recognition.interimResults = true;
+  recognitionInstance = new SpeechRecognition();
+  recognitionInstance.lang = 'ar-SA';
+  recognitionInstance.continuous = false;
+  recognitionInstance.interimResults = true;
+  recognitionInstance.maxAlternatives = 1;
 
-  recognition.onstart = () => {
+  let finalTranscript = '';
+  let lastSpeechTime = Date.now();
+  let hasSpokenSomething = false;
+
+  recognitionInstance.onstart = () => {
     btn.classList.add('listening');
     document.getElementById('audio-visualizer').classList.add('active');
+    lastSpeechTime = Date.now();
   };
 
-  recognition.onresult = (event) => {
+  recognitionInstance.onresult = (event) => {
     let interimTranscript = '';
-    let finalTranscript = '';
     
     for (let i = event.resultIndex; i < event.results.length; i++) {
-      const transcript = event.results[i][0].transcript;
+      const transcript = event.results[i][0].transcript.trim();
+      
       if (event.results[i].isFinal) {
-        finalTranscript += transcript + ' ';
+        if (transcript.length > 0) {
+          finalTranscript = transcript;
+          hasSpokenSomething = true;
+          lastSpeechTime = Date.now();
+          
+          // عند سماع كلام نهائي - اوقف الاستماع بسرعة
+          clearTimeout(silenceTimer);
+          silenceTimer = setTimeout(() => {
+            if (isListening) {
+              recognitionInstance.stop();
+            }
+          }, 800); // انتظر 0.8 ثانية فقط للكلام النهائي
+        }
       } else {
-        interimTranscript += transcript;
+        if (transcript.length > 0) {
+          interimTranscript = transcript;
+          hasSpokenSomething = true;
+        }
       }
     }
     
+    // اعرض الكلام الوسيط أو النهائي
     input.value = finalTranscript || interimTranscript;
   };
 
-  recognition.onend = () => {
+  recognitionInstance.onend = () => {
     btn.classList.remove('listening');
     btn.textContent = '🎤';
     document.getElementById('audio-visualizer').classList.remove('active');
     isListening = false;
     controlPanel.style.display = 'none';
+    clearTimeout(silenceTimer);
     
-    // إرسال الرسالة تلقائياً
-    if (input.value.trim()) {
-      setTimeout(() => sendChatMessage(), 300);
+    // إرسال الرسالة تلقائياً إذا كان هناك كلام
+    if (finalTranscript.trim() && hasSpokenSomething) {
+      input.value = finalTranscript;
+      setTimeout(() => sendChatMessage(), 200);
     }
   };
 
-  recognition.onerror = () => {
+  recognitionInstance.onerror = (event) => {
+    console.log('Speech recognition error:', event.error);
+    btn.classList.remove('listening');
+    btn.textContent = '🎤';
+    document.getElementById('audio-visualizer').classList.remove('active');
+    isListening = false;
+    clearTimeout(silenceTimer);
+  };
+
+  recognitionInstance.onabort = () => {
     btn.classList.remove('listening');
     btn.textContent = '🎤';
     document.getElementById('audio-visualizer').classList.remove('active');
     isListening = false;
   };
 
-  recognition.start();
+  recognitionInstance.start();
+  
+  // Timeout عام - 15 ثانية كحد أقصى
+  clearTimeout(silenceTimer);
+  silenceTimer = setTimeout(() => {
+    if (isListening && recognitionInstance) {
+      recognitionInstance.stop();
+    }
+  }, 15000);
 }
 
 // 🎙️ Advanced Text-to-Speech with Premium Quality
@@ -302,13 +350,16 @@ function speakText(text) {
   // إيقاف أي كلام قديم
   responsiveVoice.cancel();
 
+  // تنظيف النص - إزالة الرموز الزائدة
+  const cleanText = text.replace(/[\`\*\_\[\]\(\)]/g, '').trim();
+
   // تحديث الواجهة
   btn.classList.add('speaking');
   visualizer.classList.add('active');
 
-  // استخدام مكتبة عالية الجودة
-  responsiveVoice.speak(text, voiceSettings.voice, {
-    rate: voiceSettings.rate,
+  // استخدام مكتبة عالية الجودة مع إعدادات محسّنة
+  responsiveVoice.speak(cleanText, voiceSettings.voice, {
+    rate: Math.min(voiceSettings.rate, 1.3), // حد أقصى للسرعة
     pitch: voiceSettings.pitch,
     volume: 1,
     onstart: () => {
