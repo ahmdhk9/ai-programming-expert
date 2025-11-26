@@ -26,6 +26,7 @@ body {
   color: var(--text);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 /* Status Bar */
@@ -40,17 +41,8 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
-.status-left {
-  display: flex;
-  gap: 4px;
-}
-
-.status-time {
-  font-weight: 500;
-}
-
-/* Workspace Header */
-.workspace-header {
+/* Header */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,13 +52,13 @@ body {
   flex-shrink: 0;
 }
 
-.workspace-info {
+.header-left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.workspace-avatar {
+.avatar {
   background: var(--surface-light);
   border: 1px solid var(--border);
   width: 32px;
@@ -80,13 +72,13 @@ body {
   color: var(--text-muted);
 }
 
-.workspace-name {
+.workspace {
   font-size: 13px;
   font-weight: 500;
   color: var(--text-muted);
 }
 
-.workspace-menu {
+.menu-btn {
   background: none;
   border: none;
   color: var(--text-muted);
@@ -95,58 +87,55 @@ body {
   padding: 4px;
 }
 
-/* Chat Container */
-.chat-container {
+/* Content */
+.content {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: relative;
 }
 
-/* Welcome Section */
-.welcome-section {
+.page {
   flex: 1;
+  overflow-y: auto;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+
+/* Welcome Box (Chat) */
+.welcome-box {
+  flex: 0 0 auto;
   text-align: center;
   padding: 40px 20px;
 }
 
-.welcome-text {
+.welcome-box h1 {
   font-size: 28px;
   font-weight: 600;
   color: var(--text);
   margin-bottom: 8px;
 }
 
-.welcome-subtext {
+.welcome-box p {
   font-size: 18px;
   color: var(--text-muted);
 }
 
-/* Messages Area */
-.messages-area {
+/* Messages */
+.messages {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.message-group {
-  display: flex;
-  margin-bottom: 8px;
+  padding-bottom: 16px;
 }
 
 .msg-ai {
   display: flex;
   gap: 8px;
   align-items: flex-start;
-  margin-bottom: 12px;
 }
 
 .msg-icon {
@@ -160,8 +149,7 @@ body {
   border-radius: 8px;
   font-size: 13px;
   line-height: 1.4;
-  color: var(--text);
-  max-width: 90%;
+  max-width: 85%;
 }
 
 .msg-user {
@@ -171,29 +159,23 @@ body {
   border-radius: 8px;
   font-size: 13px;
   align-self: flex-end;
-  max-width: 90%;
+  max-width: 85%;
   line-height: 1.4;
 }
 
-/* Input Section */
-.input-section {
-  padding: 16px;
-  background: var(--bg);
+/* Input Area */
+.input-area {
+  flex: 0 0 auto;
+  padding: 12px 0;
   border-top: 1px solid var(--border);
-  flex-shrink: 0;
 }
 
-.input-box {
-  border: 1px solid var(--primary);
-  border-radius: 8px;
+.message-input {
+  width: 100%;
   padding: 12px;
   background: var(--surface);
-}
-
-.chat-input {
-  width: 100%;
-  background: transparent;
-  border: none;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
   color: var(--text);
   font-size: 13px;
   font-family: inherit;
@@ -203,8 +185,259 @@ body {
   max-height: 150px;
 }
 
-.chat-input::placeholder {
+.message-input::placeholder {
   color: var(--text-muted);
+}
+
+.message-input:focus {
+  border-color: var(--primary);
+}
+
+/* Page Header */
+.page-header {
+  flex: 0 0 auto;
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.page-header p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Sections */
+.section {
+  flex: 0 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.section h3 {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+/* Stages */
+.stages {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--surface-light);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  min-width: 60px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.stage.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
+}
+
+.stage .num {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.stage .text {
+  font-size: 8px;
+}
+
+/* Tools Grid */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.tool-item {
+  background: var(--surface-light);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 20px;
+}
+
+.tool-item:hover {
+  background: var(--primary);
+  color: var(--bg);
+  border-color: var(--primary);
+}
+
+.tool-item p {
+  font-size: 8px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Code Block */
+.code-block {
+  background: var(--bg);
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 10px;
+  font-family: monospace;
+  color: var(--primary);
+  line-height: 1.4;
+  overflow-x: auto;
+}
+
+/* Status Tabs */
+.status-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-btn {
+  background: var(--surface-light);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+  min-width: 80px;
+}
+
+.status-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
+}
+
+.status-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.action-btn {
+  background: var(--primary);
+  color: var(--bg);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: var(--secondary);
+}
+
+.action-btn.red {
+  background: #dc2626;
+}
+
+/* Profile Card */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface-light);
+  border-radius: 6px;
+}
+
+.profile-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-info p {
+  margin: 2px 0;
+  font-size: 12px;
+}
+
+.profile-info .name {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.profile-info .email {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.profile-info .country {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* Settings List */
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: var(--surface-light);
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.setting-item input {
+  width: 40px;
+  height: 20px;
+  cursor: pointer;
 }
 
 /* Bottom Navigation */
@@ -217,7 +450,7 @@ body {
   flex-shrink: 0;
 }
 
-.nav-item {
+.nav-btn {
   background: none;
   border: none;
   color: var(--text-muted);
@@ -226,25 +459,21 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 8px 16px;
+  padding: 8px 12px;
   transition: all 0.2s;
-}
-
-.nav-item.active {
-  color: var(--primary);
-}
-
-.nav-item:hover {
-  color: var(--primary);
-}
-
-.nav-icon {
-  font-size: 20px;
-}
-
-.nav-label {
   font-size: 10px;
-  font-weight: 500;
+}
+
+.nav-btn.active {
+  color: var(--primary);
+}
+
+.nav-btn:hover {
+  color: var(--primary);
+}
+
+.nav-btn .icon {
+  font-size: 18px;
 }
 
 /* Scrollbar */
@@ -263,19 +492,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .welcome-text {
-    font-size: 22px;
-  }
-
-  .welcome-subtext {
-    font-size: 14px;
-  }
-
-  .chat-input {
-    font-size: 12px;
-  }
 }

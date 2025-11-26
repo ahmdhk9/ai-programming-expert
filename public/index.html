@@ -10,55 +10,195 @@
 
 <!-- Status Bar -->
 <div class="status-bar">
-  <div class="status-left">
-    <span class="signal">📡</span>
-    <span class="wifi">📶</span>
-  </div>
+  <div class="status-left"><span>📡</span><span>📶</span></div>
   <div class="status-time">1:10</div>
 </div>
 
-<!-- Workspace Header -->
-<div class="workspace-header">
-  <div class="workspace-info">
-    <span class="workspace-avatar">AH</span>
-    <span class="workspace-name">ahmdalbsrawe's workspace</span>
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <span class="avatar">AH</span>
+    <span class="workspace">ahmdalbsrawe's workspace</span>
   </div>
-  <button class="workspace-menu">⋮</button>
+  <button class="menu-btn">⋮</button>
 </div>
 
-<!-- Chat Container -->
-<div class="chat-container">
-  <!-- Welcome Message -->
-  <div class="welcome-section">
-    <h2 class="welcome-text">Hi ahmdalbsrawe,</h2>
-    <p class="welcome-subtext">what do you want to make?</p>
-  </div>
+<!-- Main Content -->
+<div class="content">
 
-  <!-- Chat Messages Area -->
-  <div class="messages-area" id="messagesArea">
-  </div>
-
-  <!-- Input Box -->
-  <div class="input-section">
-    <div class="input-box">
-      <textarea id="messageInput" placeholder="What's on your mind..." class="chat-input"></textarea>
+  <!-- CHAT PAGE -->
+  <div class="page" id="page-chat">
+    <div class="welcome-box">
+      <h1>Hi ahmdalbsrawe,</h1>
+      <p>what do you want to make?</p>
+    </div>
+    <div class="messages" id="messages-chat"></div>
+    <div class="input-area">
+      <textarea id="input-chat" placeholder="What's on your mind..." class="message-input"></textarea>
     </div>
   </div>
+
+  <!-- APPS PAGE (APP DEV) -->
+  <div class="page" id="page-apps" style="display: none;">
+    <div class="page-header">
+      <h2>📱 APP DEVELOPMENT</h2>
+      <p>Build your next amazing app</p>
+    </div>
+
+    <div class="section">
+      <h3>Development Stages</h3>
+      <div class="stages">
+        <div class="stage">
+          <span class="num">1</span>
+          <span class="text">Concept</span>
+        </div>
+        <div class="stage">
+          <span class="num">2</span>
+          <span class="text">Design</span>
+        </div>
+        <div class="stage active">
+          <span class="num">3</span>
+          <span class="text">Development</span>
+        </div>
+        <div class="stage">
+          <span class="num">4</span>
+          <span class="text">Deploy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Project Tools</h3>
+      <div class="tools-grid">
+        <div class="tool-item">🎯<p>Code Generation</p></div>
+        <div class="tool-item">🔄<p>Code Refactoring</p></div>
+        <div class="tool-item">⚛️<p>React Logic</p></div>
+        <div class="tool-item">🖼️<p>SVG Raster</p></div>
+        <div class="tool-item">✨<p>Design</p></div>
+        <div class="tool-item">🔀<p>DB Sync</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Code Preview</h3>
+      <div class="code-block">
+// AI Generated Code
+function useApp() {
+  return &lt;App /&gt;
+}</div>
+    </div>
+
+    <div class="section">
+      <h3>Project Status</h3>
+      <div class="status-tabs">
+        <button class="status-btn active">✅ Ready</button>
+        <button class="status-btn">🔄 Building</button>
+        <button class="status-btn">🚀 Deploy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLBOX PAGE -->
+  <div class="page" id="page-toolbox" style="display: none;">
+    <div class="page-header">
+      <h2>🛠️ TOOLBOX</h2>
+      <p>AI-Powered Development Tools</p>
+    </div>
+
+    <div class="section">
+      <h3>Available Tools</h3>
+      <div class="tools-grid">
+        <div class="tool-item">🎯<p>Mesh Refine</p></div>
+        <div class="tool-item">🔄<p>Code Refactoring</p></div>
+        <div class="tool-item">⚛️<p>React Logic</p></div>
+        <div class="tool-item">🖼️<p>SVG Raster</p></div>
+        <div class="tool-item">✨<p>Advanced Design</p></div>
+        <div class="tool-item">🔀<p>DB Sync</p></div>
+        <div class="tool-item">🔌<p>API Creator</p></div>
+        <div class="tool-item">☁️<p>Cloud Functions</p></div>
+        <div class="tool-item">🔗<p>Mesh Sync</p></div>
+        <div class="tool-item">⚙️<p>Cloud Config</p></div>
+        <div class="tool-item">🗄️<p>Database</p></div>
+        <div class="tool-item">🔐<p>Security</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Quick Actions</h3>
+      <div class="action-buttons">
+        <button class="action-btn">⚡ Quick Setup</button>
+        <button class="action-btn">📊 Analytics</button>
+        <button class="action-btn">🔗 Integrations</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT PAGE -->
+  <div class="page" id="page-account" style="display: none;">
+    <div class="page-header">
+      <h2>👤 ACCOUNT</h2>
+      <p>Manage your profile</p>
+    </div>
+
+    <div class="section">
+      <h3>Profile</h3>
+      <div class="profile-card">
+        <div class="profile-avatar">AH</div>
+        <div class="profile-info">
+          <p class="name">Ahmed Albsrawe</p>
+          <p class="email">ahmdalbsrawe@gmail.com</p>
+          <p class="country">🇮🇶 Iraq</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Settings</h3>
+      <div class="settings-list">
+        <div class="setting-item">
+          <span>Dark Mode</span>
+          <input type="checkbox" checked>
+        </div>
+        <div class="setting-item">
+          <span>Notifications</span>
+          <input type="checkbox" checked>
+        </div>
+        <div class="setting-item">
+          <span>AI Suggestions</span>
+          <input type="checkbox" checked>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Account</h3>
+      <div class="action-buttons">
+        <button class="action-btn">📝 Edit Profile</button>
+        <button class="action-btn">🔐 Change Password</button>
+        <button class="action-btn red">🚪 Sign Out</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
-  <button class="nav-item active" onclick="navigateTo('apps')">
-    <span class="nav-icon">📱</span>
-    <span class="nav-label">Apps</span>
+  <button class="nav-btn active" onclick="switchPage('chat')">
+    <span class="icon">💬</span>
+    <span>Chat</span>
   </button>
-  <button class="nav-item" onclick="navigateTo('create')">
-    <span class="nav-icon">➕</span>
-    <span class="nav-label">Create</span>
+  <button class="nav-btn" onclick="switchPage('apps')">
+    <span class="icon">📱</span>
+    <span>Apps</span>
   </button>
-  <button class="nav-item" onclick="navigateTo('account')">
-    <span class="nav-icon">👤</span>
-    <span class="nav-label">Account</span>
+  <button class="nav-btn" onclick="switchPage('toolbox')">
+    <span class="icon">🛠️</span>
+    <span>Tools</span>
+  </button>
+  <button class="nav-btn" onclick="switchPage('account')">
+    <span class="icon">👤</span>
+    <span>Account</span>
   </button>
 </div>
 

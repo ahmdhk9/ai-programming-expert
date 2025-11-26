@@ -1,36 +1,44 @@
-function navigateTo(section) {
-  const navItems = document.querySelectorAll('.nav-item');
-  navItems.forEach((item, idx) => {
-    item.classList.remove('active');
-    if ((section === 'apps' && idx === 0) ||
-        (section === 'create' && idx === 1) ||
-        (section === 'account' && idx === 2)) {
-      item.classList.add('active');
-    }
-  });
+function switchPage(pageName) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  // Show selected page
+  document.getElementById(`page-${pageName}`).style.display = 'flex';
+  
+  // Mark button as active
+  event.target.closest('.nav-btn').classList.add('active');
+
+  // Focus input if chat page
+  if (pageName === 'chat') {
+    setTimeout(() => {
+      const input = document.getElementById('input-chat');
+      if (input) input.focus();
+    }, 100);
+  }
 }
 
 function sendMessage() {
-  const input = document.getElementById('messageInput');
+  const input = document.getElementById('input-chat');
   const msg = input.value.trim();
   
   if (!msg) return;
 
-  const messagesArea = document.getElementById('messagesArea');
-  
-  // If welcome section is visible, remove it
-  const welcomeSection = document.querySelector('.welcome-section');
-  if (welcomeSection) {
-    welcomeSection.style.display = 'none';
+  const messages = document.getElementById('messages-chat');
+  const welcomeBox = document.querySelector('.welcome-box');
+
+  // Hide welcome box on first message
+  if (welcomeBox && welcomeBox.style.display !== 'none') {
+    welcomeBox.style.display = 'none';
   }
 
   // User message
   const userMsg = document.createElement('div');
   userMsg.className = 'msg-user';
   userMsg.textContent = msg;
-  messagesArea.appendChild(userMsg);
+  messages.appendChild(userMsg);
 
-  // Simulate AI response
+  // AI response
   setTimeout(() => {
     const aiMsg = document.createElement('div');
     aiMsg.className = 'msg-ai';
@@ -38,17 +46,17 @@ function sendMessage() {
       <span class="msg-icon">🤖</span>
       <div class="msg-content">تم استقبال طلبك: ${msg}</div>
     `;
-    messagesArea.appendChild(aiMsg);
-    messagesArea.scrollTop = messagesArea.scrollHeight;
+    messages.appendChild(aiMsg);
+    messages.scrollTop = messages.scrollHeight;
   }, 500);
 
   input.value = '';
-  messagesArea.scrollTop = messagesArea.scrollHeight;
+  messages.scrollTop = messages.scrollHeight;
 }
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('messageInput');
+  const input = document.getElementById('input-chat');
   
   input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -57,6 +65,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Focus on input
   input.focus();
 });
