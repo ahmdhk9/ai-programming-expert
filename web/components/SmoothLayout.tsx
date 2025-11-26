@@ -18,9 +18,10 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
     { icon: "💰", label: "أرباحي", href: "/dev/dashboard-earnings" },
     { icon: "📦", label: "الخطط", href: "/dev/subscription-plans" },
     { icon: "🔒", label: "الأمان", href: "/dev/security-dashboard" },
+    { icon: "🌐", label: "محلل الويب", href: "/dev/web-analyzer" },
+    { icon: "🔎", label: "البحث", href: "/dev/search-engine" },
     { icon: "🛠️", label: "Builder", href: "/developer/dynamic-builder" },
-    { icon: "🖥️", label: "Replit", href: "/developer/replit-ide" },
-    { icon: "🌐", label: "التطبيقات", href: "/web-apps" }
+    { icon: "🖥️", label: "Replit", href: "/developer/replit-ide" }
   ];
 
   if (!mounted) return null;
@@ -56,8 +57,7 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
               borderRadius: "8px",
               transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
               fontSize: "14px",
-              cursor: "pointer",
-              animation: mounted ? `slideIn 0.3s ease-out ${idx * 30}ms both` : "none"
+              cursor: "pointer"
             }} onMouseEnter={(e) => {
               (e.currentTarget as any).style.backgroundColor = "#f0f4ff";
               (e.currentTarget as any).style.color = "#667eea";
@@ -89,12 +89,11 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
-          animation: mounted ? "slideIn 0.5s ease-out" : "none"
+          alignItems: "center"
         }}>
           <div>
-            <h1 style={{ margin: 0, fontSize: "2rem", animation: mounted ? "slideIn 0.5s ease-out 100ms both" : "none" }}>{title}</h1>
-            {subtitle && <p style={{ margin: "0.5rem 0 0 0", opacity: 0.9, animation: mounted ? "slideIn 0.5s ease-out 150ms both" : "none" }}>{subtitle}</p>}
+            <h1 style={{ margin: 0, fontSize: "2rem" }}>{title}</h1>
+            {subtitle && <p style={{ margin: "0.5rem 0 0 0", opacity: 0.9 }}>{subtitle}</p>}
           </div>
           <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{
             background: "rgba(255,255,255,0.2)",
@@ -119,8 +118,7 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
         <main style={{
           flex: 1,
           overflow: "auto",
-          padding: "2rem",
-          animation: mounted ? "fadeIn 0.5s ease-out" : "none"
+          padding: "2rem"
         }}>
           {children}
         </main>

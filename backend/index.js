@@ -1157,3 +1157,23 @@ app.post('/api/monetization/withdraw', (req, res) => {
   res.json(result);
 });
 
+
+const webCrawler = require('./web-crawler-security');
+
+app.post('/api/web/analyze', async (req, res) => {
+  const { url } = req.body;
+  const result = await webCrawler.crawlAndAnalyze(url);
+  res.json(result);
+});
+
+app.post('/api/web/search', async (req, res) => {
+  const { query } = req.body;
+  const results = await webCrawler.search(query);
+  res.json(results);
+});
+
+app.post('/api/web/link-check', (req, res) => {
+  const { link } = req.body;
+  res.json(webCrawler.analyzeLink(link));
+});
+
