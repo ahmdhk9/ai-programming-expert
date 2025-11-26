@@ -1360,3 +1360,26 @@ app.post('/api/email/opportunity', async (req, res) => {
   res.json({ sent: true, alert });
 });
 
+
+const aiSystem = require('./ai-self-improving-system');
+
+app.get('/api/ai/dashboard', (req, res) => {
+  res.json(aiSystem.aiDashboard());
+});
+
+app.get('/api/ai/requests', (req, res) => {
+  res.json(aiSystem.requestResources());
+});
+
+app.get('/api/ai/bots', (req, res) => {
+  res.json(aiSystem.autoBotCreation());
+});
+
+app.get('/api/ai/projects', (req, res) => {
+  res.json(aiSystem.autoProjectGeneration());
+});
+
+app.get('/api/ai/report', (req, res) => {
+  res.json(aiSystem.comprehensiveAIReport());
+});
+

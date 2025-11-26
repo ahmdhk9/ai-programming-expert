@@ -16,7 +16,7 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
     { icon: "📝", label: "محرر", href: "/dev/editor/myproject" },
     { icon: "💎", label: "محفظة", href: "/dev/crypto-wallet" },
     { icon: "🪙", label: "عملات", href: "/dev/crypto-coins" },
-    { icon: "🤖", label: "AI", href: "/dev/ai-developer" },
+    { icon: "🤖", label: "AI محترف", href: "/dev/ai-developer" },
     { icon: "📊", label: "تحليلات", href: "/dev/analytics-advanced" },
     { icon: "🚀", label: "أرباح", href: "/dev/smart-earnings" },
     { icon: "📢", label: "ترويج", href: "/dev/marketing-engine" },
