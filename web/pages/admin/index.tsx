@@ -41,7 +41,7 @@ export default function AdminDashboard() {
         }}>
           <h1 style={{ textAlign: "center", color: "#667eea" }}>🔐 Admin Panel</h1>
           <p style={{ textAlign: "center", color: "#666", marginBottom: "1.5rem" }}>
-            أحمد البصراوي - لوحة التحكم
+            أحمد البصراوي
           </p>
           <input
             type="password"
@@ -79,6 +79,7 @@ export default function AdminDashboard() {
   }
 
   const adminLinks = [
+    { emoji: "🏥", label: "صحة النظام", href: "/admin/system-health" },
     { emoji: "👥", label: "المستخدمون", href: "/admin/users" },
     { emoji: "👤", label: "إدارة متقدمة", href: "/admin/advanced-users" },
     { emoji: "🔑", label: "التوكنات", href: "/admin/tokens" },
@@ -87,7 +88,8 @@ export default function AdminDashboard() {
     { emoji: "🔌", label: "التكاملات", href: "/admin/integrations" },
     { emoji: "⚙️", label: "الإعدادات", href: "/admin/settings" },
     { emoji: "🔐", label: "الأمان", href: "/admin/security" },
-    { emoji: "✨", label: "الميزات", href: "/admin/features-dashboard" }
+    { emoji: "✨", label: "الميزات", href: "/admin/features-dashboard" },
+    { emoji: "🗺️", label: "الخريطة", href: "/admin/roadmap" }
   ];
 
   return (
@@ -122,7 +124,7 @@ export default function AdminDashboard() {
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "2rem" }}>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
           gap: "1.5rem"
         }}>
           {adminLinks.map((item) => (
@@ -145,7 +147,7 @@ export default function AdminDashboard() {
               }}
             >
               <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{item.emoji}</div>
-              <div style={{ fontWeight: "bold", fontSize: "0.9rem", textAlign: "center" }}>{item.label}</div>
+              <div style={{ fontWeight: "bold", fontSize: "0.85rem", textAlign: "center" }}>{item.label}</div>
             </Link>
           ))}
         </div>

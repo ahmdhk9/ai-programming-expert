@@ -529,3 +529,44 @@ app.get('/api/payments/exchange-rate/:crypto', (req, res) => {
 
 console.log('✅ Advanced User Management & Crypto Payments APIs Added');
 
+
+// Import Monitoring Systems
+const autoMonitor = require('./auto-monitor');
+const performanceOptimizer = require('./performance-optimizer');
+const errorHandler = require('./error-handler');
+
+// بدء المراقبة
+autoMonitor.startMonitoring();
+performanceOptimizer.startOptimization();
+
+// Middleware لتتبع الأداء
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    performanceOptimizer.trackRequest(req.method, req.path, duration);
+  });
+  next();
+});
+
+// معالج الأخطاء الشامل
+app.use((err, req, res, next) => {
+  const result = errorHandler.handle(err, { path: req.path, method: req.method });
+  res.status(500).json(result);
+});
+
+// API للمراقبة
+app.get('/api/admin/system-health', (req, res) => {
+  res.json(autoMonitor.getPerformanceReport());
+});
+
+app.get('/api/admin/performance', (req, res) => {
+  res.json(performanceOptimizer.getMetrics());
+});
+
+app.get('/api/admin/error-stats', (req, res) => {
+  res.json(errorHandler.getStats());
+});
+
+console.log('✅ Auto-monitoring and Self-healing systems initialized');
+
