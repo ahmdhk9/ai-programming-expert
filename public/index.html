@@ -8,134 +8,57 @@
 </head>
 <body>
 
-<!-- Header -->
-<div class="app-header">
-  <div class="header-left">
-    <span class="battery">📶</span>
-    <span class="time">1:09</span>
-  </div>
-  <div class="header-right">
+<!-- Status Bar -->
+<div class="status-bar">
+  <div class="status-left">
     <span class="signal">📡</span>
+    <span class="wifi">📶</span>
   </div>
+  <div class="status-time">1:10</div>
 </div>
 
-<!-- Agent Header -->
-<div class="agent-header">
-  <div class="agent-title">
-    <span class="agent-icon">🤖</span>
-    <span>Agent</span>
+<!-- Workspace Header -->
+<div class="workspace-header">
+  <div class="workspace-info">
+    <span class="workspace-avatar">AH</span>
+    <span class="workspace-name">ahmdalbsrawe's workspace</span>
   </div>
-  <div class="agent-actions">
-    <button>📌</button>
-    <button>⋮</button>
-  </div>
+  <button class="workspace-menu">⋮</button>
 </div>
 
-<!-- Work Sessions -->
-<div class="work-sessions">
-  <div class="session-item">
-    <span class="session-icon">📋</span>
-    <span class="session-text">3 minutes of work</span>
-    <span class="expand">˅</span>
-  </div>
-</div>
-
-<!-- Main Chat Area -->
-<div class="main-area">
-  <!-- Messages -->
-  <div class="messages-container">
-    <!-- AI Message -->
-    <div class="message-block ai-block">
-      <div class="message-time">1 hour ago</div>
-      <div class="message-box ai-message">
-        اجمالها غير متاحه صالحه لجميع اجهزه الهواتف اديها تجربه مستخدم مشيره وفريده
-      </div>
-    </div>
-
-    <!-- User Action -->
-    <div class="action-block">
-      <span class="action-icon">🎯</span>
-      <span class="action-text">1 message & 13 actions</span>
-    </div>
-    <div class="code-snippet">
-      --- # 🎉 من ☑️ تأكيد - لا تخاف - لا تأخل - **بسيطة واحدة** إلى **...
-    </div>
-
-    <!-- Status -->
-    <div class="status-item">
-      <span class="status-icon">✅</span>
-      <span class="status-text">58 minutes ago</span>
-      <span class="status-title">Make the user interface simple and responsive for all devices</span>
-    </div>
-
-    <!-- Actions -->
-    <div class="actions-row">
-      <button class="action-btn">↩️ Rollback here</button>
-      <button class="action-btn">⟨ Changes</button>
-      <button class="action-btn">👁️ Preview</button>
-    </div>
-
-    <!-- Work Session 2 -->
-    <div class="message-block session-header">
-      <div class="message-time">2 minutes of work</div>
-    </div>
-
-    <!-- AI Message 2 -->
-    <div class="message-block ai-block">
-      <div class="message-time">55 minutes ago</div>
-      <div class="message-box ai-message">
-        الآن أعطيك تقرير عن الفقرات البرمجية التي أصبحت عليه ما هي مشيره وبماذا يمكن أن تفعل
-      </div>
-      <div class="scroll-indicator">↓ Scroll to latest</div>
-    </div>
-
-    <!-- Upgrade Banner -->
-    <div class="upgrade-banner">
-      <div class="upgrade-text">
-        <p>You're in fast mode, upgrade for a</p>
-        <p>smarter Agent</p>
-      </div>
-      <button class="upgrade-btn">+ Upgrade to Core</button>
-      <p class="upgrade-hint">Make targeted changes, 5x faster...</p>
-    </div>
+<!-- Chat Container -->
+<div class="chat-container">
+  <!-- Welcome Message -->
+  <div class="welcome-section">
+    <h2 class="welcome-text">Hi ahmdalbsrawe,</h2>
+    <p class="welcome-subtext">what do you want to make?</p>
   </div>
 
-  <!-- Input Area -->
-  <div class="input-area">
-    <div class="input-row">
-      <button class="input-btn">📎</button>
-      <input type="text" placeholder="Your message here..." class="message-input" id="messageInput">
-      <button class="input-btn">🎙️</button>
-    </div>
-    <div class="input-footer">
-      <button class="quick-action">⚡</button>
-      <button class="quick-action">≋</button>
-      <button class="quick-action">↑</button>
+  <!-- Chat Messages Area -->
+  <div class="messages-area" id="messagesArea">
+  </div>
+
+  <!-- Input Box -->
+  <div class="input-section">
+    <div class="input-box">
+      <textarea id="messageInput" placeholder="What's on your mind..." class="chat-input"></textarea>
     </div>
   </div>
 </div>
 
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
-  <button class="nav-btn active" onclick="switchTab('chat')">
-    <span class="nav-icon">💜</span>
-    <span class="nav-label"></span>
+  <button class="nav-item active" onclick="navigateTo('apps')">
+    <span class="nav-icon">📱</span>
+    <span class="nav-label">Apps</span>
   </button>
-  <button class="nav-btn" onclick="switchTab('design')">
-    <span class="nav-icon">💻</span>
-    <span class="nav-label"></span>
+  <button class="nav-item" onclick="navigateTo('create')">
+    <span class="nav-icon">➕</span>
+    <span class="nav-label">Create</span>
   </button>
-  <button class="nav-btn" onclick="switchTab('tools')">
-    <span class="nav-icon">🤖</span>
-    <span class="nav-label"></span>
-  </button>
-  <button class="nav-btn" onclick="switchTab('code')">
-    <span class="nav-icon">⚡</span>
-    <span class="nav-label"></span>
-  </button>
-  <button class="nav-btn" onclick="switchTab('more')">
-    <span class="nav-icon">📊</span>
-    <span class="nav-label"></span>
+  <button class="nav-item" onclick="navigateTo('account')">
+    <span class="nav-icon">👤</span>
+    <span class="nav-label">Account</span>
   </button>
 </div>
 
