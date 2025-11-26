@@ -1,9 +1,27 @@
 function setTab(tabName) {
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  console.log('📄 فتح الصفحة:', tabName);
+  
+  // إخفاء جميع الصفحات
+  document.querySelectorAll('.tab-pane').forEach(p => {
+    p.style.display = 'none';
+    p.classList.remove('active');
+  });
+  
+  // إزالة التفعيل من الأزرار
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
   
-  document.getElementById(tabName).classList.add('active');
+  // فتح الصفحة المطلوبة
+  const targetTab = document.getElementById(tabName);
+  if (targetTab) {
+    targetTab.style.display = 'block';
+    targetTab.classList.add('active');
+    console.log('✅ تم فتح الصفحة:', tabName);
+  } else {
+    console.error('❌ الصفحة غير موجودة:', tabName);
+  }
+  
+  // تفعيل الزر المناسب
   document.querySelectorAll('[onclick*="setTab"]').forEach(btn => {
     if (btn.onclick.toString().includes(`'${tabName}'`)) {
       btn.classList.add('active');
@@ -12,7 +30,8 @@ function setTab(tabName) {
   
   if (tabName === 'ai-chat-page') {
     setTimeout(() => {
-      document.getElementById('chat-input-full').focus();
+      const input = document.getElementById('chat-input-full');
+      if (input) input.focus();
     }, 100);
   }
 }
@@ -204,16 +223,31 @@ let recognitionInstance = null;
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 function startVoiceListening() {
+  console.log('🎤 بدء الاستماع الصوتي...');
+  
   // الانتقال لصفحة الاستماع الصوتي المخصصة
   setTab('voice-chat-page');
+  
+  // التأكد من فتح الصفحة
   setTimeout(() => {
-    listenAndRespond();
+    const voicePage = document.getElementById('voice-chat-page');
+    if (voicePage && voicePage.style.display !== 'none') {
+      console.log('✅ صفحة الصوت مفتوحة، بدء الاستماع...');
+      listenAndRespond();
+    } else {
+      console.error('❌ صفحة الصوت لم تفتح - محاولة مرة أخرى');
+      setTab('voice-chat-page');
+      setTimeout(listenAndRespond, 500);
+    }
   }, 300);
 }
 
 function listenAndRespond() {
+  console.log('🎤 listenAndRespond بدأ...');
+  
   if (!SpeechRecognition) {
-    alert('التحدث الصوتي غير مدعوم');
+    alert('التحدث الصوتي غير مدعوم في متصفحك');
+    console.error('❌ SpeechRecognition غير مدعوم');
     return;
   }
 
@@ -222,9 +256,21 @@ function listenAndRespond() {
   const voiceTranscript = document.getElementById('voice-transcript');
   const voiceChatLog = document.getElementById('voice-chat-log');
 
+  if (!listenBtn || !listeningText || !voiceTranscript || !voiceChatLog) {
+    console.error('❌ العناصر المطلوبة غير موجودة!', {
+      listenBtn: !!listenBtn,
+      listeningText: !!listeningText,
+      voiceTranscript: !!voiceTranscript,
+      voiceChatLog: !!voiceChatLog
+    });
+    alert('خطأ - العناصر المطلوبة غير موجودة');
+    return;
+  }
+
   listenBtn.classList.add('listening');
   listenBtn.textContent = '🛑 جاري الاستماع...';
   listeningText.textContent = 'يستمع...';
+  console.log('✅ تم تحضير زر الاستماع');
 
   const recognition = new SpeechRecognition();
   recognition.lang = 'ar-SA';
@@ -249,6 +295,8 @@ function listenAndRespond() {
   };
 
   recognition.onend = async () => {
+    console.log('🎤 انتهى الاستماع - النص:', finalTranscript);
+    
     listenBtn.classList.remove('listening');
     listenBtn.textContent = '🎤 اضغط للاستماع';
     
@@ -260,6 +308,7 @@ function listenAndRespond() {
       try {
         listeningText.textContent = '⏳ جاري الرد...';
         voiceTranscript.innerHTML = `<p style="color: var(--primary);">جاري معالجة السؤال...</p>`;
+        console.log('📡 إرسال السؤال للـ AI...');
         
         const response = await fetch('/api/ai/chat', {
           method: 'POST',
@@ -267,23 +316,25 @@ function listenAndRespond() {
           body: JSON.stringify({ message: finalTranscript })
         });
         
-        if (!response.ok) throw new Error(`خطأ: ${response.status}`);
+        if (!response.ok) throw new Error(`خطأ الخادم: ${response.status}`);
         
         const data = await response.json();
+        console.log('✅ حصلنا على الرد من الـ AI');
         
         if (data.success) {
           const aiResponse = data.response;
           voiceChatLog.innerHTML += `<div class="voice-message ai"><strong>الذكي:</strong> ${aiResponse}</div>`;
           voiceTranscript.innerHTML = `<p>${aiResponse}</p>`;
           listeningText.textContent = '🔊 جاري الرد الصوتي...';
+          console.log('🔊 بدء الرد الصوتي...');
           
           // رد صوتي فوري - بدون تأخير
           speakTextVoice(aiResponse);
         } else {
-          throw new Error(data.error || 'خطأ غير متوقع');
+          throw new Error(data.error || 'خطأ غير متوقع من الـ AI');
         }
       } catch (error) {
-        console.error('❌ خطأ:', error);
+        console.error('❌ خطأ كامل:', error);
         voiceChatLog.innerHTML += `<div class="voice-message ai" style="color: #ff4757;"><strong>⚠️ خطأ:</strong> ${error.message}</div>`;
         listeningText.textContent = '❌ حدث خطأ - جرب مجدداً';
       }
