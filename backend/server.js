@@ -80,6 +80,44 @@ app.get('/api/earnings', (req, res) => {
   res.json(realEarning.getRealEarnings());
 });
 
+// Contact form endpoint
+app.post('/api/contact/send', (req, res) => {
+  const { name, email, subject, message } = req.body;
+  
+  if (!name || !email || !subject || !message) {
+    return res.status(400).json({ error: 'جميع الحقول مطلوبة' });
+  }
+
+  const DEVELOPER_EMAIL = 'ahmdalbsrawe@gmail.com';
+  const PHONE = '+964-770-3174287';
+  
+  const emailContent = `
+    رسالة جديدة من: ${name}
+    البريد: ${email}
+    الموضوع: ${subject}
+    
+    الرسالة:
+    ${message}
+    
+    ---
+    تم الإرسال من: منصة الأرباح الذكية
+    الوقت: ${new Date().toLocaleString('ar-SA')}
+  `;
+
+  console.log(`\n📧 رسالة جديدة من ${name}:`);
+  console.log(`📬 البريد: ${email}`);
+  console.log(`📌 الموضوع: ${subject}`);
+  console.log(`💬 الرسالة: ${message}\n`);
+
+  // محاكاة إرسال البريد - في الإنتاج، استخدم خدمة بريد حقيقية (SendGrid, Mailgun, إلخ)
+  res.json({ 
+    success: true, 
+    message: '✅ تم استقبال رسالتك بنجاح! سيتم الرد عليك قريباً.',
+    developerInfo: `📧 ${DEVELOPER_EMAIL} | 📱 ${PHONE}`,
+    timestamp: new Date()
+  });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({
@@ -105,6 +143,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`🌐 URL: http://localhost:${PORT}`);
   console.log(`👨‍💻 Developer: https://localhost:${PORT}/dev`);
   console.log(`📊 Health Check: http://localhost:${PORT}/api/health`);
+  console.log(`📧 Contact API: POST http://localhost:${PORT}/api/contact/send`);
 });
 
 module.exports = app;
