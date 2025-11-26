@@ -2,10 +2,8 @@ app = "agent-backend-ahmd1"
 primary_region = "ams"
 
 [build]
+  builder = "docker"
   dockerfile = "Dockerfile"
-  
-[build.args]
-  NODE_ENV = "production"
 
 [env]
   NODE_ENV = "production"
