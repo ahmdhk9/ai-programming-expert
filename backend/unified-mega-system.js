@@ -132,3 +132,10 @@ class UnifiedMegaSystem {
 }
 
 module.exports = new UnifiedMegaSystem();
+
+// إضافة النظام اللانهائي
+this.infiniteSources = require('./infinite-income-engine');
+
+getInfinitySources() {
+  return this.infiniteSources.generateIncomeSources();
+}

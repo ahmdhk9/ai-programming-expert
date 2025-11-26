@@ -1429,3 +1429,18 @@ app.get('/api/unified/dashboard', (req, res) => {
   res.json(unified.comprehensiveReport());
 });
 
+
+const infinite = require('./infinite-income-engine');
+
+app.get('/api/infinite/sources', (req, res) => {
+  res.json(infinite.generateIncomeSources());
+});
+
+app.get('/api/infinite/discovery', (req, res) => {
+  res.json(infinite.intelligentDiscovery());
+});
+
+app.get('/api/infinite/expansion', (req, res) => {
+  res.json(infinite.autoExpansionSystem());
+});
+
