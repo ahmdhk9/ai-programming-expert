@@ -6,8 +6,8 @@
   <title>تسجيل الدخول - لوحة المطور</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    .login-container { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-width: 400px; width: 90%; }
+    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-container { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-width: 400px; width: 100%; }
     .login-container h1 { color: #667eea; font-size: 24px; margin-bottom: 10px; text-align: center; }
     .login-container p { color: #666; text-align: center; margin-bottom: 30px; font-size: 14px; }
     .form-group { margin-bottom: 20px; }
@@ -23,21 +23,34 @@
     .back-link { text-align: center; margin-top: 20px; }
     .back-link a { color: #667eea; text-decoration: none; font-size: 13px; }
     .back-link a:hover { text-decoration: underline; }
+    .security-info { background: #f0f3f4; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 12px; color: #666; }
   </style>
 </head>
 <body>
   <div class="login-container">
     <h1>🔐 لوحة المطور</h1>
-    <p>أدخل كلمة المرور لتسجيل الدخول</p>
+    <p>أدخل كلمة المرور الآمنة لتسجيل الدخول</p>
+    
+    <div class="security-info">
+      🔒 هذه الصفحة محمية بتشفير قوي. لا تشارك كلمة مرورك مع أحد.
+    </div>
     
     <div id="message" class="message"></div>
     
     <form id="loginForm">
       <div class="form-group">
         <label for="password">كلمة المرور</label>
-        <input type="password" id="password" name="password" required placeholder="أدخل كلمة المرور" autofocus>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          required 
+          placeholder="أدخل كلمة المرور"
+          autocomplete="off"
+          autofocus
+        >
       </div>
-      <button type="submit" class="btn">دخول</button>
+      <button type="submit" class="btn" id="submitBtn">دخول</button>
     </form>
     
     <div class="back-link">
@@ -48,7 +61,7 @@
   <script>
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = e.target.querySelector('.btn');
+      const btn = document.getElementById('submitBtn');
       const msg = document.getElementById('message');
       const password = document.getElementById('password').value;
 
@@ -69,9 +82,10 @@
           msg.className = 'message success';
           msg.textContent = '✅ تم التحقق! جاري التوجيه...';
           localStorage.setItem('adminToken', data.token);
+          localStorage.setItem('tokenExpiry', Date.now() + data.expiresIn);
           setTimeout(() => window.location.href = '/dev', 1000);
         } else {
-          throw new Error(data.message || 'كلمة المرور غير صحيحة');
+          throw new Error(data.message || 'فشل التحقق');
         }
       } catch (error) {
         msg.className = 'message error';
@@ -79,6 +93,11 @@
         btn.disabled = false;
         btn.textContent = 'دخول';
       }
+    });
+
+    // مسح حقل كلمة المرور عند إعادة تحميل الصفحة
+    window.addEventListener('beforeunload', () => {
+      document.getElementById('password').value = '';
     });
   </script>
 </body>
