@@ -19,7 +19,8 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
     { icon: "🎨", label: "الواجهات", href: "/developer/ui-editor" },
     { icon: "✨", label: "الميزات", href: "/developer/advanced-features" },
     { icon: "🧠", label: "الذكاء", href: "/developer/ai-coach" },
-    { icon: "💰", label: "الأرباح", href: "/developer/revenue" }
+    { icon: "💰", label: "الأرباح", href: "/developer/revenue" },
+    { icon: "🖥️", label: "Replit", href: "/developer/replit-ide" }
   ];
 
   if (!mounted) return null;
