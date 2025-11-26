@@ -15,6 +15,7 @@ let searchInProgress = false;
 let currentUsername = null;
 let isConnected = false;
 let reconnectAttempts = 0;
+let socialRecognitionInstance = null;
 
 // Auto-reconnect handler
 socket.on('connect', () => {
@@ -141,8 +142,9 @@ function cancelSearch() {
 }
 
 function endConnection() {
-  socialVoiceActive = false;
+  stopSocialVoiceChat();
   socket.emit('end-call');
+  resetSocialChat();
 }
 
 function handleSocialKeypress(event) {
@@ -182,6 +184,19 @@ function resetSocialChat() {
   document.getElementById('social-input').value = '';
 }
 
+function toggleSocialVoiceChat() {
+  if (!connectedUserId) {
+    showNotification('❌ لا يوجد اتصال نشط', 'error');
+    return;
+  }
+
+  if (socialVoiceActive) {
+    stopSocialVoiceChat();
+  } else {
+    startSocialVoiceChat();
+  }
+}
+
 function startSocialVoiceChat() {
   if (!isConnected) {
     showNotification('❌ غير متصل بالخادم', 'error');
@@ -195,19 +210,23 @@ function startSocialVoiceChat() {
 
   socialVoiceActive = true;
   const voiceBtn = document.getElementById('voice-chat-btn');
-  if (voiceBtn) voiceBtn.textContent = '🎤 استمع...';
+  if (voiceBtn) {
+    voiceBtn.classList.add('recording');
+    voiceBtn.textContent = '🎤 إيقاف';
+  }
 
   let finalText = '';
-  const socialRecognition = new SpeechRecognition();
-  socialRecognition.lang = 'ar-SA';
-  socialRecognition.continuous = false;
-  socialRecognition.interimResults = true;
+  socialRecognitionInstance = new SpeechRecognition();
+  socialRecognitionInstance.lang = 'ar-SA';
+  socialRecognitionInstance.continuous = false;
+  socialRecognitionInstance.interimResults = true;
 
-  socialRecognition.onstart = () => {
+  socialRecognitionInstance.onstart = () => {
     console.log('🎤 بدء الاستماع');
+    showNotification('🎤 جاري الاستماع...', 'info');
   };
 
-  socialRecognition.onresult = (e) => {
+  socialRecognitionInstance.onresult = (e) => {
     for (let i = e.resultIndex; i < e.results.length; i++) {
       if (e.results[i].isFinal) {
         finalText = e.results[i][0].transcript;
@@ -215,20 +234,20 @@ function startSocialVoiceChat() {
     }
   };
 
-  socialRecognition.onend = () => {
-    const voiceBtn = document.getElementById('voice-chat-btn');
-    if (voiceBtn) voiceBtn.textContent = '🎤 تحدث';
-
+  socialRecognitionInstance.onend = () => {
     if (finalText.trim()) {
-      addSocialMessage(finalText, 'user');
-      socket.emit('send-message', finalText);
+      addSocialMessage(`🎤 ${finalText}`, 'user');
+      socket.emit('send-message', `🎤 ${finalText}`);
       finalText = '';
+      showNotification('✅ تم إرسال الرسالة الصوتية', 'success');
     }
 
     if (socialVoiceActive && connectedUserId) {
       setTimeout(() => {
         try {
-          socialRecognition.start();
+          if (socialRecognitionInstance) {
+            socialRecognitionInstance.start();
+          }
         } catch (e) {
           console.log('تم إيقاف الاستماع');
         }
@@ -236,18 +255,38 @@ function startSocialVoiceChat() {
     }
   };
 
-  socialRecognition.onerror = (event) => {
+  socialRecognitionInstance.onerror = (event) => {
     console.error('❌ خطأ الصوت:', event.error);
     if (event.error !== 'aborted') {
-      showNotification(`❌ خطأ صوتي: ${event.error}`, 'error');
+      showNotification(`⚠️ ${event.error}`, 'error');
     }
   };
 
   try {
-    socialRecognition.start();
+    socialRecognitionInstance.start();
   } catch (e) {
     console.error('خطأ في بدء الاستماع:', e);
+    showNotification('❌ خطأ في تفعيل الصوت', 'error');
   }
+}
+
+function stopSocialVoiceChat() {
+  socialVoiceActive = false;
+  const voiceBtn = document.getElementById('voice-chat-btn');
+  if (voiceBtn) {
+    voiceBtn.classList.remove('recording');
+    voiceBtn.textContent = '🎤 صوت';
+  }
+
+  if (socialRecognitionInstance) {
+    try {
+      socialRecognitionInstance.abort();
+    } catch (e) {
+      console.log('خطأ في إيقاف الاستماع');
+    }
+  }
+  
+  showNotification('⏹️ تم إيقاف الاستماع', 'info');
 }
 
 function addSocialMessage(text, type) {

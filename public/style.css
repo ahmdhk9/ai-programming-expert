@@ -512,6 +512,13 @@ body {
   padding: 12px;
   border-top: 1px solid var(--border);
   flex-shrink: 0;
+  align-items: center;
+}
+
+.social-input-wrapper {
+  display: flex;
+  gap: 6px;
+  flex: 1;
 }
 
 .social-input-field {
@@ -522,6 +529,7 @@ body {
   padding: 10px 12px;
   border-radius: 6px;
   font-size: 13px;
+  font-family: inherit;
 }
 
 .social-input-field::placeholder {
@@ -544,6 +552,11 @@ body {
   font-size: 13px;
   font-weight: 600;
   transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.social-send-btn:hover, .voice-btn:hover {
+  opacity: 0.9;
 }
 
 .social-send-btn:active, .voice-btn:active {
@@ -552,6 +565,12 @@ body {
 
 .voice-btn {
   padding: 10px 12px;
+  min-width: 80px;
+}
+
+.voice-btn.recording {
+  background: #ef4444;
+  animation: pulse 1s infinite;
 }
 
 .cancel-btn {

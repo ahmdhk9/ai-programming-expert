@@ -132,9 +132,11 @@
           </div>
           <div class="social-messages" id="social-messages"></div>
           <div class="social-input-area">
-            <input type="text" id="social-input" class="social-input-field" placeholder="اكتب رسالة..." onkeypress="handleSocialKeypress(event)">
-            <button class="social-send-btn" onclick="sendSocialMessage()">إرسال</button>
-            <button class="voice-btn" id="voice-chat-btn" onclick="startSocialVoiceChat()">🎤</button>
+            <div class="social-input-wrapper">
+              <input type="text" id="social-input" class="social-input-field" placeholder="اكتب رسالة..." onkeypress="handleSocialKeypress(event)">
+              <button class="social-send-btn" onclick="sendSocialMessage()" title="إرسال رسالة نصية">📤 إرسال</button>
+            </div>
+            <button class="voice-btn" id="voice-chat-btn" onclick="toggleSocialVoiceChat()" title="تحدث بالصوت">🎤 صوت</button>
           </div>
         </div>
       </div>
