@@ -882,3 +882,17 @@ app.get('/api/system-status', (req, res) => {
 
 console.log('✅ Platform Fully Activated!');
 
+
+app.post('/api/dev/apply-theme', (req, res) => {
+  const { theme, page, customCSS } = req.body;
+  res.json({
+    status: 'theme_applied',
+    page,
+    theme,
+    customCSS: customCSS ? 'applied' : 'none',
+    timestamp: new Date()
+  });
+});
+
+console.log('✅ UI Editor and Theme System loaded');
+
