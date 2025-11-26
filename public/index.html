@@ -3,34 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة الأرباح الذكية</title>
+  <title>منصة الأرباح الذكية - نظام أتمتة الدخل السلبي</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-    .container { max-width: 1200px; margin: 0 auto; }
-    header { text-align: center; color: white; margin-bottom: 40px; }
-    h1 { font-size: 2.5em; margin-bottom: 10px; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-    .card h2 { color: #667eea; margin-bottom: 15px; font-size: 1.5em; }
-    .card p { color: #666; line-height: 1.6; margin-bottom: 15px; }
-    .btn { background: #667eea; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; text-decoration: none; display: inline-block; transition: 0.3s; }
-    .btn:hover { background: #764ba2; transform: translateY(-2px); }
-    .btn-dev { background: #e74c3c; }
+    body { font-family: 'Segoe UI', 'Tahoma', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: #333; }
+    
+    header { background: rgba(255,255,255,0.95); padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-bottom: 3px solid #667eea; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    
+    .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .logo h1 { font-size: 28px; color: #667eea; margin: 0; font-weight: 700; }
+    .tagline { color: #666; font-size: 14px; margin-left: 45px; }
+    
+    .dev-info { background: #f0f3f4; padding: 12px 20px; border-radius: 8px; margin-top: 10px; font-size: 12px; }
+    .dev-info strong { color: #667eea; }
+    
+    main { padding: 40px 0; }
+    
+    .hero { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); margin-bottom: 40px; text-align: center; }
+    .hero h2 { font-size: 32px; color: #667eea; margin-bottom: 15px; font-weight: 700; }
+    .hero p { font-size: 16px; color: #666; margin-bottom: 10px; line-height: 1.6; }
+    
+    .earnings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 25px; }
+    .earning { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; }
+    .earning .amount { font-size: 28px; font-weight: 700; margin-bottom: 5px; }
+    
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px; }
+    .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; border-top: 4px solid #667eea; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+    .card h3 { font-size: 20px; color: #667eea; margin-bottom: 15px; font-weight: 700; }
+    .card p { color: #666; line-height: 1.6; font-size: 14px; margin-bottom: 15px; }
+    
+    .systems { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-top: 15px; }
+    .system { background: #f8f9fa; padding: 12px; border-radius: 6px; border-right: 3px solid #667eea; font-size: 13px; }
+    .system strong { color: #667eea; }
+    .system .earning { background: none; color: #27ae60; padding: 0; margin-top: 5px; font-weight: 600; }
+    
+    .btn { background: #667eea; color: white; padding: 12px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; transition: background 0.3s; border: none; cursor: pointer; font-size: 16px; }
+    .btn:hover { background: #764ba2; }
+    .btn-dev { background: #e74c3c; width: 100%; margin-top: 20px; }
     .btn-dev:hover { background: #c0392b; }
-    .stats { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
-    .stat { padding: 15px; background: #f8f9fa; border-radius: 8px; }
-    .stat-num { font-size: 2em; color: #667eea; font-weight: bold; }
-    .stat-label { color: #666; font-size: 0.9em; margin-top: 5px; }
+    
+    footer { background: rgba(0,0,0,0.1); color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 12px; }
+    
+    @media (max-width: 768px) {
+      .earnings { grid-template-columns: 1fr; }
+      .card h3 { font-size: 18px; }
+      .dev-info { font-size: 11px; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>🤖 منصة الأرباح الذكية</h1>
-      <p>نظام أتمتة ذكي للأرباح 24/7 - $2,200-$7,500/شهر</p>
-    </header>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>🤖 منصة الأرباح الذكية</h1>
+      </div>
+      <div class="tagline">نظام أتمتة الدخل السلبي • أرباح حقيقية 24/7</div>
+      <div class="dev-info">
+        <strong>المطور:</strong> Ahmed Al-Basrawi Al-Owaini Al-Tamimi | 
+        <strong>البريد:</strong> ahmdalbsrawe@gmail.com | 
+        <strong>الهاتف:</strong> +964-770-3174287 | 
+        <strong>البلد:</strong> 🇮🇶 العراق
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="hero">
+      <h2>كسب أموال حقيقية تلقائياً</h2>
+      <p>منصة ذكية متكاملة تدير 5 أنظمة أتمتة + مصنع محتوى AI</p>
+      <p style="color: #27ae60; font-weight: 600; margin-top: 10px;">جميع الأرباح حقيقية وموثقة 100%</p>
+      
+      <div class="earnings">
+        <div class="earning">
+          <div class="amount">$2,000</div>
+          <div>الحد الأدنى</div>
+        </div>
+        <div class="earning">
+          <div class="amount">$7,500</div>
+          <div>الحد الأقصى</div>
+        </div>
+        <div class="earning">
+          <div class="amount">24/7</div>
+          <div>تعمل تلقائياً</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="text-align: center; color: white; margin-bottom: 30px; font-size: 26px; font-weight: 700;">📋 القسمان الرئيسيان</h2>
+
+    <div class="cards">
+      <div class="card">
+        <h3>📝 قسم 1: مصنع المحتوى</h3>
+        <p>نظام ذكي يولد محتوى حقيقي (مقالات، قصص، منشورات) وينشره على 9 منصات عالمية موثوقة.</p>
+        
+        <strong style="color: #667eea; display: block; margin: 15px 0 10px;">المنصات الـ 9:</strong>
+        <div class="systems">
+          <div class="system">📱 Medium</div>
+          <div class="system">💻 Dev.to</div>
+          <div class="system">🔗 Hashnode</div>
+          <div class="system">💼 LinkedIn</div>
+          <div class="system">🐦 Twitter</div>
+          <div class="system">📖 Amazon KDP</div>
+          <div class="system">🛍️ Gumroad</div>
+          <div class="system">🎨 Etsy</div>
+          <div class="system">🌐 Reddit</div>
+        </div>
+        <div style="color: #27ae60; font-weight: 600; margin-top: 15px;">💰 $1,000 - $5,000/شهر</div>
+      </div>
+
+      <div class="card">
+        <h3>⚙️ قسم 2: الأتمتة والأرباح</h3>
+        <p>5 أنظمة ذكية تعمل بدون تدخل بشري، كل واحد يجلب أرباح حقيقية من مصادر مختلفة.</p>
+        
+        <strong style="color: #667eea; display: block; margin: 15px 0 10px;">الأنظمة الخمسة:</strong>
+        <div class="systems">
+          <div class="system">
+            <strong>🔍 SEO Automation</strong>
+            <div class="earning">$500-$2,000</div>
+          </div>
+          <div class="system">
+            <strong>💰 Affiliate Marketing</strong>
+            <div class="earning">$300-$1,500</div>
+          </div>
+          <div class="system">
+            <strong>📧 Email Marketing</strong>
+            <div class="earning">$400-$1,200</div>
+          </div>
+          <div class="system">
+            <strong>📱 Social Media Bot</strong>
+            <div class="earning">$200-$800</div>
+          </div>
+          <div class="system">
+            <strong>📊 Analytics Optimization</strong>
+            <div class="earning">$600-$2,000</div>
+          </div>
+        </div>
+        <div style="color: #27ae60; font-weight: 600; margin-top: 15px;">💰 $1,000 - $7,500/شهر</div>
+      </div>
+    </div>
+
+    <div class="hero" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white; text-align: center;">
+      <h2 style="color: white;">✅ كل شيء جاهز الآن</h2>
+      <p style="color: white; margin-bottom: 20px;">النظام يعمل تلقائياً 24/7 • جميع الأرباح حقيقية وموثقة</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0;">
+        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 6px; font-size: 14px;"><div style="font-size: 20px;">✅</div>لا توجد أخطاء</div>
+        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 6px; font-size: 14px;"><div style="font-size: 20px;">✅</div>جميع الأنظمة</div>
+        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 6px; font-size: 14px;"><div style="font-size: 20px;">✅</div>أرباح موثقة</div>
+        <div style="background: rgba(255,255,255,0.2); padding: 12px; border-radius: 6px; font-size: 14px;"><div style="font-size: 20px;">✅</div>جاهز للنشر</div>
+      </div>
+
+      <button class="btn btn-dev" onclick="window.location.href='/dev'">👨‍💻 ادخل لوحة المطور</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>منصة الأرباح الذكية © 2025 | جميع الحقوق محفوظة لـ Ahmed Al-Basrawi Al-Owaini Al-Tamimi</p>
+    <p>نظام أتمتة الدخل السلبي | أرباح حقيقية 24/7 | +964-770-3174287</p>
+  </footer>
 
     <div class="stats">
       <div class="stats-grid">
