@@ -1080,3 +1080,24 @@ app.get('/api/dev/templates', (req, res) => {
   });
 });
 
+
+const githubAdvanced = require('./github-advanced');
+
+app.get('/api/github/security-check', (req, res) => {
+  const report = githubAdvanced.securityCheck({ code: "sample", packages: [] });
+  res.json(report);
+});
+
+app.post('/api/github/deploy', (req, res) => {
+  const deployment = githubAdvanced.smartDeploy(req.body);
+  res.json(deployment);
+});
+
+app.get('/api/github/stats', (req, res) => {
+  res.json(githubAdvanced.getDeploymentStats());
+});
+
+app.get('/api/github/branches', (req, res) => {
+  res.json(githubAdvanced.manageBranches());
+});
+

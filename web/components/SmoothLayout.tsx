@@ -21,6 +21,7 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
     { icon: "🧠", label: "الذكاء", href: "/developer/ai-coach" },
     { icon: "💰", label: "الأرباح", href: "/developer/revenue" },
     { icon: "🖥️", label: "Replit", href: "/developer/replit-ide" },
+    { icon: "🔐", label: "GitHub", href: "/developer/github-control" },
     { icon: "🛠️", label: "Builder", href: "/developer/dynamic-builder" }
   ];
 
