@@ -1110,3 +1110,28 @@ app.post('/api/dev/generate-app-complete', (req, res) => {
   res.json(app);
 });
 
+
+const syncEngine = require('./github-sync-engine');
+
+app.post('/api/github/connect', (req, res) => {
+  const { repoUrl, token } = req.body;
+  const result = syncEngine.connectProject(repoUrl, token);
+  res.json(result);
+});
+
+app.post('/api/github/command', (req, res) => {
+  const { command } = req.body;
+  const action = syncEngine.parseCommand(command);
+  res.json({ action, understood: !!action });
+});
+
+app.get('/api/dev/editor/:projectId', (req, res) => {
+  const link = syncEngine.generateDeveloperLink(req.params.projectId);
+  res.json(link);
+});
+
+app.get('/api/dev/preview/:projectId', (req, res) => {
+  const link = syncEngine.generatePreviewLink(req.params.projectId);
+  res.json(link);
+});
+
