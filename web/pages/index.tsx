@@ -33,9 +33,9 @@ export default function Home() {
             cursor: "pointer",
             boxShadow: "0 4px 15px rgba(0,0,0,0.2)"
           }}>
-            💬 أنشئ مشروعك الآن
+            ⚡ ابدأ الآن
           </Link>
-          <Link href="/universal" style={{
+          <Link href="/50-features" style={{
             padding: "1rem 2rem",
             backgroundColor: "rgba(255,255,255,0.2)",
             color: "white",
@@ -46,7 +46,7 @@ export default function Home() {
             fontSize: "1.1rem",
             cursor: "pointer"
           }}>
-            ✨ إنشاء أي شيء
+            🔥 50 ميزة متقدمة
           </Link>
         </div>
 

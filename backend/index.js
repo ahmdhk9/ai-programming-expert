@@ -238,3 +238,8 @@ app.post("/api/intelligent-agent", (req, res) => {
 const contentEngineRouter = require('./content-engine');
 app.use('/api/content', contentEngineRouter);
 
+
+// Import Super Engine
+const superEngineRouter = require('./super-engine');
+app.use('/api/super', superEngineRouter);
+
