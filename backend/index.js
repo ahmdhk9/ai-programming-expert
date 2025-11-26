@@ -1422,3 +1422,10 @@ app.get('/api/mega/aggregator', (req, res) => {
   res.json(mega.megaAggregatorReport());
 });
 
+
+const unified = require('./unified-mega-system');
+
+app.get('/api/unified/dashboard', (req, res) => {
+  res.json(unified.comprehensiveReport());
+});
+
