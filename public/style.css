@@ -1557,3 +1557,111 @@ body {
   0%, 100% { box-shadow: 0 4px 12px rgba(0, 255, 136, 0.2); }
   50% { box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4); }
 }
+
+/* Install Button */
+.header-btn.install {
+  background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+  color: #0f1419;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.2);
+}
+
+.header-btn.install:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 255, 136, 0.4);
+}
+
+.header-btn.install:active {
+  transform: translateY(0);
+}
+
+.header-btn.install.hidden {
+  display: none;
+}
+
+/* Install Prompt */
+.install-prompt {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+  border: 2px solid #00d4ff;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.15);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.install-prompt-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.install-prompt-icon {
+  font-size: 32px;
+}
+
+.install-prompt-text h3 {
+  color: var(--primary);
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.install-prompt-text p {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.install-prompt-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.install-prompt-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+
+.install-prompt-btn.primary {
+  background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+}
+
+.install-prompt-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 212, 255, 0.4);
+}
+
+.install-prompt-btn.secondary {
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.install-prompt-btn.secondary:hover {
+  background: var(--surface-light);
+  color: var(--text);
+}

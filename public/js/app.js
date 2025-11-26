@@ -322,6 +322,63 @@ function speakText(text) {
   });
 }
 
+// 📱 PWA Installation Handler
+let deferredPrompt;
+const installBtn = document.getElementById('install-btn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.classList.remove('hidden');
+  console.log('✅ PWA install prompt ready');
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('✅ App installed successfully!');
+  installBtn.classList.add('hidden');
+  deferredPrompt = null;
+  showInstallMessage('تم تنصيب التطبيق بنجاح! ✅');
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('✅ User accepted PWA installation');
+      }
+      deferredPrompt = null;
+      installBtn.classList.add('hidden');
+    });
+  } else {
+    // Fallback for browsers that don't support beforeinstallprompt
+    showInstallMessage('جاري تنصيب التطبيق... يرجى اتباع تعليمات المتصفح 📱');
+  }
+}
+
+function showInstallMessage(message) {
+  const messagesDiv = document.getElementById('chat-messages-full');
+  if (messagesDiv) {
+    const msgEl = document.createElement('div');
+    msgEl.className = 'message ai-message';
+    msgEl.innerHTML = `
+      <span class="message-icon">📱</span>
+      <div class="message-content">${message}</div>
+    `;
+    messagesDiv.appendChild(msgEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+}
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then((reg) => {
+    console.log('✅ Service Worker registered successfully');
+  }).catch((err) => {
+    console.log('⚠️ Service Worker registration failed:', err);
+  });
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
   const firstFeature = document.querySelector('.feature-card');
@@ -336,9 +393,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
+  // Hide install button initially
+  installBtn.classList.add('hidden');
+  
   console.log('✅ Platform initialized successfully');
   console.log('🤖 AI Programming Expert Platform v5.0');
   console.log('💬 AI Chat ready with real responses!');
   console.log('🎤 Voice input enabled!');
   console.log('🔊 Text-to-Speech ready!');
+  console.log('📱 PWA ready for installation!');
 });
