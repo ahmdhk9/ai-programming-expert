@@ -170,8 +170,8 @@ async function sendChatMessage() {
       `;
       messagesDiv.appendChild(aiMessageEl);
       
-      // تشغيل الكلام تلقائياً - طبيعي وسريع
-      setTimeout(() => speakText(aiResponse), 100);
+      // تشغيل الكلام تلقائياً - فوري
+      speakText(aiResponse);
     } else {
       const errorEl = document.createElement('div');
       errorEl.className = 'message ai-message';
@@ -322,17 +322,18 @@ function toggleVoiceInput() {
   }, 15000);
 }
 
-// 🎙️ Advanced Text-to-Speech with Premium Quality
+// 🎙️ Advanced Text-to-Speech - Web Speech API
 let voiceSettings = {
-  rate: 1.1,
-  pitch: 0.95,
-  voice: 'Arabic Female'
+  rate: 1.2,
+  pitch: 0.9,
+  volume: 1
 };
 
+let currentSpeech = null;
+
 function updateVoiceSettings() {
-  voiceSettings.rate = parseFloat(document.getElementById('voice-rate')?.value || 1.1);
-  voiceSettings.pitch = parseFloat(document.getElementById('voice-pitch')?.value || 0.95);
-  voiceSettings.voice = document.getElementById('voice-select')?.value || 'Arabic Female';
+  voiceSettings.rate = Math.min(parseFloat(document.getElementById('voice-rate')?.value || 1.2), 1.5);
+  voiceSettings.pitch = parseFloat(document.getElementById('voice-pitch')?.value || 0.9);
   
   document.getElementById('rate-value').textContent = voiceSettings.rate + 'x';
   document.getElementById('pitch-value').textContent = voiceSettings.pitch.toFixed(2);
@@ -342,35 +343,57 @@ function speakText(text) {
   const btn = document.getElementById('voice-btn');
   const visualizer = document.getElementById('audio-visualizer');
   
-  if (!responsiveVoice) {
-    console.log('Advanced voice service initializing...');
+  if (!('speechSynthesis' in window)) {
+    console.log('Speech synthesis not supported');
     return;
   }
 
   // إيقاف أي كلام قديم
-  responsiveVoice.cancel();
+  window.speechSynthesis.cancel();
 
   // تنظيف النص - إزالة الرموز الزائدة
-  const cleanText = text.replace(/[\`\*\_\[\]\(\)]/g, '').trim();
+  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@]/g, '').trim();
+
+  if (!cleanText) return;
 
   // تحديث الواجهة
   btn.classList.add('speaking');
   visualizer.classList.add('active');
 
-  // استخدام مكتبة عالية الجودة مع إعدادات محسّنة
-  responsiveVoice.speak(cleanText, voiceSettings.voice, {
-    rate: Math.min(voiceSettings.rate, 1.3), // حد أقصى للسرعة
-    pitch: voiceSettings.pitch,
-    volume: 1,
-    onstart: () => {
-      btn.classList.add('speaking');
-      visualizer.classList.add('active');
-    },
-    onend: () => {
-      btn.classList.remove('speaking');
-      visualizer.classList.remove('active');
-    }
-  });
+  // إنشاء utterance جديد
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = 'ar-SA';
+  utterance.rate = voiceSettings.rate;
+  utterance.pitch = voiceSettings.pitch;
+  utterance.volume = voiceSettings.volume;
+
+  // اختيار أفضل صوت عربي متاح
+  const voices = window.speechSynthesis.getVoices();
+  const arabicVoice = voices.find(v => v.lang.includes('ar-SA') || v.lang.includes('ar')) || voices[0];
+  if (arabicVoice) {
+    utterance.voice = arabicVoice;
+  }
+
+  utterance.onstart = () => {
+    btn.classList.add('speaking');
+    visualizer.classList.add('active');
+    console.log('🔊 التحدث بدأ...');
+  };
+
+  utterance.onend = () => {
+    btn.classList.remove('speaking');
+    visualizer.classList.remove('active');
+    console.log('🔊 التحدث انتهى');
+  };
+
+  utterance.onerror = (e) => {
+    console.log('Speech error:', e.error);
+    btn.classList.remove('speaking');
+    visualizer.classList.remove('active');
+  };
+
+  currentSpeech = utterance;
+  window.speechSynthesis.speak(utterance);
 }
 
 // 📱 PWA Installation Handler - Advanced
