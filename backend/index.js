@@ -1222,3 +1222,25 @@ app.get('/api/analytics/advanced/:appId', (req, res) => {
   res.json(payment.advancedAnalytics(req.params.appId));
 });
 
+const cryptoEngine = require('./crypto-engine');
+
+app.post('/api/crypto/wallet', (req, res) => {
+  const wallet = cryptoEngine.createSmartWallet(req.body.owner);
+  res.json(wallet);
+});
+
+app.post('/api/crypto/coin', (req, res) => {
+  const coin = cryptoEngine.createCoin(req.body.name, req.body.symbol, req.body.supply);
+  res.json(coin);
+});
+
+app.get('/api/crypto/revenue/:wallet', (req, res) => {
+  res.json(cryptoEngine.autoRevenueSystem(req.params.wallet));
+});
+
+app.get('/api/crypto/ai', (req, res) => {
+  res.json({
+    research: cryptoEngine.aiResearchDevelop(),
+    platforms: cryptoEngine.connectMultiplePlatforms()
+  });
+});
