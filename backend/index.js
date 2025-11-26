@@ -1177,3 +1177,27 @@ app.post('/api/web/link-check', (req, res) => {
   res.json(webCrawler.analyzeLink(link));
 });
 
+
+const aiRevenue = require('./ai-revenue-engine');
+
+app.get('/api/ai/revenue/:appId', (req, res) => {
+  const mockData = {
+    id: req.params.appId,
+    currentRevenue: 5250,
+    downloads: 50000,
+    rating: 4.5,
+    hasAds: true,
+    hasSubs: false,
+    hasIAP: false,
+    hasAffiliate: true,
+    hasSponsors: false
+  };
+  const report = aiRevenue.generateSmartReport(mockData);
+  res.json(report);
+});
+
+app.post('/api/ai/revenue-recommendations', (req, res) => {
+  const recommendations = aiRevenue.generateRecommendations(req.body);
+  res.json(recommendations);
+});
+
