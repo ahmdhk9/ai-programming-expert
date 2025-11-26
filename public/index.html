@@ -307,24 +307,19 @@
     </div>
 
     <!-- AI Chat Page Tab -->
-    <div id="ai-chat-page" class="tab-pane">
-      <div class="section">
-        <h2>🤖 الدردشة مع الذكاء الصناعي</h2>
-        <div class="ai-chat-page">
-          <div class="chat-messages-full" id="chat-messages-full">
-            <div class="message ai-message">
-              <span class="message-icon">🤖</span>
-              <div class="message-content">مرحباً! 👋 أنا مساعدك الذكي المتخصص في البرمجة. اسألني عن أي موضوع برمجي وسأساعدك بردود حقيقية ومفيدة! 🚀</div>
-            </div>
-          </div>
-          <div class="chat-input-full">
-            <input type="text" id="chat-input-full" class="chat-input-full-field" placeholder="اسأل عن أي شيء برمجي..." onkeypress="handleChatKeypress(event)">
-            <button class="chat-send-full" onclick="sendChatMessage()">إرسال</button>
-          </div>
-          <div class="chat-loading-full" id="chat-loading-full" style="display: none;">
-            <span>⏳ جاري التفكير...</span>
-          </div>
+    <div id="ai-chat-page" class="tab-pane ai-chat-tab">
+      <div class="chat-messages-full" id="chat-messages-full">
+        <div class="message ai-message">
+          <span class="message-icon">🤖</span>
+          <div class="message-content">مرحباً! 👋 أنا مساعدك الذكي المتخصص في البرمجة. اسألني عن أي موضوع برمجي وسأساعدك بردود حقيقية ومفيدة! 🚀</div>
         </div>
+      </div>
+      <div class="chat-input-full">
+        <input type="text" id="chat-input-full" class="chat-input-full-field" placeholder="اسأل عن أي شيء برمجي..." onkeypress="handleChatKeypress(event)">
+        <button class="chat-send-full" onclick="sendChatMessage()">إرسال</button>
+      </div>
+      <div class="chat-loading-full" id="chat-loading-full" style="display: none;">
+        <span>⏳ جاري التفكير...</span>
       </div>
     </div>
 
