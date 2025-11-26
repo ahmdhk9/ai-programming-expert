@@ -18,6 +18,7 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
     { icon: "🪙", label: "عملات", href: "/dev/crypto-coins" },
     { icon: "🤖", label: "AI محترف", href: "/dev/ai-developer" },
     { icon: "🔬", label: "بحث عالمي", href: "/dev/research-engine" },
+    { icon: "💵", label: "تجميع", href: "/dev/micro-earnings" },
     { icon: "📊", label: "تحليلات", href: "/dev/analytics-advanced" },
     { icon: "🚀", label: "أرباح", href: "/dev/smart-earnings" },
     { icon: "📢", label: "ترويج", href: "/dev/marketing-engine" },

@@ -1398,3 +1398,15 @@ app.get('/api/research/trends', (req, res) => {
   res.json(research.globalTrendAnalysis());
 });
 
+
+const micro = require('./micro-earnings-aggregator');
+const advanced = require('./advanced-expansion-system');
+
+app.get('/api/micro/report', (req, res) => {
+  res.json(micro.aggregatorReport());
+});
+
+app.get('/api/advanced/expansion', (req, res) => {
+  res.json(advanced.expansionReport());
+});
+
