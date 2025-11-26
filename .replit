@@ -56,7 +56,7 @@ externalPort = 3003
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["bash", "-c", "cd web && npm start"]
+run = ["node", "backend/server.js"]
 build = ["bash", "-c", "cd web && npm install && npm run build"]
 
 [userenv]
