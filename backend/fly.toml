@@ -9,10 +9,10 @@ primary_region = "ams"
 
 [env]
   NODE_ENV = "production"
-  PORT = "3000"
+  PORT = "5000"
 
 [[services]]
-  internal_port = 3000
+  internal_port = 5000
   protocol = "tcp"
   auto_stop_machines = true
   auto_start_machines = true
@@ -31,7 +31,7 @@ primary_region = "ams"
     port = 443
 
 [deploy]
-  release_command = "node -e \"console.log('Deployed successfully')\""
+  release_command = "node -e \"console.log('✅ Deployed successfully')\""
 
 [[vm]]
   memory = "512mb"

@@ -41,8 +41,8 @@ process.on('uncaughtException', (error) => {
 });
 
 // ========== ADVANCED SESSION MANAGEMENT ==========
-const users = new Map(); // socketId -> {username, searching, sessionId, partner, timestamp}
-const sessions = new Map(); // sessionId -> {user1, user2, messages[], created_at}
+const users = new Map();
+const sessions = new Map();
 const waitingQueue = [];
 const usernames = ['محمد', 'فاطمة', 'علي', 'أحمد', 'ليلى', 'سارة', 'حسن', 'مريم', 'عمر', 'نور'];
 const emojis = ['🌟', '💻', '🚀', '🎯', '🔥', '💡', '⭐', '🎨'];
@@ -81,7 +81,6 @@ function cleanupUser(socketId) {
 io.on('connection', (socket) => {
   console.log(`✅ اتصال جديد: ${socket.id}`);
 
-  // Add error handlers
   socket.on('error', (error) => {
     console.error(`❌ خطأ في socket: ${error}`);
   });
@@ -118,7 +117,6 @@ io.on('connection', (socket) => {
 
     currentUser.searching = true;
 
-    // Search for waiting user
     let partnerSocketId = null;
     for (let [id, user] of users) {
       if (id !== socket.id && user.searching && !user.sessionId) {
@@ -134,11 +132,9 @@ io.on('connection', (socket) => {
       return;
     }
 
-    // Create new session
     const partnerUser = users.get(partnerSocketId);
     const sessionId = generateSessionId();
     
-    // Create session record
     sessions.set(sessionId, {
       id: sessionId,
       user1: { id: socket.id, username: currentUser.username },
@@ -148,7 +144,6 @@ io.on('connection', (socket) => {
       status: 'active'
     });
 
-    // Update users
     currentUser.sessionId = sessionId;
     currentUser.partner = partnerSocketId;
     currentUser.searching = false;
@@ -157,14 +152,12 @@ io.on('connection', (socket) => {
     partnerUser.partner = socket.id;
     partnerUser.searching = false;
 
-    // Remove from queue
     const idx = waitingQueue.indexOf(partnerSocketId);
     if (idx !== -1) waitingQueue.splice(idx, 1);
 
     console.log(`🔗 جلسة جديدة: ${currentUser.username} ↔ ${partnerUser.username}`);
     console.log(`📌 معرف الجلسة: ${sessionId}`);
 
-    // Notify both users
     socket.emit('user-found', {
       username: partnerUser.username,
       connectedUserId: partnerSocketId,
@@ -196,7 +189,6 @@ io.on('connection', (socket) => {
       return;
     }
 
-    // Create message record
     const msgRecord = {
       id: 'msg_' + Math.random().toString(36).substr(2, 9),
       from: {
@@ -213,17 +205,14 @@ io.on('connection', (socket) => {
       read: false
     };
 
-    // Save to session
     session.messages.push(msgRecord);
 
     console.log(`💬 رسالة من ${sender.username} إلى ${recipient.username}`);
     console.log(`   المحتوى: ${message.trim()}`);
     console.log(`   الجلسة: ${sender.sessionId}`);
 
-    // Send to recipient ONLY
     io.to(sender.partner).emit('receive-message', msgRecord);
 
-    // Send confirmation to sender
     socket.emit('message-sent', {
       msgId: msgRecord.id,
       timestamp: msgRecord.timestamp
@@ -241,8 +230,6 @@ io.on('connection', (socket) => {
     if (msg) {
       msg.delivered = true;
       console.log(`✅ تسليم: ${msg.id}`);
-      
-      // Notify sender
       io.to(msg.from.id).emit('message-delivered', { msgId });
     }
   });
@@ -258,8 +245,6 @@ io.on('connection', (socket) => {
     if (msg) {
       msg.read = true;
       console.log(`👁️ قراءة: ${msg.id}`);
-      
-      // Notify sender
       io.to(msg.from.id).emit('message-read', { msgId });
     }
   });
@@ -327,7 +312,6 @@ io.on('connection', (socket) => {
     io.emit('online-count', users.size);
   });
 
-  // Handle reconnection with grace period
   socket.on('reconnect_attempt', () => {
     console.log(`🔄 محاولة إعادة اتصال: ${socket.id}`);
   });
@@ -360,16 +344,20 @@ app.post('/api/ai/chat', async (req, res) => {
   }
 });
 
+// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
     platform: 'AI Programming Expert v5.0',
+    environment: NODE_ENV,
     activeSessions: sessions.size,
     activeUsers: users.size,
-    waitingUsers: waitingQueue.length
+    waitingUsers: waitingQueue.length,
+    uptime: process.uptime()
   });
 });
 
+// Fallback route
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
@@ -412,11 +400,12 @@ setInterval(() => {
   }
 }, 300000);
 
-const PORT = process.env.PORT || 5000;
+// Start server
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 منصة AI Programming Expert v5.0`);
   console.log(`👥 نظام جلسات متقدم مع تأكيد التسليم`);
   console.log(`📍 الخادم: http://0.0.0.0:${PORT}`);
+  console.log(`🌍 البيئة: ${NODE_ENV}`);
   console.log(`⏰ الوقت: ${new Date().toLocaleString('ar-SA')}`);
   console.log(`✅ الخادم يعمل بدون توقف...\n`);
 });
