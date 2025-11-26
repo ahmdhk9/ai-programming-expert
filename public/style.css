@@ -110,6 +110,12 @@ body {
   gap: 10px;
 }
 
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
 .feature-card {
   background: var(--surface);
   padding: 14px;

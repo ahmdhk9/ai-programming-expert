@@ -608,6 +608,34 @@ setInterval(() => {
 let aiVoiceResponseEnabled = false;
 let aiSynthesis = window.speechSynthesis;
 
+function installApp() {
+  if (window.deferredPrompt) {
+    window.deferredPrompt.prompt();
+    window.deferredPrompt.userChoice.then(choiceResult => {
+      if (choiceResult.outcome === 'accepted') {
+        showNotification('✅ تم تنصيب التطبيق بنجاح', 'success');
+      }
+      window.deferredPrompt = null;
+    });
+  } else {
+    showNotification('📲 التطبيق مثبت بالفعل أو غير متاح للتنصيب', 'info');
+  }
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  window.deferredPrompt = e;
+  document.getElementById('install-btn').style.display = 'block';
+});
+
+function askAI(template) {
+  setTab('chat');
+  setTimeout(() => {
+    document.getElementById('chat-input').value = template;
+    document.getElementById('chat-input').focus();
+  }, 300);
+}
+
 function handleChatKeypress(event) {
   if (event.key === 'Enter') {
     sendChatMessage();
