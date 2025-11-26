@@ -1016,3 +1016,25 @@ app.get('/api/dev/logs', (req, res) => {
   });
 });
 
+
+const advancedFeatures = require('./advanced-features');
+
+app.get('/api/features/advanced', (req, res) => {
+  res.json(advancedFeatures.getAllFeatures());
+});
+
+app.get('/api/features/advanced/:name', (req, res) => {
+  const features = advancedFeatures.getAllFeatures();
+  const feature = features.features.find(f => f.feature.toLowerCase().includes(req.params.name.toLowerCase()));
+  res.json(feature || { error: 'Feature not found' });
+});
+
+console.log('✅ Advanced Features System loaded');
+
+
+const integrations = require('./integrations');
+
+app.get('/api/integrations/available', (req, res) => {
+  res.json(integrations.getAvailableIntegrations());
+});
+
