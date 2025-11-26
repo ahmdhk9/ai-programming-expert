@@ -216,3 +216,36 @@ router.get('/mega/stats', (req, res) => {
   res.json(megaSources.getStats());
 });
 
+
+const unlimited = require('../services/unlimited-sources');
+
+// الأرباح التلقائية
+router.get('/unlimited/earnings', (req, res) => {
+  res.json(unlimited.getCurrentEarnings());
+});
+
+// حالة النظام الكاملة
+router.get('/unlimited/status', (req, res) => {
+  res.json(unlimited.getFullStatus());
+});
+
+// توليد مصادر عشوائية
+router.get('/unlimited/sources/:count', (req, res) => {
+  const sources = unlimited.generateRandomSources(parseInt(req.params.count) || 1000);
+  res.json({ total: sources.length, sources });
+});
+
+// السحب المباشر بدون قيود
+router.post('/unlimited/withdraw', (req, res) => {
+  const { amount, wallet } = req.body;
+  const withdrawal = {
+    id: `withdraw_${Date.now()}`,
+    amount,
+    wallet,
+    status: 'completed',
+    timestamp: new Date(),
+    txHash: `0x${Math.random().toString(16).slice(2)}`
+  };
+  res.json({ success: true, withdrawal });
+});
+
