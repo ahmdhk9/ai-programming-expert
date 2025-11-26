@@ -2,203 +2,209 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>AI DEV & CREATE PLATFORM</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<div class="app-container">
+<div class="phone-frame">
   <!-- Header -->
-  <header class="header">
-    <div class="header-left">
-      <button class="back-btn">‹</button>
-      <h1>AI DEV & CREATE PLATFORM</h1>
-    </div>
-    <div class="header-right">
-      <button class="menu-icon">⋮</button>
-    </div>
-  </header>
-
-  <!-- Main Navigation Tabs -->
-  <div class="main-tabs">
-    <button class="tab active" onclick="switchTab('appdev')">APP DEV</button>
-    <button class="tab" onclick="switchTab('gamedev')">GAME DEV</button>
-    <button class="tab" onclick="switchTab('tools')">TOOLBOX</button>
+  <div class="header">
+    <button class="header-btn back">‹</button>
+    <h1 class="header-title">AI DEV & CREATE PLATFORM</h1>
+    <button class="header-btn menu">⋮</button>
   </div>
 
-  <!-- APP DEV Tab -->
-  <div id="appdev" class="tab-content active">
-    <!-- Project Stages -->
-    <div class="section stages-section">
-      <div class="stage-flow">
-        <div class="stage-item">
-          <div class="stage-num">1</div>
-          <div class="stage-label">Concept</div>
-        </div>
-        <div class="stage-item">
-          <div class="stage-num">2</div>
-          <div class="stage-label">Disony & Ulo</div>
-        </div>
-        <div class="stage-item active">
-          <div class="stage-num">3</div>
-          <div class="stage-label">Video/Image</div>
-        </div>
-        <div class="stage-item">
-          <div class="stage-num">4</div>
-          <div class="stage-label">Videng & Integrate</div>
-        </div>
-      </div>
-      <div class="stage-details">
-        <span class="stage-tag">1 CREATION</span>
-        <span class="stage-tag">CODE/BUILD</span>
-        <span class="stage-tag">4 DEPLOY</span>
-        <span class="stage-tag">5 DEPLOY</span>
-        <span class="stage-tag">MONITOR</span>
-      </div>
-    </div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <button class="nav-tab active" onclick="setTab('appdev')">APP DEV</button>
+    <button class="nav-tab" onclick="setTab('gamedev')">GAME DEV</button>
+    <button class="nav-tab" onclick="setTab('toolbox')">TOOLBOX</button>
+  </nav>
 
-    <!-- AI Creative Chat -->
-    <div class="section">
-      <h2>AI CREative CHAT</h2>
-      <div class="chat-container">
-        <div class="chat-preview">
-          <div class="task-box">
-            <h3>Task Tasker</h3>
-            <div class="task-content">
-              <div class="task-item">🎯 Task 1 - Tasker</div>
-              <div class="task-item">📝 Task 2 - Main</div>
+  <!-- Content -->
+  <div class="content-wrapper">
+
+    <!-- APP DEV Tab -->
+    <div id="appdev" class="tab-pane active">
+      <!-- Stages -->
+      <div class="section">
+        <div class="stages">
+          <div class="stage">
+            <div class="stage-num">1</div>
+            <div class="stage-text">Concept</div>
+          </div>
+          <div class="stage">
+            <div class="stage-num">2</div>
+            <div class="stage-text">Disony & Ulo</div>
+          </div>
+          <div class="stage active">
+            <div class="stage-num">3</div>
+            <div class="stage-text">Video/Image</div>
+          </div>
+          <div class="stage">
+            <div class="stage-num">4</div>
+            <div class="stage-text">Videng & Integrate</div>
+          </div>
+        </div>
+        <div class="stage-labels">
+          <span>1 CREATION</span>
+          <span>CODE/BUILD</span>
+          <span>4 DEPLOY</span>
+          <span>5 DEPLOY</span>
+          <span>MONITOR</span>
+        </div>
+      </div>
+
+      <!-- AI Creative Chat -->
+      <div class="section">
+        <h2>AI CREative CHAT</h2>
+        <div class="chat-box">
+          <div class="chat-left">
+            <div class="task-card">
+              <div class="task-header">Task Tasker</div>
+              <div class="task-body">
+                <div>🎯 Task 1 - Tasker</div>
+                <div>📝 Task 2 - Main</div>
+              </div>
+            </div>
+            <button class="msg-btn">أنت تحدث عن شئ متعلق</button>
+          </div>
+          <div class="chat-right">
+            <div class="msg-group">
+              <div class="msg-ai">
+                <span>🤖</span>
+                <div>استشاره فني في أي شي متعلق فيه...</div>
+              </div>
+            </div>
+            <div class="msg-group">
+              <div class="msg-user">Create Firebase API for طلبي</div>
+            </div>
+            <div class="msg-group">
+              <div class="msg-ai">
+                <span>🤖</span>
+                <div>جواب فني شامل...</div>
+              </div>
             </div>
           </div>
-          <button class="chat-msg-btn">أنت تحدث عن شئ متعلق</button>
-        </div>
-        <div class="chat-messages">
-          <div class="msg ai-msg">
-            <span>🤖</span>
-            <p>استشاره فني في أي شي متعلق فيه...</p>
-          </div>
-          <div class="msg user-msg">
-            <p>Create Firebase API for طلبي</p>
-          </div>
-          <div class="msg ai-msg">
-            <span>🤖</span>
-            <p>جواب فني شامل...</p>
-          </div>
         </div>
       </div>
-    </div>
 
-    <!-- AI Code Section -->
-    <div class="section">
-      <h2>AI Code</h2>
-      <div class="code-display">
-        <pre>// JS @options تحديد Limit
+      <!-- AI Code -->
+      <div class="section">
+        <h2>AI Code</h2>
+        <div class="code-box">
+          <code>// JS @options تحديد Limit
 53 scoop @sessionStorage format, obj–1 > execute
 51 function useData()
-21 return <config
-71 import data from 'config.api'</pre>
-      </div>
-    </div>
-
-    <!-- Project Health -->
-    <div class="section project-health">
-      <h2>Project Health</h2>
-      <div class="health-tabs">
-        <button class="health-tab active">💬 AI Chat</button>
-        <button class="health-tab">🎨 Design</button>
-        <button class="health-tab">💻 Code</button>
-        <button class="health-tab">🚀 Deploy</button>
-        <button class="health-tab">📊 Monitor</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TOOLS Tab -->
-  <div id="tools" class="tab-content">
-    <h2>AI-POWERED TOOLBOX</h2>
-    <div class="toolbox-grid">
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">🎯</div>
-        <p>Mesh Refle</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">🔄</div>
-        <p>Code Refactoring</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">⚛️</div>
-        <p>React Logic</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">🖼️</div>
-        <p>SVG Raster</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">✨</div>
-        <p>Advanced Designing</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">🔀</div>
-        <p>DB Sync</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">🔌</div>
-        <p>API Creator</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">☁️</div>
-        <p>Cloud Functions</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">🔗</div>
-        <p>Mesh Sync</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">⚙️</div>
-        <p>Cloud Function</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">🗄️</div>
-        <p>DB Sync</p>
-      </div>
-      <div class="tool-card" onclick="selectTool(this)">
-        <div class="tool-icon">🔐</div>
-        <p>Readiness Sync</p>
-      </div>
-    </div>
-
-    <!-- AI Powered Toolbox Item -->
-    <div class="toolbox-item">
-      <h3>AI-POWERED TOOLITEM</h3>
-      <div class="toolitem-details">
-        <div class="toolitem-box">
-          <p>🔧 ACME NUMBER OUM</p>
-          <p class="small">بام معلومات مسجود بات محفوظ كود تالي جمود</p>
+21 return &lt;config
+71 import data from 'config.api'</code>
         </div>
-        <div class="toolitem-box">
-          <p>📊 NOOB HATENA</p>
-          <p class="small">محصحة محفوظة قبل على المحتوى و بات</p>
+      </div>
+
+      <!-- Project Health -->
+      <div class="section">
+        <h2>Project Health</h2>
+        <div class="health-tabs">
+          <button class="health-tab active">💬 AI Chat</button>
+          <button class="health-tab">🎨 Design</button>
+          <button class="health-tab">💻 Code</button>
+          <button class="health-tab">🚀 Deploy</button>
+          <button class="health-tab">📊 Monitor</button>
         </div>
       </div>
     </div>
+
+    <!-- TOOLBOX Tab -->
+    <div id="toolbox" class="tab-pane">
+      <div class="section">
+        <h2>AI-POWERED TOOLBOX</h2>
+        <div class="toolbox">
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🎯</div>
+            <div class="tool-name">Mesh Refle</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔄</div>
+            <div class="tool-name">Code Refactoring</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">⚛️</div>
+            <div class="tool-name">React Logic</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🖼️</div>
+            <div class="tool-name">SVG Raster</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">✨</div>
+            <div class="tool-name">Advanced Design</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔀</div>
+            <div class="tool-name">DB Sync</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔌</div>
+            <div class="tool-name">API Creator</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">☁️</div>
+            <div class="tool-name">Cloud Functions</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔗</div>
+            <div class="tool-name">Mesh Sync</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">⚙️</div>
+            <div class="tool-name">Cloud Function</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🗄️</div>
+            <div class="tool-name">DB Sync</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔐</div>
+            <div class="tool-name">Readiness Sync</div>
+          </div>
+        </div>
+
+        <div class="toolitem">
+          <h3>AI-POWERED TOOLITEM</h3>
+          <div class="toolitem-box">
+            <p>🔧 ACME NUMBER OUM</p>
+            <p class="small">بام معلومات مسجود بات محفوظ كود تالي جمود</p>
+          </div>
+          <div class="toolitem-box">
+            <p>📊 NOOB HATENA</p>
+            <p class="small">محصحة محفوظة قبل على المحتوى و بات</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME DEV Tab -->
+    <div id="gamedev" class="tab-pane">
+      <div class="section" style="text-align: center; padding: 40px 20px;">
+        <h2>GAME DEV</h2>
+        <p style="color: #888; margin-top: 20px;">قادم قريباً...</p>
+      </div>
+    </div>
+
   </div>
 
-  <!-- GAME DEV Tab -->
-  <div id="gamedev" class="tab-content">
-    <h2>GAME DEV</h2>
-    <p style="color: #999; text-align: center; padding: 40px;">قادم قريباً...</p>
-  </div>
-
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav">
-    <button class="nav-item active">💬 AI Chat</button>
-    <button class="nav-item">🎨 Design</button>
-    <button class="nav-item">💻 Code</button>
-    <button class="nav-item">🚀 Deploy</button>
-    <button class="nav-item">📊 Monitor</button>
-  </div>
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="bottom-tab active">💬 AI Chat</button>
+    <button class="bottom-tab">🎨 Design</button>
+    <button class="bottom-tab">💻 Code</button>
+    <button class="bottom-tab">🚀 Deploy</button>
+    <button class="bottom-tab">📊 Monitor</button>
+  </nav>
 </div>
 
-<script src="/js/ai-engine.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>
