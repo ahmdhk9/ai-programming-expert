@@ -10,11 +10,14 @@ export default function Home() {
         padding: "4rem 2rem",
         textAlign: "center"
       }}>
+        <div style={{ marginBottom: "1rem", fontSize: "1.5rem", fontWeight: "bold", color: "#fff" }}>
+          👨‍💻 أحمد البصراوي - Dark Ahmed
+        </div>
         <h1 style={{ fontSize: "3.5rem", margin: "0 0 1rem 0", fontWeight: "bold" }}>
           🤖 AI Programming Expert
         </h1>
         <p style={{ fontSize: "1.3rem", maxWidth: "600px", margin: "0 auto 2rem" }}>
-          نظام ذكي يبني مشاريع متكاملة تلقائياً
+          نظام ذكي يبني مشاريع متكاملة تلقائياً - من تطوير أحمد البصراوي العويني التميمي
         </p>
         <p style={{ fontSize: "1.1rem", opacity: 0.9, maxWidth: "700px", margin: "0 auto 2rem" }}>
           اطلب، واحصل على موقع/تطبيق جاهز مع روابط حية ولوحة تحكم
@@ -167,16 +170,17 @@ export default function Home() {
             marginBottom: "2rem"
           }}>
             <Link href="/chat" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💬 Chat</Link>
+            <Link href="/contact-developer" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📧 Contact</Link>
+            <Link href="/roadmap" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🛣️ Roadmap</Link>
             <Link href="/dream-machine" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>✨ Dream</Link>
             <Link href="/standalone-download" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📥 Download</Link>
             <Link href="/hybrid-mode" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🔄 Hybrid</Link>
             <Link href="/marketplace" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🏪 Store</Link>
-            <Link href="/free-forever" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💚 Free</Link>
             <Link href="/50-features" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🔥 Features</Link>
-            <Link href="/resources" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📊 Monitor</Link>
           </div>
           <div style={{ textAlign: "center", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
-            <p style={{ opacity: 0.8 }}>🚀 AI Programming Expert 2025 - منصة متطورة تبني مستقبل التطوير</p>
+            <p style={{ opacity: 0.8 }}>🚀 AI Programming Expert 2025 - من تطوير أحمد البصراوي 👨‍💻</p>
+            <p style={{ opacity: 0.7, fontSize: "0.9rem" }}>📧 ahmdalbsrawe@gmail.com</p>
           </div>
         </div>
       </footer>
