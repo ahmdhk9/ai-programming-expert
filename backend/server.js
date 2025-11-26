@@ -5,6 +5,11 @@ const http = require('http');
 const socketIO = require('socket.io');
 const Groq = require('groq-sdk').default;
 
+// Environment variables
+require('dotenv').config();
+const PORT = process.env.PORT || 5000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, {
