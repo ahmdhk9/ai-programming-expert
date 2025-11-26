@@ -91,6 +91,11 @@ body {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
+  display: none;
+}
+
+.section-card.active {
+  display: block;
 }
 
 .section-title {
@@ -433,6 +438,42 @@ body {
   height: 16px;
   cursor: pointer;
   accent-color: var(--primary);
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 12px;
+  transition: all 0.2s;
+  font-size: 9px;
+}
+
+.nav-btn.active {
+  color: var(--primary);
+}
+
+.nav-btn:hover {
+  color: var(--primary);
+}
+
+.nav-btn .icon {
+  font-size: 18px;
 }
 
 /* Scrollbar */

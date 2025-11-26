@@ -1,3 +1,37 @@
+function switchSection(sectionName) {
+  // Hide all sections
+  document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  // Show selected section
+  const sectionId = `${sectionName}-section`;
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.classList.add('active');
+  }
+
+  // Mark button as active
+  const buttons = document.querySelectorAll('.nav-btn');
+  const btnIndex = {
+    'chat': 0,
+    'apps': 1,
+    'toolbox': 2,
+    'account': 3
+  };
+  
+  if (btnIndex[sectionName] !== undefined) {
+    buttons[btnIndex[sectionName]].classList.add('active');
+  }
+
+  // Focus input if chat section
+  if (sectionName === 'chat') {
+    setTimeout(() => {
+      const input = document.getElementById('input-chat');
+      if (input) input.focus();
+    }, 100);
+  }
+}
+
 function sendMessage() {
   const input = document.getElementById('input-chat');
   const msg = input.value.trim();
