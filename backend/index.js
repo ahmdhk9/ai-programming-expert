@@ -570,3 +570,56 @@ app.get('/api/admin/error-stats', (req, res) => {
 
 console.log('✅ Auto-monitoring and Self-healing systems initialized');
 
+
+// Import AI Coach Systems
+const aiCoach = require('./ai-coach');
+const contextAwareness = require('./context-awareness');
+
+// AI Coach APIs
+app.post('/api/dev/ai-coach', (req, res) => {
+  const { message, context } = req.body;
+  const userId = req.user?.id || 'demo';
+
+  // فهم النية
+  const intent = aiCoach.readIntent(message);
+
+  // فهم المشروع
+  aiCoach.understandProject(context);
+
+  // الخطة الكاملة
+  const plan = aiCoach.comprehensivePlan(message);
+
+  // شرح الخطة
+  const explanation = aiCoach.explainPlan(plan);
+
+  // تسجيل الإجراء
+  contextAwareness.recordAction(userId, {
+    type: 'user_request',
+    description: message,
+    result: 'processed',
+    nextStep: plan.recommendedActions[0]
+  });
+
+  res.json({
+    response: explanation,
+    understanding: intent,
+    plan: plan.recommendedActions[0],
+    nextSteps: plan.recommendedActions.slice(1, 3).join(', '),
+    context: aiCoach.statusReport()
+  });
+});
+
+app.get('/api/dev/context', (req, res) => {
+  const userId = req.user?.id || 'demo';
+  const context = contextAwareness.getFullContext(userId);
+  res.json(context);
+});
+
+app.get('/api/dev/ai-status', (req, res) => {
+  const userId = req.user?.id || 'demo';
+  const overview = contextAwareness.overallView(userId);
+  res.json({ overview, coachStatus: aiCoach.statusReport() });
+});
+
+console.log('✅ AI Coach & Context Awareness Systems loaded');
+

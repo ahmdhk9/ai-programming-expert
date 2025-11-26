@@ -94,6 +94,7 @@ export default function DeveloperDashboard() {
             { emoji: "💰", label: "الأرباح", href: "/developer/revenue" },
             { emoji: "💳", label: "الدفع", href: "/developer/monetization" },
             { emoji: "🤖", label: "AI مساعد", href: "/developer/ai-assistant" },
+            { emoji: "🧠", label: "مدرب ذكي", href: "/developer/ai-coach" },
             { emoji: "⚙️", label: "الإعدادات", href: "/admin/settings" },
             { emoji: "📊", label: "الإحصائيات", href: "/admin/analytics" },
             { emoji: "🔐", label: "الأمان", href: "/admin/security" }
