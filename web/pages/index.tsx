@@ -156,29 +156,29 @@ export default function Home() {
       </div>
 
       {/* CTA Footer */}
-      <footer style={{ backgroundColor: "rgba(0,0,0,0.2)", padding: "3rem 2rem", color: "white", textAlign: "center" }}>
-        <h3 style={{ marginTop: 0 }}>🎯 هيا! ابدأ الآن</h3>
-        <Link href="/chat" style={{
-          padding: "1rem 2rem",
-          backgroundColor: "white",
-          color: "#667eea",
-          textDecoration: "none",
-          borderRadius: "8px",
-          fontWeight: "bold",
-          fontSize: "1.1rem",
-          cursor: "pointer",
-          display: "inline-block",
-          marginBottom: "2rem"
-        }}>
-          💬 اطلب مشروعك
-        </Link>
-        <div style={{ display: "flex", justifyContent: "center", gap: "2rem", marginTop: "2rem", flexWrap: "wrap" }}>
-          <Link href="/chat" style={{ color: "white", textDecoration: "none" }}>💬 Chat</Link>
-          <Link href="/universal" style={{ color: "white", textDecoration: "none" }}>✨ Universal</Link>
-          <Link href="/video-creator" style={{ color: "white", textDecoration: "none" }}>🎬 Videos</Link>
-          <Link href="/resources" style={{ color: "white", textDecoration: "none" }}>📊 Resources</Link>
+      <footer style={{ backgroundColor: "rgba(0,0,0,0.2)", padding: "3rem 2rem", color: "white" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <h3 style={{ textAlign: "center", marginTop: 0, marginBottom: "2rem" }}>🎯 جميع الأدوات المتاحة</h3>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+            gap: "1rem",
+            textAlign: "center",
+            marginBottom: "2rem"
+          }}>
+            <Link href="/chat" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💬 Chat</Link>
+            <Link href="/universal" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>✨ Universal</Link>
+            <Link href="/video-creator" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🎬 Videos</Link>
+            <Link href="/content-manager" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📺 Content</Link>
+            <Link href="/storage-advisor" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💾 Storage</Link>
+            <Link href="/self-healing" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🔄 Healing</Link>
+            <Link href="/resources" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📊 Resources</Link>
+            <Link href="/ai-models" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🧠 AI</Link>
+          </div>
+          <div style={{ textAlign: "center", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
+            <p style={{ opacity: 0.8 }}>🚀 AI Programming Expert 2025 - منصة متطورة تبني مستقبل التطوير</p>
+          </div>
         </div>
-        <p style={{ marginTop: "2rem", opacity: 0.8 }}>🚀 AI Programming Expert 2025</p>
       </footer>
     </div>
   );

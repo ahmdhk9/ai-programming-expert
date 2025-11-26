@@ -233,3 +233,8 @@ app.post("/api/intelligent-agent", (req, res) => {
   });
 });
 
+
+// Import Content Engine
+const contentEngineRouter = require('./content-engine');
+app.use('/api/content', contentEngineRouter);
+
