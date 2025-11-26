@@ -623,3 +623,100 @@ app.get('/api/dev/ai-status', (req, res) => {
 
 console.log('✅ AI Coach & Context Awareness Systems loaded');
 
+
+// Import Multi-Model AI Systems
+const aiModelsManager = require('./ai-models-manager');
+const selfLearningSystem = require('./self-learning-system');
+const intelligentSelector = require('./intelligent-selector');
+
+// بدء فحص صحة النماذج
+aiModelsManager.checkAllHealth().then(results => {
+  console.log('✅ AI Models Health Check Complete', Object.keys(results));
+});
+
+// AI Processing with Multiple Models
+app.post('/api/dev/ai-process', async (req, res) => {
+  const { prompt, type = 'general' } = req.body;
+
+  try {
+    const result = await aiModelsManager.process(prompt, { type });
+    
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.status(500).json(result);
+    }
+  } catch (err) {
+    selfLearningSystem.learnFromError(err, { endpoint: '/api/dev/ai-process' });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get AI Models Status
+app.get('/api/dev/ai-models-status', (req, res) => {
+  res.json(aiModelsManager.getPerformanceReport());
+});
+
+// Smart Resource Selection
+app.post('/api/dev/select-best', (req, res) => {
+  const { requirement } = req.body;
+  const best = intelligentSelector.selectBest(requirement);
+  res.json(best || { error: 'No suitable resource found' });
+});
+
+// Self-Learning Report
+app.get('/api/dev/learning-report', (req, res) => {
+  res.json(selfLearningSystem.getComprehensiveReport());
+});
+
+// Multi-Model Fallback Processing
+app.post('/api/dev/ai-fallback', async (req, res) => {
+  const { prompt, models = [] } = req.body;
+  
+  const results = [];
+  for (const model of models) {
+    try {
+      const result = await aiModelsManager.callModel(model, prompt);
+      results.push({ model: model.name, success: true, result });
+    } catch (err) {
+      results.push({ model: model.name, success: false, error: err.message });
+    }
+  }
+
+  res.json({
+    total: models.length,
+    successful: results.filter(r => r.success).length,
+    results
+  });
+});
+
+console.log('✅ Multi-Model AI Systems loaded');
+
+
+// Import Advanced Self-Healing
+const advancedSelfHealing = require('./advanced-self-healing');
+
+// بدء المراقبة الاستباقية
+advancedSelfHealing.startProactiveMonitoring();
+
+// Advanced Healing Reports
+app.get('/api/dev/advanced-healing', (req, res) => {
+  res.json(advancedSelfHealing.getComprehensiveReport());
+});
+
+console.log('✅ Advanced Self-Healing System loaded');
+
+
+// System Evolution
+const systemEvolution = require('./system-evolution');
+
+app.get('/api/dev/evolution', (req, res) => {
+  res.json(systemEvolution.getFullReport());
+});
+
+app.get('/api/dev/roadmap', (req, res) => {
+  res.json(systemEvolution.generateRoadmap());
+});
+
+console.log('✅ System Evolution loaded');
+
