@@ -720,3 +720,54 @@ app.get('/api/dev/roadmap', (req, res) => {
 
 console.log('✅ System Evolution loaded');
 
+
+// Feature Generator System
+const featureGenerator = require('./feature-generator');
+
+// Generate Feature from Description
+app.post('/api/dev/generate-feature', (req, res) => {
+  const { description } = req.body;
+  
+  try {
+    // تحليل الطلب
+    const feature = featureGenerator.parseFeatureRequest(description);
+    featureGenerator.generatedFeatures.push(feature);
+    
+    // توليد الكود
+    const generatedCode = featureGenerator.generateCode(feature);
+    
+    // نشر تلقائي
+    const deployed = featureGenerator.autoDeployFeature(feature, generatedCode);
+    
+    res.json({
+      success: true,
+      message: `✅ تم توليد الميزة: "${feature.parsed.type}" - ${feature.parsed.estimatedTime} دقيقة`,
+      feature: feature.parsed,
+      generated: { files: generatedCode.files.length },
+      deployed: { description, status: 'deployed' }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get Workshop Report
+app.get('/api/dev/workshop-report', (req, res) => {
+  res.json(featureGenerator.getReport());
+});
+
+console.log('✅ Feature Generator Workshop loaded');
+
+
+const ideasVault = require('./ideas-vault');
+
+app.get('/api/dev/roadmap-full', (req, res) => {
+  res.json(ideasVault.getFullRoadmap());
+});
+
+app.get('/api/dev/recommendations', (req, res) => {
+  res.json(ideasVault.getRecommendations());
+});
+
+console.log('✅ Ideas Vault loaded');
+
