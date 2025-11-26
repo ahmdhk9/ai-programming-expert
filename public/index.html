@@ -18,12 +18,13 @@
 </div>
 
 <!-- Main Content -->
-<div class="content">
+<div class="main-container">
 
-  <!-- CHAT PAGE -->
-  <div class="page" id="page-chat">
+  <!-- CHAT SECTION -->
+  <div class="section-card" id="chat-section">
+    <div class="section-title">💬 الدردشة الذكية</div>
     <div class="welcome-box">
-      <h1>السلام عليكم أحمد</h1>
+      <h2>السلام عليكم أحمد</h2>
       <p>ماذا تريد أن تصنع اليوم؟</p>
     </div>
     <div class="messages" id="messages-chat"></div>
@@ -32,14 +33,11 @@
     </div>
   </div>
 
-  <!-- APPS PAGE -->
-  <div class="page" id="page-apps" style="display: none;">
-    <div class="page-header">
-      <h2>📱 تطوير التطبيقات</h2>
-      <p>بناء تطبيقات رائعة</p>
-    </div>
-
-    <div class="section">
+  <!-- APPS SECTION -->
+  <div class="section-card" id="apps-section">
+    <div class="section-title">📱 تطوير التطبيقات</div>
+    
+    <div class="subsection">
       <h3>مراحل التطوير</h3>
       <div class="stages">
         <div class="stage">
@@ -61,7 +59,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="subsection">
       <h3>أدوات المشروع</h3>
       <div class="tools-grid">
         <div class="tool-item">🎯<p>توليد الكود</p></div>
@@ -73,7 +71,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="subsection">
       <h3>عرض الكود</h3>
       <div class="code-block">
 // كود تم توليده بالذكاء الاصطناعي
@@ -82,7 +80,7 @@ function useApp() {
 }</div>
     </div>
 
-    <div class="section">
+    <div class="subsection">
       <h3>حالة المشروع</h3>
       <div class="status-tabs">
         <button class="status-btn active">✅ جاهز</button>
@@ -92,14 +90,11 @@ function useApp() {
     </div>
   </div>
 
-  <!-- TOOLBOX PAGE -->
-  <div class="page" id="page-toolbox" style="display: none;">
-    <div class="page-header">
-      <h2>🛠️ صندوق الأدوات</h2>
-      <p>أدوات ذكية متقدمة</p>
-    </div>
-
-    <div class="section">
+  <!-- TOOLBOX SECTION -->
+  <div class="section-card" id="toolbox-section">
+    <div class="section-title">🛠️ صندوق الأدوات</div>
+    
+    <div class="subsection">
       <h3>الأدوات المتاحة</h3>
       <div class="tools-grid">
         <div class="tool-item">🎯<p>تحسين الشبكة</p></div>
@@ -117,7 +112,7 @@ function useApp() {
       </div>
     </div>
 
-    <div class="section">
+    <div class="subsection">
       <h3>الإجراءات السريعة</h3>
       <div class="action-buttons">
         <button class="action-btn">⚡ إعداد سريع</button>
@@ -127,14 +122,11 @@ function useApp() {
     </div>
   </div>
 
-  <!-- ACCOUNT PAGE -->
-  <div class="page" id="page-account" style="display: none;">
-    <div class="page-header">
-      <h2>👤 الحساب</h2>
-      <p>إدارة ملفك الشخصي</p>
-    </div>
-
-    <div class="section">
+  <!-- ACCOUNT SECTION -->
+  <div class="section-card" id="account-section">
+    <div class="section-title">👤 الحساب</div>
+    
+    <div class="subsection">
       <h3>الملف الشخصي</h3>
       <div class="profile-card">
         <div class="profile-avatar">أح</div>
@@ -146,7 +138,7 @@ function useApp() {
       </div>
     </div>
 
-    <div class="section">
+    <div class="subsection">
       <h3>الإعدادات</h3>
       <div class="settings-list">
         <div class="setting-item">
@@ -164,7 +156,7 @@ function useApp() {
       </div>
     </div>
 
-    <div class="section">
+    <div class="subsection">
       <h3>إدارة الحساب</h3>
       <div class="action-buttons">
         <button class="action-btn">📝 تعديل الملف</button>
@@ -174,26 +166,6 @@ function useApp() {
     </div>
   </div>
 
-</div>
-
-<!-- Bottom Navigation -->
-<div class="bottom-nav">
-  <button class="nav-btn active" onclick="switchPage('chat')">
-    <span class="icon">💬</span>
-    <span>دردشة</span>
-  </button>
-  <button class="nav-btn" onclick="switchPage('apps')">
-    <span class="icon">📱</span>
-    <span>تطبيقات</span>
-  </button>
-  <button class="nav-btn" onclick="switchPage('toolbox')">
-    <span class="icon">🛠️</span>
-    <span>أدوات</span>
-  </button>
-  <button class="nav-btn" onclick="switchPage('account')">
-    <span class="icon">👤</span>
-    <span>الحساب</span>
-  </button>
 </div>
 
 <script src="/js/app.js"></script>
