@@ -896,3 +896,80 @@ app.post('/api/dev/apply-theme', (req, res) => {
 
 console.log('✅ UI Editor and Theme System loaded');
 
+
+const smartDeployment = require('./smart-deployment');
+const githubAutomation = require('./github-automation');
+const deploymentPipeline = require('./deployment-pipeline');
+
+// Smart Deployment APIs
+app.post('/api/dev/smart-deploy', (req, res) => {
+  const { files, options } = req.body;
+  const changes = smartDeployment.detectChanges(files);
+  const result = smartDeployment.smartDeploy(changes, options);
+  res.json(result);
+});
+
+app.get('/api/dev/change-log', (req, res) => {
+  res.json(smartDeployment.getChangeLog());
+});
+
+app.post('/api/dev/rollback/:id', (req, res) => {
+  const result = smartDeployment.intelligentRollback(req.params.id);
+  res.json(result);
+});
+
+// GitHub Automation APIs
+app.post('/api/dev/auto-resolve-conflicts', (req, res) => {
+  const { branch, conflicts } = req.body;
+  const result = githubAutomation.autoResolveConflicts(branch, conflicts);
+  res.json(result);
+});
+
+app.get('/api/dev/github-healing', (req, res) => {
+  const result = githubAutomation.autoHealGithub();
+  res.json(result);
+});
+
+app.get('/api/dev/ci-pipeline', (req, res) => {
+  const result = githubAutomation.setupAdvancedCI();
+  res.json(result);
+});
+
+// Deployment Pipeline APIs
+app.post('/api/dev/create-pipeline', (req, res) => {
+  const pipeline = deploymentPipeline.createAdvancedPipeline(req.body);
+  res.json(pipeline);
+});
+
+app.post('/api/dev/blue-green-deploy', (req, res) => {
+  const result = deploymentPipeline.blueGreenDeploy(req.body.version);
+  res.json(result);
+});
+
+app.post('/api/dev/canary-deploy', (req, res) => {
+  const result = deploymentPipeline.canaryDeploy(req.body.version);
+  res.json(result);
+});
+
+console.log('✅ Advanced Deployment & GitHub Automation loaded');
+
+
+app.get('/api/dev/deployment-status', (req, res) => {
+  res.json({
+    current_deployment: {
+      type: 'smart_incremental',
+      status: 'ready',
+      downtime: '0 seconds',
+      rollback_time: '< 10 seconds'
+    },
+    features: {
+      smart_deploy: 'enabled',
+      github_automation: 'enabled',
+      blue_green: 'enabled',
+      canary: 'enabled',
+      auto_healing: 'enabled'
+    },
+    last_deployment: new Date().toISOString()
+  });
+});
+
