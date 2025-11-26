@@ -243,3 +243,38 @@ app.use('/api/content', contentEngineRouter);
 const superEngineRouter = require('./super-engine');
 app.use('/api/super', superEngineRouter);
 
+
+// New Advanced Routes
+app.post("/api/dream-to-project", (req, res) => {
+  const { dream } = req.body;
+  res.json({
+    status: "dream-converted",
+    project: {
+      name: dream.substring(0, 50),
+      type: "auto-detected",
+      tech: ["Next.js", "Firebase", "AI"],
+      url: `https://dream-${Date.now()}.vercel.app`,
+    },
+  });
+});
+
+app.get("/api/free-services", (req, res) => {
+  res.json({
+    services: [
+      { name: "Vercel", capacity: "unlimited", status: "✅" },
+      { name: "Firebase", capacity: "5GB", status: "✅" },
+      { name: "Fly.io", capacity: "3 shared CPU", status: "✅" },
+      { name: "Groq", capacity: "unlimited", status: "✅" },
+    ],
+    monthlyBudget: "$0",
+  });
+});
+
+app.get("/api/marketplace", (req, res) => {
+  res.json({
+    projects: 50,
+    allFree: true,
+    readyToUse: true,
+  });
+});
+

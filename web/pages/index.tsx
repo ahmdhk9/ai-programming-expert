@@ -167,12 +167,12 @@ export default function Home() {
             marginBottom: "2rem"
           }}>
             <Link href="/chat" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💬 Chat</Link>
-            <Link href="/universal" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>✨ Universal</Link>
-            <Link href="/video-creator" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🎬 Videos</Link>
-            <Link href="/content-manager" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📺 Content</Link>
-            <Link href="/storage-advisor" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💾 Storage</Link>
-            <Link href="/self-healing" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🔄 Healing</Link>
-            <Link href="/resources" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📊 Resources</Link>
+            <Link href="/dream-machine" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>✨ Dream</Link>
+            <Link href="/voice-commands" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🎙️ Voice</Link>
+            <Link href="/marketplace" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🏪 Store</Link>
+            <Link href="/free-forever" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💚 Free</Link>
+            <Link href="/50-features" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🔥 Features</Link>
+            <Link href="/resources" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📊 Monitor</Link>
             <Link href="/ai-models" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🧠 AI</Link>
           </div>
           <div style={{ textAlign: "center", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
