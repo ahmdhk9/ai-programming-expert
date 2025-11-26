@@ -9,6 +9,81 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
+// ========== SOCIAL CHAT SYSTEM ==========
+const activeUsers = new Map();
+const matchedPairs = new Map();
+
+// Generate unique user ID
+function generateUserId() {
+  return 'user_' + Math.random().toString(36).substr(2, 9);
+}
+
+// Generate random username
+const usernames = ['محمد', 'فاطمة', 'علي', 'أحمد', 'ليلى', 'سارة', 'حسن', 'مريم', 'عمر', 'نور'];
+function getRandomUsername() {
+  const name = usernames[Math.floor(Math.random() * usernames.length)];
+  const emoji = ['🌟', '💻', '🚀', '🎯', '🔥', '💡', '⭐', '🎨'][Math.floor(Math.random() * 8)];
+  return `${name}${emoji}`;
+}
+
+// Social Chat API
+app.post('/api/social/register', (req, res) => {
+  const userId = generateUserId();
+  const username = getRandomUsername();
+  activeUsers.set(userId, { username, connected: false, timestamp: Date.now() });
+  res.json({ success: true, userId, username });
+});
+
+app.post('/api/social/find-user', (req, res) => {
+  const { userId } = req.body;
+  
+  // العثور على مستخدم متاح (لم يكن مرتبطاً)
+  let availableUser = null;
+  for (let [id, user] of activeUsers) {
+    if (id !== userId && !user.connected && !matchedPairs.has(id)) {
+      availableUser = { id, ...user };
+      break;
+    }
+  }
+  
+  if (availableUser) {
+    matchedPairs.set(userId, availableUser.id);
+    matchedPairs.set(availableUser.id, userId);
+    activeUsers.get(userId).connected = true;
+    activeUsers.get(availableUser.id).connected = true;
+    
+    res.json({ success: true, connectedUser: availableUser });
+  } else {
+    res.json({ success: false, message: 'لا يوجد مستخدمون متاحون الآن' });
+  }
+});
+
+app.post('/api/social/send-message', (req, res) => {
+  const { fromId, toId, message } = req.body;
+  
+  if (matchedPairs.has(fromId) && matchedPairs.get(fromId) === toId) {
+    res.json({ success: true, message: 'تم إرسال الرسالة' });
+  } else {
+    res.json({ success: false, error: 'الاتصال منقطع' });
+  }
+});
+
+app.post('/api/social/end-call', (req, res) => {
+  const { userId, connectedUserId } = req.body;
+  
+  matchedPairs.delete(userId);
+  matchedPairs.delete(connectedUserId);
+  
+  if (activeUsers.has(userId)) {
+    activeUsers.get(userId).connected = false;
+  }
+  if (activeUsers.has(connectedUserId)) {
+    activeUsers.get(connectedUserId).connected = false;
+  }
+  
+  res.json({ success: true, message: 'تم إنهاء الاتصال' });
+});
+
 // Initialize Groq client
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY

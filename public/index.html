@@ -104,41 +104,35 @@
     <div id="social" class="tab-pane">
       <div class="social-container">
         <div class="social-header">
-          <button onclick="setTab('tools')" class="social-back">‹ رجوع</button>
-          <h2>👥 دردشة اجتماعية</h2>
-          <button class="social-settings">⚙️</button>
+          <h2>👥 تواصل عشوائي</h2>
         </div>
 
-        <div class="online-users">
-          <h3>المستخدمون النشطون:</h3>
-          <div class="users-list" id="users-list">
-            <div class="user-item" onclick="connectToUser('محمد🌟')">
-              <span class="user-status">🟢</span>
-              <span class="user-name">محمد</span>
-              <span class="user-badge">نشط</span>
-            </div>
-            <div class="user-item" onclick="connectToUser('فاطمة💻')">
-              <span class="user-status">🟢</span>
-              <span class="user-name">فاطمة</span>
-              <span class="user-badge">نشط</span>
-            </div>
-            <div class="user-item" onclick="connectToUser('علي🚀')">
-              <span class="user-status">🟢</span>
-              <span class="user-name">علي</span>
-              <span class="user-badge">نشط</span>
-            </div>
+        <!-- Search State -->
+        <div class="social-search" id="social-search">
+          <div class="search-content">
+            <div class="search-icon">🔍</div>
+            <h3>ابحث عن شخص عشوائي</h3>
+            <p id="search-status">جاهز للبحث</p>
+            <button class="find-btn" onclick="findRandomUser()">🎲 ابحث الآن</button>
           </div>
         </div>
 
+        <!-- Loading State -->
+        <div class="social-loading" id="social-loading" style="display: none;">
+          <div class="loading-spinner"></div>
+          <h3>جاري البحث عن شخص...</h3>
+          <button class="cancel-btn" onclick="cancelSearch()">إلغاء</button>
+        </div>
+
+        <!-- Chat State -->
         <div class="social-chat" id="social-chat" style="display: none;">
           <div class="active-user-header">
-            <button onclick="closeSocialChat()" class="close-btn">✕</button>
             <h3 id="active-user-name"></h3>
+            <button onclick="endConnection()" class="end-btn">📞 إنهاء</button>
           </div>
           <div class="social-messages" id="social-messages"></div>
           <div class="social-controls">
-            <button class="voice-btn" onclick="startSocialVoiceChat()">🎤 تحدث</button>
-            <button class="call-btn" onclick="endSocialVoiceChat()" style="display: none;" id="end-call-btn">📞 إنهاء</button>
+            <button class="voice-btn" id="voice-chat-btn" onclick="startSocialVoiceChat()">🎤 تحدث</button>
           </div>
         </div>
       </div>

@@ -416,26 +416,99 @@ function speakTextVoice(text) {
   }
 }
 
-// ========== SOCIAL CHAT SYSTEM ==========
-let currentSocialUser = null;
+// ========== REAL SOCIAL CHAT SYSTEM ==========
+let currentUserId = null;
+let connectedUserId = null;
+let connectedUserName = null;
 let socialVoiceActive = false;
-let socialChatMessages = [];
+let searchInProgress = false;
 
-function connectToUser(userName) {
-  currentSocialUser = userName;
-  socialChatMessages = [];
-  document.getElementById('users-list').style.display = 'none';
-  document.getElementById('social-chat').style.display = 'flex';
-  document.getElementById('active-user-name').textContent = userName;
-  document.getElementById('social-messages').innerHTML = '';
-  document.getElementById('end-call-btn').style.display = 'none';
+// Initialize social chat on load
+async function initSocialChat() {
+  if (!currentUserId) {
+    try {
+      const res = await fetch('/api/social/register', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        currentUserId = data.userId;
+        console.log('✅ تم تسجيل مستخدم جديد:', data.username);
+      }
+    } catch (err) {
+      console.error('خطأ:', err);
+    }
+  }
 }
 
-function closeSocialChat() {
-  currentSocialUser = null;
-  document.getElementById('users-list').style.display = 'block';
+async function findRandomUser() {
+  if (!currentUserId) await initSocialChat();
+  
+  searchInProgress = true;
+  document.getElementById('social-search').style.display = 'none';
+  document.getElementById('social-loading').style.display = 'flex';
+  
+  try {
+    // محاكاة وقت البحث
+    await new Promise(r => setTimeout(r, 1500));
+    
+    const res = await fetch('/api/social/find-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: currentUserId })
+    });
+    
+    const data = await res.json();
+    
+    if (data.success) {
+      connectedUserId = data.connectedUser.id;
+      connectedUserName = data.connectedUser.username;
+      
+      document.getElementById('social-loading').style.display = 'none';
+      document.getElementById('social-chat').style.display = 'flex';
+      document.getElementById('active-user-name').textContent = `💬 ${connectedUserName}`;
+      document.getElementById('social-messages').innerHTML = '';
+      
+      addSocialMessage('مرحباً! 👋', 'other');
+    } else {
+      document.getElementById('social-loading').style.display = 'none';
+      document.getElementById('social-search').style.display = 'flex';
+      document.getElementById('search-status').textContent = '❌ لا يوجد مستخدمون متاحون الآن';
+      searchInProgress = false;
+    }
+  } catch (err) {
+    console.error('خطأ:', err);
+    document.getElementById('social-loading').style.display = 'none';
+    document.getElementById('social-search').style.display = 'flex';
+  }
+}
+
+function cancelSearch() {
+  searchInProgress = false;
+  document.getElementById('social-loading').style.display = 'none';
+  document.getElementById('social-search').style.display = 'flex';
+  document.getElementById('search-status').textContent = 'جاهز للبحث';
+}
+
+async function endConnection() {
+  if (!currentUserId || !connectedUserId) return;
+  
+  try {
+    await fetch('/api/social/end-call', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: currentUserId, connectedUserId })
+    });
+  } catch (err) {
+    console.error('خطأ:', err);
+  }
+  
+  socialVoiceActive = false;
+  connectedUserId = null;
+  connectedUserName = null;
+  
   document.getElementById('social-chat').style.display = 'none';
-  endSocialVoiceChat();
+  document.getElementById('social-search').style.display = 'flex';
+  document.getElementById('search-status').textContent = 'جاهز للبحث';
+  document.getElementById('social-messages').innerHTML = '';
 }
 
 function startSocialVoiceChat() {
@@ -445,10 +518,8 @@ function startSocialVoiceChat() {
   }
 
   socialVoiceActive = true;
-  document.getElementById('end-call-btn').style.display = 'flex';
-  const voiceBtn = document.querySelector('.voice-btn');
+  const voiceBtn = document.getElementById('voice-chat-btn');
   voiceBtn.textContent = '🎤 استمع...';
-  voiceBtn.onclick = null;
 
   let finalText = '';
   const socialRecognition = new SpeechRecognition();
@@ -465,21 +536,21 @@ function startSocialVoiceChat() {
   };
 
   socialRecognition.onend = () => {
+    voiceBtn.textContent = '🎤 تحدث';
+    
     if (finalText.trim()) {
       addSocialMessage(finalText, 'user');
       
-      // محاكاة رد المستخدم الآخر
+      // محاكاة الرد من المستخدم الآخر
       setTimeout(() => {
         const responses = ['ممتاز! 👍', 'أتفق معك 💯', 'فكرة رائعة! 🚀', 'صحيح تماماً! ✅', 'أحب ذلك! ❤️'];
         const randomResponse = responses[Math.floor(Math.random() * responses.length)];
         addSocialMessage(randomResponse, 'other');
-        
-        // محاكاة الرد الصوتي
         speakArabic(randomResponse);
       }, 500);
     }
     
-    if (socialVoiceActive) {
+    if (socialVoiceActive && connectedUserId) {
       setTimeout(() => {
         socialRecognition.start();
       }, 1000);
@@ -487,14 +558,6 @@ function startSocialVoiceChat() {
   };
 
   socialRecognition.start();
-}
-
-function endSocialVoiceChat() {
-  socialVoiceActive = false;
-  document.getElementById('end-call-btn').style.display = 'none';
-  const voiceBtn = document.querySelector('.voice-btn');
-  voiceBtn.textContent = '🎤 تحدث';
-  voiceBtn.onclick = startSocialVoiceChat;
 }
 
 function addSocialMessage(text, type) {
@@ -505,6 +568,9 @@ function addSocialMessage(text, type) {
   messagesDiv.appendChild(messageEl);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
+
+// Initialize on page load
+window.addEventListener('load', initSocialChat);
 
 function speakArabic(text) {
   if (!('speechSynthesis' in window)) return;
