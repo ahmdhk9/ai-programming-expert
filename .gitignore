@@ -1,52 +1,32 @@
 # Dependencies
 node_modules/
-.yarn/
-*.lock
+package-lock.json
+yarn.lock
 
-# Environment
+# Development
 .env
 .env.local
-.env.*.local
+.env.development
 
-# Backups
-.backups/
-*.enc
+# Next.js
+.next/
+out/
+
+# Build
+dist/
+build/
 
 # Logs
 logs/
 *.log
 
-# OS
+# System
 .DS_Store
-Thumbs.db
-
-# IDE
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# Build
-dist/
-build/
-.next/
-out/
+# Backups
+.backups/
 
-# Database
-*.db
-*.sqlite
-
-# Sensitive
-.project-lock
-secrets/
-credentials/
-
-# Cache
-.cache/
-.turbo/
-
-# Email & Notifications
-*.log
-backend/email-config.js
-backend/nodemailer-config.js
-.env.email
+# Replit
+.replit
