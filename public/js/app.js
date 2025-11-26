@@ -9,17 +9,17 @@ function setTab(tabName) {
   }
   
   // تفعيل الزر الصحيح في الشريط السفلي
-  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(btn => {
+  document.querySelectorAll('.bar-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.bar-btn').forEach(btn => {
     if (btn.onclick && btn.onclick.toString().includes(`'${tabName}'`)) {
       btn.classList.add('active');
     }
   });
   
   // تركيز على input الكتابة
-  if (tabName === 'ai-chat-page') {
+  if (tabName === 'chat') {
     setTimeout(() => {
-      const input = document.getElementById('chat-input-full');
+      const input = document.getElementById('chat-input');
       if (input) input.focus();
     }, 100);
   }
