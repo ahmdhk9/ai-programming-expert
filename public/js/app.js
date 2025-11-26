@@ -143,7 +143,8 @@ async function sendChatMessage() {
   loadingDiv.style.display = 'block';
   
   try {
-    // Call real Groq API via backend
+    // Call real Groq API via backend - Optimized for speed
+    const startTime = performance.now();
     const response = await fetch('/api/ai/chat', {
       method: 'POST',
       headers: {
@@ -153,6 +154,7 @@ async function sendChatMessage() {
     });
     
     const data = await response.json();
+    const responseTime = Math.round(performance.now() - startTime);
     
     loadingDiv.style.display = 'none';
     
@@ -164,12 +166,12 @@ async function sendChatMessage() {
       aiMessageEl.innerHTML = `
         <span class="message-icon">🤖</span>
         <div class="message-content">${aiResponse}</div>
-        <button class="speak-btn" onclick="speakText('${aiResponse.replace(/'/g, "\\'")}')">🔊</button>
+        <button class="speak-btn" onclick="speakText('${aiResponse.replace(/'/g, "\\'")}')">🔊 إعادة</button>
       `;
       messagesDiv.appendChild(aiMessageEl);
       
-      // تشغيل الكلام تلقائياً
-      speakText(aiResponse);
+      // تشغيل الكلام تلقائياً - طبيعي وسريع
+      setTimeout(() => speakText(aiResponse), 100);
     } else {
       const errorEl = document.createElement('div');
       errorEl.className = 'message ai-message';
@@ -256,7 +258,7 @@ function toggleVoiceInput() {
   recognition.start();
 }
 
-// Text-to-Speech
+// Text-to-Speech - Natural & Fast
 function speakText(text) {
   if (!('speechSynthesis' in window)) {
     console.log('التحدث الصوتي غير مدعوم');
@@ -268,9 +270,16 @@ function speakText(text) {
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'ar-SA';
-  utterance.rate = 1;
-  utterance.pitch = 1;
+  utterance.rate = 1.1; // أسرع قليلاً للطبيعية
+  utterance.pitch = 0.95; // أخفض قليلاً للطبيعية
   utterance.volume = 1;
+
+  // حدد أفضل صوت عربي متاح
+  const voices = window.speechSynthesis.getVoices();
+  const arabicVoice = voices.find(v => v.lang.includes('ar')) || voices[0];
+  if (arabicVoice) {
+    utterance.voice = arabicVoice;
+  }
 
   window.speechSynthesis.speak(utterance);
 }
