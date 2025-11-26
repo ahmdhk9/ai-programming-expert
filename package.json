@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "groq-sdk": "^0.36.0",
-    "openai": "^6.9.1"
+    "openai": "^6.9.1",
+    "socket.io": "^4.8.1"
   }
 }
