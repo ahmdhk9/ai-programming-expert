@@ -314,3 +314,30 @@ router.get('/real-platforms/count', (req, res) => {
   res.json({ total: realPlatforms.getTotalCount() });
 });
 
+
+const guided = require('../services/guided-earning');
+
+// بدء التتبع للمستخدم
+router.post('/guided/start/:userId', (req, res) => {
+  const progress = guided.startTracking(req.params.userId);
+  res.json(progress);
+});
+
+// الحصول على الخطوات التالية
+router.get('/guided/next-steps/:userId', (req, res) => {
+  const steps = guided.getNextSteps(req.params.userId);
+  res.json(steps);
+});
+
+// تسجيل إكمال خطوة
+router.post('/guided/complete-step/:userId/:platformId/:stepId', (req, res) => {
+  const result = guided.completeStep(req.params.userId, req.params.platformId, parseInt(req.params.stepId));
+  res.json(result);
+});
+
+// الحصول على الإحصائيات
+router.get('/guided/stats/:userId', (req, res) => {
+  const stats = guided.getStats(req.params.userId);
+  res.json(stats);
+});
+
