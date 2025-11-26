@@ -2,30 +2,17 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  images: {
-    domains: ['firebasestorage.googleapis.com'],
-  },
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'no-cache, no-store, must-revalidate'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY'
-          },
-        ],
-      },
-    ];
-  },
-}
+  headers: async () => [
+    {
+      source: "/(.*)",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, max-age=3600, must-revalidate"
+        }
+      ]
+    }
+  ]
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

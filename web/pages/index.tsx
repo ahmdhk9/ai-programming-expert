@@ -168,12 +168,12 @@ export default function Home() {
           }}>
             <Link href="/chat" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💬 Chat</Link>
             <Link href="/dream-machine" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>✨ Dream</Link>
-            <Link href="/voice-commands" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🎙️ Voice</Link>
+            <Link href="/standalone-download" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📥 Download</Link>
+            <Link href="/hybrid-mode" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🔄 Hybrid</Link>
             <Link href="/marketplace" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🏪 Store</Link>
             <Link href="/free-forever" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>💚 Free</Link>
             <Link href="/50-features" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🔥 Features</Link>
             <Link href="/resources" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>📊 Monitor</Link>
-            <Link href="/ai-models" style={{ color: "white", textDecoration: "none", padding: "1rem", backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "8px" }}>🧠 AI</Link>
           </div>
           <div style={{ textAlign: "center", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
             <p style={{ opacity: 0.8 }}>🚀 AI Programming Expert 2025 - منصة متطورة تبني مستقبل التطوير</p>
