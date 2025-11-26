@@ -341,3 +341,44 @@ router.get('/guided/stats/:userId', (req, res) => {
   res.json(stats);
 });
 
+
+const aiGen = require('../services/ai-content-generator');
+
+// توليد كتاب
+router.post('/ai/generate-book', (req, res) => {
+  const { title, genre, pages } = req.body;
+  const book = aiGen.generateBook(title, genre, pages || 50);
+  res.json(book);
+});
+
+// توليد نموذج
+router.post('/ai/generate-template', (req, res) => {
+  const { title, type } = req.body;
+  const template = aiGen.generateTemplate(title, type);
+  res.json(template);
+});
+
+// نشر على منصة
+router.post('/ai/publish', (req, res) => {
+  const { contentId, platformId, price } = req.body;
+  const result = aiGen.publishToMarketplace(contentId, platformId, price);
+  res.json(result);
+});
+
+// تسجيل بيع
+router.post('/ai/record-sale', (req, res) => {
+  const { contentId, platformId, quantity } = req.body;
+  const result = aiGen.recordSale(contentId, platformId, quantity);
+  res.json(result);
+});
+
+// الإحصائيات
+router.get('/ai/stats', (req, res) => {
+  res.json(aiGen.getStats());
+});
+
+// المنصات المتاحة
+router.get('/ai/platforms', (req, res) => {
+  res.json(aiGen.getAvailablePlatforms());
+});
+
