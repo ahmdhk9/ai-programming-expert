@@ -70,8 +70,9 @@ socket.on('user-found', (data) => {
   document.getElementById('social-chat').style.display = 'flex';
   document.getElementById('active-user-name').textContent = `💬 ${connectedUserName}`;
   document.getElementById('social-messages').innerHTML = '';
+  document.getElementById('social-input').value = '';
+  document.getElementById('social-input').focus();
 
-  addSocialMessage('مرحباً! 👋', 'other');
   showNotification(`✅ متصل مع ${connectedUserName}`, 'success');
 });
 
@@ -144,6 +145,29 @@ function endConnection() {
   socket.emit('end-call');
 }
 
+function handleSocialKeypress(event) {
+  if (event.key === 'Enter') {
+    sendSocialMessage();
+  }
+}
+
+function sendSocialMessage() {
+  if (!isConnected || !connectedUserId) {
+    showNotification('❌ لا يوجد اتصال نشط', 'error');
+    return;
+  }
+
+  const input = document.getElementById('social-input');
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  addSocialMessage(message, 'user');
+  socket.emit('send-message', message);
+  input.value = '';
+  input.focus();
+}
+
 function resetSocialChat() {
   connectedUserId = null;
   connectedUserName = null;
@@ -155,6 +179,7 @@ function resetSocialChat() {
   document.getElementById('social-search').style.display = 'flex';
   document.getElementById('search-status').textContent = '👥 جاهز للبحث';
   document.getElementById('social-messages').innerHTML = '';
+  document.getElementById('social-input').value = '';
 }
 
 function startSocialVoiceChat() {

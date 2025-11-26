@@ -131,8 +131,10 @@
             <button onclick="endConnection()" class="end-btn">📞 إنهاء</button>
           </div>
           <div class="social-messages" id="social-messages"></div>
-          <div class="social-controls">
-            <button class="voice-btn" id="voice-chat-btn" onclick="startSocialVoiceChat()">🎤 تحدث</button>
+          <div class="social-input-area">
+            <input type="text" id="social-input" class="social-input-field" placeholder="اكتب رسالة..." onkeypress="handleSocialKeypress(event)">
+            <button class="social-send-btn" onclick="sendSocialMessage()">إرسال</button>
+            <button class="voice-btn" id="voice-chat-btn" onclick="startSocialVoiceChat()">🎤</button>
           </div>
         </div>
       </div>
