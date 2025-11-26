@@ -193,3 +193,26 @@ router.post('/discovery/start', (req, res) => {
   res.json(autoDiscovery.startAutoSearch());
 });
 
+
+const megaSources = require('../services/mega-income-sources');
+
+// جميع المصادر الضخمة
+router.get('/mega/all-sources', (req, res) => {
+  res.json(megaSources.getAllSources());
+});
+
+// المصادر حسب النوع
+router.get('/mega/sources/:type', (req, res) => {
+  res.json(megaSources.getSourcesByType(req.params.type));
+});
+
+// الأرباح المتوقعة
+router.get('/mega/earnings', (req, res) => {
+  res.json(megaSources.calculateTotalEarnings());
+});
+
+// الإحصائيات الشاملة
+router.get('/mega/stats', (req, res) => {
+  res.json(megaSources.getStats());
+});
+
