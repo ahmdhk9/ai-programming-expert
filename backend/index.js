@@ -350,3 +350,52 @@ app.get('/api/admin/tokens', (req, res) => {
   });
 });
 
+
+// Import Security
+const { security, securityMiddleware, corsOptions, securityHeaders } = require('./security');
+const backupManager = require('./backup-manager');
+const codeProtection = require('./code-protection');
+
+// استخدام Middleware الأمان
+app.use(securityMiddleware);
+app.use(securityHeaders);
+
+// CORS Protection
+const cors = require('cors');
+app.use(cors(corsOptions));
+
+// Helmet for additional security
+const helmet = require('helmet');
+app.use(helmet());
+
+// Admin Backup Routes
+app.get('/api/admin/backups', (req, res) => {
+  res.json(backupManager.listBackups());
+});
+
+app.post('/api/admin/restore-backup', (req, res) => {
+  try {
+    const data = backupManager.restoreBackup(req.body.filename);
+    res.json({ success: true, data });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Code Protection Routes
+app.get('/api/admin/verify-integrity', (req, res) => {
+  const changes = codeProtection.verifyIntegrity();
+  res.json({ changes, isIntact: changes.length === 0 });
+});
+
+app.post('/api/admin/lock-project', (req, res) => {
+  codeProtection.lockProject();
+  res.json({ locked: true });
+});
+
+// Start monitoring
+codeProtection.watchForDeletion();
+backupManager.startAutoBackup();
+
+console.log('✅ Security Systems Initialized');
+

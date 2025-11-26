@@ -1,0 +1,10 @@
+# Prevent binary files
+*.tsx binary
+*.ts binary
+*.js binary
+
+# Encrypt sensitive files
+.env binary merge=union
+.env.* binary merge=union
+credentials/* binary merge=union
+
