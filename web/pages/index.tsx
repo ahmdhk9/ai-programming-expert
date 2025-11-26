@@ -187,3 +187,5 @@ export default function Home() {
     </div>
   );
 }
+
+// Quick links to auth pages will be added via nav

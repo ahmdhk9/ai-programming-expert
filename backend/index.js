@@ -296,3 +296,28 @@ app.get("/api/github-sync", (req, res) => {
   });
 });
 
+
+// Auth Routes
+const authService = require('./auth-service');
+app.use('/api/auth', authService);
+
+// Profile Routes
+app.get('/api/profile/:userId', (req, res) => {
+  res.json({ profile: { name: 'User', bio: 'Bio' } });
+});
+
+// Settings Routes
+app.get('/api/settings/:userId', (req, res) => {
+  res.json({ settings: { notifications: true, theme: 'dark' } });
+});
+
+// Stats Routes
+app.get('/api/stats/:userId', (req, res) => {
+  res.json({
+    projects: 0,
+    features: 25,
+    storage: 2.5,
+    time: 0
+  });
+});
+
