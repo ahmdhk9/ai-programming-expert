@@ -1,0 +1,39 @@
+# نظام النشر على منصات متعددة
+
+platforms:
+  - name: "Replit"
+    type: "nodejs"
+    command: "cd web && npm run dev"
+    port: 5000
+    
+  - name: "Vercel"
+    framework: "nextjs"
+    buildCommand: "cd web && npm run build"
+    startCommand: "cd web && npm run start"
+    
+  - name: "Firebase"
+    type: "static"
+    buildCommand: "cd web && npm run build"
+    outputDir: "web/out"
+    
+  - name: "Railway"
+    type: "nodejs"
+    startCommand: "cd web && npm start"
+    
+  - name: "Render"
+    type: "nodejs"
+    startCommand: "cd web && npm start"
+    buildCommand: "cd web && npm run build"
+    
+  - name: "Netlify"
+    type: "static"
+    buildCommand: "cd web && npm run build"
+    outputDir: "web/.next"
+
+autoDeploy: true
+deployInterval: "hourly"
+backupFrequency: "daily"
+monitors:
+  - uptime
+  - performance
+  - errors

@@ -1459,3 +1459,38 @@ app.get('/api/hidden/report', (req, res) => {
   res.json(hidden.fullReport());
 });
 
+
+const earnings = require('./earnings-system');
+const multiDeploy = require('./multi-deploy');
+
+// API الأرباح
+app.get('/api/earnings/status', (req, res) => {
+  res.json(earnings.getEarningsStatus());
+});
+
+app.post('/api/earnings/withdraw', (req, res) => {
+  const { amount } = req.body;
+  res.json(earnings.requestWithdraw(amount));
+});
+
+app.get('/api/earnings/history', (req, res) => {
+  res.json(earnings.getWithdrawalHistory());
+});
+
+// API النشر
+app.get('/api/deploy/platforms', (req, res) => {
+  res.json(multiDeploy.getAllPlatforms());
+});
+
+app.get('/api/deploy/status', (req, res) => {
+  res.json(multiDeploy.checkAllStatus());
+});
+
+app.post('/api/deploy/all', (req, res) => {
+  res.json(multiDeploy.deployToAll());
+});
+
+app.post('/api/deploy/backup', (req, res) => {
+  res.json(multiDeploy.autoBackup());
+});
+
