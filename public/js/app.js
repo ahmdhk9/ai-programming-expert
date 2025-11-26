@@ -742,6 +742,129 @@ async function sendChatMessage() {
   }
 }
 
+// Projects Management
+let projects = JSON.parse(localStorage.getItem('projects') || '[]') || [
+  { id: 0, title: '📱 تطبيق ويب', desc: 'React + Node.js', stats: '📊 1500 سطر • ⭐ v1.0', status: 'نشط' },
+  { id: 1, title: '🎮 لعبة ويب', desc: 'JavaScript/Canvas', stats: '📊 800 سطر • ⭐ v0.5', status: 'قادم' }
+];
+let selectedProjectId = 0;
+
+function showProjectDetails(id) {
+  selectedProjectId = id;
+  const project = projects[id];
+  document.getElementById('project-title').textContent = project.title;
+  document.getElementById('project-details').innerHTML = `
+    <div class="project-detail-info">
+      <p><strong>الوصف:</strong> ${project.desc}</p>
+      <p><strong>الإحصائيات:</strong> ${project.stats}</p>
+      <p><strong>الحالة:</strong> ${project.status}</p>
+      <div class="project-actions">
+        <button class="action-btn" onclick="askAI('ساعدني بتطوير مشروع ${project.title}')">💡 استشارة ذكاء</button>
+        <button class="action-btn" onclick="askAI('كيف أحسّن أداء مشروع ${project.title}')">⚡ تحسين الأداء</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('project-details-modal').style.display = 'flex';
+}
+
+function closeProjectModal() {
+  document.getElementById('project-details-modal').style.display = 'none';
+}
+
+function editProject() {
+  const newDesc = prompt('وصف المشروع:', projects[selectedProjectId].desc);
+  if (newDesc) {
+    projects[selectedProjectId].desc = newDesc;
+    localStorage.setItem('projects', JSON.stringify(projects));
+    showNotification('✅ تم تحديث المشروع', 'success');
+    closeProjectModal();
+    refreshProjects();
+  }
+}
+
+function deleteProject() {
+  if (confirm('هل تريد حذف هذا المشروع؟')) {
+    projects.splice(selectedProjectId, 1);
+    localStorage.setItem('projects', JSON.stringify(projects));
+    showNotification('✅ تم حذف المشروع', 'success');
+    closeProjectModal();
+    refreshProjects();
+  }
+}
+
+function showAddProjectModal() {
+  const title = prompt('اسم المشروع:');
+  if (!title) return;
+  const desc = prompt('وصف المشروع:');
+  if (!desc) return;
+  
+  projects.push({
+    id: projects.length,
+    title: title,
+    desc: desc,
+    stats: '📊 جديد • ⭐ v0.1',
+    status: 'قادم'
+  });
+  localStorage.setItem('projects', JSON.stringify(projects));
+  showNotification('✅ تم إضافة المشروع', 'success');
+  refreshProjects();
+}
+
+function refreshProjects() {
+  const list = document.getElementById('projects-list');
+  if (!list) return;
+  list.innerHTML = projects.map((p, i) => `
+    <div class="project-item" onclick="showProjectDetails(${i})">
+      <div class="project-header">
+        <h3>${p.title}</h3>
+        <span class="status-badge ${p.status === 'نشط' ? 'active' : 'pending'}">${p.status}</span>
+      </div>
+      <div class="project-info">
+        <div>${p.desc}</div>
+        <div class="project-stats">${p.stats}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Profile Management
+let profileData = JSON.parse(localStorage.getItem('profileData') || '{"developer":"احمد العويني التميمي البصراوي","specialty":"هندسة البرمجيات والذكاء الاصطناعي"}');
+
+function toggleEditProfile() {
+  const view = document.getElementById('profile-view');
+  const edit = document.getElementById('profile-edit');
+  if (view.style.display === 'none') {
+    view.style.display = 'block';
+    edit.style.display = 'none';
+  } else {
+    document.getElementById('edit-developer').value = profileData.developer;
+    document.getElementById('edit-specialty').value = profileData.specialty;
+    view.style.display = 'none';
+    edit.style.display = 'flex';
+  }
+}
+
+function saveProfile() {
+  profileData.developer = document.getElementById('edit-developer').value;
+  profileData.specialty = document.getElementById('edit-specialty').value;
+  localStorage.setItem('profileData', JSON.stringify(profileData));
+  document.getElementById('profile-developer').textContent = profileData.developer;
+  document.getElementById('profile-specialty').textContent = profileData.specialty;
+  showNotification('✅ تم حفظ الملف الشخصي', 'success');
+  toggleEditProfile();
+}
+
+function updateSystemTime() {
+  const now = new Date();
+  document.getElementById('system-time').textContent = 
+    now.getHours().toString().padStart(2, '0') + ':' + 
+    now.getMinutes().toString().padStart(2, '0');
+  document.getElementById('connection-status').textContent = 
+    isConnected ? '✅ متصل' : '❌ مقطوع';
+}
+
+setInterval(updateSystemTime, 1000);
+
 function setTab(tabName) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   const targetTab = document.getElementById(tabName);
@@ -753,6 +876,9 @@ function setTab(tabName) {
       btn.classList.add('active');
     }
   });
+  
+  if (tabName === 'projects') refreshProjects();
+  if (tabName === 'profile') updateSystemTime();
 }
 
 window.addEventListener('load', () => {
