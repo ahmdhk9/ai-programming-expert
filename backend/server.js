@@ -2,6 +2,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+// 🔐 كلمة المرور الرئيسية للمطور (يجب تغييرها في الإنتاج!)
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Ahmed123456';
+const ADMIN_TOKENS = new Set();
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -11,6 +15,15 @@ app.use((req, res, next) => {
   res.header('Expires', '0');
   next();
 });
+
+// Middleware للتحقق من المصادقة
+const requireAdmin = (req, res, next) => {
+  const token = req.headers['x-admin-token'] || req.query.token;
+  if (!token || !ADMIN_TOKENS.has(token)) {
+    return res.status(401).redirect('/login');
+  }
+  next();
+};
 
 // خدمات Backend
 const aiFactory = require('./services/ai-content-factory');
@@ -26,8 +39,36 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// لوحة المطور
+// صفحة تسجيل الدخول
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/login.html'));
+});
+
+// API لتسجيل الدخول
+app.post('/api/admin/login', (req, res) => {
+  const { password } = req.body;
+  
+  if (!password) {
+    return res.status(400).json({ success: false, message: 'كلمة المرور مطلوبة' });
+  }
+
+  if (password === ADMIN_PASSWORD) {
+    const token = 'admin_' + Math.random().toString(36).substring(7);
+    ADMIN_TOKENS.add(token);
+    console.log(`✅ تسجيل دخول مطور بنجاح! Token: ${token}`);
+    return res.json({ success: true, token, message: 'تم التحقق بنجاح' });
+  }
+
+  console.warn('❌ محاولة تسجيل دخول فاشلة بكلمة مرور خاطئة');
+  res.status(401).json({ success: false, message: 'كلمة المرور غير صحيحة' });
+});
+
+// لوحة المطور (محمية)
 app.get('/dev', (req, res) => {
+  const token = req.headers['x-admin-token'] || req.query.token;
+  if (!token || !ADMIN_TOKENS.has(token)) {
+    return res.redirect('/login');
+  }
   res.sendFile(path.join(__dirname, '../public/dev/index.html'));
 });
 

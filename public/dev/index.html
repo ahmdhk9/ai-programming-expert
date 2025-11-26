@@ -36,7 +36,7 @@
     <header>
       <h1>⚙️ لوحة المطور - منصة الأرباح الذكية</h1>
       <p><strong>التطبيق:</strong> نظام أتمتة الدخل السلبي | <strong>الإصدار:</strong> 1.0</p>
-      <p>🔐 للتواصل مع الفريق، استخدم نموذج الاتصال في <a href="/" style="color: #667eea;">الصفحة الرئيسية</a></p>
+      <p>👤 <strong>حساب محمي:</strong> أنت الآن مسجل كمطور | <button onclick="logout()" style="background: #e74c3c; color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">تسجيل الخروج</button></p>
     </header>
 
     <div class="section">
@@ -83,5 +83,22 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function logout() {
+      if (confirm('هل تريد تسجيل الخروج؟')) {
+        localStorage.removeItem('adminToken');
+        window.location.href = '/login';
+      }
+    }
+
+    // التحقق من المصادقة عند التحميل
+    window.addEventListener('load', () => {
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        window.location.href = '/login';
+      }
+    });
+  </script>
 </body>
 </html>
