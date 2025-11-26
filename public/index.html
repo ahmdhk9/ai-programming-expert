@@ -2,204 +2,207 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة الذكاء الاصطناعي</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>AI DEV & CREATE PLATFORM</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<!-- Status Bar -->
-<div class="status-bar">
-  <div class="status-left"><span>📡</span><span>📶</span></div>
-  <div class="status-time">1:10</div>
-</div>
-
-<!-- Header -->
-<div class="header">
-  <div class="header-left">
-    <span class="avatar">أح</span>
-    <span class="workspace">مساحة عمل أحمد</span>
-  </div>
-  <button class="menu-btn">⋮</button>
-</div>
-
-<!-- Main Content -->
-<div class="content">
-
-  <!-- CHAT PAGE -->
-  <div class="page" id="page-chat">
-    <div class="welcome-box">
-      <h1>السلام عليكم أحمد</h1>
-      <p>ماذا تريد أن تصنع اليوم؟</p>
-    </div>
-    <div class="messages" id="messages-chat"></div>
-    <div class="input-area">
-      <textarea id="input-chat" placeholder="ما في بالك..." class="message-input"></textarea>
-    </div>
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="header">
+    <button class="header-btn back">‹</button>
+    <h1 class="header-title">AI DEV & CREATE PLATFORM</h1>
+    <button class="header-btn menu">⋮</button>
   </div>
 
-  <!-- APPS PAGE -->
-  <div class="page" id="page-apps" style="display: none;">
-    <div class="page-header">
-      <h2>📱 تطوير التطبيقات</h2>
-      <p>بناء تطبيقات رائعة</p>
-    </div>
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <button class="nav-tab active" onclick="setTab('appdev')">APP DEV</button>
+    <button class="nav-tab" onclick="setTab('gamedev')">GAME DEV</button>
+    <button class="nav-tab" onclick="setTab('toolbox')">TOOLBOX</button>
+  </nav>
 
-    <div class="section">
-      <h3>مراحل التطوير</h3>
-      <div class="stages">
-        <div class="stage">
-          <span class="num">1</span>
-          <span class="text">الفكرة</span>
+  <!-- Content -->
+  <div class="content-wrapper">
+
+    <!-- APP DEV Tab -->
+    <div id="appdev" class="tab-pane active">
+      <!-- Stages -->
+      <div class="section">
+        <div class="stages">
+          <div class="stage">
+            <div class="stage-num">1</div>
+            <div class="stage-text">Concept</div>
+          </div>
+          <div class="stage">
+            <div class="stage-num">2</div>
+            <div class="stage-text">Disony & Ulo</div>
+          </div>
+          <div class="stage active">
+            <div class="stage-num">3</div>
+            <div class="stage-text">Video/Image</div>
+          </div>
+          <div class="stage">
+            <div class="stage-num">4</div>
+            <div class="stage-text">Videng & Integrate</div>
+          </div>
         </div>
-        <div class="stage">
-          <span class="num">2</span>
-          <span class="text">التصميم</span>
+        <div class="stage-labels">
+          <span>1 CREATION</span>
+          <span>CODE/BUILD</span>
+          <span>4 DEPLOY</span>
+          <span>5 DEPLOY</span>
+          <span>MONITOR</span>
         </div>
-        <div class="stage active">
-          <span class="num">3</span>
-          <span class="text">البرمجة</span>
+      </div>
+
+      <!-- AI Creative Chat -->
+      <div class="section">
+        <h2>AI CREative CHAT</h2>
+        <div class="chat-box">
+          <div class="chat-left">
+            <div class="task-card">
+              <div class="task-header">Task Tasker</div>
+              <div class="task-body">
+                <div>🎯 Task 1 - Tasker</div>
+                <div>📝 Task 2 - Main</div>
+              </div>
+            </div>
+            <button class="msg-btn">أنت تحدث عن شئ متعلق</button>
+          </div>
+          <div class="chat-right">
+            <div class="msg-group">
+              <div class="msg-ai">
+                <span>🤖</span>
+                <div>استشاره فني في أي شي متعلق فيه...</div>
+              </div>
+            </div>
+            <div class="msg-group">
+              <div class="msg-user">Create Firebase API for طلبي</div>
+            </div>
+            <div class="msg-group">
+              <div class="msg-ai">
+                <span>🤖</span>
+                <div>جواب فني شامل...</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="stage">
-          <span class="num">4</span>
-          <span class="text">النشر</span>
+      </div>
+
+      <!-- AI Code -->
+      <div class="section">
+        <h2>AI Code</h2>
+        <div class="code-box">
+          <code>// JS @options تحديد Limit
+53 scoop @sessionStorage format, obj–1 > execute
+51 function useData()
+21 return &lt;config
+71 import data from 'config.api'</code>
+        </div>
+      </div>
+
+      <!-- Project Health -->
+      <div class="section">
+        <h2>Project Health</h2>
+        <div class="health-tabs">
+          <button class="health-tab active">💬 AI Chat</button>
+          <button class="health-tab">🎨 Design</button>
+          <button class="health-tab">💻 Code</button>
+          <button class="health-tab">🚀 Deploy</button>
+          <button class="health-tab">📊 Monitor</button>
         </div>
       </div>
     </div>
 
-    <div class="section">
-      <h3>أدوات المشروع</h3>
-      <div class="tools-grid">
-        <div class="tool-item">🎯<p>توليد الكود</p></div>
-        <div class="tool-item">🔄<p>إعادة البناء</p></div>
-        <div class="tool-item">⚛️<p>منطق React</p></div>
-        <div class="tool-item">🖼️<p>الرسومات</p></div>
-        <div class="tool-item">✨<p>التصميم المتقدم</p></div>
-        <div class="tool-item">🔀<p>مزامنة قاعدة البيانات</p></div>
+    <!-- TOOLBOX Tab -->
+    <div id="toolbox" class="tab-pane">
+      <div class="section">
+        <h2>AI-POWERED TOOLBOX</h2>
+        <div class="toolbox">
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🎯</div>
+            <div class="tool-name">Mesh Refle</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔄</div>
+            <div class="tool-name">Code Refactoring</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">⚛️</div>
+            <div class="tool-name">React Logic</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🖼️</div>
+            <div class="tool-name">SVG Raster</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">✨</div>
+            <div class="tool-name">Advanced Design</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔀</div>
+            <div class="tool-name">DB Sync</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔌</div>
+            <div class="tool-name">API Creator</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">☁️</div>
+            <div class="tool-name">Cloud Functions</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔗</div>
+            <div class="tool-name">Mesh Sync</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">⚙️</div>
+            <div class="tool-name">Cloud Function</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🗄️</div>
+            <div class="tool-name">DB Sync</div>
+          </div>
+          <div class="tool" onclick="selectTool(this)">
+            <div class="tool-icon">🔐</div>
+            <div class="tool-name">Readiness Sync</div>
+          </div>
+        </div>
+
+        <div class="toolitem">
+          <h3>AI-POWERED TOOLITEM</h3>
+          <div class="toolitem-box">
+            <p>🔧 ACME NUMBER OUM</p>
+            <p class="small">بام معلومات مسجود بات محفوظ كود تالي جمود</p>
+          </div>
+          <div class="toolitem-box">
+            <p>📊 NOOB HATENA</p>
+            <p class="small">محصحة محفوظة قبل على المحتوى و بات</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="section">
-      <h3>عرض الكود</h3>
-      <div class="code-block">
-// كود تم توليده بالذكاء الاصطناعي
-function useApp() {
-  return &lt;App /&gt;
-}</div>
-    </div>
-
-    <div class="section">
-      <h3>حالة المشروع</h3>
-      <div class="status-tabs">
-        <button class="status-btn active">✅ جاهز</button>
-        <button class="status-btn">🔄 قيد البناء</button>
-        <button class="status-btn">🚀 النشر</button>
+    <!-- GAME DEV Tab -->
+    <div id="gamedev" class="tab-pane">
+      <div class="section" style="text-align: center; padding: 40px 20px;">
+        <h2>GAME DEV</h2>
+        <p style="color: #888; margin-top: 20px;">قادم قريباً...</p>
       </div>
     </div>
+
   </div>
 
-  <!-- TOOLBOX PAGE -->
-  <div class="page" id="page-toolbox" style="display: none;">
-    <div class="page-header">
-      <h2>🛠️ صندوق الأدوات</h2>
-      <p>أدوات ذكية متقدمة</p>
-    </div>
-
-    <div class="section">
-      <h3>الأدوات المتاحة</h3>
-      <div class="tools-grid">
-        <div class="tool-item">🎯<p>تحسين الشبكة</p></div>
-        <div class="tool-item">🔄<p>إعادة البناء</p></div>
-        <div class="tool-item">⚛️<p>منطق React</p></div>
-        <div class="tool-item">🖼️<p>تحويل SVG</p></div>
-        <div class="tool-item">✨<p>التصميم المتقدم</p></div>
-        <div class="tool-item">🔀<p>مزامنة قاعدة البيانات</p></div>
-        <div class="tool-item">🔌<p>منشئ API</p></div>
-        <div class="tool-item">☁️<p>دوال سحابية</p></div>
-        <div class="tool-item">🔗<p>مزامنة الشبكة</p></div>
-        <div class="tool-item">⚙️<p>التكوينات</p></div>
-        <div class="tool-item">🗄️<p>قاعدة البيانات</p></div>
-        <div class="tool-item">🔐<p>الأمان</p></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h3>الإجراءات السريعة</h3>
-      <div class="action-buttons">
-        <button class="action-btn">⚡ إعداد سريع</button>
-        <button class="action-btn">📊 الإحصائيات</button>
-        <button class="action-btn">🔗 التكاملات</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ACCOUNT PAGE -->
-  <div class="page" id="page-account" style="display: none;">
-    <div class="page-header">
-      <h2>👤 الحساب</h2>
-      <p>إدارة ملفك الشخصي</p>
-    </div>
-
-    <div class="section">
-      <h3>الملف الشخصي</h3>
-      <div class="profile-card">
-        <div class="profile-avatar">أح</div>
-        <div class="profile-info">
-          <p class="name">أحمد البصراوي</p>
-          <p class="email">ahmdalbsrawe@gmail.com</p>
-          <p class="country">🇮🇶 العراق</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h3>الإعدادات</h3>
-      <div class="settings-list">
-        <div class="setting-item">
-          <span>الوضع الليلي</span>
-          <input type="checkbox" checked>
-        </div>
-        <div class="setting-item">
-          <span>التنبيهات</span>
-          <input type="checkbox" checked>
-        </div>
-        <div class="setting-item">
-          <span>اقتراحات الذكاء الاصطناعي</span>
-          <input type="checkbox" checked>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h3>إدارة الحساب</h3>
-      <div class="action-buttons">
-        <button class="action-btn">📝 تعديل الملف</button>
-        <button class="action-btn">🔐 تغيير كلمة المرور</button>
-        <button class="action-btn red">🚪 تسجيل الخروج</button>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Bottom Navigation -->
-<div class="bottom-nav">
-  <button class="nav-btn active" onclick="switchPage('chat')">
-    <span class="icon">💬</span>
-    <span>دردشة</span>
-  </button>
-  <button class="nav-btn" onclick="switchPage('apps')">
-    <span class="icon">📱</span>
-    <span>تطبيقات</span>
-  </button>
-  <button class="nav-btn" onclick="switchPage('toolbox')">
-    <span class="icon">🛠️</span>
-    <span>أدوات</span>
-  </button>
-  <button class="nav-btn" onclick="switchPage('account')">
-    <span class="icon">👤</span>
-    <span>الحساب</span>
-  </button>
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="bottom-tab active">💬 AI Chat</button>
+    <button class="bottom-tab">🎨 Design</button>
+    <button class="bottom-tab">💻 Code</button>
+    <button class="bottom-tab">🚀 Deploy</button>
+    <button class="bottom-tab">📊 Monitor</button>
+  </nav>
 </div>
 
 <script src="/js/app.js"></script>
