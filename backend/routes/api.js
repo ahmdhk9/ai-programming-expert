@@ -128,3 +128,50 @@ router.get('/wallets/balance/:address/:type', async (req, res) => {
   res.json(balance);
 });
 
+
+const auth = require('../services/auth');
+const monitoring = require('../services/monitoring');
+
+// المصادقة
+router.post('/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  const result = auth.login(email, password);
+  res.json(result);
+});
+
+router.post('/auth/logout', (req, res) => {
+  const { sessionId } = req.body;
+  res.json(auth.logout(sessionId));
+});
+
+router.get('/auth/verify/:sessionId', (req, res) => {
+  res.json(auth.verify(req.params.sessionId));
+});
+
+// المراقبة والصحة
+router.get('/system/health', (req, res) => {
+  res.json(monitoring.getSystemHealth());
+});
+
+router.get('/system/alerts', (req, res) => {
+  res.json(monitoring.getAlerts());
+});
+
+router.post('/system/health-check', (req, res) => {
+  res.json(monitoring.performHealthCheck());
+});
+
+
+const realEarnings = require('../services/real-earnings');
+
+// حساب الأرباح الحقيقية اليومية
+router.post('/earnings/calculate-real', async (req, res) => {
+  const result = await realEarnings.calculateDailyEarnings();
+  res.json(result);
+});
+
+// الحصول على الأرباح الحقيقية الكاملة
+router.get('/earnings/real-status', (req, res) => {
+  res.json(realEarnings.getRealEarnings());
+});
+
