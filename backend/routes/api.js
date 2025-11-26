@@ -299,3 +299,18 @@ router.post('/discovery/search', (req, res) => {
   res.json({ results: results.length, sources: results });
 });
 
+
+const realPlatforms = require('../services/real-platforms');
+
+router.get('/real-platforms/all', (req, res) => {
+  res.json(realPlatforms.getAllPlatforms());
+});
+
+router.get('/real-platforms/earnings', (req, res) => {
+  res.json(realPlatforms.calculateTotalEarnings());
+});
+
+router.get('/real-platforms/count', (req, res) => {
+  res.json({ total: realPlatforms.getTotalCount() });
+});
+
