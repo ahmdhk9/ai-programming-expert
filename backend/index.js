@@ -1383,3 +1383,18 @@ app.get('/api/ai/report', (req, res) => {
   res.json(aiSystem.comprehensiveAIReport());
 });
 
+
+const research = require('./global-research-engine');
+
+app.get('/api/research/report', (req, res) => {
+  res.json(research.completeResearchReport());
+});
+
+app.get('/api/research/opportunities', (req, res) => {
+  res.json(research.comprehensiveOpportunityHunting());
+});
+
+app.get('/api/research/trends', (req, res) => {
+  res.json(research.globalTrendAnalysis());
+});
+
