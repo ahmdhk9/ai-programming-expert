@@ -216,10 +216,12 @@ async function sendChatMessage() {
   }
 }
 
-// Speech Recognition - Toggle Voice Chat (Press to listen, press again to respond)
+// Speech Recognition - Smart Voice Chat with interrupt detection
 let isCurrentlyListening = false;
 let currentRecognition = null;
 let voiceIsPlaying = false;
+let interruptRecognition = null;
+let userInterrupted = false;
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 function startVoiceListening() {
@@ -242,7 +244,7 @@ function startVoiceListening() {
   }, 300);
 }
 
-// Toggle Voice - Press 1st time to listen, 2nd time to respond, then listen again
+// Toggle Voice - Press to listen, press again to stop, stop while speaking to listen
 function toggleVoiceListening() {
   const listenBtn = document.getElementById('voice-listen-btn');
   const listeningText = document.getElementById('listening-text');
@@ -252,7 +254,7 @@ function toggleVoiceListening() {
     return;
   }
 
-  // إذا كان يستمع حالياً - توقف الاستماع وابدأ الرد
+  // إذا كان يستمع حالياً - توقف الاستماع
   if (isCurrentlyListening) {
     console.log('🛑 إيقاف الاستماع...');
     if (currentRecognition) {
@@ -262,10 +264,23 @@ function toggleVoiceListening() {
     return;
   }
 
-  // إذا كان يتحدث - انتظر حتى ينتهي ثم ابدأ الاستماع
+  // إذا كان يتحدث - أوقفه وابدأ الاستماع مباشرة
   if (voiceIsPlaying) {
-    console.log('⏳ انتظار انتهاء الكلام الصوتي...');
-    listeningText.textContent = '⏳ انتظر قليلاً...';
+    console.log('🛑 إيقاف الكلام الآلي - بدء الاستماع');
+    userInterrupted = true;
+    window.speechSynthesis.cancel();
+    
+    if (interruptRecognition) {
+      interruptRecognition.stop();
+      interruptRecognition = null;
+    }
+    
+    voiceIsPlaying = false;
+    listeningText.textContent = '🎤 استمع...';
+    
+    setTimeout(() => {
+      startListeningSession();
+    }, 300);
     return;
   }
 
@@ -386,7 +401,7 @@ function startListeningSession() {
   recognition.start();
 }
 
-// Speak and then listen again automatically
+// Speak and listen for interrupts - user can interrupt by speaking
 function speakTextAndListen(text) {
   if (!('speechSynthesis' in window)) {
     console.error('❌ Text-to-Speech not supported');
@@ -397,7 +412,9 @@ function speakTextAndListen(text) {
   const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@\>\<]/g, '').trim();
   if (!cleanText) return;
 
+  userInterrupted = false;
   voiceIsPlaying = true;
+  
   const utterance = new SpeechSynthesisUtterance(cleanText);
   utterance.lang = 'ar-SA';
   utterance.rate = 1.0;
@@ -421,29 +438,47 @@ function speakTextAndListen(text) {
   };
 
   utterance.onstart = () => {
-    console.log('🔊 بدء التحدث');
+    console.log('🔊 بدء التحدث - مراقبة المقاطعات');
     const listeningText = document.getElementById('listening-text');
-    if (listeningText) listeningText.textContent = '🔊 جاري الكلام...';
+    if (listeningText) listeningText.textContent = '🔊 جاري الكلام (تحدث لتقاطع)...';
+    
+    // بدء مراقبة الاستماع للكشف عن تحدث المستخدم
+    startInterruptDetection();
   };
 
   utterance.onend = () => {
-    console.log('✅ انتهى الكلام - بدء الاستماع مجدداً تلقائياً');
+    console.log('✅ انتهى الكلام');
     voiceIsPlaying = false;
     
-    const listeningText = document.getElementById('listening-text');
-    if (listeningText) listeningText.textContent = '🎤 استمع...';
+    // إيقاف مراقبة المقاطعات
+    if (interruptRecognition) {
+      interruptRecognition.stop();
+      interruptRecognition = null;
+    }
     
-    // ابدأ الاستماع تلقائياً بعد الرد
-    setTimeout(() => {
+    if (userInterrupted) {
+      console.log('⚡ تم مقاطعة الكلام - بدء الاستماع');
+      const listeningText = document.getElementById('listening-text');
+      if (listeningText) listeningText.textContent = '🎤 استمع...';
       startListeningSession();
-    }, 500);
+    } else {
+      const listeningText = document.getElementById('listening-text');
+      if (listeningText) listeningText.textContent = '🎤 استمع...';
+      
+      // ابدأ الاستماع تلقائياً بعد الرد
+      setTimeout(() => {
+        startListeningSession();
+      }, 500);
+    }
   };
 
   utterance.onerror = (e) => {
     console.error('❌ خطأ صوت:', e.error);
     voiceIsPlaying = false;
-    const listeningText = document.getElementById('listening-text');
-    if (listeningText) listeningText.textContent = '❌ خطأ صوت';
+    if (interruptRecognition) {
+      interruptRecognition.stop();
+      interruptRecognition = null;
+    }
   };
 
   assignVoice();
@@ -453,6 +488,53 @@ function speakTextAndListen(text) {
   } catch (error) {
     console.error('❌ خطأ تشغيل:', error);
     voiceIsPlaying = false;
+  }
+}
+
+// Detect if user interrupts while AI is speaking
+function startInterruptDetection() {
+  if (!SpeechRecognition || !voiceIsPlaying) return;
+
+  if (interruptRecognition) {
+    interruptRecognition.stop();
+  }
+
+  interruptRecognition = new SpeechRecognition();
+  interruptRecognition.lang = 'ar-SA';
+  interruptRecognition.continuous = true;
+  interruptRecognition.interimResults = true;
+
+  let hasSound = false;
+
+  interruptRecognition.onresult = (event) => {
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i][0].transcript.trim().length > 0) {
+        hasSound = true;
+        console.log('🎤 كشف صوت المستخدم - إيقاف الكلام الآلي');
+        
+        // إيقاف الكلام الآلي
+        userInterrupted = true;
+        window.speechSynthesis.cancel();
+        
+        if (interruptRecognition) {
+          interruptRecognition.stop();
+          interruptRecognition = null;
+        }
+        
+        voiceIsPlaying = false;
+        break;
+      }
+    }
+  };
+
+  interruptRecognition.onerror = (event) => {
+    console.log('🔇 خطأ في كشف المقاطعة:', event.error);
+  };
+
+  try {
+    interruptRecognition.start();
+  } catch (error) {
+    console.log('❌ لا يمكن بدء كشف المقاطعة:', error);
   }
 }
 
