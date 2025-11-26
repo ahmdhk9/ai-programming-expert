@@ -1,67 +1,0 @@
-<!DOCTYPE html>
-<html dir="rtl" lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <div class="container">
-    <aside class="sidebar">
-      <div class="logo">
-        <h2>🚀 AI Expert</h2>
-      </div>
-      <nav>
-        <ul class="nav-menu">
-          <li><a href="/dashboard" class="active">📊 لوحة التحكم</a></li>
-          <li><a href="/chat">💬 الدردشة</a></li>
-          <li><a href="/code-editor">💻 محرر الكود</a></li>
-          <li><a href="/ui-builder">🎨 مصمم الواجهات</a></li>
-          <li><a href="/db-designer">🗄️ مصمم قاعدة البيانات</a></li>
-          <li><a href="/deployment">🚀 النشر</a></li>
-          <li><a href="/files">📁 الملفات</a></li>
-          <li><a href="/settings">⚙️ الإعدادات</a></li>
-          <li><a href="/admin">👨‍💻 الإدارة</a></li>
-        </ul>
-      </nav>
-    </aside>
-
-    <main class="main-content">
-      <div class="header">
-        <h1>لوحة التحكم</h1>
-        <button class="btn btn-primary" onclick="app.api.createProject(prompt('اسم المشروع'))">+ مشروع جديد</button>
-      </div>
-
-      <div class="projects-section">
-        <h2>المشاريع</h2>
-        <div id="projects-list" class="projects-grid"></div>
-      </div>
-
-      <div class="stats-section">
-        <h2>الإحصائيات</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <h3>60</h3>
-            <p>ميزة ذكية</p>
-          </div>
-          <div class="stat-card">
-            <h3>50+</h3>
-            <p>لغة برمجية</p>
-          </div>
-          <div class="stat-card">
-            <h3>23</h3>
-            <p>صفحة</p>
-          </div>
-          <div class="stat-card">
-            <h3>40+</h3>
-            <p>API Endpoint</p>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <script src="/js/app.js"></script>
-</body>
-</html>

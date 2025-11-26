@@ -3,95 +3,187 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة AI للبرمجة</title>
+  <title>AI Programming Expert - منصة ذكية</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="navbar">
-    <div class="nav-container">
-      <h1>🚀 AI Programming Expert</h1>
-      <div class="nav-buttons">
-        <a href="/login" class="btn btn-secondary">دخول</a>
-        <a href="/signup" class="btn btn-primary">إنشاء حساب</a>
+  <div class="app-container">
+    <!-- Sidebar ذكي -->
+    <aside class="sidebar">
+      <div class="logo">
+        <h1>🚀 AI Expert</h1>
+        <p>منصة ذكية للبرمجة</p>
       </div>
-    </div>
+      
+      <nav class="main-nav">
+        <button class="nav-btn active" onclick="switchPage('chat')">💬 الدردشة الذكية</button>
+        <button class="nav-btn" onclick="switchPage('workspace')">🛠️ منطقة العمل</button>
+        <button class="nav-btn" onclick="switchPage('projects')">📁 مشاريعي</button>
+        <button class="nav-btn" onclick="switchPage('templates')">🎯 قوالس</button>
+        <button class="nav-btn" onclick="switchPage('settings')">⚙️ الإعدادات</button>
+      </nav>
+
+      <div class="user-section">
+        <div class="user-avatar">👤</div>
+        <div class="user-info">
+          <p class="user-name">أحمد</p>
+          <p class="user-email">ahmed@example.com</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+      
+      <!-- صفحة الدردشة الذكية الرئيسية -->
+      <div id="page-chat" class="page active">
+        <div class="chat-header">
+          <h2>💬 مساعدك الذكي</h2>
+          <p>أخبرني ماذا تريد أن تصنع، وسأساعدك في كل شيء</p>
+        </div>
+
+        <div class="chat-interface">
+          <div class="chat-messages" id="chatMessages">
+            <div class="ai-message">
+              <p>👋 مرحباً! أنا مساعدك الذكي. يمكنك أن تطلب مني:</p>
+              <ul>
+                <li>✍️ كتابة كود في أي لغة برمجية</li>
+                <li>🔍 إصلاح الأخطاء في الكود</li>
+                <li>🎨 تصميم واجهات احترافية</li>
+                <li>🗄️ إنشاء قواعد بيانات</li>
+                <li>🚀 نشر مشروعك على السحابة</li>
+                <li>📚 شرح أي مفهوم برمجي</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <textarea id="userInput" placeholder="مثال: اكتب لي دالة تحسب الفيبوناتشي بـ Python..." rows="3"></textarea>
+            <div class="input-actions">
+              <button class="btn btn-primary" onclick="sendMessage()">📤 إرسال</button>
+              <button class="btn btn-secondary" onclick="clearChat()">🔄 مسح</button>
+            </div>
+          </div>
+
+          <!-- خيارات سريعة -->
+          <div class="quick-actions">
+            <button class="quick-btn" onclick="quickRequest('code')">💻 إنشاء كود</button>
+            <button class="quick-btn" onclick="quickRequest('fix')">🔧 إصلاح الأخطاء</button>
+            <button class="quick-btn" onclick="quickRequest('ui')">🎨 تصميم واجهة</button>
+            <button class="quick-btn" onclick="quickRequest('db')">🗄️ قاعدة بيانات</button>
+            <button class="quick-btn" onclick="quickRequest('deploy')">🚀 النشر</button>
+            <button class="quick-btn" onclick="quickRequest('explain')">📖 شرح</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- منطقة العمل -->
+      <div id="page-workspace" class="page">
+        <div class="workspace-header">
+          <h2>🛠️ منطقة العمل</h2>
+        </div>
+        
+        <div class="workspace-grid">
+          <!-- محرر الكود -->
+          <div class="editor-section">
+            <div class="editor-header">
+              <h3>💻 محرر الكود</h3>
+              <div class="editor-actions">
+                <button class="btn btn-sm" onclick="saveCode()">💾 حفظ</button>
+                <button class="btn btn-sm" onclick="runCode()">▶️ تشغيل</button>
+              </div>
+            </div>
+            <textarea id="codeEditor" placeholder="الصق الكود هنا أو اكتبه..."></textarea>
+          </div>
+
+          <!-- معاينة الإخراج -->
+          <div class="preview-section">
+            <div class="preview-header">
+              <h3>👁️ المعاينة</h3>
+            </div>
+            <div id="codeOutput" class="code-output">
+              <p>سيظهر الإخراج هنا...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- مشاريعي -->
+      <div id="page-projects" class="page">
+        <div class="projects-header">
+          <h2>📁 مشاريعي</h2>
+          <button class="btn btn-primary" onclick="newProject()">+ مشروع جديد</button>
+        </div>
+        <div id="projectsList" class="projects-list">
+          <p class="empty-state">لا توجد مشاريع حالياً. ابدأ بإنشاء مشروع جديد!</p>
+        </div>
+      </div>
+
+      <!-- القوالس -->
+      <div id="page-templates" class="page">
+        <div class="templates-header">
+          <h2>🎯 قوالس جاهزة</h2>
+        </div>
+        <div class="templates-grid">
+          <div class="template-card" onclick="loadTemplate('todo')">
+            <h3>📝 تطبيق Todo</h3>
+            <p>إدارة المهام الذكية</p>
+          </div>
+          <div class="template-card" onclick="loadTemplate('ecommerce')">
+            <h3>🛒 متجر إلكتروني</h3>
+            <p>نظام بيع متكامل</p>
+          </div>
+          <div class="template-card" onclick="loadTemplate('blog')">
+            <h3>📰 مدونة</h3>
+            <p>منصة نشر محتوى</p>
+          </div>
+          <div class="template-card" onclick="loadTemplate('portfolio')">
+            <h3>🎨 محفظة</h3>
+            <p>عرض أعمالك</p>
+          </div>
+          <div class="template-card" onclick="loadTemplate('dashboard')">
+            <h3>📊 لوحة تحكم</h3>
+            <p>عرض البيانات</p>
+          </div>
+          <div class="template-card" onclick="loadTemplate('api')">
+            <h3>🔌 API</h3>
+            <p>واجهة برمجية</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- الإعدادات -->
+      <div id="page-settings" class="page">
+        <div class="settings-header">
+          <h2>⚙️ الإعدادات</h2>
+        </div>
+        <div class="settings-form">
+          <div class="setting-group">
+            <label>🌙 الوضع الليلي</label>
+            <input type="checkbox" id="darkMode" onchange="toggleDarkMode()">
+          </div>
+          <div class="setting-group">
+            <label>🔔 إشعارات</label>
+            <input type="checkbox" checked>
+          </div>
+          <div class="setting-group">
+            <label>🌍 اللغة</label>
+            <select>
+              <option>العربية</option>
+              <option>English</option>
+            </select>
+          </div>
+          <div class="setting-group">
+            <label>💾 المزامنة التلقائية</label>
+            <input type="checkbox" checked>
+          </div>
+          <button class="btn btn-primary" onclick="saveSettings()">✅ حفظ الإعدادات</button>
+        </div>
+      </div>
+
+    </main>
   </div>
 
-  <div class="hero">
-    <div class="hero-content">
-      <h2>منصة ذكية لبناء التطبيقات</h2>
-      <p>60+ ميزة ذكية | 23 صفحة متقدمة | 40+ API Endpoint</p>
-      <div class="hero-buttons">
-        <a href="/signup" class="btn btn-primary btn-lg">ابدأ الآن</a>
-        <a href="#features" class="btn btn-secondary btn-lg">شاهد الميزات</a>
-      </div>
-    </div>
-  </div>
-
-  <section id="features" class="section">
-    <h2>الميزات الرئيسية الـ 60+</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <h3>💻 إنشاء الكود</h3>
-        <p>توليد كود احترافي تلقائياً في 50+ لغة برمجية</p>
-      </div>
-      <div class="feature-card">
-        <h3>🔧 إصلاح الأخطاء</h3>
-        <p>اكتشاف وإصلاح الأخطاء البرمجية والمنطقية</p>
-      </div>
-      <div class="feature-card">
-        <h3>🎨 تصميم الواجهات</h3>
-        <p>توليد تصاميم احترافية جاهزة للاستخدام</p>
-      </div>
-      <div class="feature-card">
-        <h3>🗄️ قاعدة البيانات</h3>
-        <p>تصميم وإنشاء قواعد بيانات ذكية</p>
-      </div>
-      <div class="feature-card">
-        <h3>🚀 النشر الفوري</h3>
-        <p>نشر المشاريع على السحابة بنقرة واحدة</p>
-      </div>
-      <div class="feature-card">
-        <h3>💬 دردشة ذكية</h3>
-        <p>تفاعل مباشر مع AI لحل المشاكل</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <h2>الإحصائيات</h2>
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h3>60+</h3>
-        <p>ميزة ذكية</p>
-      </div>
-      <div class="stat-card">
-        <h3>23</h3>
-        <p>صفحة متقدمة</p>
-      </div>
-      <div class="stat-card">
-        <h3>40+</h3>
-        <p>API Endpoint</p>
-      </div>
-      <div class="stat-card">
-        <h3>50+</h3>
-        <p>لغة برمجية</p>
-      </div>
-      <div class="stat-card">
-        <h3>3</h3>
-        <p>أنماط عمل</p>
-      </div>
-      <div class="stat-card">
-        <h3>6</h3>
-        <p>منصات دعم</p>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <p>&copy; 2024 AI Programming Expert - جميع الحقوق محفوظة</p>
-  </footer>
-
-  <script src="/js/app.js"></script>
+  <script src="/js/ai-engine.js"></script>
 </body>
 </html>
