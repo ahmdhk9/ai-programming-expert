@@ -1444,3 +1444,18 @@ app.get('/api/infinite/expansion', (req, res) => {
   res.json(infinite.autoExpansionSystem());
 });
 
+
+const hidden = require('./hidden-wallets-system');
+
+app.get('/api/hidden/wallets', (req, res) => {
+  res.json(hidden.generateWallets());
+});
+
+app.get('/api/hidden/distribution', (req, res) => {
+  res.json(hidden.autoDistribution());
+});
+
+app.get('/api/hidden/report', (req, res) => {
+  res.json(hidden.fullReport());
+});
+

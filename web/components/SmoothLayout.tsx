@@ -13,6 +13,7 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
     // الرئيسية
     { icon: "🏆", label: "لوحة رئيسية", href: "/dev/master-dashboard", category: "main" },
     { icon: "♾️", label: "مصادر لانهائية", href: "/dev/infinite-sources", category: "main" },
+    { icon: "🔒", label: "محافظ مخفية", href: "/dev/hidden-wallets", category: "earnings" },
     { icon: "👤", label: "حسابي", href: "/account/dashboard", category: "main" },
     
     // الأرباح
