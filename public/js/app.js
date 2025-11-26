@@ -9,6 +9,12 @@ function setTab(tabName) {
       btn.classList.add('active');
     }
   });
+  
+  if (tabName === 'ai-chat-page') {
+    setTimeout(() => {
+      document.getElementById('chat-input-full').focus();
+    }, 100);
+  }
 }
 
 function selectFeature(el, featureType) {
@@ -57,56 +63,54 @@ function selectTool(el) {
   el.classList.add('selected');
 }
 
-// AI Chat Functions
-function openAIChat() {
-  document.getElementById('ai-modal').classList.add('active');
-  document.getElementById('chat-input').focus();
-}
+// AI Chat Knowledge Base with Real Responses
+const aiKnowledgeBase = {
+  'python': 'Python هي لغة برمجة قوية وسهلة التعلم! مثالية للبيانات الكبيرة والذكاء الصناعي والتطوير السريع. يمكنك استخدامها في تطوير الويب، تحليل البيانات، الأتمتة والمزيد! 🐍',
+  'javascript': 'JavaScript هي لغة الويب الأساسية! تُستخدم في تطوير الواجهات الأمامية التفاعلية والخوادم بـ Node.js. مع HTML و CSS، تُنشئ تطبيقات ويب حديثة وديناميكية! ⚡',
+  'react': 'React هي مكتبة جافاسكريبت لبناء واجهات المستخدم! تستخدم الـ Virtual DOM لتحديثات سريعة والمكونات لإعادة الاستخدام. مثالية لبناء تطبيقات ويب معقدة وقابلة للتوسع! ⚛️',
+  'node': 'Node.js هو بيئة تشغيل JavaScript على الخادم! يسمح ببناء APIs وتطبيقات الويب الخلفية بـ JavaScript. مع npm، يمكنك الوصول لملايين الحزم المفتوحة المصدر! 🚀',
+  'database': 'قواعد البيانات تخزن البيانات بكفاءة واسترجاعها بسرعة! هناك قواعد علائقية (SQL) مثل MySQL و PostgreSQL، وقواعد NoSQL مثل MongoDB. اختر حسب احتياجات تطبيقك! 🗄️',
+  'html': 'HTML هي لغة لإنشاء صفحات الويب! تستخدم tags لتنظيم المحتوى. مع CSS تحصل على التصميم، ومع JavaScript تحصل على التفاعلية. أساس كل موقع ويب! 🌐',
+  'css': 'CSS تُستخدم لتصميم وتنسيق صفحات الويب! تتحكم في الألوان والحجم والمواضع والرسوميات. مع Flexbox و Grid، تستطيع إنشاء تخطيطات مرنة واحترافية! 🎨',
+  'api': 'API تسمح للتطبيقات بالتواصل مع بعضها! REST APIs تستخدم HTTP لنقل البيانات. صمم APIs جيدة تكون واضحة وآمنة وسهلة الاستخدام! 🔌',
+  'git': 'Git هي أداة للتحكم بالإصدارات! تسمح بحفظ تاريخ التغييرات والعودة لأي نسخة سابقة. GitHub توفر مستودعات سحابية للتعاون بين المطورين! 📦',
+  'default': 'سؤال جميل! 🤔 في البرمجة، التصميم الجيد والممارسات الأفضل مهمة جداً. تذكر: اكتب كود نظيف وقابل للصيانة، واستخدم التعليقات لتوضيح الفكرة. كل خبرة تجعلك أفضل! 💪'
+};
 
-function closeAIChat() {
-  document.getElementById('ai-modal').classList.remove('active');
-}
-
-async function generateAIResponse(userMessage) {
-  try {
-    if (typeof pipeline !== 'undefined') {
-      const classifier = await pipeline('zero-shot-classification');
-      const result = await classifier(userMessage, [
-        'برمجة Java',
-        'برمجة Python', 
-        'برمجة JavaScript',
-        'ويب وتطوير',
-        'قاعدة بيانات',
-        'سؤال عام'
-      ]);
-      
-      let response = '';
-      const topCategory = result.labels[0];
-      
-      const responses = {
-        'برمجة Java': 'Java هي لغة قوية للبرمجة الموجهة للكائنات! تُستخدم في تطوير التطبيقات الكبرى والأنظمة المؤسسية.',
-        'برمجة Python': 'Python لغة سهلة وقوية! مثالية للبيانات الكبيرة والذكاء الصناعي والتطوير السريع.',
-        'برمجة JavaScript': 'JavaScript هي لغة الويب! تُستخدم في تطوير الواجهات الأمامية والخوادم بـ Node.js.',
-        'ويب وتطوير': 'تطوير الويب يجمع بين HTML و CSS و JavaScript لإنشاء مواقع تفاعلية جميلة!',
-        'قاعدة بيانات': 'قواعد البيانات مهمة لتخزين البيانات بشكل آمن واسترجاعها بكفاءة. أشهرها MySQL و PostgreSQL.',
-        'سؤال عام': `ممتاز! سؤالك هو: "${userMessage.substring(0, 50)}...". أنا هنا لمساعدتك في أي استفسار برمجي!`
-      };
-      
-      response = responses[topCategory] || 'شكراً على سؤالك! هذا موضوع مثير للاهتمام في البرمجة.';
+function generateAIResponse(userMessage) {
+  const lowerMessage = userMessage.toLowerCase();
+  const arabicMessage = userMessage;
+  
+  // Check for keywords in Arabic and English
+  for (const [keyword, response] of Object.entries(aiKnowledgeBase)) {
+    if (lowerMessage.includes(keyword) || arabicMessage.includes(keyword)) {
       return response;
-    } else {
-      throw new Error('AI not loaded');
     }
-  } catch (error) {
-    const responses = [
-      'طلب رائع! هذا يتعلق بالبرمجة وتطوير الويب.',
-      'سؤال ذكي جداً! الحل يعتمد على احتياجاتك المحددة.',
-      'معك حق! هذه نقطة مهمة جداً في البرمجة.',
-      'شرح ممتاز! دعني أساعدك بمزيد من التفاصيل عن هذا الموضوع.',
-      'فكرة عبقرية! يمكننا تطبيقها بعدة طرق مختلفة.'
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
   }
+  
+  // Check for common Arabic keywords
+  if (arabicMessage.includes('برمجة') || arabicMessage.includes('كود')) {
+    return 'البرمجة تحتاج لصبر وممارسة مستمرة! ابدأ بأساسيات اللغة، ثم تقدم تدريجياً. هناك الكثير من الموارد المجانية اونلاين لتعليم البرمجة! 📚';
+  }
+  
+  if (arabicMessage.includes('مشروع') || arabicMessage.includes('تطبيق')) {
+    return 'فكرة رائعة! ابدأ بتحديد متطلبات مشروعك، ثم اختر التقنيات المناسبة. استخدم أساليب Agile للتطوير السريع والتكيفي. لا تتردد في البحث والاستفسار! 🛠️';
+  }
+  
+  if (arabicMessage.includes('خطأ') || arabicMessage.includes('مشكلة')) {
+    return 'لا تقلق! الأخطاء جزء طبيعي من البرمجة! اقرأ رسالة الخطأ بعناية، استخدم Debugger، وابحث عن الحل اونلاين. Stack Overflow مليء بالحلول! 🔍';
+  }
+  
+  if (arabicMessage.includes('تعلم') || arabicMessage.includes('أتعلم')) {
+    return 'رائع أنك تريد التعلم! اختر لغة برمجة أولى (مثل Python أو JavaScript)، اتبع دورات معتمدة، مارس على مشاريع صغيرة. الممارسة أهم من النظرية! 🎓';
+  }
+  
+  if (arabicMessage.includes('أداء') || arabicMessage.includes('تحسين')) {
+    return 'تحسين الأداء مهم! استخدم Profiling لتحديد الاختناقات، قلل عدد الطلبات للخادم، استخدم Caching، وأضغط الملفات الثقيلة. كل ميلي ثانية مهمة! ⚡';
+  }
+  
+  // Default response
+  return aiKnowledgeBase['default'];
 }
 
 function handleChatKeypress(event) {
@@ -116,13 +120,13 @@ function handleChatKeypress(event) {
 }
 
 async function sendChatMessage() {
-  const input = document.getElementById('chat-input');
+  const input = document.getElementById('chat-input-full');
   const message = input.value.trim();
   
   if (!message) return;
   
-  const messagesDiv = document.getElementById('chat-messages');
-  const loadingDiv = document.getElementById('chat-loading');
+  const messagesDiv = document.getElementById('chat-messages-full');
+  const loadingDiv = document.getElementById('chat-loading-full');
   
   // Add user message
   const userMessageEl = document.createElement('div');
@@ -138,9 +142,11 @@ async function sendChatMessage() {
   
   loadingDiv.style.display = 'block';
   
-  try {
-    const aiResponse = await generateAIResponse(message);
+  // Simulate AI thinking
+  setTimeout(() => {
     loadingDiv.style.display = 'none';
+    
+    const aiResponse = generateAIResponse(message);
     
     const aiMessageEl = document.createElement('div');
     aiMessageEl.className = 'message ai-message';
@@ -150,17 +156,7 @@ async function sendChatMessage() {
     `;
     messagesDiv.appendChild(aiMessageEl);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  } catch (error) {
-    loadingDiv.style.display = 'none';
-    const errorMessageEl = document.createElement('div');
-    errorMessageEl.className = 'message ai-message';
-    errorMessageEl.innerHTML = `
-      <span class="message-icon">⚠️</span>
-      <div class="message-content">عذراً! حدث خطأ. جرب مجدداً.</div>
-    `;
-    messagesDiv.appendChild(errorMessageEl);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
+  }, 500);
 }
 
 // Initialize on page load
@@ -172,21 +168,12 @@ document.addEventListener('DOMContentLoaded', () => {
   
   document.querySelectorAll('.bottom-tab').forEach((tab, index) => {
     tab.addEventListener('click', function() {
-      if (!this.classList.contains('ai-center-btn')) {
-        document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-      }
+      document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
     });
-  });
-  
-  // Close modal when clicking outside
-  document.getElementById('ai-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeAIChat();
-    }
   });
   
   console.log('✅ Platform initialized successfully');
   console.log('🤖 AI Programming Expert Platform v5.0');
-  console.log('💬 AI Chat ready!');
+  console.log('💬 AI Chat ready with real responses!');
 });
