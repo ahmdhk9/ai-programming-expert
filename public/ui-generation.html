@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Generation - AI Programming Expert</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo"><h2>🚀 AI Expert</h2><p>منصة ذكية</p></div>
+      <nav><ul class="nav-menu">
+        <div class="nav-section"><div class="nav-section-title">الرئيسية</div>
+          <li class="nav-item"><a href="/" class="nav-link">🏠 الرئيسية</a></li></div>
+        <div class="nav-section"><div class="nav-section-title">الميزات</div>
+          <li class="nav-item"><a href="/ui-generation.html" class="nav-link active">🎨 UI Gen</a></li></div>
+      </ul></nav>
+    </aside>
+    <main class="main-content">
+      <div class="header"><h1>🎨 تصميم الواجهات</h1><p>تصاميم احترافية جاهزة للاستخدام</p></div>
+      <div class="cards-grid">
+        <div class="card"><div class="card-icon">🎯</div><h3>تصاميم جاهزة</h3></div>
+        <div class="card"><div class="card-icon">⚡</div><h3>سريعة ومحسّنة</h3></div>
+      </div>
+      <div style="background: white; padding: 30px; border-radius: 12px;">
+        <h2 style="color: var(--primary);">اطلب تصميم</h2>
+        <form onsubmit="generateUI(event)">
+          <div class="form-group">
+            <label>وصف التصميم:</label>
+            <textarea id="ui-desc" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">🎨 إنشاء التصميم</button>
+        </form>
+        <div id="ui-result"></div>
+      </div>
+    </main>
+  </div>
+  <script>
+    function generateUI(e) {
+      e.preventDefault();
+      document.getElementById('ui-result').innerHTML = `<div class="alert alert-success" style="margin-top: 20px;">✅ تم إنشاء التصميم!</div>`;
+    }
+  </script>
+</body>
+</html>

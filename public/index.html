@@ -4,115 +4,190 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🚀 AI Programming Expert - منصة ذكية خارقة</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: #333; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    header { background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-    h1 { color: #667eea; font-size: 32px; margin-bottom: 10px; }
-    .tagline { color: #666; font-size: 16px; margin-bottom: 20px; }
-    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0; }
-    .feature-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .feature-box h3 { color: #667eea; margin-bottom: 10px; }
-    .feature-box p { color: #666; font-size: 14px; line-height: 1.6; }
-    .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 20px 0; }
-    .mode-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; }
-    .btn { background: #667eea; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; margin: 10px 5px; font-size: 14px; }
-    .btn:hover { background: #764ba2; }
-    .stats { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .stat { text-align: center; }
-    .stat-num { font-size: 32px; font-weight: 700; color: #667eea; }
-    .stat-label { color: #666; font-size: 14px; margin-top: 5px; }
-    footer { background: rgba(0,0,0,0.1); color: white; text-align: center; padding: 20px; margin-top: 40px; border-radius: 8px; }
-  </style>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>🚀 AI Programming Expert</h1>
-      <p class="tagline">منصة ذكية متطورة تصنع أي شيء فوراً - عبر الويب، محلياً، أو هجين</p>
-    </header>
+    <aside class="sidebar">
+      <div class="logo">
+        <h2>🚀 AI Expert</h2>
+        <p>منصة ذكية خارقة</p>
+      </div>
+      <nav>
+        <ul class="nav-menu">
+          <div class="nav-section">
+            <div class="nav-section-title">الرئيسية</div>
+            <li class="nav-item"><a href="/" class="nav-link active">🏠 الرئيسية</a></li>
+            <li class="nav-item"><a href="/chat.html" class="nav-link">💬 دردشة ذكية</a></li>
+          </div>
+          <div class="nav-section">
+            <div class="nav-section-title">الميزات الرئيسية</div>
+            <li class="nav-item"><a href="/code-generation.html" class="nav-link">💻 Code Generation</a></li>
+            <li class="nav-item"><a href="/auto-fixing.html" class="nav-link">🔧 Auto Fixing</a></li>
+            <li class="nav-item"><a href="/ui-generation.html" class="nav-link">🎨 UI Generation</a></li>
+            <li class="nav-item"><a href="/database-auto.html" class="nav-link">🗄️ Database Auto</a></li>
+            <li class="nav-item"><a href="/deployment.html" class="nav-link">🚀 Deployment</a></li>
+          </div>
+          <div class="nav-section">
+            <div class="nav-section-title">آخرى</div>
+            <li class="nav-item"><a href="/marketplace.html" class="nav-link">🏪 Marketplace</a></li>
+            <li class="nav-item"><a href="/admin.html" class="nav-link">👨‍💻 Admin</a></li>
+          </div>
+        </ul>
+      </nav>
+    </aside>
 
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-num">60+</div>
-        <div class="stat-label">ميزة ذكية</div>
+    <main class="main-content">
+      <div class="header">
+        <h1>🚀 AI Programming Expert v4.0</h1>
+        <p>منصة ذكية متطورة تصنع أي شيء فوراً - عبر الويب، محلياً، أو هجين</p>
       </div>
-      <div class="stat">
-        <div class="stat-num">23</div>
-        <div class="stat-label">صفحة React</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">3</div>
-        <div class="stat-label">أنماط عمل</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">6</div>
-        <div class="stat-label">منصات تحميل</div>
-      </div>
-    </div>
 
-    <h2 style="color: white; text-align: center; margin: 30px 0;">🌐 أنماط العمل الثلاثة</h2>
-    <div class="modes">
-      <div class="mode-card">
-        <h3>🌐 Online Mode</h3>
-        <p>جميع الخدمات السحابية متاحة</p>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <div class="card-icon" style="font-size: 32px;">60</div>
+          <h3>ميزة ذكية</h3>
+          <p>60+ ميزة متطورة وقوية</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📄</div>
+          <div class="card-icon" style="font-size: 32px;">23</div>
+          <h3>صفحة React</h3>
+          <p>23 صفحة احترافية</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔄</div>
+          <div class="card-icon" style="font-size: 32px;">3</div>
+          <h3>أنماط عمل</h3>
+          <p>Online, Offline, Hybrid</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <div class="card-icon" style="font-size: 32px;">6</div>
+          <h3>منصات</h3>
+          <p>PWA, Desktop, Mobile</p>
+        </div>
       </div>
-      <div class="mode-card">
-        <h3>📱 Offline Mode</h3>
-        <p>عمل محلي 100% بدون انترنت</p>
-      </div>
-      <div class="mode-card">
-        <h3>🔄 Hybrid Mode</h3>
-        <p>مزامنة ذكية تلقائية</p>
-      </div>
-    </div>
 
-    <h2 style="color: white; text-align: center; margin: 30px 0;">✨ المميزات الرئيسية</h2>
-    <div class="features">
-      <div class="feature-box">
-        <h3>💻 Code Generation</h3>
-        <p>كتابة كود في أقل من 5 ثواني بجودة عالية واحترافية</p>
+      <div style="background: white; padding: 40px; border-radius: 12px; margin-bottom: 30px;">
+        <h2 style="color: var(--primary); text-align: center; margin-bottom: 30px; font-size: 28px;">🌐 أنماط العمل الثلاثة</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-icon">🌐</div>
+            <h3>Online Mode</h3>
+            <p>اتصل بالسحابة للوصول لجميع الخدمات بكامل طاقتها</p>
+            <ul class="card-features">
+              <li>خدمات سحابية متطورة</li>
+              <li>قاعدة بيانات عملاقة</li>
+              <li>نشر فوري</li>
+              <li>AI المتقدم</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-icon">📱</div>
+            <h3>Offline Mode</h3>
+            <p>عمل محلي 100% بدون الحاجة للإنترنت</p>
+            <ul class="card-features">
+              <li>عمل بدون إنترنت</li>
+              <li>سرعة فائقة</li>
+              <li>خصوصية كاملة</li>
+              <li>استقلالية تامة</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔄</div>
+            <h3>Hybrid Mode</h3>
+            <p>مزامنة ذكية تلقائية بين الأنمات</p>
+            <ul class="card-features">
+              <li>أفضل الاثنين معاً</li>
+              <li>مزامنة تلقائية</li>
+              <li>أداء محسّن</li>
+              <li>مرونة كاملة</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="feature-box">
-        <h3>🔧 Auto Fixing</h3>
-        <p>إصلاح الأخطاء تلقائياً مع شرح واضح للمشكلة</p>
-      </div>
-      <div class="feature-box">
-        <h3>🎨 UI Generation</h3>
-        <p>تصميم واجهات احترافية جاهزة للاستخدام</p>
-      </div>
-      <div class="feature-box">
-        <h3>🗄️ Database Auto</h3>
-        <p>إنشاء قواعد بيانات ذكية تلقائياً</p>
-      </div>
-      <div class="feature-box">
-        <h3>🚀 Deployment</h3>
-        <p>نشر فوري للسحابة (Vercel, Fly.io, Firebase)</p>
-      </div>
-      <div class="feature-box">
-        <h3>🧠 AI Learning</h3>
-        <p>تعلم ذاتي من الاستخدام وتحسين مستمر</p>
-      </div>
-    </div>
 
-    <div style="background: white; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: center;">
-      <h3 style="color: #667eea; margin-bottom: 15px;">🎯 ابدأ الآن</h3>
-      <button class="btn" onclick="goToChat()">💬 افتح Chat</button>
-      <button class="btn" onclick="goToFeatures()">✨ جميع الميزات</button>
-      <button class="btn" onclick="goToAdmin()">👨‍💻 لوحة المسؤول</button>
-    </div>
+      <div style="background: white; padding: 40px; border-radius: 12px;">
+        <h2 style="color: var(--primary); text-align: center; margin-bottom: 30px; font-size: 28px;">✨ الميزات الرئيسية</h2>
+        <div class="cards-grid">
+          <a href="/code-generation.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon">💻</div>
+            <h3>Code Generation</h3>
+            <p>كتابة كود احترافي في أقل من 5 ثواني</p>
+            <ul class="card-features">
+              <li>50+ لغة برمجة</li>
+              <li>كود محسّن</li>
+              <li>بدون أخطاء</li>
+            </ul>
+          </a>
+          <a href="/auto-fixing.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon">🔧</div>
+            <h3>Auto Fixing</h3>
+            <p>اكتشاف وإصلاح الأخطاء تلقائياً</p>
+            <ul class="card-features">
+              <li>اكتشاف ذكي</li>
+              <li>شرح تفصيلي</li>
+              <li>إصلاح فوري</li>
+            </ul>
+          </a>
+          <a href="/ui-generation.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon">🎨</div>
+            <h3>UI Generation</h3>
+            <p>تصميم واجهات احترافية جاهزة</p>
+            <ul class="card-features">
+              <li>تصاميم مجانية</li>
+              <li>محسّنة للأداء</li>
+              <li>متجاوبة</li>
+            </ul>
+          </a>
+          <a href="/database-auto.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon">🗄️</div>
+            <h3>Database Auto</h3>
+            <p>إنشاء قواعد بيانات احترافية</p>
+            <ul class="card-features">
+              <li>تصميم ذكي</li>
+              <li>تحسين تلقائي</li>
+              <li>أمان عالي</li>
+            </ul>
+          </a>
+          <a href="/deployment.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon">🚀</div>
+            <h3>Deployment</h3>
+            <p>نشر فوري على السحابة</p>
+            <ul class="card-features">
+              <li>نشر بسيط</li>
+              <li>دعم عالمي</li>
+              <li>SSL مجاني</li>
+            </ul>
+          </a>
+          <a href="/marketplace.html" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="card-icon">🏪</div>
+            <h3>Marketplace</h3>
+            <p>50+ مشروع جاهز</p>
+            <ul class="card-features">
+              <li>قوالب مجانية</li>
+              <li>مشاريع كاملة</li>
+              <li>أكواد جاهزة</li>
+            </ul>
+          </a>
+        </div>
+      </div>
 
-    <footer>
-      <p>🚀 AI Programming Expert Platform v4.0</p>
-      <p>منصة ذكية متطورة لصناعة المستقبل</p>
-    </footer>
+      <div style="text-align: center; margin-top: 40px;">
+        <h2 style="color: var(--primary); margin-bottom: 20px;">ابدأ الآن</h2>
+        <button onclick="goToChat()" class="btn btn-primary" style="margin: 10px;">💬 دردشة ذكية</button>
+        <button onclick="goToCode()" class="btn btn-primary" style="margin: 10px;">💻 إنشاء كود</button>
+        <button onclick="goToMarketplace()" class="btn btn-primary" style="margin: 10px;">🏪 المتجر</button>
+      </div>
+    </main>
   </div>
 
   <script>
-    function goToChat() { window.location.href = '/chat'; }
-    function goToFeatures() { window.location.href = '/features'; }
-    function goToAdmin() { window.location.href = '/admin'; }
+    function goToChat() { window.location.href = '/chat.html'; }
+    function goToCode() { window.location.href = '/code-generation.html'; }
+    function goToMarketplace() { window.location.href = '/marketplace.html'; }
   </script>
 </body>
 </html>
