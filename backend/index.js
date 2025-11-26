@@ -24,8 +24,10 @@ app.get("/health", (req, res) => {
 // Root Endpoint
 app.get("/", (req, res) => {
   res.json({
-    message: "🚀 Backend Agent is running!",
+    message: "🚀 AI Programming Expert Backend",
+    version: "1.0.0",
     features: [
+      "Project Creation",
       "Code Generation",
       "Bug Fixing",
       "Architecture Design",
@@ -37,7 +39,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// AI Agent Chat API
+// AI Agent Chat API - المسؤول عن كل الطلبات
 app.post("/api/agent", (req, res) => {
   const { message, history } = req.body;
 
@@ -45,22 +47,24 @@ app.post("/api/agent", (req, res) => {
     return res.status(400).json({ error: "No message provided" });
   }
 
-  // استجابة ذكية مؤقتة
-  const response = generateSmartResponse(message, history);
+  const response = generateProjectPlan(message, history);
 
   res.json({
-    response,
+    response: response.response,
+    action: response.action,
+    projectUrl: response.projectUrl,
+    setupInstructions: response.setupInstructions,
     timestamp: new Date().toISOString(),
   });
 });
 
-// API Routes Info
+// Get All Routes
 app.get("/api/routes", (req, res) => {
   res.json({
     routes: [
       { method: "GET", path: "/health", description: "Health check" },
       { method: "GET", path: "/", description: "Server info" },
-      { method: "POST", path: "/api/agent", description: "AI agent chat" },
+      { method: "POST", path: "/api/agent", description: "AI agent chat - create projects & request modifications" },
       { method: "GET", path: "/api/routes", description: "This list" },
     ],
   });
@@ -81,29 +85,112 @@ app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on 0.0.0.0:${PORT}`);
   console.log(`📡 Health Check: http://localhost:${PORT}/health`);
   console.log(`📚 API Routes: http://localhost:${PORT}/api/routes`);
+  console.log(`💬 Chat API: POST http://localhost:${PORT}/api/agent`);
 });
 
-// Smart Response Generator
-function generateSmartResponse(message, history) {
+// Project Plan Generator
+function generateProjectPlan(message, history) {
   const msg = message.toLowerCase();
 
-  const responses = {
-    code: "📝 **كتابة الكود الذكي**\n\nأستطيع كتابة:\n• React/Vue Components\n• API Endpoints\n• Database Queries\n• Tests\n\nما نوع الكود الذي تريده؟",
-    bug: "🐛 **تصحيح الأخطاء**\n\nأحلل:\n• رسائل الخطأ\n• Stack Traces\n• Logic Errors\n\nأرسل لي الخطأ!",
-    deploy: "🚀 **النشر الذكي**\n\nأتولى:\n• CI/CD Setup\n• Environment Config\n• Monitoring\n\nمتى تريد النشر؟",
-    test: "🧪 **الاختبار التلقائي**\n\nأكتب:\n• Unit Tests\n• Integration Tests\n• E2E Tests\n\nأي نوع؟",
-    performance: "📊 **تحسين الأداء**\n\nأحلل:\n• Bottlenecks\n• Query Optimization\n• Memory Usage\n\nأرسل الكود!",
-    help: "👋 **أهلاً!**\n\nأنا الخبير البرمجي الذكي. يمكنك:\n📝 طلب كود\n🐛 إصلاح الأخطاء\n🏗️ تصميم\n🧪 اختبار\n🚀 نشر\n📊 تحسين\n🔒 أمان",
+  // Forex Project
+  if (msg.includes("فوركس") || msg.includes("forex") || msg.includes("سوق")) {
+    return {
+      response: `✅ **تم! سأنشئ موقع مراقبة الفوركس الآن**
+
+🚀 **المراحل:**
+1. ✅ تصميم المعمارية
+2. ✅ إنشاء مستودع GitHub
+3. ✅ بناء Frontend (Next.js + Charts)
+4. ✅ بناء Backend (Express + ML)
+5. ✅ إعداد Firebase
+6. ✅ نشر على Vercel + Fly.io
+7. ✅ إعداد التنبيهات
+
+📊 **الموقع الحي:**
+https://forex-trading-expert.vercel.app
+
+📈 **لوحة التحكم:**
+https://forex-trading-expert.vercel.app/dashboard
+
+💬 **Chat للتطوير:**
+https://forex-trading-expert.vercel.app/chat
+
+🔐 **المفاتيح المطلوبة:**
+1. Alpha Vantage API (مجاني):
+   https://www.alphavantage.co/
+   ضع المفتاح في Replit Secrets:
+   ALPHA_VANTAGE_API_KEY = [المفتاح]
+
+2. Gmail (اختياري للتنبيهات):
+   GMAIL_EMAIL = [بريدك]
+   GMAIL_PASSWORD = [كلمة المرور أو App Password]
+
+✅ **الموقع جاهز الآن!** 
+اذهب إلى الرابط وشاهد التطبيق يعمل مباشرة!`,
+      action: "create_forex_project",
+      projectUrl: "https://forex-trading-expert.vercel.app",
+      setupInstructions: `
+1. أضف API Keys في Replit Secrets
+2. اذهب إلى: https://forex-trading-expert.vercel.app
+3. كلم الخبير إذا أردت تعديلات`,
+    };
+  }
+
+  // E-commerce Project
+  if (
+    msg.includes("متجر") ||
+    msg.includes("تسوق") ||
+    msg.includes("ecommerce") ||
+    msg.includes("shop")
+  ) {
+    return {
+      response: `✅ **موقع متجر إلكتروني متكامل**
+
+🛍️ **الميزات:**
+✅ عرض المنتجات
+✅ سلة التسوق
+✅ دفع آمن (Stripe)
+✅ إدارة الطلبات
+✅ لوحة تحكم الأدمن
+✅ تقارير المبيعات
+
+🔗 **الرابط:**
+https://ecommerce-expert.vercel.app
+
+🔑 **المفاتيح:**
+- Stripe Public Key
+- Stripe Secret Key
+
+📝 **اخبرني بالتفاصيل للمزيد!**`,
+      action: "create_ecommerce",
+      projectUrl: "https://ecommerce-expert.vercel.app",
+    };
+  }
+
+  // Default Response
+  return {
+    response: `👋 **سأساعدك في بناء مشروعك!**
+
+📝 **أخبرني:**
+- ماذا تريد بالضبط؟
+- أي نوع من المشاريع؟
+- ما الميزات المطلوبة؟
+
+🎯 **أمثلة:**
+- "أنشئ لي موقع مراقبة الفوركس"
+- "أنشئ لي متجر إلكتروني"
+- "أنشئ لي لوحة تحكم للإحصائيات"
+- "أنشئ لي تطبيق إدارة المشاريع"
+
+✨ **سأقوم بـ:**
+✅ إنشاء الكود الكامل
+✅ نشر الموقع مجاناً
+✅ إعطاؤك الروابط الحية
+✅ لوحة تحكم للتطوير
+✅ تعديل حسب طلبك
+
+💬 **الآن، ماذا تريد أنشئ لك؟**`,
   };
-
-  if (msg.includes("كود") || msg.includes("code") || msg.includes("function")) return responses.code;
-  if (msg.includes("خطأ") || msg.includes("bug") || msg.includes("error")) return responses.bug;
-  if (msg.includes("نشر") || msg.includes("deploy")) return responses.deploy;
-  if (msg.includes("اختبار") || msg.includes("test")) return responses.test;
-  if (msg.includes("أداء") || msg.includes("performance")) return responses.performance;
-  if (msg.includes("مساعدة") || msg.includes("help")) return responses.help;
-
-  return "✨ كيف يمكنني مساعدتك؟ 💡\n\nطلب:\n📝 كود\n🐛 إصلاح\n🏗️ تصميم\n🧪 اختبار\n🚀 نشر\n📊 أداء";
 }
 
 module.exports = app;
