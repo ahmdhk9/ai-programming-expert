@@ -35,7 +35,7 @@ export default function Home() {
           }}>
             💬 أنشئ مشروعك الآن
           </Link>
-          <Link href="/projects" style={{
+          <Link href="/universal" style={{
             padding: "1rem 2rem",
             backgroundColor: "rgba(255,255,255,0.2)",
             color: "white",
@@ -46,7 +46,7 @@ export default function Home() {
             fontSize: "1.1rem",
             cursor: "pointer"
           }}>
-            📚 المشاريع الموجودة
+            ✨ إنشاء أي شيء
           </Link>
         </div>
 
@@ -174,9 +174,9 @@ export default function Home() {
         </Link>
         <div style={{ display: "flex", justifyContent: "center", gap: "2rem", marginTop: "2rem", flexWrap: "wrap" }}>
           <Link href="/chat" style={{ color: "white", textDecoration: "none" }}>💬 Chat</Link>
-          <Link href="/projects" style={{ color: "white", textDecoration: "none" }}>📚 Projects</Link>
-          <Link href="/dashboard" style={{ color: "white", textDecoration: "none" }}>📊 Dashboard</Link>
-          <Link href="/about" style={{ color: "white", textDecoration: "none" }}>ℹ️ About</Link>
+          <Link href="/universal" style={{ color: "white", textDecoration: "none" }}>✨ Universal</Link>
+          <Link href="/video-creator" style={{ color: "white", textDecoration: "none" }}>🎬 Videos</Link>
+          <Link href="/resources" style={{ color: "white", textDecoration: "none" }}>📊 Resources</Link>
         </div>
         <p style={{ marginTop: "2rem", opacity: 0.8 }}>🚀 AI Programming Expert 2025</p>
       </footer>

@@ -194,3 +194,42 @@ https://ecommerce-expert.vercel.app
 }
 
 module.exports = app;
+
+// Import AI Agents Router
+const aiAgentsRouter = require('./ai-agents');
+app.use('/api/ai', aiAgentsRouter);
+
+// Advanced AI Chat with Multiple Models
+app.post("/api/intelligent-agent", (req, res) => {
+  const { request, taskType } = req.body;
+
+  const intelligentResponse = {
+    status: "processing",
+    taskType,
+    selectedModels: [],
+    estimatedTime: 0,
+    cost: 0,
+  };
+
+  // اختيار النموذج المناسب
+  if (taskType === "code-generation") {
+    intelligentResponse.selectedModels = ["groq", "mistral"];
+    intelligentResponse.estimatedTime = "2-5 seconds";
+    intelligentResponse.cost = 0;
+  } else if (taskType === "video-generation") {
+    intelligentResponse.selectedModels = ["replicate"];
+    intelligentResponse.estimatedTime = "30-60 seconds";
+    intelligentResponse.cost = 0.5;
+  } else if (taskType === "analysis") {
+    intelligentResponse.selectedModels = ["mistral", "openai"];
+    intelligentResponse.estimatedTime = "3-10 seconds";
+    intelligentResponse.cost = 0;
+  }
+
+  res.json({
+    response: "🚀 جاري معالجة الطلب بأفضل نموذج ذكاء صناعي",
+    ...intelligentResponse,
+    message: `تم اختيار ${intelligentResponse.selectedModels.join(" + ")} لهذه المهمة`,
+  });
+});
+
