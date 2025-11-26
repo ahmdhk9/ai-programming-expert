@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="AI Expert">
-  <title>🤖 AI Programming Expert Platform</title>
+  <title>🤖 AI Programming Expert</title>
   <link rel="stylesheet" href="/style.css">
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='75' font-size='80' text-anchor='middle'>🤖</text></svg>">
@@ -18,308 +18,43 @@
 <div class="phone-frame">
   <!-- Header -->
   <div class="header">
-    <button class="header-btn back">‹</button>
     <div class="header-content">
       <div class="logo-section">
         <div class="logo-icon">🤖</div>
         <div class="logo-text">
           <h1 class="header-title">AI Programming Expert</h1>
-          <p class="developer-name">By احمد البصراوي</p>
         </div>
       </div>
     </div>
     <button class="header-btn install" id="install-btn" onclick="installApp()" title="تنصيب التطبيق">⬇️</button>
-    <button class="header-btn menu">⋮</button>
   </div>
 
   <!-- Content -->
   <div class="content-wrapper">
 
-    <!-- Features Tab -->
-    <div id="features" class="tab-pane">
-      <div class="section">
-        <h2>🎯 المميزات الأساسية</h2>
-        <div class="features-grid">
-          <div class="feature-card" onclick="selectFeature(this, 'generate')">
-            <div class="feature-icon">💻</div>
-            <div class="feature-name">إنشاء الكود</div>
-          </div>
-          <div class="feature-card" onclick="selectFeature(this, 'fix')">
-            <div class="feature-icon">🔧</div>
-            <div class="feature-name">إصلاح الأخطاء</div>
-          </div>
-          <div class="feature-card" onclick="selectFeature(this, 'design')">
-            <div class="feature-icon">🎨</div>
-            <div class="feature-name">تصميم الواجهات</div>
-          </div>
-          <div class="feature-card" onclick="selectFeature(this, 'explain')">
-            <div class="feature-icon">📚</div>
-            <div class="feature-name">شرح المفاهيم</div>
-          </div>
-          <div class="feature-card" onclick="selectFeature(this, 'understand')">
-            <div class="feature-icon">🧠</div>
-            <div class="feature-name">فهم النية</div>
-          </div>
-          <div class="feature-card" onclick="selectFeature(this, 'deploy')">
-            <div class="feature-icon">🚀</div>
-            <div class="feature-name">النشر الذكي</div>
-          </div>
+    <!-- AI Chat Page -->
+    <div id="ai-chat-page" class="tab-pane active">
+      <div class="chat-messages-full" id="chat-messages-full">
+        <div class="message ai-message">
+          <span class="message-icon">🤖</span>
+          <div class="message-content">مرحباً! اسألني عن أي موضوع برمجي 🚀</div>
         </div>
       </div>
-
-      <div class="section">
-        <h2>📋 تفاصيل المميزة</h2>
-        <div id="feature-details" class="feature-details">
-          <div class="detail-card">
-            <h3>💻 إنشاء الكود</h3>
-            <p>أصف ما تريد، واحصل على كود احترافي جاهز للاستخدام</p>
-            <ul>
-              <li>JavaScript / TypeScript</li>
-              <li>Python</li>
-              <li>Java</li>
-              <li>C++</li>
-              <li>PHP</li>
-              <li>Rust / Go</li>
-            </ul>
-          </div>
-        </div>
+      <div class="chat-input-full">
+        <input type="text" id="chat-input-full" class="chat-input-full-field" placeholder="اسأل عن أي شيء..." onkeypress="handleChatKeypress(event)">
+        <button class="chat-voice-btn" id="voice-btn" onclick="startVoiceListening()" title="تحدث">🎤</button>
+        <button class="chat-send-full" onclick="sendChatMessage()">إرسال</button>
       </div>
-
-      <div class="section">
-        <h2>💬 استشير الـ AI</h2>
-        <div class="chat-input-box">
-          <input type="text" placeholder="اسأل عن أي شيء برمجي...">
-          <button>إرسال</button>
-        </div>
+      <div class="chat-loading-full" id="chat-loading-full" style="display: none;">
+        <span>⏳ جاري التفكير...</span>
       </div>
     </div>
 
-    <!-- Tools Tab -->
-    <div id="tools" class="tab-pane">
-      <div class="section">
-        <h2>⚙️ أدوات مساعدة ذكية</h2>
-        <div class="toolbox">
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🔄</div>
-            <div class="tool-name">إعادة هيكلة</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">⚛️</div>
-            <div class="tool-name">React</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🗄️</div>
-            <div class="tool-name">قواعد البيانات</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🔌</div>
-            <div class="tool-name">APIs</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">☁️</div>
-            <div class="tool-name">Cloud</div>
-          </div>
-          <div class="tool" onclick="selectTool(this)">
-            <div class="tool-icon">🔐</div>
-            <div class="tool-name">الأمان</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>🚀 إجراءات سريعة</h2>
-        <div class="quick-actions">
-          <button class="action-btn">
-            <span class="action-icon">📝</span>
-            <span>تحليل الكود</span>
-          </button>
-          <button class="action-btn">
-            <span class="action-icon">🧪</span>
-            <span>اختبار</span>
-          </button>
-          <button class="action-btn">
-            <span class="action-icon">📊</span>
-            <span>تحسينات</span>
-          </button>
-          <button class="action-btn">
-            <span class="action-icon">📖</span>
-            <span>توثيق</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Projects Tab -->
-    <div id="projects" class="tab-pane">
-      <div class="section">
-        <h2>📦 إدارة المشاريع</h2>
-        <div class="project-actions">
-          <button class="create-project-btn">+ مشروع جديد</button>
-        </div>
-
-        <div class="projects-list">
-          <div class="project-item">
-            <div class="project-header">
-              <h3>📱 تطبيق ويب</h3>
-              <span class="status-badge active">نشط</span>
-            </div>
-            <div class="project-info">
-              <div class="info-row">
-                <span>الحالة:</span>
-                <span>قيد التطوير</span>
-              </div>
-              <div class="info-row">
-                <span>النوع:</span>
-                <span>React + Node.js</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <div class="project-header">
-              <h3>🎮 لعبة ويب</h3>
-              <span class="status-badge pending">قادم</span>
-            </div>
-            <div class="project-info">
-              <div class="info-row">
-                <span>الحالة:</span>
-                <span>في التخطيط</span>
-              </div>
-              <div class="info-row">
-                <span>النوع:</span>
-                <span>JavaScript/Canvas</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="section">
-        <h2>📊 الإحصائيات</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value">7</div>
-            <div class="stat-label">مميزات</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">6+</div>
-            <div class="stat-label">لغات</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">100%</div>
-            <div class="stat-label">أداء</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>🚀 حالة النشر</h2>
-        <div class="deploy-status">
-          <div class="status-item">
-            <span class="status-dot active"></span>
-            <span class="status-text">الخادم نشط</span>
-          </div>
-          <div class="status-item">
-            <span class="status-dot active"></span>
-            <span class="status-text">APIs متصلة</span>
-          </div>
-          <div class="status-item">
-            <span class="status-dot active"></span>
-            <span class="status-text">ذكاء صناعي مفعّل</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Profile Tab -->
-    <div id="profile" class="tab-pane">
-      <div class="section">
-        <h2>👤 بيانات الملف الشخصي</h2>
-        <div class="profile-header">
-          <div class="profile-avatar">👨‍💻</div>
-          <div class="profile-info">
-            <h3>مطور ذكي</h3>
-            <p>AI Programming Expert</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>📊 إحصائيات الملف</h2>
-        <div class="profile-stats">
-          <div class="profile-stat">
-            <span class="stat-icon">💻</span>
-            <span class="stat-title">مشاريع مكتملة</span>
-            <span class="stat-count">12</span>
-          </div>
-          <div class="profile-stat">
-            <span class="stat-icon">⭐</span>
-            <span class="stat-title">تقييم</span>
-            <span class="stat-count">4.9</span>
-          </div>
-          <div class="profile-stat">
-            <span class="stat-icon">🏆</span>
-            <span class="stat-title">إنجازات</span>
-            <span class="stat-count">28</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>🛠️ المهارات</h2>
-        <div class="skills-list">
-          <div class="skill-item">
-            <span>JavaScript</span>
-            <div class="skill-bar" style="width: 95%"></div>
-          </div>
-          <div class="skill-item">
-            <span>React</span>
-            <div class="skill-bar" style="width: 90%"></div>
-          </div>
-          <div class="skill-item">
-            <span>Node.js</span>
-            <div class="skill-bar" style="width: 85%"></div>
-          </div>
-          <div class="skill-item">
-            <span>Python</span>
-            <div class="skill-bar" style="width: 88%"></div>
-          </div>
-          <div class="skill-item">
-            <span>Database</span>
-            <div class="skill-bar" style="width: 92%"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>🎯 الإنجازات الأخيرة</h2>
-        <div class="achievements-list">
-          <div class="achievement">
-            <span>🥇</span>
-            <span>مطور نجم</span>
-            <span>2024</span>
-          </div>
-          <div class="achievement">
-            <span>🎓</span>
-            <span>خبير معتمد</span>
-            <span>2024</span>
-          </div>
-          <div class="achievement">
-            <span>🚀</span>
-            <span>قائد الفريق</span>
-            <span>2024</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Voice Chat Page - Dedicated Voice Only -->
+    <!-- Voice Chat Page -->
     <div id="voice-chat-page" class="tab-pane">
       <div class="voice-chat-container">
         <div class="voice-header">
           <h2>🎙️ محادثة صوتية</h2>
-          <p>تحدث بحرية - سأستمع وأرد عليك صوتياً</p>
         </div>
         <div class="voice-display">
           <div class="listening-indicator">
@@ -327,15 +62,7 @@
             <span id="listening-text">اضغط للاستماع...</span>
           </div>
           <div id="voice-transcript" class="voice-transcript">
-            <p style="color: var(--text-muted); text-align: center; font-size: 14px;">سيظهر النص هنا...</p>
-          </div>
-          <div style="margin-top: 16px; padding: 12px; background: rgba(255, 71, 87, 0.1); border-radius: 8px; border-left: 3px solid #ff4757; font-size: 12px; color: var(--text-muted);">
-            <strong>⚠️ تنبيه:</strong> تأكد من:
-            <ul style="margin: 8px 0; padding-right: 20px;">
-              <li>عدم كتم صوت الهاتف 🔊</li>
-              <li>مستوى الصوت عالي 📈</li>
-              <li>السماعات متصلة أو الصوت مفعّل</li>
-            </ul>
+            <p style="color: var(--text-muted); text-align: center;">سيظهر النص هنا...</p>
           </div>
         </div>
         <div class="voice-messages">
@@ -351,183 +78,11 @@
       </div>
     </div>
 
-    <!-- AI Chat Page Tab -->
-    <div id="ai-chat-page" class="tab-pane ai-chat-tab active">
-      <div class="chat-messages-full" id="chat-messages-full">
-        <div class="message ai-message">
-          <span class="message-icon">🤖</span>
-          <div class="message-content">مرحباً! 👋 أنا مساعدك الذكي المتخصص في البرمجة. اسألني عن أي موضوع برمجي وسأساعدك بردود حقيقية ومفيدة! 🚀</div>
-        </div>
-      </div>
-      <div class="chat-controls">
-        <div class="audio-visualizer" id="audio-visualizer">
-          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-        </div>
-      </div>
-      <div class="chat-input-full">
-        <input type="text" id="chat-input-full" class="chat-input-full-field" placeholder="اسأل عن أي شيء برمجي..." onkeypress="handleChatKeypress(event)">
-        <button class="chat-voice-btn" id="voice-btn" onclick="startVoiceListening()" title="تحدث">🎤</button>
-        <button class="chat-send-full" onclick="sendChatMessage()">إرسال</button>
-      </div>
-      <div class="chat-loading-full" id="chat-loading-full" style="display: none;">
-        <span>⏳ جاري التفكير...</span>
-      </div>
-      <div class="voice-control-panel" id="voice-control-panel" style="display: none;">
-        <div class="control-item">
-          <label>السرعة:</label>
-          <input type="range" id="voice-rate" min="0.5" max="2" step="0.1" value="1.1" onchange="updateVoiceSettings()">
-          <span id="rate-value">1.1x</span>
-        </div>
-        <div class="control-item">
-          <label>النبرة:</label>
-          <input type="range" id="voice-pitch" min="0.5" max="2" step="0.1" value="0.95" onchange="updateVoiceSettings()">
-          <span id="pitch-value">0.95</span>
-        </div>
-        <div class="control-item">
-          <label>الصوت:</label>
-          <select id="voice-select" onchange="updateVoiceSettings()">
-            <option value="Arabic Female">أنثى عربية</option>
-            <option value="Arabic Male">ذكر عربي</option>
-            <option value="Google Arabic">Google عربي</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- Settings Tab -->
-    <div id="settings" class="tab-pane">
-      <div class="section">
-        <h2>⚙️ الإعدادات العامة</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-label">
-              <span class="setting-icon">🌙</span>
-              <span>الوضع الليلي</span>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" checked>
-              <span class="toggle-switch"></span>
-            </label>
-          </div>
-          <div class="setting-item">
-            <div class="setting-label">
-              <span class="setting-icon">🔔</span>
-              <span>التنبيهات</span>
-            </div>
-            <label class="toggle">
-              <input type="checkbox" checked>
-              <span class="toggle-switch"></span>
-            </label>
-          </div>
-          <div class="setting-item">
-            <div class="setting-label">
-              <span class="setting-icon">🌍</span>
-              <span>اللغة</span>
-            </div>
-            <select class="setting-select">
-              <option>العربية</option>
-              <option>English</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>🔐 الخصوصية والأمان</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-label">
-              <span class="setting-icon">🔒</span>
-              <span>تحديث كلمة المرور</span>
-            </div>
-            <button class="setting-btn">تغيير</button>
-          </div>
-          <div class="setting-item">
-            <div class="setting-label">
-              <span class="setting-icon">✋</span>
-              <span>المصادقة الثنائية</span>
-            </div>
-            <label class="toggle">
-              <input type="checkbox">
-              <span class="toggle-switch"></span>
-            </label>
-          </div>
-          <div class="setting-item">
-            <div class="setting-label">
-              <span class="setting-icon">📱</span>
-              <span>الأجهزة المتصلة</span>
-            </div>
-            <button class="setting-btn">عرض</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>💾 البيانات والتخزين</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-label">
-              <span class="setting-icon">💾</span>
-              <span>المساحة المستخدمة</span>
-            </div>
-            <span class="setting-value">2.3 GB / 5 GB</span>
-          </div>
-          <div class="storage-bar">
-            <div class="storage-used" style="width: 46%"></div>
-          </div>
-          <div class="setting-item" style="margin-top: 10px;">
-            <div class="setting-label">
-              <span class="setting-icon">🗑️</span>
-              <span>حذف البيانات المؤقتة</span>
-            </div>
-            <button class="setting-btn danger">حذف</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>🔗 الحسابات المتصلة</h2>
-        <div class="connected-accounts">
-          <div class="account-item">
-            <span class="account-icon">🐙</span>
-            <span>GitHub</span>
-            <span class="account-status connected">متصل</span>
-          </div>
-          <div class="account-item">
-            <span class="account-icon">🔵</span>
-            <span>Facebook</span>
-            <span class="account-status">غير متصل</span>
-          </div>
-          <div class="account-item">
-            <span class="account-icon">🐦</span>
-            <span>Twitter</span>
-            <span class="account-status">غير متصل</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2>⚡ خطر</h2>
-        <div class="danger-zone">
-          <button class="danger-btn">🚪 تسجيل الخروج</button>
-          <button class="danger-btn delete">🗑️ حذف الحساب</button>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-  <!-- Bottom Nav -->
-  <nav class="bottom-nav">
-    <button class="bottom-tab" onclick="setTab('features')"><span>💬</span><span>مميزات</span></button>
-    <button class="bottom-tab" onclick="setTab('tools')"><span>⚙️</span><span>أدوات</span></button>
-    <button class="bottom-tab active" onclick="setTab('ai-chat-page')"><span>🤖</span><span>الذكي</span></button>
-    <button class="bottom-tab" onclick="setTab('projects')"><span>📦</span><span>مشاريع</span></button>
-    <button class="bottom-tab" onclick="setTab('profile')"><span>👤</span><span>ملفي</span></button>
-  </nav>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.0/dist/transformers.min.js"></script>
 <script src="/js/app.js"></script>
+
 </body>
 </html>
