@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة الأرباح الذكية</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { text-align: center; color: white; margin-bottom: 40px; }
+    h1 { font-size: 2.5em; margin-bottom: 10px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+    .card h2 { color: #667eea; margin-bottom: 15px; font-size: 1.5em; }
+    .card p { color: #666; line-height: 1.6; margin-bottom: 15px; }
+    .btn { background: #667eea; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; text-decoration: none; display: inline-block; transition: 0.3s; }
+    .btn:hover { background: #764ba2; transform: translateY(-2px); }
+    .btn-dev { background: #e74c3c; }
+    .btn-dev:hover { background: #c0392b; }
+    .stats { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+    .stat { padding: 15px; background: #f8f9fa; border-radius: 8px; }
+    .stat-num { font-size: 2em; color: #667eea; font-weight: bold; }
+    .stat-label { color: #666; font-size: 0.9em; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🤖 منصة الأرباح الذكية</h1>
+      <p>نظام أتمتة ذكي للأرباح 24/7 - $2,200-$7,500/شهر</p>
+    </header>
+
+    <div class="stats">
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-num">5</div>
+          <div class="stat-label">أنظمة أتمتة</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">6</div>
+          <div class="stat-label">منصات نشر</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">$7,500</div>
+          <div class="stat-label">أرباح شهرية</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">تعمل تلقائياً</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h2>🤖 مصنع المحتوى</h2>
+        <p>توليد محتوى AI تلقائي ونشره على:</p>
+        <p>📝 Medium, Dev.to, LinkedIn, Gumroad, Amazon</p>
+        <p><strong>$1000-$5000/شهر</strong></p>
+        <button class="btn" onclick="alert('سيتم فتح المحتوى قريباً')">زيارة</button>
+      </div>
+
+      <div class="card">
+        <h2>💰 نظام الأتمتة</h2>
+        <p>5 أنظمة تعمل بدون تدخل:</p>
+        <p>SEO • Affiliate • Email • Social • Analytics</p>
+        <p><strong>$2,200-$7,500/شهر</strong></p>
+        <button class="btn" onclick="alert('سيتم فتح الأتمتة قريباً')">ابدأ الآن</button>
+      </div>
+
+      <div class="card">
+        <h2>💎 تتبع الأرباح</h2>
+        <p>ربط مع منصات حقيقية:</p>
+        <p>Stripe • AdSense • Amazon • Upwork • YouTube</p>
+        <p><strong>أرباح موثقة وحقيقية</strong></p>
+        <button class="btn" onclick="alert('سيتم فتح التتبع قريباً')">ربط الآن</button>
+      </div>
+
+      <div class="card">
+        <h2>👨‍💻 لوحة المطور</h2>
+        <p>التحكم الكامل بكل شيء</p>
+        <p>إحصائيات • تحليلات • تحكم كامل</p>
+        <button class="btn btn-dev" onclick="window.location.href='/dev'">⚙️ دخول لوحة المطور</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
