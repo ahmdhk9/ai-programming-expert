@@ -4,9 +4,8 @@ import { useRouter } from "next/router";
 
 export default function AdminDashboard() {
   const router = useRouter();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [adminPassword, setAdminPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [adminPassword, setAdminPassword] = useState("");
 
   useEffect(() => {
     const adminAuth = localStorage.getItem("adminAuth");
@@ -16,7 +15,6 @@ export default function AdminDashboard() {
   }, []);
 
   const handleAdminLogin = () => {
-    // كلمة السر البسيطة (يجب استخدام نظام آمن في الإنتاج)
     if (adminPassword === "ahmed2024") {
       setIsAuthenticated(true);
       localStorage.setItem("adminAuth", "true");
@@ -80,6 +78,18 @@ export default function AdminDashboard() {
     );
   }
 
+  const adminLinks = [
+    { emoji: "👥", label: "المستخدمون", href: "/admin/users" },
+    { emoji: "👤", label: "إدارة متقدمة", href: "/admin/advanced-users" },
+    { emoji: "🔑", label: "التوكنات", href: "/admin/tokens" },
+    { emoji: "💳", label: "طرق الدفع", href: "/admin/payment-methods" },
+    { emoji: "📊", label: "التحليلات", href: "/admin/analytics" },
+    { emoji: "🔌", label: "التكاملات", href: "/admin/integrations" },
+    { emoji: "⚙️", label: "الإعدادات", href: "/admin/settings" },
+    { emoji: "🔐", label: "الأمان", href: "/admin/security" },
+    { emoji: "✨", label: "الميزات", href: "/admin/features-dashboard" }
+  ];
+
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
       <header style={{
@@ -90,7 +100,7 @@ export default function AdminDashboard() {
         alignItems: "center",
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
       }}>
-        <h1 style={{ margin: 0, color: "#667eea" }}>👨‍💻 Admin Panel - أحمد البصراوي</h1>
+        <h1 style={{ margin: 0, color: "#667eea" }}>👨‍💻 Admin Panel</h1>
         <button
           onClick={() => {
             localStorage.removeItem("adminAuth");
@@ -110,44 +120,12 @@ export default function AdminDashboard() {
       </header>
 
       <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "2rem" }}>
-        {/* Statistics */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "1.5rem",
-          marginBottom: "2rem"
+          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+          gap: "1.5rem"
         }}>
-          {[
-            { emoji: "👥", label: "المستخدمون", value: "1,234" },
-            { emoji: "🚀", label: "المشاريع", value: "567" },
-            { emoji: "💰", label: "العائد", value: "$12,345" },
-            { emoji: "📊", label: "النشاط", value: "98.5%" }
-          ].map((stat) => (
-            <div key={stat.label} style={{
-              backgroundColor: "white",
-              padding: "1.5rem",
-              borderRadius: "12px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
-            }}>
-              <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{stat.emoji}</div>
-              <div style={{ color: "#666", fontSize: "0.9rem" }}>{stat.label}</div>
-              <div style={{ fontSize: "1.8rem", fontWeight: "bold", color: "#667eea" }}>{stat.value}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Admin Links */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "1.5rem" }}>
-          {[
-            { emoji: "👥", label: "المستخدمون", href: "/admin/users" },
-            { emoji: "🔑", label: "التوكنات", href: "/admin/tokens" },
-            { emoji: "🌐", label: "الإعدادات", href: "/admin/settings" },
-            { emoji: "📊", label: "التحليلات", href: "/admin/analytics" },
-            { emoji: "🔌", label: "التكاملات", href: "/admin/integrations" },
-            { emoji: "🛠️", label: "الأدوات", href: "/admin/tools" },
-            { emoji: "📋", label: "السجلات", href: "/admin/logs" },
-            { emoji: "⚙️", label: "النظام", href: "/admin/system" }
-          ].map((item) => (
+          {adminLinks.map((item) => (
             <Link
               key={item.label}
               href={item.href}
@@ -166,8 +144,8 @@ export default function AdminDashboard() {
                 boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
               }}
             >
-              <div style={{ fontSize: "1.8rem", marginBottom: "0.5rem" }}>{item.emoji}</div>
-              <div style={{ fontSize: "0.9rem", fontWeight: "bold" }}>{item.label}</div>
+              <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{item.emoji}</div>
+              <div style={{ fontWeight: "bold", fontSize: "0.9rem", textAlign: "center" }}>{item.label}</div>
             </Link>
           ))}
         </div>

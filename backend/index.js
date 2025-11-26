@@ -466,3 +466,66 @@ app.post('/api/dev/ai-assistant', (req, res) => {
   res.json({ response });
 });
 
+
+// Import New Systems
+const userManagement = require('./user-management');
+const cryptoPayments = require('./crypto-payments');
+
+// User Management APIs
+app.get('/api/admin/users-advanced', (req, res) => {
+  res.json(userManagement.getAllUsers());
+});
+
+app.post('/api/admin/create-user', (req, res) => {
+  const user = userManagement.createUser(req.body);
+  res.json(user);
+});
+
+app.put('/api/admin/update-user/:userId', (req, res) => {
+  const user = userManagement.updateUser(req.params.userId, req.body);
+  res.json(user);
+});
+
+app.delete('/api/admin/delete-user/:userId', (req, res) => {
+  const result = userManagement.deleteUser(req.params.userId);
+  res.json(result);
+});
+
+app.get('/api/admin/user-stats/:userId', (req, res) => {
+  const stats = userManagement.getUserStats(req.params.userId);
+  res.json(stats);
+});
+
+app.post('/api/admin/grant-feature/:userId/:feature', (req, res) => {
+  const user = userManagement.grantFeature(req.params.userId, req.params.feature);
+  res.json(user);
+});
+
+// Payment Methods APIs
+app.get('/api/admin/payment-methods', (req, res) => {
+  res.json(cryptoPayments.getPaymentMethods());
+});
+
+app.post('/api/admin/add-payment-method', (req, res) => {
+  const method = cryptoPayments.addPaymentMethod(req.body.id, req.body);
+  res.json(method);
+});
+
+app.post('/api/payments/process', (req, res) => {
+  const { userId, amount, methodId } = req.body;
+  const transaction = cryptoPayments.processPayment(userId, amount, methodId);
+  res.json(transaction);
+});
+
+app.get('/api/payments/stats', (req, res) => {
+  const stats = cryptoPayments.getPaymentStats();
+  res.json(stats);
+});
+
+app.get('/api/payments/exchange-rate/:crypto', (req, res) => {
+  const rate = cryptoPayments.getExchangeRate(req.params.crypto);
+  res.json({ crypto: req.params.crypto, rate });
+});
+
+console.log('✅ Advanced User Management & Crypto Payments APIs Added');
+
