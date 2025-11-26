@@ -1,477 +1,132 @@
-function setTab(tabName) {
-  // إخفاء جميع الصفحات
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  
-  // فتح الصفحة المطلوبة
-  const targetTab = document.getElementById(tabName);
-  if (targetTab) {
-    targetTab.classList.add('active');
-  }
-  
-  // تفعيل الزر الصحيح في الشريط السفلي
-  document.querySelectorAll('.bar-btn').forEach(btn => btn.classList.remove('active'));
-  document.querySelectorAll('.bar-btn').forEach(btn => {
-    if (btn.onclick && btn.onclick.toString().includes(`'${tabName}'`)) {
-      btn.classList.add('active');
-    }
-  });
-  
-  // تركيز على input الكتابة
-  if (tabName === 'chat') {
-    setTimeout(() => {
-      const input = document.getElementById('chat-input');
-      if (input) input.focus();
-    }, 100);
-  }
-}
+// ========== REAL-TIME SOCIAL CHAT WITH ADVANCED FEATURES ==========
+const socket = io({
+  reconnection: true,
+  reconnectionDelay: 1000,
+  reconnectionDelayMax: 5000,
+  reconnectionAttempts: Infinity,
+  transports: ['websocket', 'polling']
+});
 
-function selectFeature(el, featureType) {
-  document.querySelectorAll('.feature-card').forEach(f => f.classList.remove('active'));
-  el.classList.add('active');
-  
-  const details = {
-    generate: {
-      title: '💻 إنشاء الكود',
-      content: 'أصف ما تريد، واحصل على كود احترافي جاهز للاستخدام بلغات متعددة:<br><ul><li>JavaScript / TypeScript</li><li>Python</li><li>Java</li><li>C++</li><li>PHP</li><li>Rust / Go</li></ul>'
-    },
-    fix: {
-      title: '🔧 إصلاح الأخطاء',
-      content: 'أرسل كودك، وسيتم:<br><ul><li>اكتشاف جميع الأخطاء</li><li>إصلاحها تلقائياً</li><li>تقديم اقتراحات للتحسين</li><li>شرح كل خطوة</li></ul>'
-    },
-    design: {
-      title: '🎨 تصميم الواجهات',
-      content: 'وصف واجهتك المطلوبة، واحصل على:<br><ul><li>HTML احترافي</li><li>CSS متقدم</li><li>تخطيط ريسبونسيف</li><li>مكونات جاهزة الاستخدام</li></ul>'
-    },
-    explain: {
-      title: '📚 شرح المفاهيم',
-      content: 'اسأل عن أي مفهوم برمجي واحصل على:<br><ul><li>شرح مفصل وسهل</li><li>أمثلة عملية</li><li>حالات الاستخدام</li><li>موارد تعليمية</li></ul>'
-    },
-    understand: {
-      title: '🧠 فهم النية',
-      content: 'النظام يفهم سياق طلبك:<br><ul><li>تحليل اللغة الطبيعية</li><li>التعرف على النية الحقيقية</li><li>دعم العربية والإنجليزية</li><li>توصيات ذكية</li></ul>'
-    },
-    deploy: {
-      title: '🚀 النشر الذكي',
-      content: 'نشر تطبيقك بسهولة:<br><ul><li>بضغطة واحدة فقط</li><li>اختبار تلقائي قبل النشر</li><li>رابط مباشر للتطبيق</li><li>مراقبة أداء التطبيق</li></ul>'
-    }
-  };
-  
-  const detail = details[featureType];
-  const detailsDiv = document.getElementById('feature-details');
-  if (detailsDiv && detail) {
-    detailsDiv.innerHTML = `<div class="detail-card">
-      <h3>${detail.title}</h3>
-      <p>${detail.content}</p>
-    </div>`;
-  }
-}
-
-function selectTool(el) {
-  document.querySelectorAll('.tool').forEach(t => t.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-// AI Chat Knowledge Base with Real Responses
-const aiKnowledgeBase = {
-  'python': 'Python هي لغة برمجة قوية وسهلة التعلم! مثالية للبيانات الكبيرة والذكاء الصناعي والتطوير السريع. يمكنك استخدامها في تطوير الويب، تحليل البيانات، الأتمتة والمزيد! 🐍',
-  'javascript': 'JavaScript هي لغة الويب الأساسية! تُستخدم في تطوير الواجهات الأمامية التفاعلية والخوادم بـ Node.js. مع HTML و CSS، تُنشئ تطبيقات ويب حديثة وديناميكية! ⚡',
-  'react': 'React هي مكتبة جافاسكريبت لبناء واجهات المستخدم! تستخدم الـ Virtual DOM لتحديثات سريعة والمكونات لإعادة الاستخدام. مثالية لبناء تطبيقات ويب معقدة وقابلة للتوسع! ⚛️',
-  'node': 'Node.js هو بيئة تشغيل JavaScript على الخادم! يسمح ببناء APIs وتطبيقات الويب الخلفية بـ JavaScript. مع npm، يمكنك الوصول لملايين الحزم المفتوحة المصدر! 🚀',
-  'database': 'قواعد البيانات تخزن البيانات بكفاءة واسترجاعها بسرعة! هناك قواعد علائقية (SQL) مثل MySQL و PostgreSQL، وقواعد NoSQL مثل MongoDB. اختر حسب احتياجات تطبيقك! 🗄️',
-  'html': 'HTML هي لغة لإنشاء صفحات الويب! تستخدم tags لتنظيم المحتوى. مع CSS تحصل على التصميم، ومع JavaScript تحصل على التفاعلية. أساس كل موقع ويب! 🌐',
-  'css': 'CSS تُستخدم لتصميم وتنسيق صفحات الويب! تتحكم في الألوان والحجم والمواضع والرسوميات. مع Flexbox و Grid، تستطيع إنشاء تخطيطات مرنة واحترافية! 🎨',
-  'api': 'API تسمح للتطبيقات بالتواصل مع بعضها! REST APIs تستخدم HTTP لنقل البيانات. صمم APIs جيدة تكون واضحة وآمنة وسهلة الاستخدام! 🔌',
-  'git': 'Git هي أداة للتحكم بالإصدارات! تسمح بحفظ تاريخ التغييرات والعودة لأي نسخة سابقة. GitHub توفر مستودعات سحابية للتعاون بين المطورين! 📦',
-  'default': 'سؤال جميل! 🤔 في البرمجة، التصميم الجيد والممارسات الأفضل مهمة جداً. تذكر: اكتب كود نظيف وقابل للصيانة، واستخدم التعليقات لتوضيح الفكرة. كل خبرة تجعلك أفضل! 💪'
-};
-
-function generateAIResponse(userMessage) {
-  const lowerMessage = userMessage.toLowerCase();
-  const arabicMessage = userMessage;
-  
-  // Check for keywords in Arabic and English
-  for (const [keyword, response] of Object.entries(aiKnowledgeBase)) {
-    if (lowerMessage.includes(keyword) || arabicMessage.includes(keyword)) {
-      return response;
-    }
-  }
-  
-  // Check for common Arabic keywords
-  if (arabicMessage.includes('برمجة') || arabicMessage.includes('كود')) {
-    return 'البرمجة تحتاج لصبر وممارسة مستمرة! ابدأ بأساسيات اللغة، ثم تقدم تدريجياً. هناك الكثير من الموارد المجانية اونلاين لتعليم البرمجة! 📚';
-  }
-  
-  if (arabicMessage.includes('مشروع') || arabicMessage.includes('تطبيق')) {
-    return 'فكرة رائعة! ابدأ بتحديد متطلبات مشروعك، ثم اختر التقنيات المناسبة. استخدم أساليب Agile للتطوير السريع والتكيفي. لا تتردد في البحث والاستفسار! 🛠️';
-  }
-  
-  if (arabicMessage.includes('خطأ') || arabicMessage.includes('مشكلة')) {
-    return 'لا تقلق! الأخطاء جزء طبيعي من البرمجة! اقرأ رسالة الخطأ بعناية، استخدم Debugger، وابحث عن الحل اونلاين. Stack Overflow مليء بالحلول! 🔍';
-  }
-  
-  if (arabicMessage.includes('تعلم') || arabicMessage.includes('أتعلم')) {
-    return 'رائع أنك تريد التعلم! اختر لغة برمجة أولى (مثل Python أو JavaScript)، اتبع دورات معتمدة، مارس على مشاريع صغيرة. الممارسة أهم من النظرية! 🎓';
-  }
-  
-  if (arabicMessage.includes('أداء') || arabicMessage.includes('تحسين')) {
-    return 'تحسين الأداء مهم! استخدم Profiling لتحديد الاختناقات، قلل عدد الطلبات للخادم، استخدم Caching، وأضغط الملفات الثقيلة. كل ميلي ثانية مهمة! ⚡';
-  }
-  
-  // Default response
-  return aiKnowledgeBase['default'];
-}
-
-function handleChatKeypress(event) {
-  if (event.key === 'Enter') {
-    sendChatMessage();
-  }
-}
-
-async function sendChatMessage() {
-  const input = document.getElementById('chat-input');
-  const message = input.value.trim();
-  
-  if (!message) return;
-  
-  const messagesDiv = document.getElementById('chat-messages');
-  const loadingDiv = document.getElementById('chat-loading');
-  
-  // Add user message
-  const userMessageEl = document.createElement('div');
-  userMessageEl.className = 'message user-message';
-  userMessageEl.innerHTML = `
-    <span class="message-icon">👤</span>
-    <div class="message-content">${message}</div>
-  `;
-  messagesDiv.appendChild(userMessageEl);
-  
-  input.value = '';
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  
-  loadingDiv.style.display = 'block';
-  
-  try {
-    // Call real Groq API via backend - Optimized for speed
-    const startTime = performance.now();
-    const response = await fetch('/api/ai/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ message })
-    });
-    
-    const data = await response.json();
-    const responseTime = Math.round(performance.now() - startTime);
-    
-    loadingDiv.style.display = 'none';
-    
-    if (data.success) {
-      const aiResponse = data.response;
-      
-      const aiMessageEl = document.createElement('div');
-      aiMessageEl.className = 'message ai-message';
-      aiMessageEl.innerHTML = `
-        <span class="message-icon">🤖</span>
-        <div class="message-content">${aiResponse}</div>
-      `;
-      messagesDiv.appendChild(aiMessageEl);
-      
-      // الكتابة = رد كتابي فقط (بدون صوت)
-      console.log('💬 رد كتابي (بدون صوت)');
-    } else {
-      const errorEl = document.createElement('div');
-      errorEl.className = 'message ai-message';
-      errorEl.innerHTML = `
-        <span class="message-icon">⚠️</span>
-        <div class="message-content">عذراً، حدث خطأ: ${data.error}</div>
-      `;
-      messagesDiv.appendChild(errorEl);
-    }
-    
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  } catch (error) {
-    loadingDiv.style.display = 'none';
-    
-    const errorEl = document.createElement('div');
-    errorEl.className = 'message ai-message';
-    errorEl.innerHTML = `
-      <span class="message-icon">⚠️</span>
-      <div class="message-content">خطأ في الاتصال: ${error.message}</div>
-    `;
-    messagesDiv.appendChild(errorEl);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-}
-
-// ========== SIMPLE VOICE CHAT SYSTEM ==========
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-let voiceRecognition = null;
-let voiceIsListening = false;
-
-function startVoiceListening() {
-  console.log('🎤 بدء الاستماع...');
-  startListening();
-}
-
-function startListening() {
-  if (!SpeechRecognition) {
-    alert('التحدث الصوتي غير مدعوم');
-    return;
-  }
-
-  const input = document.getElementById('chat-input');
-  const messagesDiv = document.getElementById('chat-messages');
-
-  if (!input || !messagesDiv) return;
-
-  voiceIsListening = true;
-
-  voiceRecognition = new SpeechRecognition();
-  voiceRecognition.lang = 'ar-SA';
-  voiceRecognition.continuous = false;
-  voiceRecognition.interimResults = true;
-
-  let finalText = '';
-
-  voiceRecognition.onresult = (e) => {
-    let interim = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      const transcript = e.results[i][0].transcript;
-      if (e.results[i].isFinal) {
-        finalText = transcript;
-      } else {
-        interim = transcript;
-      }
-    }
-    input.value = finalText || interim;
-  };
-
-  voiceRecognition.onend = async () => {
-    voiceIsListening = false;
-
-    if (!finalText.trim()) {
-      return;
-    }
-
-    // إضافة رسالة المستخدم
-    const userMessageEl = document.createElement('div');
-    userMessageEl.className = 'message user-message';
-    userMessageEl.innerHTML = `
-      <span class="message-icon">👤</span>
-      <div class="message-content">${finalText}</div>
-    `;
-    messagesDiv.appendChild(userMessageEl);
-    input.value = '';
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-    // إرسال الرسالة
-    try {
-      const res = await fetch('/api/ai/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: finalText })
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        const aiMessageEl = document.createElement('div');
-        aiMessageEl.className = 'message ai-message';
-        aiMessageEl.innerHTML = `
-          <span class="message-icon">🤖</span>
-          <div class="message-content">${data.response}</div>
-        `;
-        messagesDiv.appendChild(aiMessageEl);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-      }
-    } catch (err) {
-      console.error('خطأ:', err);
-    }
-  };
-
-  voiceRecognition.onerror = (e) => {
-    console.error('خطأ الصوت:', e.error);
-    voiceIsListening = false;
-  };
-
-  voiceRecognition.start();
-}
-
-function stopVoiceListening() {
-  if (voiceRecognition) {
-    voiceRecognition.stop();
-  }
-  voiceIsListening = false;
-}
-
-function playVoiceResponse(text) {
-  if (!('speechSynthesis' in window)) return;
-
-  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@\>\<]/g, '').trim();
-  
-  const utterance = new SpeechSynthesisUtterance(cleanText);
-  utterance.lang = 'ar-SA';
-  utterance.rate = 1.0;
-  utterance.pitch = 1.0;
-  utterance.volume = 1;
-
-  let voices = window.speechSynthesis.getVoices();
-  if (voices.length > 0) {
-    const arabicVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
-    if (arabicVoice) utterance.voice = arabicVoice;
-  }
-
-  utterance.onend = () => {
-    const listeningText = document.getElementById('listening-text');
-    if (listeningText) listeningText.textContent = '🎤 استمع';
-    setTimeout(() => {
-      startListening();
-    }, 300);
-  };
-
-  window.speechSynthesis.speak(utterance);
-}
-
-function speakTextVoice(text) {
-  if (!('speechSynthesis' in window)) {
-    console.log('❌ Text-to-Speech not supported');
-    const listeningText = document.getElementById('listening-text');
-    if (listeningText) listeningText.textContent = '❌ السماعة غير مدعومة في متصفحك';
-    return;
-  }
-
-  // إلغاء أي كلام سابق
-  window.speechSynthesis.cancel();
-
-  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@\>\<]/g, '').trim();
-  if (!cleanText) return;
-
-  // إنشاء utterance جديد
-  const utterance = new SpeechSynthesisUtterance(cleanText);
-  utterance.lang = 'ar-SA';
-  utterance.rate = 1.0;  // سرعة عادية
-  utterance.pitch = 1.0;  // نبرة عادية
-  utterance.volume = 1;    // مستوى صوت كامل (100%)
-
-  console.log('🔊 إعدادات الصوت:', { rate: utterance.rate, pitch: utterance.pitch, volume: utterance.volume });
-
-  // تحديد الصوت - عملية حرجة
-  const assignVoice = () => {
-    let voices = window.speechSynthesis.getVoices();
-    console.log('🎙️ عدد الأصوات المتاحة:', voices.length);
-    
-    if (voices.length === 0) {
-      // محاولة إعادة التحميل
-      setTimeout(() => {
-        voices = window.speechSynthesis.getVoices();
-        console.log('🎙️ إعادة التحميل - عدد الأصوات:', voices.length);
-        if (voices.length > 0) {
-          const arabicVoice = voices.find(v => v.lang.startsWith('ar-SA') || v.lang.startsWith('ar')) || voices[0];
-          if (arabicVoice) {
-            utterance.voice = arabicVoice;
-            console.log('✅ تم اختيار الصوت:', arabicVoice.name, arabicVoice.lang);
-          }
-        }
-      }, 200);
-    } else {
-      // اختيار الصوت العربي الأفضل
-      const arabicVoice = voices.find(v => v.lang.startsWith('ar-SA') || v.lang.startsWith('ar')) || voices[0];
-      if (arabicVoice) {
-        utterance.voice = arabicVoice;
-        console.log('✅ تم اختيار الصوت:', arabicVoice.name, arabicVoice.lang);
-      }
-    }
-  };
-
-  utterance.onstart = () => {
-    console.log('🔊 بدء التحدث - الصوت يجب أن يكون واضحاً الآن');
-    const listeningText = document.getElementById('listening-text');
-    if (listeningText) listeningText.textContent = '🔊 جاري التحدث...';
-  };
-
-  utterance.onend = () => {
-    console.log('✅ انتهى التحدث');
-    const listeningText = document.getElementById('listening-text');
-    if (listeningText) {
-      listeningText.textContent = '✅ تم الرد - اضغط مجدداً للمتابعة';
-    }
-  };
-
-  utterance.onerror = (e) => {
-    console.error('❌ خطأ في الصوت:', e.error);
-    const listeningText = document.getElementById('listening-text');
-    if (listeningText) {
-      listeningText.textContent = `❌ خطأ: ${e.error} - تأكد من عدم كتم الصوت`;
-    }
-  };
-
-  // تحديد الصوت
-  assignVoice();
-  
-  try {
-    window.speechSynthesis.speak(utterance);
-    console.log('📢 تم إرسال الكلام للنظام');
-  } catch (error) {
-    console.error('❌ استثناء في تشغيل الصوت:', error);
-  }
-}
-
-// ========== REAL SOCIAL CHAT WITH WEBSOCKET ==========
-const socket = io();
 let currentUserId = null;
 let connectedUserId = null;
 let connectedUserName = null;
 let socialVoiceActive = false;
 let searchInProgress = false;
 let currentUsername = null;
+let isConnected = false;
+let reconnectAttempts = 0;
 
-// Socket events
+// Auto-reconnect handler
 socket.on('connect', () => {
-  console.log('✅ متصل بالخادم:', socket.id);
+  console.log('✅ متصل بالخادم');
+  isConnected = true;
+  reconnectAttempts = 0;
   currentUserId = socket.id;
-  
-  // Generate username
+
+  // Register user
   const names = ['محمد', 'فاطمة', 'علي', 'أحمد', 'ليلى', 'سارة', 'حسن', 'مريم', 'عمر', 'نور'];
   const emojis = ['🌟', '💻', '🚀', '🎯', '🔥', '💡', '⭐', '🎨'];
-  currentUsername = names[Math.floor(Math.random() * names.length)] + 
+  currentUsername = names[Math.floor(Math.random() * names.length)] +
                     emojis[Math.floor(Math.random() * emojis.length)];
-  
+
   socket.emit('register', currentUsername);
-  console.log('📝 تسجيل:', currentUsername);
+});
+
+socket.on('disconnect', () => {
+  console.log('❌ قطع الاتصال');
+  isConnected = false;
+  showNotification('❌ قطع الاتصال - جاري إعادة الاتصال...', 'error');
+});
+
+socket.on('reconnect', () => {
+  console.log('✅ تم إعادة الاتصال');
+  showNotification('✅ تم استعادة الاتصال', 'success');
+});
+
+socket.on('connect_error', (error) => {
+  console.error('❌ خطأ في الاتصال:', error);
+  reconnectAttempts++;
+  if (reconnectAttempts > 3) {
+    showNotification('⚠️ مشكلة في الاتصال، تحقق من الإنترنت', 'error');
+  }
+});
+
+socket.on('registered', (data) => {
+  currentUsername = data.username;
+  currentUserId = data.userId;
+  console.log('📝 مسجل:', currentUsername);
 });
 
 socket.on('searching', () => {
-  document.getElementById('social-loading').querySelector('h3').textContent = 'جاري البحث عن شخص...';
+  const h3 = document.getElementById('social-loading')?.querySelector('h3');
+  if (h3) h3.textContent = 'جاري البحث عن شخص... ⏳';
 });
 
 socket.on('user-found', (data) => {
   connectedUserId = data.connectedUserId;
   connectedUserName = data.username;
-  
+
   document.getElementById('social-loading').style.display = 'none';
   document.getElementById('social-chat').style.display = 'flex';
   document.getElementById('active-user-name').textContent = `💬 ${connectedUserName}`;
   document.getElementById('social-messages').innerHTML = '';
-  
+
   addSocialMessage('مرحباً! 👋', 'other');
-  console.log('🔗 متصل مع:', connectedUserName);
+  showNotification(`✅ متصل مع ${connectedUserName}`, 'success');
 });
 
 socket.on('receive-message', (data) => {
   addSocialMessage(data.message, 'other');
+  playNotificationSound();
 });
 
-socket.on('call-ended', () => {
-  alert('تم إنهاء الاتصال من قبل المستخدم الآخر');
+socket.on('user-typing', (data) => {
+  const messagesDiv = document.getElementById('social-messages');
+  let typingEl = document.getElementById('typing-indicator');
+  if (!typingEl) {
+    typingEl = document.createElement('div');
+    typingEl.id = 'typing-indicator';
+    typingEl.style.cssText = 'color: var(--text-muted); font-size: 12px; padding: 8px; margin: 4px 0;';
+    messagesDiv.appendChild(typingEl);
+  }
+  typingEl.textContent = `${data.username} يكتب...`;
+
+  setTimeout(() => {
+    if (typingEl && typingEl.parentElement) {
+      typingEl.remove();
+    }
+  }, 2000);
+});
+
+socket.on('call-ended', (data) => {
   resetSocialChat();
+  showNotification(data?.reason === 'user-ended' ? '📞 أنهى الطرف الآخر الاتصال' : '❌ تم إنهاء الاتصال', 'info');
 });
 
-socket.on('user-disconnected', () => {
-  alert('قطع الاتصال');
+socket.on('user-disconnected', (data) => {
   resetSocialChat();
+  showNotification(`❌ ${data.username} قطع الاتصال`, 'error');
 });
 
+socket.on('error', (error) => {
+  console.error('❌ خطأ Socket:', error);
+  showNotification(`❌ ${error}`, 'error');
+});
+
+socket.on('online-count', (count) => {
+  const statusEl = document.getElementById('search-status');
+  if (statusEl && !searchInProgress) {
+    statusEl.textContent = `👥 ${count} مستخدم متصل حالياً`;
+  }
+});
+
+// UI Functions
 function findRandomUser() {
+  if (!isConnected) {
+    showNotification('❌ غير متصل بالخادم', 'error');
+    return;
+  }
+
   searchInProgress = true;
   document.getElementById('social-search').style.display = 'none';
   document.getElementById('social-loading').style.display = 'flex';
@@ -487,36 +142,45 @@ function cancelSearch() {
 function endConnection() {
   socialVoiceActive = false;
   socket.emit('end-call');
-  resetSocialChat();
 }
 
 function resetSocialChat() {
   connectedUserId = null;
   connectedUserName = null;
   socialVoiceActive = false;
-  
+  searchInProgress = false;
+
   document.getElementById('social-chat').style.display = 'none';
   document.getElementById('social-loading').style.display = 'none';
   document.getElementById('social-search').style.display = 'flex';
-  document.getElementById('search-status').textContent = 'جاهز للبحث';
+  document.getElementById('search-status').textContent = '👥 جاهز للبحث';
   document.getElementById('social-messages').innerHTML = '';
 }
 
 function startSocialVoiceChat() {
+  if (!isConnected) {
+    showNotification('❌ غير متصل بالخادم', 'error');
+    return;
+  }
+
   if (!SpeechRecognition) {
-    alert('الصوت غير مدعوم');
+    showNotification('❌ الصوت غير مدعوم في متصفحك', 'error');
     return;
   }
 
   socialVoiceActive = true;
   const voiceBtn = document.getElementById('voice-chat-btn');
-  voiceBtn.textContent = '🎤 استمع...';
+  if (voiceBtn) voiceBtn.textContent = '🎤 استمع...';
 
   let finalText = '';
   const socialRecognition = new SpeechRecognition();
   socialRecognition.lang = 'ar-SA';
   socialRecognition.continuous = false;
   socialRecognition.interimResults = true;
+
+  socialRecognition.onstart = () => {
+    console.log('🎤 بدء الاستماع');
+  };
 
   socialRecognition.onresult = (e) => {
     for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -527,355 +191,201 @@ function startSocialVoiceChat() {
   };
 
   socialRecognition.onend = () => {
-    voiceBtn.textContent = '🎤 تحدث';
-    
+    const voiceBtn = document.getElementById('voice-chat-btn');
+    if (voiceBtn) voiceBtn.textContent = '🎤 تحدث';
+
     if (finalText.trim()) {
       addSocialMessage(finalText, 'user');
       socket.emit('send-message', finalText);
+      finalText = '';
     }
-    
+
     if (socialVoiceActive && connectedUserId) {
       setTimeout(() => {
-        socialRecognition.start();
-      }, 1000);
+        try {
+          socialRecognition.start();
+        } catch (e) {
+          console.log('تم إيقاف الاستماع');
+        }
+      }, 500);
     }
   };
 
-  socialRecognition.start();
+  socialRecognition.onerror = (event) => {
+    console.error('❌ خطأ الصوت:', event.error);
+    if (event.error !== 'aborted') {
+      showNotification(`❌ خطأ صوتي: ${event.error}`, 'error');
+    }
+  };
+
+  try {
+    socialRecognition.start();
+  } catch (e) {
+    console.error('خطأ في بدء الاستماع:', e);
+  }
 }
 
 function addSocialMessage(text, type) {
   const messagesDiv = document.getElementById('social-messages');
+  if (!messagesDiv) return;
+
   const messageEl = document.createElement('div');
   messageEl.className = `social-message ${type}`;
   messageEl.textContent = text;
+  messageEl.style.animation = 'slideIn 0.3s ease';
   messagesDiv.appendChild(messageEl);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
 
-function speakArabic(text) {
-  if (!('speechSynthesis' in window)) return;
-  
-  window.speechSynthesis.cancel();
-  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@\>\<]/g, '').trim();
-  const utterance = new SpeechSynthesisUtterance(cleanText);
-  utterance.lang = 'ar-SA';
-  utterance.volume = 1;
-  utterance.rate = 1.0;
-  
-  const voices = window.speechSynthesis.getVoices();
-  const arabicVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
-  if (arabicVoice) utterance.voice = arabicVoice;
-  
-  window.speechSynthesis.speak(utterance);
+function showNotification(message, type = 'info') {
+  const color = type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#00d4ff';
+  console.log(message);
+
+  // Toast notification
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: ${color};
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    z-index: 9999;
+    animation: slideIn 0.3s ease;
+  `;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => toast.remove(), 3000);
 }
 
-function toggleVoiceInput() {
-  if (!SpeechRecognition) {
-    alert('التحدث الصوتي غير مدعوم في متصفحك');
-    return;
-  }
+function playNotificationSound() {
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
 
-  const btn = document.getElementById('voice-btn');
-  const input = document.getElementById('chat-input-full');
-  const controlPanel = document.getElementById('voice-control-panel');
-  
-  if (isListening) {
-    isListening = false;
-    btn.classList.remove('listening');
-    controlPanel.style.display = 'none';
-    clearTimeout(silenceTimer);
-    if (recognitionInstance) {
-      recognitionInstance.abort();
-    }
-    return;
-  }
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
 
-  // عرض لوحة التحكم
-  controlPanel.style.display = 'block';
-  
-  isListening = true;
-  btn.classList.add('listening');
-  btn.textContent = '🎤 اسمع...';
+  oscillator.frequency.value = 800;
+  oscillator.type = 'sine';
+
+  gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+  oscillator.start(audioContext.currentTime);
+  oscillator.stop(audioContext.currentTime + 0.1);
+}
+
+// Heartbeat
+setInterval(() => {
+  if (isConnected) {
+    socket.emit('ping');
+  }
+}, 30000);
+
+// Keep existing AI chat functions
+function handleChatKeypress(event) {
+  if (event.key === 'Enter') {
+    sendChatMessage();
+  }
+}
+
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  const messagesDiv = document.getElementById('chat-messages');
+  const loadingDiv = document.getElementById('chat-loading');
+
+  // Add user message
+  const userMessageEl = document.createElement('div');
+  userMessageEl.className = 'message user-message';
+  userMessageEl.innerHTML = `
+    <span class="message-icon">👤</span>
+    <div class="message-content">${message}</div>
+  `;
+  messagesDiv.appendChild(userMessageEl);
+
   input.value = '';
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  loadingDiv.style.display = 'block';
 
-  recognitionInstance = new SpeechRecognition();
-  recognitionInstance.lang = 'ar-SA';
-  recognitionInstance.continuous = false;
-  recognitionInstance.interimResults = true;
-  recognitionInstance.maxAlternatives = 1;
-
-  let finalTranscript = '';
-  let lastSpeechTime = Date.now();
-  let hasSpokenSomething = false;
-
-  recognitionInstance.onstart = () => {
-    btn.classList.add('listening');
-    document.getElementById('audio-visualizer').classList.add('active');
-    lastSpeechTime = Date.now();
-  };
-
-  recognitionInstance.onresult = (event) => {
-    let interimTranscript = '';
-    
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      const transcript = event.results[i][0].transcript.trim();
-      
-      if (event.results[i].isFinal) {
-        if (transcript.length > 0) {
-          finalTranscript = transcript;
-          hasSpokenSomething = true;
-          lastSpeechTime = Date.now();
-          
-          // عند سماع كلام نهائي - اوقف الاستماع بسرعة
-          clearTimeout(silenceTimer);
-          silenceTimer = setTimeout(() => {
-            if (isListening) {
-              recognitionInstance.stop();
-            }
-          }, 800); // انتظر 0.8 ثانية فقط للكلام النهائي
-        }
-      } else {
-        if (transcript.length > 0) {
-          interimTranscript = transcript;
-          hasSpokenSomething = true;
-        }
-      }
-    }
-    
-    // اعرض الكلام الوسيط أو النهائي
-    input.value = finalTranscript || interimTranscript;
-  };
-
-  recognitionInstance.onend = () => {
-    btn.classList.remove('listening');
-    btn.textContent = '🎤';
-    document.getElementById('audio-visualizer').classList.remove('active');
-    isListening = false;
-    controlPanel.style.display = 'none';
-    clearTimeout(silenceTimer);
-    
-    // إرسال الرسالة تلقائياً إذا كان هناك كلام
-    if (finalTranscript.trim() && hasSpokenSomething) {
-      input.value = finalTranscript;
-      setTimeout(() => sendChatMessage(), 200);
-    }
-  };
-
-  recognitionInstance.onerror = (event) => {
-    console.log('Speech recognition error:', event.error);
-    btn.classList.remove('listening');
-    btn.textContent = '🎤';
-    document.getElementById('audio-visualizer').classList.remove('active');
-    isListening = false;
-    clearTimeout(silenceTimer);
-  };
-
-  recognitionInstance.onabort = () => {
-    btn.classList.remove('listening');
-    btn.textContent = '🎤';
-    document.getElementById('audio-visualizer').classList.remove('active');
-    isListening = false;
-  };
-
-  recognitionInstance.start();
-  
-  // Timeout عام - 15 ثانية كحد أقصى
-  clearTimeout(silenceTimer);
-  silenceTimer = setTimeout(() => {
-    if (isListening && recognitionInstance) {
-      recognitionInstance.stop();
-    }
-  }, 15000);
-}
-
-// 🎙️ Advanced Text-to-Speech - Web Speech API
-let voiceSettings = {
-  rate: 1.2,
-  pitch: 0.9,
-  volume: 1
-};
-
-let currentSpeech = null;
-
-function updateVoiceSettings() {
-  voiceSettings.rate = Math.min(parseFloat(document.getElementById('voice-rate')?.value || 1.2), 1.5);
-  voiceSettings.pitch = parseFloat(document.getElementById('voice-pitch')?.value || 0.9);
-  
-  document.getElementById('rate-value').textContent = voiceSettings.rate + 'x';
-  document.getElementById('pitch-value').textContent = voiceSettings.pitch.toFixed(2);
-}
-
-function speakText(text) {
-  const btn = document.getElementById('voice-btn');
-  const visualizer = document.getElementById('audio-visualizer');
-  
-  if (!('speechSynthesis' in window)) {
-    console.log('❌ Text-to-Speech not supported');
-    return;
-  }
-
-  // إيقاف أي كلام قديم
-  window.speechSynthesis.cancel();
-
-  // تنظيف النص - إزالة الرموز الزائدة
-  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@\>\<]/g, '').trim();
-
-  if (!cleanText) return;
-
-  // تحديث الواجهة
-  btn?.classList.add('speaking');
-  visualizer?.classList.add('active');
-
-  // إنشاء utterance جديد
-  const utterance = new SpeechSynthesisUtterance(cleanText);
-  utterance.lang = 'ar-SA';
-  utterance.rate = 1.0;  // سرعة عادية
-  utterance.pitch = 1.0;  // نبرة عادية
-  utterance.volume = 1;    // مستوى صوت 100%
-
-  // اختيار صوت عربي - مع تأخير لتحميل الأصوات
-  const selectVoice = () => {
-    let voices = window.speechSynthesis.getVoices();
-    console.log('📊 عدد الأصوات:', voices.length);
-    
-    if (voices.length === 0) {
-      // إذا لم تحمل الأصوات، جرب مرة أخرى
-      setTimeout(() => {
-        voices = window.speechSynthesis.getVoices();
-        applyVoice(voices);
-      }, 200);
-    } else {
-      applyVoice(voices);
-    }
-  };
-
-  const applyVoice = (voices) => {
-    const arabicVoice = voices.find(v => 
-      v.lang.startsWith('ar-SA') || 
-      v.lang.startsWith('ar-AE') || 
-      v.lang.startsWith('ar')
-    ) || voices.find(v => v.lang.startsWith('ar')) || voices[0];
-    
-    if (arabicVoice) {
-      utterance.voice = arabicVoice;
-      console.log('✅ صوت مختار:', arabicVoice.name, '- اللغة:', arabicVoice.lang);
-    }
-  };
-
-  utterance.onstart = () => {
-    btn?.classList.add('speaking');
-    visualizer?.classList.add('active');
-    console.log('🔊 التحدث بدأ - تأكد من عدم كتم الصوت!');
-  };
-
-  utterance.onend = () => {
-    btn?.classList.remove('speaking');
-    visualizer?.classList.remove('active');
-    console.log('✅ انتهى التحدث');
-  };
-
-  utterance.onerror = (e) => {
-    console.error('❌ خطأ في الصوت:', e.error);
-    btn?.classList.remove('speaking');
-    visualizer?.classList.remove('active');
-  };
-
-  // تحديد الصوت قبل التحدث
-  selectVoice();
-  
   try {
-    window.speechSynthesis.speak(utterance);
-    console.log('📢 تم إرسال الكلام للنظام');
+    const response = await fetch('/api/ai/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await response.json();
+    loadingDiv.style.display = 'none';
+
+    if (data.success) {
+      const aiMessageEl = document.createElement('div');
+      aiMessageEl.className = 'message ai-message';
+      aiMessageEl.innerHTML = `
+        <span class="message-icon">🤖</span>
+        <div class="message-content">${data.response}</div>
+      `;
+      messagesDiv.appendChild(aiMessageEl);
+    } else {
+      const errorEl = document.createElement('div');
+      errorEl.className = 'message ai-message';
+      errorEl.innerHTML = `
+        <span class="message-icon">⚠️</span>
+        <div class="message-content">خطأ: ${data.error}</div>
+      `;
+      messagesDiv.appendChild(errorEl);
+    }
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   } catch (error) {
-    console.error('❌ خطأ في تشغيل الصوت:', error);
+    loadingDiv.style.display = 'none';
+    const errorEl = document.createElement('div');
+    errorEl.className = 'message ai-message';
+    errorEl.innerHTML = `
+      <span class="message-icon">❌</span>
+      <div class="message-content">خطأ في الاتصال</div>
+    `;
+    messagesDiv.appendChild(errorEl);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   }
 }
 
-// 📱 PWA Installation Handler - Advanced
-let deferredPrompt;
-const installBtn = document.getElementById('install-btn');
-let isAppInstalled = false;
+function setTab(tabName) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  const targetTab = document.getElementById(tabName);
+  if (targetTab) targetTab.classList.add('active');
 
-// Check if app is already installed
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.classList.remove('hidden');
-  console.log('✅ PWA install prompt ready');
-});
-
-window.addEventListener('appinstalled', () => {
-  console.log('✅ App installed successfully!');
-  isAppInstalled = true;
-  installBtn.classList.add('hidden');
-  deferredPrompt = null;
-});
-
-// Check if PWA is running as installed app
-if (window.matchMedia('(display-mode: standalone)').matches) {
-  isAppInstalled = true;
-  installBtn.classList.add('hidden');
-  console.log('✅ App is running as installed PWA');
-}
-
-function installApp() {
-  if (deferredPrompt) {
-    // Native install prompt - no messages
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('✅ User accepted PWA installation');
-      }
-      deferredPrompt = null;
-      installBtn.classList.add('hidden');
-    });
-  } else {
-    // Fallback for browsers without native prompt
-    console.log('⬇️ تنصيب التطبيق: نسخ الرابط وفتحه في متصفح محدث');
-  }
-}
-
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').then((reg) => {
-    console.log('✅ Service Worker registered successfully');
-  }).catch((err) => {
-    console.log('⚠️ Service Worker registration failed:', err);
+  document.querySelectorAll('.bar-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.bar-btn').forEach(btn => {
+    if (btn.onclick && btn.onclick.toString().includes(`'${tabName}'`)) {
+      btn.classList.add('active');
+    }
   });
-}
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
-  const firstFeature = document.querySelector('.feature-card');
-  if (firstFeature) {
-    selectFeature(firstFeature, 'generate');
-  }
-  
-  document.querySelectorAll('.bottom-tab').forEach((tab, index) => {
-    tab.addEventListener('click', function() {
-      document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
-  
-  // Show install button if not already installed
-  if (!isAppInstalled) {
-    // Always show the button for manual installation
+  if (tabName === 'chat') {
     setTimeout(() => {
-      if (!deferredPrompt) {
-        installBtn.classList.remove('hidden');
-      }
-    }, 2000);
-  } else {
-    installBtn.classList.add('hidden');
+      const input = document.getElementById('chat-input');
+      if (input) input.focus();
+    }, 100);
   }
-  
-  console.log('✅ Platform initialized successfully');
-  console.log('🤖 AI Programming Expert Platform v5.0');
-  console.log('💬 AI Chat ready with real responses!');
-  console.log('🎤 Voice input enabled!');
-  console.log('🔊 Text-to-Speech ready!');
-  console.log('📱 PWA ready for installation!');
-  console.log('⬇️ زر التنصيب متاح - يمكنك تثبيت التطبيق على جهازك!');
+}
+
+// Initialize app
+window.addEventListener('load', () => {
+  console.log('✅ تم تحميل التطبيق');
+});
+
+// Prevent accidental page close
+window.addEventListener('beforeunload', (e) => {
+  if (connectedUserId) {
+    e.preventDefault();
+    e.returnValue = 'لديك اتصال نشط. هل أنت متأكد من الخروج؟';
+  }
 });

@@ -480,17 +480,30 @@ body {
 
 .social-message {
   background: var(--surface-light);
-  padding: 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  max-width: 80%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  max-width: 85%;
   word-wrap: break-word;
+  animation: slideIn 0.3s ease;
+  line-height: 1.4;
 }
 
 .social-message.user {
   align-self: flex-end;
   background: var(--primary);
   color: var(--bg);
+  border-bottom-right-radius: 2px;
+}
+
+.social-message.other {
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+}
+
+#typing-indicator {
+  font-style: italic;
+  animation: pulse 1.5s infinite;
 }
 
 .social-controls {
