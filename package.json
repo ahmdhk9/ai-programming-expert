@@ -1,48 +1,27 @@
 {
   "name": "ai-programming-expert",
-  "version": "4.0.0",
-  "description": "Advanced AI Programming Expert Platform - 60+ Features, Online/Offline/Hybrid",
+  "version": "5.0.0",
+  "description": "Advanced AI Programming Expert Platform - Real-time Social Chat + AI",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"cd web && npm run dev\" \"cd backend && npm start\"",
-    "build": "cd web && npm run build && cd ../backend && npm run build",
-    "start": "concurrently \"cd web && npm start\" \"cd backend && npm start\"",
-    "test": "concurrently \"cd web && npm test\" \"cd backend && npm test\"",
-    "lint": "concurrently \"cd web && npm run lint\" \"cd backend && npm run lint\"",
-    "backup": "bash .backups/backup.sh",
-    "health-check": "bash check-health.sh",
-    "analyze": "cd web && npm run build -- --analyze"
-  },
-  "workspaces": [
-    "web",
-    "backend"
-  ],
-  "devDependencies": {
-    "concurrently": "^8.2.2"
+    "dev": "cd backend && npm start",
+    "start": "cd backend && npm start",
+    "build": "echo 'No build needed - static frontend'",
+    "deploy:vercel": "vercel --prod",
+    "deploy:fly": "cd backend && flyctl deploy",
+    "deploy:all": "npm run deploy:vercel && npm run deploy:fly"
   },
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.0.0",
     "npm": ">=9.0.0"
   },
   "keywords": [
     "ai",
-    "programming",
-    "expert",
-    "no-code",
-    "automation",
-    "offline",
-    "hybrid"
+    "chat",
+    "social",
+    "realtime",
+    "socket.io"
   ],
-  "license": "MIT",
-  "author": "AI Programming Expert Team",
-  "homepage": "https://aiexpert.dev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AIExpert/platform"
-  },
-  "bugs": {
-    "url": "https://github.com/AIExpert/platform/issues"
-  },
   "dependencies": {
     "groq-sdk": "^0.36.0",
     "openai": "^6.9.1",
