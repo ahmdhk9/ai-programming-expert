@@ -258,12 +258,16 @@ function listenAndRespond() {
       
       // احصل على رد من الـ AI
       try {
-        listeningText.textContent = 'جاري الرد...';
+        listeningText.textContent = '⏳ جاري الرد...';
+        voiceTranscript.innerHTML = `<p style="color: var(--primary);">جاري معالجة السؤال...</p>`;
+        
         const response = await fetch('/api/ai/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: finalTranscript })
         });
+        
+        if (!response.ok) throw new Error(`خطأ: ${response.status}`);
         
         const data = await response.json();
         
@@ -271,17 +275,20 @@ function listenAndRespond() {
           const aiResponse = data.response;
           voiceChatLog.innerHTML += `<div class="voice-message ai"><strong>الذكي:</strong> ${aiResponse}</div>`;
           voiceTranscript.innerHTML = `<p>${aiResponse}</p>`;
-          listeningText.textContent = 'جاري الرد الصوتي...';
+          listeningText.textContent = '🔊 جاري الرد الصوتي...';
           
-          // رد صوتي فوري
+          // رد صوتي فوري - بدون تأخير
           speakTextVoice(aiResponse);
+        } else {
+          throw new Error(data.error || 'خطأ غير متوقع');
         }
       } catch (error) {
-        voiceChatLog.innerHTML += `<div class="voice-message ai" style="color: #ff4757;"><strong>خطأ:</strong> ${error.message}</div>`;
-        listeningText.textContent = 'حدث خطأ - حاول مجدداً';
+        console.error('❌ خطأ:', error);
+        voiceChatLog.innerHTML += `<div class="voice-message ai" style="color: #ff4757;"><strong>⚠️ خطأ:</strong> ${error.message}</div>`;
+        listeningText.textContent = '❌ حدث خطأ - جرب مجدداً';
       }
     } else {
-      listeningText.textContent = 'لم أسمع شيء - حاول مجدداً';
+      listeningText.textContent = '⚠️ لم أسمع صوت - حاول مجدداً';
     }
   };
 
@@ -289,8 +296,14 @@ function listenAndRespond() {
 }
 
 function speakTextVoice(text) {
-  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@]/g, '').trim();
-  
+  if (!('speechSynthesis' in window)) {
+    console.log('❌ Text-to-Speech not supported');
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@\>\<]/g, '').trim();
   if (!cleanText) return;
 
   const utterance = new SpeechSynthesisUtterance(cleanText);
@@ -299,15 +312,52 @@ function speakTextVoice(text) {
   utterance.pitch = 0.9;
   utterance.volume = 1;
 
-  const voices = window.speechSynthesis.getVoices();
-  const arabicVoice = voices.find(v => v.lang.includes('ar-SA') || v.lang.includes('ar')) || voices[0];
-  if (arabicVoice) utterance.voice = arabicVoice;
-
-  utterance.onend = () => {
-    document.getElementById('listening-text').textContent = 'الرد انتهى - اضغط للاستماع مجدداً';
+  // تحديد الصوت مع معالجة التأخير
+  const assignVoice = () => {
+    let voices = window.speechSynthesis.getVoices();
+    
+    if (voices.length === 0) {
+      setTimeout(() => {
+        voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          const arabicVoice = voices.find(v => v.lang.startsWith('ar-SA') || v.lang.startsWith('ar')) || voices[0];
+          if (arabicVoice) utterance.voice = arabicVoice;
+        }
+      }, 100);
+    } else {
+      const arabicVoice = voices.find(v => v.lang.startsWith('ar-SA') || v.lang.startsWith('ar')) || voices[0];
+      if (arabicVoice) utterance.voice = arabicVoice;
+    }
   };
 
-  window.speechSynthesis.speak(utterance);
+  utterance.onstart = () => {
+    console.log('🔊 الرد الصوتي بدأ...');
+  };
+
+  utterance.onend = () => {
+    const listeningText = document.getElementById('listening-text');
+    if (listeningText) {
+      listeningText.textContent = '✅ الرد انتهى - اضغط للاستماع مجدداً';
+    }
+    console.log('✅ انتهى الرد الصوتي');
+  };
+
+  utterance.onerror = (e) => {
+    console.log('❌ خطأ صوت:', e.error);
+    const listeningText = document.getElementById('listening-text');
+    if (listeningText) {
+      listeningText.textContent = '❌ خطأ في الصوت - حاول مجدداً';
+    }
+  };
+
+  assignVoice();
+  
+  try {
+    window.speechSynthesis.speak(utterance);
+    console.log('📢 جاري التحدث الصوتي...');
+  } catch (error) {
+    console.log('❌ خطأ في تشغيل الصوت:', error);
+  }
 }
 
 function toggleVoiceInput() {
@@ -451,7 +501,7 @@ function speakText(text) {
   const visualizer = document.getElementById('audio-visualizer');
   
   if (!('speechSynthesis' in window)) {
-    console.log('Speech synthesis not supported');
+    console.log('❌ Text-to-Speech not supported');
     return;
   }
 
@@ -459,48 +509,77 @@ function speakText(text) {
   window.speechSynthesis.cancel();
 
   // تنظيف النص - إزالة الرموز الزائدة
-  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@]/g, '').trim();
+  const cleanText = text.replace(/[\`\*\_\[\]\(\)\#\@\>\<]/g, '').trim();
 
   if (!cleanText) return;
 
   // تحديث الواجهة
-  btn.classList.add('speaking');
-  visualizer.classList.add('active');
+  btn?.classList.add('speaking');
+  visualizer?.classList.add('active');
 
   // إنشاء utterance جديد
   const utterance = new SpeechSynthesisUtterance(cleanText);
   utterance.lang = 'ar-SA';
-  utterance.rate = voiceSettings.rate;
-  utterance.pitch = voiceSettings.pitch;
-  utterance.volume = voiceSettings.volume;
+  utterance.rate = Math.min(voiceSettings.rate || 1.2, 1.5);
+  utterance.pitch = voiceSettings.pitch || 0.9;
+  utterance.volume = 1;
 
-  // اختيار أفضل صوت عربي متاح
-  const voices = window.speechSynthesis.getVoices();
-  const arabicVoice = voices.find(v => v.lang.includes('ar-SA') || v.lang.includes('ar')) || voices[0];
-  if (arabicVoice) {
-    utterance.voice = arabicVoice;
-  }
+  // اختيار صوت عربي - مع تأخير لتحميل الأصوات
+  const selectVoice = () => {
+    let voices = window.speechSynthesis.getVoices();
+    
+    if (voices.length === 0) {
+      // إذا لم تحمل الأصوات، جرب مرة أخرى
+      setTimeout(() => {
+        voices = window.speechSynthesis.getVoices();
+        applyVoice(voices);
+      }, 100);
+    } else {
+      applyVoice(voices);
+    }
+  };
+
+  const applyVoice = (voices) => {
+    const arabicVoice = voices.find(v => 
+      v.lang.startsWith('ar-SA') || 
+      v.lang.startsWith('ar-AE') || 
+      v.lang.startsWith('ar')
+    ) || voices.find(v => v.lang.startsWith('ar')) || voices[0];
+    
+    if (arabicVoice) {
+      utterance.voice = arabicVoice;
+      console.log('🎙️ صوت مختار:', arabicVoice.name);
+    }
+  };
 
   utterance.onstart = () => {
-    btn.classList.add('speaking');
-    visualizer.classList.add('active');
-    console.log('🔊 التحدث بدأ...');
+    btn?.classList.add('speaking');
+    visualizer?.classList.add('active');
+    console.log('🔊 الرد الصوتي بدأ...');
   };
 
   utterance.onend = () => {
-    btn.classList.remove('speaking');
-    visualizer.classList.remove('active');
-    console.log('🔊 التحدث انتهى');
+    btn?.classList.remove('speaking');
+    visualizer?.classList.remove('active');
+    console.log('✅ الرد الصوتي انتهى');
   };
 
   utterance.onerror = (e) => {
-    console.log('Speech error:', e.error);
-    btn.classList.remove('speaking');
-    visualizer.classList.remove('active');
+    console.log('❌ خطأ صوت:', e.error);
+    btn?.classList.remove('speaking');
+    visualizer?.classList.remove('active');
   };
 
+  // تحديد الصوت قبل التحدث
+  selectVoice();
+  
   currentSpeech = utterance;
-  window.speechSynthesis.speak(utterance);
+  try {
+    window.speechSynthesis.speak(utterance);
+    console.log('📢 جاري التحدث...');
+  } catch (error) {
+    console.log('❌ خطأ في تشغيل الصوت:', error);
+  }
 }
 
 // 📱 PWA Installation Handler - Advanced
