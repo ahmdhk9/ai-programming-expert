@@ -32,8 +32,38 @@
   <!-- Content -->
   <div class="content-wrapper">
 
+    <!-- Features Page -->
+    <div id="features" class="tab-pane active">
+      <div class="page-content">
+        <h2>🎯 المميزات</h2>
+        <div class="features-list">
+          <div class="feature-item">💻 إنشاء الكود</div>
+          <div class="feature-item">🔧 إصلاح الأخطاء</div>
+          <div class="feature-item">🎨 تصميم الواجهات</div>
+          <div class="feature-item">📚 شرح المفاهيم</div>
+          <div class="feature-item">🧠 فهم النية</div>
+          <div class="feature-item">🚀 النشر الذكي</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools Page -->
+    <div id="tools" class="tab-pane">
+      <div class="page-content">
+        <h2>⚙️ الأدوات</h2>
+        <div class="tools-list">
+          <div class="tool-item">🔄 إعادة هيكلة</div>
+          <div class="tool-item">⚛️ React</div>
+          <div class="tool-item">🗄️ قواعد البيانات</div>
+          <div class="tool-item">🔌 APIs</div>
+          <div class="tool-item">☁️ Cloud</div>
+          <div class="tool-item">🔐 الأمان</div>
+        </div>
+      </div>
+    </div>
+
     <!-- AI Chat Page -->
-    <div id="ai-chat-page" class="tab-pane active">
+    <div id="ai-chat-page" class="tab-pane">
       <div class="chat-messages-full" id="chat-messages-full">
         <div class="message ai-message">
           <span class="message-icon">🤖</span>
@@ -47,6 +77,44 @@
       </div>
       <div class="chat-loading-full" id="chat-loading-full" style="display: none;">
         <span>⏳ جاري التفكير...</span>
+      </div>
+    </div>
+
+    <!-- Projects Page -->
+    <div id="projects" class="tab-pane">
+      <div class="page-content">
+        <h2>📦 المشاريع</h2>
+        <div class="projects-list">
+          <div class="project-item">
+            <div>📱 تطبيق ويب</div>
+            <div style="color: var(--text-muted); font-size: 12px;">React + Node.js</div>
+          </div>
+          <div class="project-item">
+            <div>🎮 لعبة ويب</div>
+            <div style="color: var(--text-muted); font-size: 12px;">JavaScript/Canvas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profile" class="tab-pane">
+      <div class="page-content">
+        <h2>👤 الملف الشخصي</h2>
+        <div class="profile-info">
+          <div class="profile-item">
+            <strong>المطور:</strong>
+            <span>احمد العويني التميمي البصراوي</span>
+          </div>
+          <div class="profile-item">
+            <strong>التخصص:</strong>
+            <span>هندسة البرمجيات والذكاء الاصطناعي</span>
+          </div>
+          <div class="profile-item">
+            <strong>الإصدار:</strong>
+            <span>v5.0</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -78,6 +146,15 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" onclick="setTab('features')" title="المميزات">🎯</button>
+    <button class="nav-btn" onclick="setTab('tools')" title="الأدوات">⚙️</button>
+    <button class="nav-btn" onclick="setTab('ai-chat-page')" title="الدردشة">💬</button>
+    <button class="nav-btn" onclick="setTab('projects')" title="المشاريع">📦</button>
+    <button class="nav-btn" onclick="setTab('profile')" title="الملف">👤</button>
   </div>
 
 </div>

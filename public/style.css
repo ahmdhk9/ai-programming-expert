@@ -231,6 +231,98 @@ body {
   font-size: 14px;
 }
 
+/* Bottom Navigation */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  background: rgba(26, 32, 44, 0.95);
+  border-top: 2px solid var(--primary);
+  flex-shrink: 0;
+  height: 60px;
+}
+
+.nav-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 12px;
+  transition: all 0.3s ease;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn.active {
+  color: var(--primary);
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.nav-btn:hover {
+  color: var(--primary);
+}
+
+/* Simple Pages */
+.page-content {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.page-content h2 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.features-list, .tools-list {
+  display: grid;
+  gap: 10px;
+}
+
+.feature-item, .tool-item {
+  background: var(--surface);
+  padding: 14px 12px;
+  border-radius: 8px;
+  border-right: 3px solid var(--primary);
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-item {
+  background: var(--surface);
+  padding: 12px;
+  border-radius: 8px;
+  border-right: 3px solid var(--primary);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-item {
+  background: var(--surface);
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-item strong {
+  color: var(--primary);
+}
+
 @keyframes slideIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }

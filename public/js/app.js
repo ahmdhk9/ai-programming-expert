@@ -1,33 +1,22 @@
 function setTab(tabName) {
-  console.log('📄 فتح الصفحة:', tabName);
-  
   // إخفاء جميع الصفحات
-  document.querySelectorAll('.tab-pane').forEach(p => {
-    p.style.display = 'none';
-    p.classList.remove('active');
-  });
-  
-  // إزالة التفعيل من الأزرار
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   
   // فتح الصفحة المطلوبة
   const targetTab = document.getElementById(tabName);
   if (targetTab) {
-    targetTab.style.display = 'block';
     targetTab.classList.add('active');
-    console.log('✅ تم فتح الصفحة:', tabName);
-  } else {
-    console.error('❌ الصفحة غير موجودة:', tabName);
   }
   
-  // تفعيل الزر المناسب
-  document.querySelectorAll('[onclick*="setTab"]').forEach(btn => {
-    if (btn.onclick.toString().includes(`'${tabName}'`)) {
+  // تفعيل الزر الصحيح في الشريط السفلي
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    if (btn.onclick && btn.onclick.toString().includes(`'${tabName}'`)) {
       btn.classList.add('active');
     }
   });
   
+  // تركيز على input الكتابة
   if (tabName === 'ai-chat-page') {
     setTimeout(() => {
       const input = document.getElementById('chat-input-full');
