@@ -2,162 +2,202 @@
 <html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI DEV & CREATE PLATFORM</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<!-- عنوان التطبيق -->
-<header class="app-header">
-  <div class="header-content">
-    <h1 class="app-title">🚀 AI DEV</h1>
-    <p class="app-subtitle">منصة الإنشاء الذكية</p>
+<div class="app-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <button class="back-btn">‹</button>
+      <h1>AI DEV & CREATE PLATFORM</h1>
+    </div>
+    <div class="header-right">
+      <button class="menu-icon">⋮</button>
+    </div>
+  </header>
+
+  <!-- Main Navigation Tabs -->
+  <div class="main-tabs">
+    <button class="tab active" onclick="switchTab('appdev')">APP DEV</button>
+    <button class="tab" onclick="switchTab('gamedev')">GAME DEV</button>
+    <button class="tab" onclick="switchTab('tools')">TOOLBOX</button>
   </div>
-  <button class="menu-toggle" onclick="toggleMenu()">⋮</button>
-</header>
 
-<!-- التنقل العلوي للأقسام الرئيسية -->
-<nav class="tabs-nav">
-  <button class="tab-btn active" onclick="switchTab('app-dev')">💻 APP DEV</button>
-  <button class="tab-btn" onclick="switchTab('game-dev')">🎮 GAME DEV</button>
-  <button class="tab-btn" onclick="switchTab('tools')">🛠️ TOOLS</button>
-</nav>
-
-<!-- المحتوى الرئيسي -->
-<main class="app-main">
-
-  <!-- قسم APP DEV -->
-  <section id="app-dev" class="tab-content active">
-    
-    <!-- مراحل التطوير -->
-    <div class="dev-stages">
-      <h3>مراحل المشروع</h3>
-      <div class="stages-container">
-        <div class="stage" onclick="goToStage('concept')">
+  <!-- APP DEV Tab -->
+  <div id="appdev" class="tab-content active">
+    <!-- Project Stages -->
+    <div class="section stages-section">
+      <div class="stage-flow">
+        <div class="stage-item">
           <div class="stage-num">1</div>
-          <div class="stage-name">تصور</div>
+          <div class="stage-label">Concept</div>
         </div>
-        <div class="stage" onclick="goToStage('design')">
+        <div class="stage-item">
           <div class="stage-num">2</div>
-          <div class="stage-name">تصميم</div>
+          <div class="stage-label">Disony & Ulo</div>
         </div>
-        <div class="stage active" onclick="goToStage('dev')">
+        <div class="stage-item active">
           <div class="stage-num">3</div>
-          <div class="stage-name">تطوير</div>
+          <div class="stage-label">Video/Image</div>
         </div>
-        <div class="stage" onclick="goToStage('deploy')">
+        <div class="stage-item">
           <div class="stage-num">4</div>
-          <div class="stage-name">نشر</div>
+          <div class="stage-label">Videng & Integrate</div>
         </div>
+      </div>
+      <div class="stage-details">
+        <span class="stage-tag">1 CREATION</span>
+        <span class="stage-tag">CODE/BUILD</span>
+        <span class="stage-tag">4 DEPLOY</span>
+        <span class="stage-tag">5 DEPLOY</span>
+        <span class="stage-tag">MONITOR</span>
       </div>
     </div>
 
-    <!-- الدردشة الذكية -->
-    <div class="ai-chat-section">
-      <h3>💬 الدردشة الذكية</h3>
-      <div class="chat-box">
-        <div id="messages" class="messages">
-          <div class="ai-msg">
-            <span class="avatar">🤖</span>
-            <p>مرحباً! أنا هنا لمساعدتك في تطوير مشروعك</p>
+    <!-- AI Creative Chat -->
+    <div class="section">
+      <h2>AI CREative CHAT</h2>
+      <div class="chat-container">
+        <div class="chat-preview">
+          <div class="task-box">
+            <h3>Task Tasker</h3>
+            <div class="task-content">
+              <div class="task-item">🎯 Task 1 - Tasker</div>
+              <div class="task-item">📝 Task 2 - Main</div>
+            </div>
+          </div>
+          <button class="chat-msg-btn">أنت تحدث عن شئ متعلق</button>
+        </div>
+        <div class="chat-messages">
+          <div class="msg ai-msg">
+            <span>🤖</span>
+            <p>استشاره فني في أي شي متعلق فيه...</p>
+          </div>
+          <div class="msg user-msg">
+            <p>Create Firebase API for طلبي</p>
+          </div>
+          <div class="msg ai-msg">
+            <span>🤖</span>
+            <p>جواب فني شامل...</p>
           </div>
         </div>
-        <div class="input-area">
-          <textarea id="input" placeholder="اكتب طلبك..."></textarea>
-          <button class="send-btn" onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+
+    <!-- AI Code Section -->
+    <div class="section">
+      <h2>AI Code</h2>
+      <div class="code-display">
+        <pre>// JS @options تحديد Limit
+53 scoop @sessionStorage format, obj–1 > execute
+51 function useData()
+21 return <config
+71 import data from 'config.api'</pre>
+      </div>
+    </div>
+
+    <!-- Project Health -->
+    <div class="section project-health">
+      <h2>Project Health</h2>
+      <div class="health-tabs">
+        <button class="health-tab active">💬 AI Chat</button>
+        <button class="health-tab">🎨 Design</button>
+        <button class="health-tab">💻 Code</button>
+        <button class="health-tab">🚀 Deploy</button>
+        <button class="health-tab">📊 Monitor</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS Tab -->
+  <div id="tools" class="tab-content">
+    <h2>AI-POWERED TOOLBOX</h2>
+    <div class="toolbox-grid">
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">🎯</div>
+        <p>Mesh Refle</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">🔄</div>
+        <p>Code Refactoring</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">⚛️</div>
+        <p>React Logic</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">🖼️</div>
+        <p>SVG Raster</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">✨</div>
+        <p>Advanced Designing</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">🔀</div>
+        <p>DB Sync</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">🔌</div>
+        <p>API Creator</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">☁️</div>
+        <p>Cloud Functions</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">🔗</div>
+        <p>Mesh Sync</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">⚙️</div>
+        <p>Cloud Function</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">🗄️</div>
+        <p>DB Sync</p>
+      </div>
+      <div class="tool-card" onclick="selectTool(this)">
+        <div class="tool-icon">🔐</div>
+        <p>Readiness Sync</p>
+      </div>
+    </div>
+
+    <!-- AI Powered Toolbox Item -->
+    <div class="toolbox-item">
+      <h3>AI-POWERED TOOLITEM</h3>
+      <div class="toolitem-details">
+        <div class="toolitem-box">
+          <p>🔧 ACME NUMBER OUM</p>
+          <p class="small">بام معلومات مسجود بات محفوظ كود تالي جمود</p>
+        </div>
+        <div class="toolitem-box">
+          <p>📊 NOOB HATENA</p>
+          <p class="small">محصحة محفوظة قبل على المحتوى و بات</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- عرض الكود -->
-    <div class="code-section">
-      <h3>💻 الكود</h3>
-      <textarea id="code" placeholder="الكود يظهر هنا..."></textarea>
-    </div>
+  <!-- GAME DEV Tab -->
+  <div id="gamedev" class="tab-content">
+    <h2>GAME DEV</h2>
+    <p style="color: #999; text-align: center; padding: 40px;">قادم قريباً...</p>
+  </div>
 
-    <!-- صحة المشروع -->
-    <div class="project-health">
-      <h3>📊 صحة المشروع</h3>
-      <div class="health-tabs">
-        <button class="health-btn active">💬 الدردشة</button>
-        <button class="health-btn">🎨 التصميم</button>
-        <button class="health-btn">💻 الكود</button>
-        <button class="health-btn">🚀 النشر</button>
-        <button class="health-btn">📈 المراقبة</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- قسم GAME DEV -->
-  <section id="game-dev" class="tab-content">
-    <h3>تطوير الألعاب</h3>
-    <p>قسم تطوير الألعاب - قريباً</p>
-  </section>
-
-  <!-- قسم TOOLS -->
-  <section id="tools" class="tab-content">
-    <h3>🛠️ صندوق الأدوات الذكية</h3>
-    <div class="toolbox-grid">
-      <div class="tool-card" onclick="useTool('mesh-refine')">
-        <div class="tool-icon">🎯</div>
-        <p class="tool-name">Mesh Refine</p>
-      </div>
-      <div class="tool-card" onclick="useTool('code-refactor')">
-        <div class="tool-icon">🔄</div>
-        <p class="tool-name">Code Refactoring</p>
-      </div>
-      <div class="tool-card" onclick="useTool('react-logic')">
-        <div class="tool-icon">⚛️</div>
-        <p class="tool-name">React Logic</p>
-      </div>
-      <div class="tool-card" onclick="useTool('svg-raster')">
-        <div class="tool-icon">🖼️</div>
-        <p class="tool-name">SVG Raster</p>
-      </div>
-      <div class="tool-card" onclick="useTool('advanced-design')">
-        <div class="tool-icon">✨</div>
-        <p class="tool-name">Advanced Design</p>
-      </div>
-      <div class="tool-card" onclick="useTool('db-sync')">
-        <div class="tool-icon">🔀</div>
-        <p class="tool-name">DB Sync</p>
-      </div>
-      <div class="tool-card" onclick="useTool('api-create')">
-        <div class="tool-icon">🔌</div>
-        <p class="tool-name">API Creator</p>
-      </div>
-      <div class="tool-card" onclick="useTool('cloud-func')">
-        <div class="tool-icon">☁️</div>
-        <p class="tool-name">Cloud Functions</p>
-      </div>
-      <div class="tool-card" onclick="useTool('analytics')">
-        <div class="tool-icon">📈</div>
-        <p class="tool-name">Analytics</p>
-      </div>
-      <div class="tool-card" onclick="useTool('security')">
-        <div class="tool-icon">🔒</div>
-        <p class="tool-name">Security Audit</p>
-      </div>
-      <div class="tool-card" onclick="useTool('performance')">
-        <div class="tool-icon">⚡</div>
-        <p class="tool-name">Performance</p>
-      </div>
-      <div class="tool-card" onclick="useTool('ai-assist')">
-        <div class="tool-icon">🤖</div>
-        <p class="tool-name">AI Assistant</p>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- التنقل السفلي -->
-<nav class="bottom-nav">
-  <button class="nav-item active" onclick="switchTab('app-dev')">💻 التطوير</button>
-  <button class="nav-item" onclick="switchTab('tools')">🛠️ الأدوات</button>
-  <button class="nav-item" onclick="goToPage('settings')">⚙️ الإعدادات</button>
-</nav>
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <button class="nav-item active">💬 AI Chat</button>
+    <button class="nav-item">🎨 Design</button>
+    <button class="nav-item">💻 Code</button>
+    <button class="nav-item">🚀 Deploy</button>
+    <button class="nav-item">📊 Monitor</button>
+  </div>
+</div>
 
 <script src="/js/ai-engine.js"></script>
 </body>
