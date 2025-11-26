@@ -604,11 +604,55 @@ setInterval(() => {
   }
 }, 30000);
 
-// Keep existing AI chat functions
+// AI Chat Functions - Enhanced
+let aiVoiceResponseEnabled = false;
+let aiSynthesis = window.speechSynthesis;
+
 function handleChatKeypress(event) {
   if (event.key === 'Enter') {
     sendChatMessage();
   }
+}
+
+function toggleAIVoiceResponse() {
+  aiVoiceResponseEnabled = !aiVoiceResponseEnabled;
+  const btn = document.getElementById('ai-voice-response');
+  btn.style.opacity = aiVoiceResponseEnabled ? '1' : '0.5';
+  showNotification(aiVoiceResponseEnabled ? '🔊 الرد الصوتي مفعل' : '🔇 الرد الصوتي معطل', 'info');
+}
+
+function startAIVoiceListening() {
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = 'ar-SA';
+  recognition.start();
+  showNotification('🎤 استمع...', 'info');
+  
+  recognition.onresult = (event) => {
+    const transcript = Array.from(event.results)
+      .map(result => result[0].transcript)
+      .join('');
+    document.getElementById('chat-input').value = transcript;
+    recognition.stop();
+  };
+}
+
+function speakAIResponse(text) {
+  if (!aiVoiceResponseEnabled || !aiSynthesis) return;
+  
+  aiSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'ar-SA';
+  utterance.rate = 0.9;
+  aiSynthesis.speak(utterance);
+}
+
+function copyToClipboard(text, element) {
+  navigator.clipboard.writeText(text).then(() => {
+    showNotification('✅ تم نسخ النص', 'success');
+    const originalText = element.textContent;
+    element.textContent = '✓';
+    setTimeout(() => element.textContent = originalText, 2000);
+  });
 }
 
 async function sendChatMessage() {
@@ -642,8 +686,16 @@ async function sendChatMessage() {
     if (data.success) {
       const aiMessageEl = document.createElement('div');
       aiMessageEl.className = 'message ai-message';
-      aiMessageEl.innerHTML = `<span class="message-icon">🤖</span><div class="message-content">${data.response}</div>`;
+      const messageId = 'ai-msg-' + Date.now();
+      aiMessageEl.id = messageId;
+      
+      const copyBtn = `<button class="msg-copy-btn" onclick="copyToClipboard('${data.response.replace(/'/g, "\\'")}', this)">📋 نسخ</button>`;
+      aiMessageEl.innerHTML = `<span class="message-icon">🤖</span><div class="message-wrapper"><div class="message-content">${data.response}</div><div class="message-actions">${copyBtn}</div></div>`;
       messagesDiv.appendChild(aiMessageEl);
+      
+      if (aiVoiceResponseEnabled) {
+        speakAIResponse(data.response);
+      }
     } else {
       const errorEl = document.createElement('div');
       errorEl.className = 'message ai-message';

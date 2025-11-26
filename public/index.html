@@ -224,9 +224,15 @@
       </div>
     </div>
 
-    <!-- Chat Tab -->
+    <!-- AI Chat Tab -->
     <div id="chat" class="tab-pane">
       <div class="chat-container">
+        <div class="ai-header">
+          <div class="ai-header-content">
+            <h2>🤖 الذكاء الصناعي</h2>
+            <p class="ai-status">متصل وجاهز للحوار</p>
+          </div>
+        </div>
         <div class="chat-messages" id="chat-messages">
           <div class="message ai-message">
             <span class="message-icon">🤖</span>
@@ -234,9 +240,12 @@
           </div>
         </div>
         <div class="chat-input">
-          <input type="text" id="chat-input" class="chat-input-field" placeholder="اسأل عن أي شيء..." onkeypress="handleChatKeypress(event)">
-          <button class="chat-voice-btn" onclick="startVoiceListening()" title="تحدث">🎤</button>
-          <button class="chat-send" onclick="sendChatMessage()">إرسال</button>
+          <div class="chat-input-wrapper">
+            <button class="chat-voice-btn" id="ai-voice-input" onclick="startAIVoiceListening()" title="اسأل بالصوت">🎤</button>
+            <input type="text" id="chat-input" class="chat-input-field" placeholder="اسأل عن أي شيء..." onkeypress="handleChatKeypress(event)">
+            <button class="chat-send" onclick="sendChatMessage()">إرسال</button>
+          </div>
+          <button class="ai-voice-response-btn" id="ai-voice-response" onclick="toggleAIVoiceResponse()" title="الرد الصوتي">🔊</button>
         </div>
         <div class="chat-loading" id="chat-loading" style="display: none;">
           <span>⏳ جاري التفكير...</span>
@@ -298,7 +307,7 @@
   <div class="bottom-bar">
     <button class="bar-btn active" onclick="setTab('features')">🎯 مميزات</button>
     <button class="bar-btn" onclick="setTab('tools')">⚙️ أدوات</button>
-    <button class="bar-btn" onclick="setTab('chat')">💬 دردشة</button>
+    <button class="bar-btn" onclick="setTab('chat')">🤖 الذكاء الصناعي</button>
     <button class="bar-btn" onclick="setTab('projects')">📦 مشاريع</button>
     <button class="bar-btn" onclick="setTab('social')">👥 تواصل</button>
   </div>
