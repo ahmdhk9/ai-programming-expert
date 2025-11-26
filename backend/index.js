@@ -321,3 +321,32 @@ app.get('/api/stats/:userId', (req, res) => {
   });
 });
 
+
+// Admin Routes - Protected
+app.get('/api/admin/stats', (req, res) => {
+  res.json({
+    users: 1234,
+    projects: 567,
+    revenue: 12345,
+    uptime: 99.9
+  });
+});
+
+app.get('/api/admin/users', (req, res) => {
+  res.json({
+    users: [
+      { id: 1, name: 'أحمد البصراوي', email: 'ahmed@example.com', role: 'admin' },
+      { id: 2, name: 'User 1', email: 'user1@example.com', role: 'user' }
+    ]
+  });
+});
+
+app.get('/api/admin/tokens', (req, res) => {
+  res.json({
+    tokens: [
+      { id: 1, name: 'Groq', status: 'active' },
+      { id: 2, name: 'Mistral', status: 'active' }
+    ]
+  });
+});
+
