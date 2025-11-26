@@ -1323,3 +1323,22 @@ app.get('/api/integrations/instagram', (req, res) => {
   res.json(integrations.instagramIntegration());
 });
 
+
+const instant = require('./instant-monetization');
+
+app.get('/api/instant/earnings', (req, res) => {
+  res.json(instant.immediateEarningsReport());
+});
+
+app.get('/api/instant/status', (req, res) => {
+  res.json(instant.activateInstantEarnings());
+});
+
+app.get('/api/instant/crypto', (req, res) => {
+  res.json(instant.cryptoFarming());
+});
+
+app.get('/api/instant/ai-search', (req, res) => {
+  res.json(instant.aiSearching());
+});
+

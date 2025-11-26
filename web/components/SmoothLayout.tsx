@@ -22,6 +22,7 @@ export default function SmoothLayout({ children, title, subtitle }: any) {
     { icon: "📢", label: "ترويج", href: "/dev/marketing-engine" },
     { icon: "🚀", label: "نمو", href: "/dev/auto-growth" },
     { icon: "🔗", label: "تكامل", href: "/dev/integrations" },
+    { icon: "💰", label: "ربح فوري", href: "/dev/instant-earnings" },
     { icon: "🔒", label: "أمان", href: "/dev/security-dashboard" }
   ];
 
