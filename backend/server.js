@@ -10,13 +10,30 @@ const server = http.createServer(app);
 const io = socketIO(server, {
   cors: { origin: '*' },
   transports: ['websocket', 'polling'],
-  pingInterval: 25000,
-  pingTimeout: 60000
+  pingInterval: 10000,
+  pingTimeout: 30000,
+  allowEIO3: true,
+  upgrade: true,
+  reconnection: true,
+  reconnectionDelay: 100,
+  reconnectionDelayMax: 5000,
+  reconnectionAttempts: Infinity,
+  maxHttpBufferSize: 1000000
 });
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
+
+// Global error handling
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection:', reason);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+});
 
 // ========== ADVANCED SESSION MANAGEMENT ==========
 const users = new Map(); // socketId -> {username, searching, sessionId, partner, timestamp}
@@ -35,8 +52,38 @@ function getRandomUsername() {
   return `${name}${emoji}`;
 }
 
+// Cleanup function for removing disconnected users
+function cleanupUser(socketId) {
+  const user = users.get(socketId);
+  if (!user) return;
+
+  if (user.sessionId && user.partner) {
+    const session = sessions.get(user.sessionId);
+    if (session) session.status = 'disconnected';
+    
+    const partner = users.get(user.partner);
+    if (partner) {
+      partner.sessionId = null;
+      partner.partner = null;
+    }
+  }
+
+  const idx = waitingQueue.indexOf(socketId);
+  if (idx !== -1) waitingQueue.splice(idx, 1);
+  users.delete(socketId);
+}
+
 io.on('connection', (socket) => {
   console.log(`✅ اتصال جديد: ${socket.id}`);
+
+  // Add error handlers
+  socket.on('error', (error) => {
+    console.error(`❌ خطأ في socket: ${error}`);
+  });
+
+  socket.on('connect_error', (error) => {
+    console.error(`❌ خطأ في الاتصال: ${error}`);
+  });
 
   socket.on('register', (username) => {
     if (!username || username.trim().length === 0) {
@@ -262,32 +309,22 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('ping', () => {
+    socket.emit('pong');
+  });
+
   socket.on('disconnect', () => {
     const user = users.get(socket.id);
     if (!user) return;
 
     console.log(`❌ قطع: ${user.username}`);
-
-    if (user.sessionId && user.partner) {
-      const session = sessions.get(user.sessionId);
-      if (session) {
-        session.status = 'disconnected';
-        console.log(`🔌 قطع الاتصال في الجلسة: ${session.id}`);
-      }
-
-      const partner = users.get(user.partner);
-      if (partner) {
-        partner.sessionId = null;
-        partner.partner = null;
-        io.to(user.partner).emit('partner-disconnected', { username: user.username });
-      }
-    }
-
-    const idx = waitingQueue.indexOf(socket.id);
-    if (idx !== -1) waitingQueue.splice(idx, 1);
-
-    users.delete(socket.id);
+    cleanupUser(socket.id);
     io.emit('online-count', users.size);
+  });
+
+  // Handle reconnection with grace period
+  socket.on('reconnect_attempt', () => {
+    console.log(`🔄 محاولة إعادة اتصال: ${socket.id}`);
   });
 });
 
@@ -313,7 +350,8 @@ app.post('/api/ai/chat', async (req, res) => {
 
     res.json({ success: true, response: response.choices[0].message.content });
   } catch (error) {
-    res.status(500).json({ error: 'خطأ في الذكاء الصناعي' });
+    console.error('AI Chat Error:', error);
+    res.status(500).json({ success: false, error: 'خطأ في الذكاء الصناعي' });
   }
 });
 
@@ -331,9 +369,49 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('⏹️ استقبال SIGTERM - إيقاف آمن...');
+  server.close(() => {
+    console.log('✅ تم إيقاف الخادم بنجاح');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('⏹️ استقبال SIGINT - إيقاف آمن...');
+  server.close(() => {
+    console.log('✅ تم إيقاف الخادم بنجاح');
+    process.exit(0);
+  });
+});
+
+// Keepalive heartbeat
+setInterval(() => {
+  const activeUsers = Array.from(users.values());
+  console.log(`💓 Heartbeat: ${activeUsers.length} مستخدم نشط، ${sessions.size} جلسات نشطة`);
+}, 30000);
+
+// Cleanup old sessions every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  let cleaned = 0;
+  for (let [sessionId, session] of sessions) {
+    if (session.status !== 'active' && (now - session.createdAt) > 3600000) {
+      sessions.delete(sessionId);
+      cleaned++;
+    }
+  }
+  if (cleaned > 0) {
+    console.log(`🧹 تنظيف: تم حذف ${cleaned} جلسة قديمة`);
+  }
+}, 300000);
+
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🚀 منصة AI Programming Expert v5.0`);
   console.log(`👥 نظام جلسات متقدم مع تأكيد التسليم`);
-  console.log(`📍 الخادم: http://localhost:${PORT}\n`);
+  console.log(`📍 الخادم: http://0.0.0.0:${PORT}`);
+  console.log(`⏰ الوقت: ${new Date().toLocaleString('ar-SA')}`);
+  console.log(`✅ الخادم يعمل بدون توقف...\n`);
 });
