@@ -1,14 +1,16 @@
 {
   "version": 2,
-  "public": false,
+  "public": true,
+  "env": {
+    "NODE_ENV": "production"
+  },
   "builds": [
     {
       "src": "backend/server.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
+      "use": "@vercel/node",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
     }
   ],
   "routes": [
@@ -21,12 +23,12 @@
       "dest": "backend/server.js"
     },
     {
-      "src": "/(.*)",
+      "src": "/(.*\\.(?:js|css|json|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot))",
       "dest": "public/$1"
+    },
+    {
+      "src": "/.*",
+      "dest": "public/index.html"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production",
-    "PORT": "5000"
-  }
+  ]
 }
