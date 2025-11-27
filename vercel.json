@@ -1,34 +1,26 @@
 {
   "version": 2,
-  "public": true,
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "builds": [
-    {
-      "src": "backend/server.js",
-      "use": "@vercel/node",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
+  "buildCommand": "echo 'Build complete'",
+  "outputDirectory": "public",
+  "framework": "static",
+  "functions": {
+    "backend/server.js": {
+      "maxDuration": 60,
+      "memory": 512
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "backend/server.js"
+      "source": "/api/(.*)",
+      "destination": "backend/server.js"
     },
     {
-      "src": "/socket.io/(.*)",
-      "dest": "backend/server.js"
+      "source": "/socket.io/(.*)",
+      "destination": "backend/server.js"
     },
     {
-      "src": "/(.*\\.(?:js|css|json|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot))",
-      "dest": "public/$1"
-    },
-    {
-      "src": "/.*",
-      "dest": "public/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
