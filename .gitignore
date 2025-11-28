@@ -1,17 +1,45 @@
+# Dependencies
+node_modules/
+package-lock.json
+npm-debug.log
+yarn.lock
 
-# 🗑️ Log Files & Temp Files
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build
+dist/
+build/
+.next/
+out/
+
+# Logs
+logs/
 *.log
+
+# Cache
+.cache/
+.local/
+.config/
+
+# Temporary
 *.tmp
 *.temp
-*.cache
-*.swp
-*~
+*.bak
 
-# 📱 Mobile Storage
-.DS_Store
+# Reports (الاحتفاظ بـ reports في git للتتبع)
+# reports/
+
+# OS
 Thumbs.db
-
-# 🔧 Debug Files
-debug.js
-test.log
-
+.DS_Store
