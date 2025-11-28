@@ -262,10 +262,17 @@ class AdvancedErrorMonitor {
       this.addIssue('dom', `⚠️ Missing DOM Elements: ${missing.join(', ')}`, 'high');
     }
 
-    // Check for console errors in DOM
-    const bodyHTML = document.body.innerHTML;
-    if (bodyHTML.includes('undefined') || bodyHTML.includes('null')) {
-      this.addIssue('dom', '⚠️ Potential null/undefined values in DOM', 'medium');
+    // Check for console errors in DOM (safe check for iframe)
+    try {
+      if (document.body && document.body.innerHTML) {
+        const bodyHTML = document.body.innerHTML;
+        if (bodyHTML.includes('undefined') || bodyHTML.includes('null')) {
+          this.addIssue('dom', '⚠️ Potential null/undefined values in DOM', 'medium');
+        }
+      }
+    } catch (e) {
+      // DOM might not be accessible in some contexts
+      console.log('⚠️ DOM check skipped:', e.message);
     }
 
     this.metrics.dom = {
