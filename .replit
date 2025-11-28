@@ -24,8 +24,16 @@ waitForPort = 8000
 outputType = "console"
 
 [[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
 localPort = 8000
 externalPort = 8000
+
+[[ports]]
+localPort = 41561
+externalPort = 3000
 
 [agent]
 expertMode = true
