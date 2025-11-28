@@ -21,7 +21,8 @@ class ConfigEngine {
         ].filter(url => url !== null);
     
     this.currentBackendUrl = null;
-    this.healthCheckInterval = 30000;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    this.healthCheckInterval = isMobile ? 60000 : 30000; // 60s على الهاتف
     this.isOnline = navigator.onLine;
     this.config = this.loadConfig();
   }
@@ -95,6 +96,8 @@ class ConfigEngine {
     console.log('🏥 Starting Health Check Service');
     
     setInterval(async () => {
+      // تخطي على الهاتف إذا كان الاتصال متأخر
+      if (/Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent) && Math.random() > 0.5) return;
       if (!navigator.onLine) {
         console.warn('📡 Offline - skipping health check');
         return;

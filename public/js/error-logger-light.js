@@ -9,8 +9,9 @@ class LightweightErrorLogger {
     this.maxErrors = 50; // قليل لتوفير الموارد
     this.maxStorageSize = 1024 * 50; // 50KB فقط
     this.errorBatch = []; // تجميع الأخطاء
-    this.batchInterval = 10000; // إرسال كل 10 ثواني
-    this.duplicateWindow = 5000; // تجاهل التكرار الفوري
+    const isMobile = /Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    this.batchInterval = isMobile ? 30000 : 10000; // 30s على الهاتف
+    this.duplicateWindow = isMobile ? 10000 : 5000; // تجاهل التكرار الفوري
     this.lastErrorTime = {};
     this.errorCounts = {}; // تتبع تكرار الأخطاء
     
