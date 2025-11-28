@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎯 Complete Integrated System Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+      color: #00d4ff;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 1600px; margin: 0 auto; }
+    h1 { text-align: center; margin: 20px 0; font-size: 32px; }
+    .header {
+      background: linear-gradient(135deg, rgba(76, 222, 128, 0.2), rgba(0, 212, 255, 0.2));
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #4ade80;
+      text-align: center;
+    }
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .status-item {
+      background: #1a1f2e;
+      border: 1px solid #4ade8030;
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .status-item:hover { border-color: #4ade80; }
+    .status-value { font-size: 24px; font-weight: bold; color: #4ade80; }
+    .status-label { font-size: 10px; color: #888; margin-top: 5px; }
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .system-card {
+      background: #1a1f2e;
+      border: 1px solid #4ade8030;
+      border-radius: 10px;
+      padding: 15px;
+      transition: all 0.3s;
+    }
+    .system-card:hover { border-color: #4ade80; box-shadow: 0 0 15px rgba(74, 222, 128, 0.2); }
+    .system-title { color: #4ade80; font-weight: bold; margin-bottom: 10px; }
+    .system-status { display: flex; justify-content: space-between; margin: 5px 0; font-size: 12px; }
+    .controls { text-align: center; margin: 20px 0; }
+    button {
+      background: #4ade80;
+      color: #0f1419;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 5px;
+      transition: all 0.3s;
+    }
+    button:hover { background: #22c55e; transform: translateY(-2px); }
+    .stats-section { background: #1a1f2e; border: 1px solid #4ade8030; border-radius: 10px; padding: 20px; margin: 20px 0; }
+    .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #4ade8010; }
+    .stat-label { color: #888; }
+    .stat-value { color: #4ade80; font-weight: bold; }
+    .active { color: #4ade80; }
+    .inactive { color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Complete Integrated System Dashboard</h1>
+    
+    <div class="header">
+      <div>لوحة التحكم المتكاملة الشاملة</div>
+      <small style="color: #888;">8 أنظمة مدموجة تعمل معاً بتناغم</small>
+    </div>
+
+    <div class="controls">
+      <button onclick="refreshAll()">🔄 تحديث فوري</button>
+      <button onclick="systemsStatus()">📊 حالة الأنظمة</button>
+      <button onclick="exportFullReport()">📥 تصدير التقرير</button>
+    </div>
+
+    <div class="status-grid" id="quick-stats"></div>
+
+    <div class="systems-grid" id="systems-overview"></div>
+
+    <div class="stats-section">
+      <h2 style="color: #4ade80; margin-bottom: 15px;">📈 الإحصائيات الموحدة</h2>
+      <div id="detailed-stats"></div>
+    </div>
+
+    <div class="stats-section">
+      <h2 style="color: #4ade80; margin-bottom: 15px;">🚀 حالة النشر والجاهزية</h2>
+      <div id="deployment-status"></div>
+    </div>
+  </div>
+
+  <script>
+    async function refreshAll() {
+      if (!window.unifiedMonitor) {
+        setTimeout(refreshAll, 500);
+        return;
+      }
+
+      const report = window.unifiedMonitor.getUnifiedReport();
+      const detailed = window.unifiedMonitor.getDetailedReport();
+
+      // Update quick stats
+      const quickStats = document.getElementById('quick-stats');
+      quickStats.innerHTML = `
+        <div class="status-item">
+          <div class="status-value">${report.totalIssues}</div>
+          <div class="status-label">المشاكل</div>
+        </div>
+        <div class="status-item">
+          <div class="status-value">${report.autoRepair.fixed}</div>
+          <div class="status-label">تم إصلاحه</div>
+        </div>
+        <div class="status-item">
+          <div class="status-value">${Math.round(report.efficiency.fixedPercentage)}%</div>
+          <div class="status-label">معدل النجاح</div>
+        </div>
+        <div class="status-item">
+          <div class="status-value">${Object.values(report.monitors).filter(m => m === 'active').length}/8</div>
+          <div class="status-label">الأنظمة النشطة</div>
+        </div>
+      `;
+
+      // Update systems overview
+      const systemsOverview = document.getElementById('systems-overview');
+      systemsOverview.innerHTML = `
+        <div class="system-card">
+          <div class="system-title">🔍 مراقب الأخطاء</div>
+          <div class="system-status">
+            <span>الحالة</span>
+            <span class="${report.monitors.errorLogger === 'active' ? 'active' : 'inactive'}">
+              ${report.monitors.errorLogger}
+            </span>
+          </div>
+        </div>
+        <div class="system-card">
+          <div class="system-title">🔥 مراقب شامل</div>
+          <div class="system-status">
+            <span>الحالة</span>
+            <span class="${report.monitors.advancedMonitor === 'active' ? 'active' : 'inactive'}">
+              ${report.monitors.advancedMonitor}
+            </span>
+          </div>
+        </div>
+        <div class="system-card">
+          <div class="system-title">🤖 تشخيص ذكي</div>
+          <div class="system-status">
+            <span>الحالة</span>
+            <span class="${report.monitors.aiDiagnostics === 'active' ? 'active' : 'inactive'}">
+              ${report.monitors.aiDiagnostics}
+            </span>
+          </div>
+        </div>
+        <div class="system-card">
+          <div class="system-title">🔥 مراقب هجين</div>
+          <div class="system-status">
+            <span>الحالة</span>
+            <span class="${report.monitors.hybridMonitor === 'active' ? 'active' : 'inactive'}">
+              ${report.monitors.hybridMonitor}
+            </span>
+          </div>
+        </div>
+        <div class="system-card">
+          <div class="system-title">🔧 إصلاح ذاتي</div>
+          <div class="system-status">
+            <span>الحالة</span>
+            <span class="${report.monitors.autoRepair === 'active' ? 'active' : 'inactive'}">
+              ${report.monitors.autoRepair}
+            </span>
+          </div>
+        </div>
+        <div class="system-card">
+          <div class="system-title">🎯 جودة الكود</div>
+          <div class="system-status">
+            <span>الحالة</span>
+            <span class="${report.monitors.codeQuality === 'active' ? 'active' : 'inactive'}">
+              ${report.monitors.codeQuality}
+            </span>
+          </div>
+        </div>
+        <div class="system-card">
+          <div class="system-title">🚀 مراقب النشر</div>
+          <div class="system-status">
+            <span>الحالة</span>
+            <span class="${report.monitors.deploymentMonitor === 'active' ? 'active' : 'inactive'}">
+              ${report.monitors.deploymentMonitor}
+            </span>
+          </div>
+        </div>
+        <div class="system-card">
+          <div class="system-title">🛠️ مصحح النشر</div>
+          <div class="system-status">
+            <span>الحالة</span>
+            <span class="${report.monitors.deploymentFixer === 'active' ? 'active' : 'inactive'}">
+              ${report.monitors.deploymentFixer}
+            </span>
+          </div>
+        </div>
+      `;
+
+      // Update detailed stats
+      const detailedStats = document.getElementById('detailed-stats');
+      detailedStats.innerHTML = `
+        <div class="stat-row">
+          <span class="stat-label">إجمالي المشاكل</span>
+          <span class="stat-value">${report.totalIssues}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">الحلول المتوفرة</span>
+          <span class="stat-value">${report.solutions}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">الإصلاحات الناجحة</span>
+          <span class="stat-value">${report.autoRepair.fixed}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">الإصلاحات المعلقة</span>
+          <span class="stat-value">${report.autoRepair.pending}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">معدل النجاح</span>
+          <span class="stat-value">${Math.round(report.efficiency.fixedPercentage)}%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">الأنظمة النشطة</span>
+          <span class="stat-value">${Object.values(report.monitors).filter(m => m === 'active').length}/8</span>
+        </div>
+      `;
+
+      // Update deployment status
+      const deploymentStatus = document.getElementById('deployment-status');
+      deploymentStatus.innerHTML = `
+        <div class="stat-row">
+          <span class="stat-label">حالة النشر</span>
+          <span class="stat-value">${report.deployment.status}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">مشاكل النشر</span>
+          <span class="stat-value">${report.deployment.totalIssues}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">جاهزية النشر</span>
+          <span class="stat-value">${report.deployment.readyToDeploy ? '✅ جاهز' : '⚠️ يحتاج فحص'}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">صحة النظام</span>
+          <span class="stat-value">
+            ${report.systemHealth.deploymentHealthy ? '✅ سليمة' : '⚠️ تحتاج فحص'}
+          </span>
+        </div>
+      `;
+    }
+
+    function systemsStatus() {
+      const report = window.unifiedMonitor?.getUnifiedReport?.();
+      if (!report) return;
+      alert(`📊 حالة الأنظمة:\n\nالأنظمة النشطة: ${Object.values(report.monitors).filter(m => m === 'active').length}/8\n\nإجمالي المشاكل: ${report.totalIssues}\nتم إصلاحه: ${report.autoRepair.fixed}\nمعدل النجاح: ${Math.round(report.efficiency.fixedPercentage)}%`);
+    }
+
+    function exportFullReport() {
+      const report = window.unifiedMonitor?.getDetailedReport?.();
+      if (!report) return;
+      
+      const json = JSON.stringify(report, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `complete-system-report-${new Date().toISOString()}.json`;
+      a.click();
+    }
+
+    refreshAll();
+    setInterval(refreshAll, 2000);
+  </script>
+</body>
+</html>

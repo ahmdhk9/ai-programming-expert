@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔥 Hybrid Monitor Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+      color: #00d4ff;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    h1 { text-align: center; margin: 20px 0; font-size: 32px; }
+    .header {
+      background: rgba(0, 212, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #00d4ff;
+      text-align: center;
+    }
+    .generation {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .card {
+      background: #1a1f2e;
+      border: 1px solid #00d4ff20;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+    .card:hover {
+      border-color: #00d4ff;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    }
+    .card h3 {
+      color: #00e5ff;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #00d4ff30;
+      padding-bottom: 10px;
+    }
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+      margin: 8px 0;
+    }
+    .stat-value {
+      font-weight: bold;
+      color: #4ade80;
+      font-size: 18px;
+    }
+    .algorithm-item {
+      background: rgba(0, 212, 255, 0.05);
+      padding: 12px;
+      border-radius: 6px;
+      margin: 8px 0;
+      border-left: 3px solid #00d4ff;
+    }
+    .algorithm-name {
+      font-weight: bold;
+      color: #00e5ff;
+    }
+    .algorithm-version {
+      font-size: 12px;
+      color: #888;
+    }
+    .progress-bar {
+      background: rgba(0, 0, 0, 0.5);
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #00d4ff, #00e5ff);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    button {
+      background: #00d4ff;
+      color: #0f1419;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background: #00e5ff;
+      transform: translateY(-2px);
+    }
+    .section {
+      background: #1a1f2e;
+      border: 1px solid #00d4ff20;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .section h2 {
+      color: #00e5ff;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #00d4ff30;
+      padding-bottom: 10px;
+    }
+    .dialogue {
+      background: rgba(0, 212, 255, 0.05);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border-left: 4px solid #00d4ff;
+    }
+    .dialogue-question {
+      color: #00e5ff;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .dialogue-answer {
+      color: #ddd;
+      margin-left: 15px;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .status {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .status.learning { background: #4ade80; color: white; }
+    .status.improving { background: #00d4ff; color: #0f1419; }
+    .status.active { background: #ff9800; color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔥 Hybrid Monitor Dashboard</h1>
+    
+    <div class="header">
+      <div>نظام المراقبة الهجين المتقدم</div>
+      <div class="generation" id="generation">جيل: -</div>
+      <small id="last-update">آخر تحديث: الآن</small>
+    </div>
+
+    <div class="controls">
+      <button onclick="updateDashboard()">🔄 تحديث</button>
+      <button onclick="startSelfDialogue()">🤖 حوار ذاتي</button>
+      <button onclick="triggerImprovement()">⚡ تحسن</button>
+      <button onclick="viewReport()">📊 تقرير</button>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>🧠 الخوارزميات</h3>
+        <div id="algorithms-list"></div>
+      </div>
+
+      <div class="card">
+        <h3>📚 التعلم الذاتي</h3>
+        <div class="stat">
+          <span>التجارب المسجلة</span>
+          <span class="stat-value" id="learning-count">0</span>
+        </div>
+        <div class="stat">
+          <span>معدل النجاح</span>
+          <span class="stat-value" id="success-rate">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="success-bar" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>✨ التحسينات</h3>
+        <div class="stat">
+          <span>إجمالي التحسينات</span>
+          <span class="stat-value" id="improvements-count">0</span>
+        </div>
+        <div class="stat">
+          <span>الجيل الحالي</span>
+          <span class="stat-value" id="current-generation">1</span>
+        </div>
+        <span class="status improving">متطور ذاتياً</span>
+      </div>
+
+      <div class="card">
+        <h3>🔍 المراقبة</h3>
+        <div class="stat">
+          <span>المشاكل المكتشفة</span>
+          <span class="stat-value" id="issues-count">0</span>
+        </div>
+        <div class="stat">
+          <span>المشاكل المحلولة</span>
+          <span class="stat-value" id="solved-count">0</span>
+        </div>
+        <span class="status active">نشط</span>
+      </div>
+
+      <div class="card">
+        <h3>💬 الحوارات الذاتية</h3>
+        <div class="stat">
+          <span>عدد الحوارات</span>
+          <span class="stat-value" id="dialogues-count">0</span>
+        </div>
+        <div class="stat">
+          <span>آخر حوار</span>
+          <span class="stat-value" id="last-dialogue">-</span>
+        </div>
+        <span class="status learning">يتعلم</span>
+      </div>
+
+      <div class="card">
+        <h3>🚀 الأداء</h3>
+        <div class="stat">
+          <span>سرعة المراقبة</span>
+          <span class="stat-value">فوري</span>
+        </div>
+        <div class="stat">
+          <span>دقة الكشف</span>
+          <span class="stat-value">99%</span>
+        </div>
+        <span class="status improving">محسّن</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🤖 الخوارزميات المتطورة</h2>
+      <div id="detailed-algorithms"></div>
+    </div>
+
+    <div class="section">
+      <h2>💬 الحوارات الذاتية الأخيرة</h2>
+      <div id="dialogues-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>📈 إحصائيات التطور</h2>
+      <div id="evolution-stats"></div>
+    </div>
+  </div>
+
+  <script>
+    async function updateDashboard() {
+      if (!window.hybridMonitor) {
+        setTimeout(updateDashboard, 500);
+        return;
+      }
+
+      const report = window.hybridMonitor.getHybridReport();
+      
+      // Update generation
+      document.getElementById('generation').textContent = `جيل: ${report.generation}`;
+      document.getElementById('current-generation').textContent = report.generation;
+      document.getElementById('last-update').textContent = `آخر تحديث: ${new Date().toLocaleTimeString('ar-SA')}`;
+
+      // Update algorithms
+      const algorithmsList = document.getElementById('algorithms-list');
+      algorithmsList.innerHTML = report.algorithms.map(algo => `
+        <div class="algorithm-item">
+          <div class="algorithm-name">${algo.name}</div>
+          <div class="algorithm-version">v${algo.version.toFixed(2)}</div>
+        </div>
+      `).join('');
+
+      const detailedAlgos = document.getElementById('detailed-algorithms');
+      detailedAlgos.innerHTML = report.algorithms.map(algo => `
+        <div style="margin-bottom: 15px;">
+          <strong style="color: #00e5ff;">${algo.name}</strong><br>
+          <small>الإصدار: ${algo.version.toFixed(2)}</small>
+          <div class="progress-bar" style="margin-top: 8px;">
+            <div class="progress-fill" style="width: ${(algo.version / 2) * 100}%;"></div>
+          </div>
+        </div>
+      `).join('');
+
+      // Update learning
+      document.getElementById('learning-count').textContent = report.learning.total;
+      const successRate = Math.round((window.hybridMonitor.calculateSuccessRate() * 100));
+      document.getElementById('success-rate').textContent = successRate + '%';
+      document.getElementById('success-bar').style.width = successRate + '%';
+
+      // Update improvements
+      document.getElementById('improvements-count').textContent = report.improvements;
+
+      // Update monitoring
+      document.getElementById('issues-count').textContent = report.issues;
+      document.getElementById('solved-count').textContent = report.improvements;
+
+      // Update dialogues
+      document.getElementById('dialogues-count').textContent = report.dialogues;
+      if (report.dialogues > 0) {
+        document.getElementById('last-dialogue').textContent = `${report.dialogues} حوار`;
+      }
+
+      // Display dialogues
+      const dialoguesList = document.getElementById('dialogues-list');
+      if (window.hybridMonitor.dialogues.length > 0) {
+        dialoguesList.innerHTML = window.hybridMonitor.dialogues.slice(-3).map(d => `
+          <div class="dialogue">
+            <div class="dialogue-question">❓ ${d.exchanges[0]?.content || 'سؤال'}</div>
+            <div class="dialogue-answer">💡 ${d.exchanges[1]?.content?.insights?.[0]?.name || 'إجابة'}</div>
+            <small style="opacity: 0.6;">الجيل: ${d.generation}</small>
+          </div>
+        `).join('');
+      } else {
+        dialoguesList.innerHTML = '<div style="color: #666; text-align: center;">لا توجد حوارات بعد</div>';
+      }
+    }
+
+    function startSelfDialogue() {
+      if (!window.hybridMonitor) return;
+      
+      const dialogue = window.hybridMonitor.discussWithSelf('system-health');
+      alert(`💬 حوار ذاتي:\n\n❓ ${dialogue.exchanges[0].content}\n\n💡 تم التحليل بنجاح`);
+      updateDashboard();
+    }
+
+    function triggerImprovement() {
+      if (!window.hybridMonitor) return;
+      
+      window.hybridMonitor.performSelfImprovement();
+      alert('⚡ تم تفعيل التحسن الذاتي');
+      updateDashboard();
+    }
+
+    function viewReport() {
+      const report = window.hybridMonitor?.getHybridReport();
+      if (!report) return;
+      
+      const json = JSON.stringify(report, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `hybrid-monitor-${new Date().toISOString()}.json`;
+      a.click();
+    }
+
+    // Auto update
+    updateDashboard();
+    setInterval(updateDashboard, 5000);
+  </script>
+</body>
+</html>

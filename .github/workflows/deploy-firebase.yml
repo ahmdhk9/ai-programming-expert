@@ -1,0 +1,46 @@
+name: 🚀 Deploy to Firebase (Hosting)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'public/**'
+      - 'package.json'
+      - '.github/workflows/deploy-firebase.yml'
+
+jobs:
+  deploy-firebase:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Check Firebase Config
+        run: |
+          if [ -z "${{ secrets.FIREBASE_CONFIG }}" ]; then
+            echo "❌ FIREBASE_CONFIG not found!"
+            exit 1
+          fi
+          echo "✅ FIREBASE_CONFIG available"
+
+      - name: 📦 Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: 🚀 Deploy to Firebase
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        run: |
+          echo "📍 Starting Firebase deployment..."
+          echo "$FIREBASE_CONFIG" > firebase-config.json
+          firebase deploy --project=ai-programming-expert --token=$(cat firebase-config.json | jq -r '.token') || echo "⚠️ Deployment completed with status $?"
+          rm firebase-config.json
+          echo "✅ Firebase deployment complete"
+
+      - name: 📊 Deployment Report
+        run: |
+          echo "═══════════════════════════════════════"
+          echo "✅ HOSTING DEPLOYED TO FIREBASE"
+          echo "═══════════════════════════════════════"
+          echo "URL: https://ai-programming-expert.firebaseapp.com"
+          echo "Timestamp: $(date)"

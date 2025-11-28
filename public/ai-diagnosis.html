@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🤖 AI Diagnosis Report</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+      color: #00d4ff;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 { margin: 20px 0; font-size: 28px; text-align: center; }
+    .header {
+      background: rgba(0, 212, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #00d4ff30;
+      text-align: center;
+    }
+    .ai-summary {
+      background: rgba(0, 212, 255, 0.05);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 2px solid #00d4ff;
+      font-size: 16px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      background: #00d4ff;
+      color: #0f1419;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    button:hover { background: #00e5ff; transform: translateY(-2px); }
+    .section {
+      background: #1a1f2e;
+      border: 1px solid #00d4ff20;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .section h2 {
+      margin-bottom: 15px;
+      color: #00e5ff;
+      border-bottom: 2px solid #00d4ff30;
+      padding-bottom: 10px;
+    }
+    .problem {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 4px solid;
+    }
+    .problem.critical { border-left-color: #ff0000; }
+    .problem.high { border-left-color: #ff9800; }
+    .problem.medium { border-left-color: #ffc107; }
+    .problem.good { border-left-color: #4ade80; }
+    .problem-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .problem-details {
+      color: #ddd;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+    .recommendation {
+      background: rgba(76, 222, 196, 0.1);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border-left: 4px solid #4ade80;
+    }
+    .recommendation-title {
+      font-weight: bold;
+      color: #4ade80;
+      margin-bottom: 10px;
+    }
+    .recommendation-action {
+      color: #ddd;
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .priority {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .priority.critical { background: #ff0000; color: white; }
+    .priority.high { background: #ff9800; color: white; }
+    .priority.medium { background: #ffc107; color: white; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .stat {
+      background: rgba(0, 212, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #00d4ff30;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: bold;
+      color: #00e5ff;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
+    }
+    .empty { text-align: center; color: #666; padding: 40px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 AI Comprehensive Diagnosis Report</h1>
+    
+    <div class="header">
+      <p id="ai-status">جاري التحليل الذكي...</p>
+      <small id="diagnosis-time"></small>
+    </div>
+
+    <div class="controls">
+      <button onclick="loadDiagnosis()">🔄 تحديث التشخيص</button>
+      <button onclick="autoRefresh()">⚡ تحديث تلقائي</button>
+      <button onclick="exportDiagnosis()">📥 تصدير التقرير</button>
+    </div>
+
+    <div id="ai-summary" class="ai-summary" style="display: none;"></div>
+
+    <div class="stats" id="stats-grid">
+      <div class="stat">
+        <div class="stat-value" id="total-problems">-</div>
+        <div class="stat-label">إجمالي المشاكل</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="critical-problems">-</div>
+        <div class="stat-label">حرجة</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="high-problems">-</div>
+        <div class="stat-label">عالية</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="medium-problems">-</div>
+        <div class="stat-label">متوسطة</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>📋 تحليل المشاكل</h2>
+      <div id="problems-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>💡 التوصيات الذكية</h2>
+      <div id="recommendations-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>📊 التحليل التفصيلي</h2>
+      <div id="detailed-analysis"></div>
+    </div>
+  </div>
+
+  <script>
+    let autoRefreshInterval = null;
+
+    async function loadDiagnosis() {
+      if (!window.aiDiagnostics) {
+        setTimeout(loadDiagnosis, 500);
+        return;
+      }
+
+      const report = window.aiDiagnostics.getComprehensiveReport();
+      
+      if (!report.problems || report.problems.length === 0) {
+        document.getElementById('ai-status').textContent = '⏳ جاري جمع البيانات...';
+        setTimeout(loadDiagnosis, 1000);
+        return;
+      }
+
+      displayDiagnosis(report);
+    }
+
+    function displayDiagnosis(report) {
+      const summary = window.aiDiagnostics.diagnosis?.summary || '';
+      
+      // Display AI Summary
+      const summaryDiv = document.getElementById('ai-summary');
+      summaryDiv.textContent = summary;
+      summaryDiv.style.display = 'block';
+      document.getElementById('ai-status').textContent = '✅ التشخيص الذكي جاهز';
+
+      // Update timestamp
+      document.getElementById('diagnosis-time').textContent = 
+        `آخر تحديث: ${new Date(report.timestamp).toLocaleString('ar-SA')}`;
+
+      // Update stats
+      document.getElementById('total-problems').textContent = report.totalIssues;
+      document.getElementById('critical-problems').textContent = report.criticalIssues;
+      document.getElementById('high-problems').textContent = report.highIssues;
+      document.getElementById('medium-problems').textContent = report.mediumIssues;
+
+      // Display problems
+      const problemsList = document.getElementById('problems-list');
+      if (report.problems.length === 0) {
+        problemsList.innerHTML = '<div class="empty">✅ لا توجد مشاكل</div>';
+      } else {
+        problemsList.innerHTML = report.problems.map(p => `
+          <div class="problem ${p.severity}">
+            <div class="problem-title">${p.summary}</div>
+            <div class="problem-details">${p.details}</div>
+          </div>
+        `).join('');
+      }
+
+      // Display recommendations
+      const recsList = document.getElementById('recommendations-list');
+      if (report.recommendations.length === 0) {
+        recsList.innerHTML = '<div class="empty">✅ لا توجد توصيات</div>';
+      } else {
+        recsList.innerHTML = report.recommendations.map(r => `
+          <div class="recommendation">
+            <div class="recommendation-title">
+              <span class="priority ${r.priority}">${r.priority.toUpperCase()}</span>
+              ${r.title}
+            </div>
+            ${r.actions.map(action => `
+              <div class="recommendation-action">• ${action}</div>
+            `).join('')}
+          </div>
+        `).join('');
+      }
+
+      // Display detailed analysis
+      const analysis = document.getElementById('detailed-analysis');
+      analysis.innerHTML = report.fullAnalysis.map(p => `
+        <div class="problem ${p.severity}">
+          <div class="problem-title">[${p.category}] ${p.summary}</div>
+          <div class="problem-details">${typeof p.details === 'string' ? p.details : p.details.join('\n')}</div>
+        </div>
+      `).join('');
+    }
+
+    function autoRefresh() {
+      if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+        alert('⏸️ تم إيقاف التحديث التلقائي');
+      } else {
+        autoRefreshInterval = setInterval(loadDiagnosis, 5000);
+        alert('▶️ تم تفعيل التحديث التلقائي');
+      }
+    }
+
+    function exportDiagnosis() {
+      const report = window.aiDiagnostics?.getComprehensiveReport();
+      if (!report) return;
+      
+      const json = JSON.stringify(report, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ai-diagnosis-${new Date().toISOString()}.json`;
+      a.click();
+    }
+
+    // Initial load
+    setTimeout(loadDiagnosis, 1000);
+    setInterval(loadDiagnosis, 5000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#00d4ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI Expert">
+  <title>🤖 AI Programming Expert Platform</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='75' font-size='80' text-anchor='middle'>🤖</text></svg>">
+  <script>
+    // تحديد Backend URL بشكل صحيح
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    const protocol = window.location.protocol;
+    const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
+    const isReplit = hostname.includes('replit.dev') || hostname.includes('.replit');
+    const isVercel = hostname.includes('vercel.app');
+    const isFirebase = hostname.includes('firebaseapp.com');
+    const isProduction = isVercel || isFirebase;
+    
+    // حساب Backend URL - الحل الفعلي
+    if (isReplit || isLocalhost) {
+      // على Replit: استخدم Backend مباشرة على port 8000
+      window.BACKEND_URL = 'http://localhost:8000';
+    } else if (isProduction) {
+      // للإنتاج (Vercel/Firebase): استخدم Fly.io Backend
+      window.BACKEND_URL = 'https://agent-backend-ahmd1.fly.dev';
+    } else {
+      // default fallback
+      window.BACKEND_URL = 'https://agent-backend-ahmd1.fly.dev';
+    }
+    
+    console.log('🌐 Backend URL:', window.BACKEND_URL);
+    window.DEBUG_CONN = { hostname, isLocalhost, isReplit, isProduction };
+  </script>
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+  <script src="/js/config-engine.js"></script>
+  <script src="/js/performance-engine.js"></script>
+  <script src="/js/auto-fix.js"></script>
+  <script src="/js/revenue-engine.js"></script>
+  <script src="/js/error-logger-light.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/missing-functions.js"></script>
+  <script src="/js/ui-handlers.js"></script>
+  <script src="/js/load-order.js"></script>
+  <script src="/js/tab-manager.js"></script>
+  <script src="/js/advanced-features.js"></script>
+  <script src="/js/analytics-dashboard.js"></script>
+  <script src="/js/smart-search.js"></script>
+  <script src="/js/recommendations.js"></script>
+  <script src="/js/performance-monitor.js"></script>
+  <script src="/js/theme-engine.js"></script>
+  <script src="/js/notification-center.js"></script>
+  <script src="/js/export-manager.js"></script>
+  <script src="/js/keyboard-shortcuts.js"></script>
+  <script src="/js/settings-manager.js"></script>
+  <script src="/js/auto-backup.js"></script>
+  <script src="/js/usage-analytics.js"></script>
+  <!-- 🚀 Self-Improvement System -->
+  <script src="/js/learning-engine.js"></script>
+  <script src="/js/adaptive-responses.js"></script>
+  <script src="/js/pattern-detector.js"></script>
+  <script src="/js/self-improve.js"></script>
+  <!-- 🔥 Advanced Social Chat Pro -->
+  <script src="/js/social-chat-pro.js"></script>
+  <!-- 🔍 Advanced Error Monitor -->
+  <script src="/js/error-detector.js"></script>
+  <script src="/js/advanced-error-monitor.js"></script>
+  <!-- 🤖 AI Diagnostics Engine -->
+  <script src="/js/ai-diagnostics.js"></script>
+  <!-- 🔥 Hybrid Monitor Engine -->
+  <script src="/js/hybrid-monitor-engine.js"></script>
+  <!-- 🚀 Unified Monitoring System -->
+  <script src="/js/unified-monitor.js"></script>
+  <!-- 🔧 Advanced Auto-Repair System -->
+  <script src="/js/auto-repair-system.js"></script>
+  <!-- 🎯 Code Quality Checker -->
+  <script src="/js/code-quality-checker.js"></script>
+  <!-- 🚀 Smart Deployment Monitor -->
+  <script src="/js/deployment-monitor.js"></script>
+  <!-- 🛠️ Smart Deployment Fixer -->
+  <script src="/js/smart-deployment-fixer.js"></script>
+  <!-- 🔬 Algorithm Compatibility Monitor -->
+  <script src="/js/algorithm-compatibility-monitor.js"></script>
+  <style>
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(400px); opacity: 0; }
+    }
+  </style>
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230f1419' width='180' height='180' rx='40'/><text x='90' y='135' font-size='140' text-anchor='middle'>🤖</text></svg>">
+<script src="/js/security-headers.js"></script>
+</head>
+<body>
+
+<div class="phone-frame">
+  <!-- Header -->
+  <div class="header">
+    <button class="header-btn back">‹</button>
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo-icon">🤖</div>
+        <div class="logo-text">
+          <h1 class="header-title">AI Programming Expert</h1>
+          <p class="developer-name">By احمد البصراوي</p>
+        </div>
+      </div>
+    </div>
+    <button class="header-btn install" id="install-btn" onclick="installApp()" title="تنصيب التطبيق">⬇️</button>
+  </div>
+
+  <!-- Content -->
+  <div class="content-wrapper">
+
+    <!-- Features Tab -->
+    <div id="features" class="tab-pane active">
+      <div class="section">
+        <h2>🎯 المميزات الأساسية</h2>
+        <div class="features-grid">
+          <div class="feature-card" onclick="askAI('هل يمكنك كتابة كود بـ React يقوم بـ...')">
+            <div class="feature-icon">💻</div>
+            <div class="feature-name">إنشاء الكود</div>
+          </div>
+          <div class="feature-card" onclick="askAI('هناك خطأ في الكود: ')">
+            <div class="feature-icon">🔧</div>
+            <div class="feature-name">إصلاح الأخطاء</div>
+          </div>
+          <div class="feature-card" onclick="askAI('ساعدني بتصميم واجهة مستخدم حديثة...')">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-name">تصميم الواجهات</div>
+          </div>
+          <div class="feature-card" onclick="askAI('شرح لي مفهوم: ')">
+            <div class="feature-icon">📚</div>
+            <div class="feature-name">شرح المفاهيم</div>
+          </div>
+          <div class="feature-card" onclick="askAI('أحتاج مساعدة في فهم...')">
+            <div class="feature-icon">🧠</div>
+            <div class="feature-name">فهم النية</div>
+          </div>
+          <div class="feature-card" onclick="askAI('كيف يمكنني نشر التطبيق...')">
+            <div class="feature-icon">🚀</div>
+            <div class="feature-name">النشر الذكي</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools Tab -->
+    <div id="tools" class="tab-pane">
+      <div class="section">
+        <h2>⚙️ أدوات مساعدة ذكية</h2>
+        <div class="toolbox">
+          <div class="tool" onclick="window.open('/error-viewer.html', '_blank')">
+            <div class="tool-icon">🔍</div>
+            <div class="tool-name">مراقب الأخطاء</div>
+          </div>
+          <div class="tool" onclick="window.open('/comprehensive-monitor.html', '_blank')">
+            <div class="tool-icon">🔥</div>
+            <div class="tool-name">مراقب شامل</div>
+          </div>
+          <div class="tool" onclick="window.open('/ai-diagnosis.html', '_blank')">
+            <div class="tool-icon">🤖</div>
+            <div class="tool-name">تشخيص ذكي</div>
+          </div>
+          <div class="tool" onclick="window.open('/hybrid-monitor.html', '_blank')">
+            <div class="tool-icon">🔥</div>
+            <div class="tool-name">مراقب هجين</div>
+          </div>
+          <div class="tool" onclick="window.open('/unified-dashboard.html', '_blank')">
+            <div class="tool-icon">🚀</div>
+            <div class="tool-name">لوحة موحدة</div>
+          </div>
+          <div class="tool" onclick="window.open('/auto-repair-dashboard.html', '_blank')">
+            <div class="tool-icon">🔧</div>
+            <div class="tool-name">إصلاح ذاتي</div>
+          </div>
+          <div class="tool" onclick="window.open('/smart-deployment.html', '_blank')">
+            <div class="tool-icon">🚀</div>
+            <div class="tool-name">نشر ذكي</div>
+          </div>
+          <div class="tool" onclick="window.open('/complete-system-dashboard.html', '_blank')">
+            <div class="tool-icon">🎯</div>
+            <div class="tool-name">النظام الموحد</div>
+          </div>
+          <div class="tool" onclick="window.open('/algorithm-health.html', '_blank')">
+            <div class="tool-icon">🔬</div>
+            <div class="tool-name">صحة الخوارزميات</div>
+          </div>
+          <div class="tool" onclick="askAI('ساعدني بإعادة هيكلة الكود للأفضل...')">
+            <div class="tool-icon">🔄</div>
+            <div class="tool-name">إعادة هيكلة</div>
+          </div>
+          <div class="tool" onclick="askAI('كيف أستخدم React بشكل أفضل...')">
+            <div class="tool-icon">⚛️</div>
+            <div class="tool-name">React</div>
+          </div>
+          <div class="tool" onclick="askAI('ما أفضل قواعد البيانات لـ...')">
+            <div class="tool-icon">🗄️</div>
+            <div class="tool-name">قاعدة البيانات</div>
+          </div>
+          <div class="tool" onclick="askAI('كيف أتعامل مع APIs...')">
+            <div class="tool-icon">🔌</div>
+            <div class="tool-name">APIs</div>
+          </div>
+          <div class="tool" onclick="askAI('كيف أحمي التطبيق من المخاطر...')">
+            <div class="tool-icon">🔐</div>
+            <div class="tool-name">الأمان</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Chat Tab -->
+    <div id="social" class="tab-pane">
+      <div class="social-container">
+        <div class="social-header">
+          <h2>👥 تواصل عشوائي</h2>
+        </div>
+
+        <!-- Search State -->
+        <div class="social-search" id="social-search">
+          <div class="search-content">
+            <div class="search-icon">🔍</div>
+            <h3>ابحث عن شخص عشوائي</h3>
+            <p id="search-status">جاهز للبحث</p>
+            <button class="find-btn" onclick="findRandomUser()">🎲 ابحث الآن</button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="social-loading" id="social-loading" style="display: none;">
+          <div class="loading-spinner"></div>
+          <h3>جاري البحث عن شخص...</h3>
+          <button class="cancel-btn" onclick="cancelSearch()">إلغاء</button>
+        </div>
+
+        <!-- Chat State -->
+        <div class="social-chat" id="social-chat" style="display: none;">
+          <div class="active-user-header">
+            <div class="user-info">
+              <div class="user-avatar" id="partner-avatar"></div>
+              <div class="user-details">
+                <h3 id="active-user-name"></h3>
+                <p id="user-status" class="user-status">🟢 متصل</p>
+              </div>
+            </div>
+            <div class="header-actions">
+              <button class="header-icon-btn" onclick="toggleUserProfile()" title="معلومات">ℹ️</button>
+              <button class="header-icon-btn" onclick="toggleEmojiPanel()" title="إيموجي">😊</button>
+              <button onclick="endConnection()" class="end-btn" title="إنهاء الاتصال">📞</button>
+            </div>
+          </div>
+
+          <!-- User Profile Panel -->
+          <div id="profile-panel" class="profile-panel" style="display: none;">
+            <h4>معلومات المستخدم</h4>
+            <div class="profile-info">
+              <p><strong>الاسم:</strong> <span id="profile-name"></span></p>
+              <p><strong>الحالة:</strong> <span id="profile-status">🟢 متصل</span></p>
+              <p><strong>معرف الجلسة:</strong> <span id="profile-session" style="font-size: 11px; direction: ltr;"></span></p>
+              <p><strong>عدد الرسائل:</strong> <span id="profile-msg-count">0</span></p>
+              <p id="profile-time"><strong>المدة:</strong> لم تحسب</p>
+            </div>
+          </div>
+
+          <!-- Emoji Panel -->
+          <div id="emoji-panel" class="emoji-panel" style="display: none;">
+            <div class="emoji-grid" id="emoji-grid"></div>
+          </div>
+
+          <div class="social-messages" id="social-messages"></div>
+
+          <div class="typing-indicator-area" id="typing-area" style="display: none;">
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span id="typing-user"></span>
+          </div>
+
+          <div class="social-input-area">
+            <div class="social-input-wrapper">
+              <button class="input-icon-btn" onclick="toggleTemplates()" title="رسائل سريعة">⚡</button>
+              <input type="text" id="social-input" class="social-input-field" placeholder="اكتب رسالة..." onkeypress="handleSocialKeypress(event)" oninput="emitTyping()">
+              <button class="search-btn" onclick="toggleSearchMessages()" title="بحث">🔍</button>
+            </div>
+            <div class="action-buttons">
+              <button class="voice-btn" id="voice-chat-btn" onclick="toggleSocialVoiceChat()" title="تحدث بالصوت">🎤</button>
+              <button class="social-save-btn" onclick="toggleSavedMessages()" title="الرسائل المحفوظة">💾</button>
+              <button class="social-send-btn" onclick="sendSocialMessage()" title="إرسال رسالة">📤</button>
+            </div>
+          </div>
+
+          <!-- Quick Reactions Panel -->
+          <div id="quick-reactions" class="quick-reactions" style="display: none;">
+            <button onclick="sendQuickReaction('👍')">👍</button>
+            <button onclick="sendQuickReaction('❤️')">❤️</button>
+            <button onclick="sendQuickReaction('😂')">😂</button>
+            <button onclick="sendQuickReaction('😲')">😲</button>
+            <button onclick="sendQuickReaction('🔥')">🔥</button>
+            <button onclick="sendQuickReaction('⭐')">⭐</button>
+          </div>
+
+          <!-- Search Bar -->
+          <div id="search-bar" class="search-bar" style="display: none;">
+            <input type="text" id="search-input" placeholder="ابحث في الرسائل..." onkeyup="searchMessages(this.value)">
+            <div id="search-results"></div>
+          </div>
+
+          <!-- Quick Templates Panel -->
+          <div id="templates-panel" class="quick-templates" style="display: none;">
+            <h5>رسائل سريعة</h5>
+            <div class="templates-grid">
+              <button onclick="sendTemplate('مرحباً 👋')">مرحباً</button>
+              <button onclick="sendTemplate('كيف حالك؟')">كيف حالك؟</button>
+              <button onclick="sendTemplate('أنا بخير شكراً 😊')">بخير</button>
+              <button onclick="sendTemplate('ممتاز! 🎉')">ممتاز</button>
+              <button onclick="sendTemplate('هل أنت متاح الآن؟')">متاح؟</button>
+              <button onclick="sendTemplate('نتكلم بعدين 👋')">بعدين</button>
+              <button onclick="addCustomTemplate()">➕ إضافة</button>
+            </div>
+          </div>
+
+          <!-- Saved Messages Panel -->
+          <div id="saved-panel" class="saved-messages" style="display: none;">
+            <h5>الرسائل المحفوظة</h5>
+            <div id="saved-list" class="saved-list"></div>
+          </div>
+
+          <!-- Recent Emojis Panel -->
+          <div id="recent-emoji-panel" class="recent-emoji" style="display: none;">
+            <h5>الإيموجي الأخيرة</h5>
+            <div id="recent-emoji-grid" class="emoji-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Chat Tab -->
+    <div id="chat" class="tab-pane">
+      <div class="chat-container">
+        <div class="ai-header">
+          <div class="ai-header-content">
+            <h2>🤖 الذكاء الصناعي</h2>
+            <p class="ai-status">متصل وجاهز للحوار</p>
+          </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="message ai-message">
+            <span class="message-icon">🤖</span>
+            <div class="message-content">مرحباً! اسألني عن أي موضوع برمجي 🚀</div>
+          </div>
+        </div>
+        <div class="chat-input">
+          <div class="chat-input-wrapper">
+            <button class="chat-voice-btn" id="ai-voice-input" onclick="startAIVoiceListening()" title="اسأل بالصوت">🎤</button>
+            <input type="text" id="chat-input" class="chat-input-field" placeholder="اسأل عن أي شيء..." onkeypress="handleChatKeypress(event)">
+            <button class="chat-send" onclick="sendChatMessage()">إرسال</button>
+          </div>
+          <button class="ai-voice-response-btn" id="ai-voice-response" onclick="toggleAIVoiceResponse()" title="الرد الصوتي">🔊</button>
+        </div>
+        <div class="chat-loading" id="chat-loading" style="display: none;">
+          <span>⏳ جاري التفكير...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects Tab -->
+    <div id="projects" class="tab-pane">
+      <div class="section">
+        <div class="projects-header">
+          <h2>📦 إدارة المشاريع</h2>
+          <button class="add-project-btn" onclick="showAddProjectModal()">➕ جديد</button>
+        </div>
+        <div class="projects-list" id="projects-list">
+          <div class="project-item" onclick="showProjectDetails(0)">
+            <div class="project-header">
+              <h3>📱 تطبيق ويب</h3>
+              <span class="status-badge active">نشط</span>
+            </div>
+            <div class="project-info">
+              <div>React + Node.js</div>
+              <div class="project-stats">📊 1500 سطر • ⭐ v1.0</div>
+            </div>
+          </div>
+          <div class="project-item" onclick="showProjectDetails(1)">
+            <div class="project-header">
+              <h3>🎮 لعبة ويب</h3>
+              <span class="status-badge pending">قادم</span>
+            </div>
+            <div class="project-info">
+              <div>JavaScript/Canvas</div>
+              <div class="project-stats">📊 800 سطر • ⭐ v0.5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects Details Modal -->
+    <div id="project-details-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="project-title"></h2>
+          <button class="modal-close" onclick="closeProjectModal()">✕</button>
+        </div>
+        <div id="project-details" class="modal-body"></div>
+        <div class="modal-footer">
+          <button class="btn-cancel" onclick="closeProjectModal()">إغلاق</button>
+          <button class="btn-edit" onclick="editProject()">✏️ تعديل</button>
+          <button class="btn-delete" onclick="deleteProject()">🗑️ حذف</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div id="profile" class="tab-pane">
+      <div class="section">
+        <div class="profile-header">
+          <h2>👤 الملف الشخصي</h2>
+          <button class="edit-profile-btn" onclick="toggleEditProfile()">✏️</button>
+        </div>
+        <div class="profile-card" id="profile-view">
+          <div class="profile-item">
+            <strong>المطور:</strong>
+            <span id="profile-developer">احمد العويني التميمي البصراوي</span>
+          </div>
+          <div class="profile-item">
+            <strong>التخصص:</strong>
+            <span id="profile-specialty">هندسة البرمجيات والذكاء الاصطناعي</span>
+          </div>
+          <div class="profile-item">
+            <strong>الإصدار:</strong>
+            <span id="profile-version">v5.0</span>
+          </div>
+          <div class="profile-item">
+            <strong>الإحصائيات:</strong>
+            <span id="profile-stats">📱 2 مشروع • 🤖 1000+ سؤال</span>
+          </div>
+          <div class="profile-item">
+            <strong>معلومات النظام:</strong>
+            <div style="font-size: 12px; margin-top: 4px;">
+              📍 جلسة حالية: <span id="current-session">متصل</span><br>
+              ⏰ الوقت: <span id="system-time">--:--</span><br>
+              🌐 الاتصال: <span id="connection-status">✅ متصل</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <div id="profile-edit" class="profile-edit" style="display: none;">
+          <input type="text" id="edit-developer" placeholder="اسم المطور" class="edit-input">
+          <input type="text" id="edit-specialty" placeholder="التخصص" class="edit-input">
+          <button class="btn-save" onclick="saveProfile()">💾 حفظ</button>
+          <button class="btn-cancel" onclick="toggleEditProfile()">إلغاء</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-bar">
+    <button class="bar-btn active" onclick="setTab('features')">🎯 مميزات</button>
+    <button class="bar-btn" onclick="setTab('tools')">⚙️ أدوات</button>
+    <button class="bar-btn" onclick="setTab('chat')">🤖 ذكاء</button>
+    <button class="bar-btn" onclick="setTab('projects')">📦 مشاريع</button>
+    <button class="bar-btn" onclick="setTab('social')">👥 تواصل</button>
+    <button class="bar-btn" onclick="setTab('profile')">👤 ملف</button>
+  </div>
+
+</div>
+
+
+</body>
+</html>
+  <script src="/js/revenue-dashboard.js"></script>
+
+<!-- Analytics Dashboard (Hidden, Toggled from menu) -->
+<div id="analytics-dashboard" style="display: none; padding: 20px; background: rgba(0,212,255,0.05); margin: 10px; border-radius: 10px;"></div>
+
+<!-- Advanced Search -->
+<div id="advanced-search-panel" style="display: none; padding: 15px;">
+  <input type="text" id="advanced-search" placeholder="🔍 بحث متقدم..." style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #00d4ff;">
+  <div id="search-results-advanced" style="margin-top: 10px;"></div>
+</div>
+
+<!-- Recommendations Panel -->
+<div id="recommendations-panel" style="display: none; padding: 15px; background: rgba(0,212,255,0.08); border-radius: 10px;"></div>
+
+<!-- Performance Metrics -->
+<div id="performance-metrics" style="display: none; padding: 15px;"></div>
+
+<!-- Help & Quick Actions -->
+<script src="/js/help-system.js"></script>
+<script src="/js/quick-actions.js"></script>
+<script src="/js/open-source-integration.js"></script>
+
+<!-- New validation and accessibility systems -->
+<script src="/js/validation-engine.js"></script>
+<script src="/js/accessibility.js"></script>
+<script src="/js/feedback-system.js"></script>

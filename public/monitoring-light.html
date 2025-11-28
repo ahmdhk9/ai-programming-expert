@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔍 Error Monitor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+      padding: 15px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { color: #00d4ff; text-align: center; margin-bottom: 20px; }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .stat {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid #00d4ff;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .stat-value { font-size: 1.8em; font-weight: bold; color: #00d4ff; }
+    .stat-label { font-size: 0.85em; color: #b0b0b0; }
+    
+    .controls { 
+      display: flex;
+      gap: 10px; 
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    button {
+      background: #00d4ff;
+      color: #1a1a2e;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { opacity: 0.8; }
+    
+    .errors {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .error-item {
+      background: rgba(255, 100, 100, 0.05);
+      border-left: 3px solid #ff6b6b;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .error-msg { color: #ff6b6b; font-weight: bold; }
+    .error-meta { font-size: 0.85em; color: #b0b0b0; margin-top: 5px; }
+    .empty { text-align: center; color: #b0b0b0; padding: 20px; }
+    
+    .scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .scroll::-webkit-scrollbar-track {
+      background: rgba(0, 212, 255, 0.1);
+    }
+    .scroll::-webkit-scrollbar-thumb {
+      background: #00d4ff;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Error Monitor</h1>
+    
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value" id="total">0</div>
+        <div class="stat-label">الأخطاء</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="critical">0</div>
+        <div class="stat-label">حرجة</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="high">0</div>
+        <div class="stat-label">عالية</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="load()">🔄 تحديث</button>
+      <button onclick="clear()">🗑️ حذف</button>
+    </div>
+
+    <div class="errors scroll" id="list">
+      <div class="empty">لا توجد أخطاء</div>
+    </div>
+  </div>
+
+  <script>
+    async function load() {
+      try {
+        const res = await fetch('/api/errors');
+        const errors = await res.json() || [];
+        
+        const statRes = await fetch('/api/errors/stats');
+        const stats = await statRes.json();
+        
+        document.getElementById('total').textContent = stats.total;
+        document.getElementById('critical').textContent = stats.critical;
+        document.getElementById('high').textContent = stats.high;
+
+        const list = document.getElementById('list');
+        if (errors.length === 0) {
+          list.innerHTML = '<div class="empty">لا توجد أخطاء</div>';
+          return;
+        }
+
+        list.innerHTML = errors.map(e => `
+          <div class="error-item">
+            <div class="error-msg">❌ ${e.m || e.message}</div>
+            <div class="error-meta">
+              نوع: ${e.type} | خطورة: ${e.s} | ${e.c || 1}x
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function clear() {
+      if (confirm('هل تريد حذف جميع الأخطاء؟')) {
+        await fetch('/api/errors', { method: 'DELETE' });
+        load();
+      }
+    }
+
+    setInterval(load, 5000);
+    load();
+  </script>
+</body>
+</html>

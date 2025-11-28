@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔍 مراقب الأخطاء</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0f1419;
+      color: #00d4ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #1a1f2e;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #00d4ff20;
+    }
+    h1 { margin-bottom: 20px; font-size: 24px; }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    button {
+      background: #00d4ff;
+      color: #0f1419;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    button:hover { background: #00e5ff; transform: translateY(-2px); }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: rgba(0, 212, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #00d4ff;
+    }
+    .stat-card strong { display: block; margin-bottom: 5px; }
+    .errors-list {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      max-height: 600px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    .error-item {
+      background: #2a3442;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border-left: 3px solid #ff6b6b;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .error-item:hover {
+      background: #354555;
+      transform: translateX(5px);
+    }
+    .error-item.critical { border-left-color: #ff0000; background: rgba(255, 0, 0, 0.1); }
+    .error-item.high { border-left-color: #ff9800; }
+    .error-item.medium { border-left-color: #ffc107; }
+    .error-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .error-time { font-size: 12px; opacity: 0.7; }
+    .error-count {
+      background: #ff6b6b;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .error-message { font-size: 14px; word-break: break-all; }
+    .empty { text-align: center; color: #666; padding: 40px 20px; }
+    .success { color: #4ade80; }
+    .danger { color: #ff6b6b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 مراقب الأخطاء الذكي</h1>
+    
+    <div class="controls">
+      <button onclick="location.reload()">🔄 تحديث</button>
+      <button onclick="clearErrors()">🗑️ مسح الكل</button>
+      <button onclick="exportErrors()">📥 تصدير</button>
+      <button onclick="autoRefresh()">⚡ تحديث تلقائي</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <strong>إجمالي الأخطاء</strong>
+        <div id="total-errors">0</div>
+      </div>
+      <div class="stat-card">
+        <strong>حرجة</strong>
+        <div id="critical-count" class="danger">0</div>
+      </div>
+      <div class="stat-card">
+        <strong>عالية</strong>
+        <div id="high-count">0</div>
+      </div>
+      <div class="stat-card">
+        <strong>آخر تحديث</strong>
+        <div id="last-update">الآن</div>
+      </div>
+    </div>
+
+    <div id="errors-container" class="errors-list">
+      <div class="empty">⏳ جاري تحميل الأخطاء...</div>
+    </div>
+  </div>
+
+  <script>
+    let autoRefreshInterval = null;
+    let errors = [];
+
+    function loadErrors() {
+      // تحميل من localStorage
+      const stored = localStorage.getItem('el') || '[]';
+      try {
+        errors = JSON.parse(stored);
+        displayErrors();
+      } catch (e) {
+        console.error('❌ Error loading errors:', e);
+      }
+    }
+
+    function displayErrors() {
+      const container = document.getElementById('errors-container');
+      
+      if (errors.length === 0) {
+        container.innerHTML = '<div class="empty">✅ لا توجد أخطاء الحمد لله!</div>';
+        updateStats();
+        return;
+      }
+
+      container.innerHTML = errors.map((err, i) => `
+        <div class="error-item ${err.s || 'medium'}" onclick="showDetails(${i})">
+          <div class="error-header">
+            <div>
+              <strong>${err.m || 'Unknown Error'}</strong>
+              ${err.c && err.c > 1 ? `<span class="error-count">×${err.c}</span>` : ''}
+            </div>
+            <div class="error-time">${new Date(err.t * 1000).toLocaleTimeString('ar-SA')}</div>
+          </div>
+          <div class="error-message">[${err.type}] ${err.s}</div>
+        </div>
+      `).join('');
+
+      updateStats();
+      document.getElementById('last-update').textContent = new Date().toLocaleTimeString('ar-SA');
+    }
+
+    function updateStats() {
+      const total = errors.length;
+      const critical = errors.filter(e => e.s === 'critical').length;
+      const high = errors.filter(e => e.s === 'high').length;
+
+      document.getElementById('total-errors').textContent = total;
+      document.getElementById('critical-count').textContent = critical;
+      document.getElementById('high-count').textContent = high;
+    }
+
+    function clearErrors() {
+      if (confirm('هل تريد مسح جميع الأخطاء؟')) {
+        localStorage.removeItem('el');
+        errors = [];
+        displayErrors();
+        console.log('✅ تم مسح جميع الأخطاء');
+      }
+    }
+
+    function exportErrors() {
+      const data = JSON.stringify(errors, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `errors-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+    }
+
+    function autoRefresh() {
+      if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+        console.log('⏸️ تم إيقاف التحديث التلقائي');
+      } else {
+        autoRefreshInterval = setInterval(loadErrors, 5000);
+        console.log('▶️ تم تفعيل التحديث التلقائي');
+      }
+    }
+
+    function showDetails(index) {
+      const err = errors[index];
+      alert(`📊 تفاصيل الخطأ:\n\n` +
+        `الرسالة: ${err.m}\n` +
+        `النوع: ${err.type}\n` +
+        `الخطورة: ${err.s}\n` +
+        `التكرار: ${err.c || 1}\n` +
+        `الوقت: ${new Date(err.t * 1000).toLocaleString('ar-SA')}`);
+    }
+
+    // تحميل أولي
+    loadErrors();
+    
+    // تحديث كل 10 ثوانٍ
+    setInterval(loadErrors, 10000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔧 Auto-Repair Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+      color: #00d4ff;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 { text-align: center; margin: 20px 0; font-size: 32px; }
+    .header {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(76, 222, 196, 0.2));
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #4ade80;
+    }
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .status-card {
+      background: #1a1f2e;
+      border: 1px solid #4ade8030;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .status-card:hover {
+      border-color: #4ade80;
+      box-shadow: 0 0 20px rgba(74, 222, 128, 0.2);
+    }
+    .status-value {
+      font-size: 32px;
+      font-weight: bold;
+      color: #4ade80;
+      margin: 10px 0;
+    }
+    .status-label { font-size: 12px; color: #888; }
+    .section {
+      background: #1a1f2e;
+      border: 1px solid #4ade8030;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .section h2 {
+      color: #4ade80;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #4ade8030;
+      padding-bottom: 10px;
+    }
+    .issue-item {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border-left: 4px solid;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .issue-critical { border-left-color: #ff0000; }
+    .issue-high { border-left-color: #ff9800; }
+    .issue-medium { border-left-color: #ffc107; }
+    .issue-low { border-left-color: #4ade80; }
+    .fix-status {
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .fix-success { background: #4ade80; color: white; }
+    .fix-failed { background: #ff6b6b; color: white; }
+    .fix-running { background: #ffc107; color: #000; }
+    .progress-bar {
+      background: rgba(0, 0, 0, 0.5);
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #4ade80, #00e5ff);
+      height: 100%;
+      transition: width 0.3s;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    button {
+      background: #4ade80;
+      color: #0f1419;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background: #22c55e;
+      transform: translateY(-2px);
+    }
+    .empty { text-align: center; color: #666; padding: 40px; }
+    .repair-card {
+      background: rgba(74, 222, 128, 0.05);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border-left: 4px solid #4ade80;
+    }
+    .repair-title { font-weight: bold; color: #4ade80; margin-bottom: 8px; }
+    .repair-details { font-size: 12px; color: #ccc; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔧 Advanced Auto-Repair Dashboard</h1>
+    
+    <div class="header">
+      <div style="text-align: center;">
+        <div>نظام الإصلاح الذاتي المتقدم</div>
+        <small style="color: #888;">يكتشف ويصلح الأخطاء والمشاكل تلقائياً</small>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="refreshDashboard()">🔄 تحديث فوري</button>
+      <button onclick="runSystemScan()">🔍 فحص شامل</button>
+      <button onclick="triggerRepairs()">⚡ تنفيذ إصلاحات</button>
+      <button onclick="exportReport()">📥 تصدير</button>
+    </div>
+
+    <div class="status-grid">
+      <div class="status-card">
+        <div class="status-label">الأخطاء المكتشفة</div>
+        <div class="status-value" id="total-errors">0</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">تم إصلاحه بنجاح</div>
+        <div class="status-value" id="successful">0</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">فشل الإصلاح</div>
+        <div class="status-value" id="failed">0</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">معدل النجاح</div>
+        <div class="status-value" id="success-rate">0%</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">صحة النظام</div>
+        <div class="status-value" id="health">100%</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">جودة الكود</div>
+        <div class="status-value" id="code-quality">100%</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>⚠️ الأخطاء المكتشفة</h2>
+      <div id="errors-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>✅ الإصلاحات الجارية والمكتملة</h2>
+      <div id="repairs-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>📊 قائمة المشاكل المصححة</h2>
+      <div id="history-list"></div>
+    </div>
+  </div>
+
+  <script>
+    async function refreshDashboard() {
+      if (!window.autoRepair) {
+        setTimeout(refreshDashboard, 500);
+        return;
+      }
+
+      const report = window.autoRepair.getRepairReport();
+      const qualityReport = window.codeQuality?.getQualityReport?.();
+
+      // Update status cards
+      document.getElementById('total-errors').textContent = report.statistics.total;
+      document.getElementById('successful').textContent = report.statistics.successful;
+      document.getElementById('failed').textContent = report.statistics.failed;
+      document.getElementById('success-rate').textContent = report.successRate.toFixed(0) + '%';
+      document.getElementById('health').textContent = report.systemHealth + '%';
+      document.getElementById('code-quality').textContent = (qualityReport?.score || 100) + '%';
+
+      // Update errors list
+      const errorsList = document.getElementById('errors-list');
+      if (window.autoRepair.issues.length > 0) {
+        errorsList.innerHTML = window.autoRepair.issues.slice(0, 10).map(issue => `
+          <div class="issue-item issue-${issue.severity || 'medium'}">
+            <div>
+              <strong>${issue.category || issue.type}</strong>
+              <div style="font-size: 12px; color: #888; margin-top: 4px;">
+                ${issue.message || 'خطأ مكتشف'}
+              </div>
+            </div>
+            <span class="fix-status fix-${issue.status || 'running'}">
+              ${issue.status || 'جاري'}
+            </span>
+          </div>
+        `).join('');
+      } else {
+        errorsList.innerHTML = '<div class="empty">✅ لا توجد أخطاء - النظام بصحة جيدة</div>';
+      }
+
+      // Update repairs list
+      const repairsList = document.getElementById('repairs-list');
+      const activeRepairs = window.autoRepair.activeRepairs || [];
+      if (activeRepairs.length > 0) {
+        repairsList.innerHTML = activeRepairs.slice(0, 5).map(repair => `
+          <div class="repair-card">
+            <div class="repair-title">🔧 ${repair.type}</div>
+            <div class="repair-details">
+              الحالة: <strong>${repair.status}</strong> | النتائج: ${repair.results.length} إجراء
+            </div>
+            <div class="progress-bar" style="margin-top: 8px;">
+              <div class="progress-fill" style="width: ${(repair.results.filter(r => r.status !== 'failed').length / repair.results.length) * 100}%;"></div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        repairsList.innerHTML = '<div class="empty">✅ لا توجد إصلاحات معلقة</div>';
+      }
+
+      // Update history list
+      const historyList = document.getElementById('history-list');
+      const history = window.autoRepair.repairHistory || [];
+      if (history.length > 0) {
+        historyList.innerHTML = history.slice(-10).reverse().map(repair => `
+          <div class="issue-item issue-${repair.status === 'success' ? 'low' : 'medium'}">
+            <div>
+              <strong>${repair.type}</strong>
+              <div style="font-size: 12px; color: #888; margin-top: 4px;">
+                ${new Date(repair.timestamp).toLocaleTimeString('ar-SA')}
+              </div>
+            </div>
+            <span class="fix-status fix-${repair.status}">
+              ${repair.status === 'success' ? '✅ نجح' : '⚠️ جزئي'}
+            </span>
+          </div>
+        `).join('');
+      } else {
+        historyList.innerHTML = '<div class="empty">لا يوجد سجل إصلاحات</div>';
+      }
+    }
+
+    function runSystemScan() {
+      if (!window.autoRepair) return;
+      alert('🔍 جاري فحص النظام بحثاً عن المشاكل...');
+      window.autoRepair.performSystemScan();
+      setTimeout(refreshDashboard, 1000);
+    }
+
+    function triggerRepairs() {
+      if (!window.autoRepair) return;
+      alert('⚡ جاري تنفيذ الإصلاحات التلقائية...');
+      refreshDashboard();
+    }
+
+    function exportReport() {
+      const report = window.autoRepair?.getRepairReport?.();
+      const qualityReport = window.codeQuality?.getQualityReport?.();
+      
+      const combined = {
+        repairs: report,
+        codeQuality: qualityReport,
+        timestamp: new Date().toISOString()
+      };
+
+      const json = JSON.stringify(combined, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `repair-report-${new Date().toISOString()}.json`;
+      a.click();
+    }
+
+    // Auto refresh
+    refreshDashboard();
+    setInterval(refreshDashboard, 3000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔬 Algorithm Health Monitor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+      color: #00d4ff;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 { text-align: center; margin: 20px 0; font-size: 32px; color: #4ade80; }
+    .header {
+      background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(0, 212, 255, 0.2));
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #4ade80;
+      text-align: center;
+    }
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .health-card {
+      background: #1a1f2e;
+      border: 2px solid #4ade8030;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .health-card:hover { border-color: #4ade80; }
+    .health-value { font-size: 28px; font-weight: bold; color: #4ade80; margin: 10px 0; }
+    .health-label { font-size: 11px; color: #888; }
+    .section {
+      background: #1a1f2e;
+      border: 1px solid #4ade8030;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .section h2 { color: #4ade80; margin-bottom: 15px; border-bottom: 1px solid #4ade8030; padding-bottom: 10px; }
+    .algo-item {
+      background: rgba(74, 222, 128, 0.05);
+      padding: 12px;
+      border-radius: 8px;
+      margin: 8px 0;
+      border-left: 3px solid #4ade80;
+    }
+    .algo-name { font-weight: bold; color: #00e5ff; }
+    .algo-status { font-size: 12px; color: #888; margin-top: 5px; }
+    .conflict-item {
+      background: rgba(255, 107, 107, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      margin: 8px 0;
+      border-left: 3px solid #ff6b6b;
+    }
+    .conflict-severity {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    .severity-critical { background: #ff0000; color: white; }
+    .severity-high { background: #ff9800; color: white; }
+    .controls { text-align: center; margin: 20px 0; }
+    button {
+      background: #4ade80;
+      color: #0f1419;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 5px;
+      transition: all 0.3s;
+    }
+    button:hover { background: #22c55e; transform: translateY(-2px); }
+    .empty { text-align: center; color: #666; padding: 30px; }
+    .progress-bar {
+      background: rgba(0, 0, 0, 0.3);
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #4ade80, #00e5ff);
+      height: 100%;
+      transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔬 Algorithm Health & Compatibility Monitor</h1>
+    
+    <div class="header">
+      <div>مراقب صحة وتوافق الخوارزميات</div>
+      <small style="color: #888;">تأكد من تنسيق وترابط جميع الخوارزميات</small>
+    </div>
+
+    <div class="controls">
+      <button onclick="refreshHealth()">🔄 تحديث</button>
+      <button onclick="viewReport()">📊 التقرير</button>
+      <button onclick="exportReport()">📥 تصدير</button>
+    </div>
+
+    <div class="health-grid" id="health-summary"></div>
+
+    <div class="section">
+      <h2>🧬 حالة الخوارزميات</h2>
+      <div id="algorithms-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>⚡ التحسينات المطبقة</h2>
+      <div id="optimizations-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>⚠️ التضاربات المكتشفة</h2>
+      <div id="conflicts-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>🎯 توافق الخوارزميات</h2>
+      <div id="compatibility-list"></div>
+    </div>
+  </div>
+
+  <script>
+    async function refreshHealth() {
+      if (!window.algorithmCompatibility) {
+        setTimeout(refreshHealth, 500);
+        return;
+      }
+
+      const report = window.algorithmCompatibility.getCompatibilityReport();
+      const health = window.algorithmCompatibility.getHealthStatus();
+
+      // Health summary
+      const summary = document.getElementById('health-summary');
+      summary.innerHTML = `
+        <div class="health-card">
+          <div class="health-label">الصحة العامة</div>
+          <div class="health-value">${report.performance.overall?.score || 100}%</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${report.performance.overall?.score || 100}%;"></div>
+          </div>
+        </div>
+        <div class="health-card">
+          <div class="health-label">الخوارزميات النشطة</div>
+          <div class="health-value">${report.performance.efficiency?.activeAlgorithms || '0/0'}</div>
+        </div>
+        <div class="health-card">
+          <div class="health-label">التضاربات</div>
+          <div class="health-value">${report.summary.criticalConflicts || 0}</div>
+        </div>
+        <div class="health-card">
+          <div class="health-label">الكفاءة</div>
+          <div class="health-value">${report.performance.efficiency?.efficiency || 0}%</div>
+        </div>
+      `;
+
+      // Algorithms
+      const algoList = document.getElementById('algorithms-list');
+      const algosByName = Object.entries(report.performance.byAlgorithm || {});
+      if (algosByName.length > 0) {
+        algoList.innerHTML = algosByName.map(([name, metrics]) => `
+          <div class="algo-item">
+            <div class="algo-name">${name}</div>
+            <div class="algo-status">
+              الإصدار: ${metrics.version} | التوافق: ${metrics.compatibility}%
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${metrics.compatibility}%;"></div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        algoList.innerHTML = '<div class="empty">جاري التحميل...</div>';
+      }
+
+      // Optimizations
+      const optList = document.getElementById('optimizations-list');
+      const opts = report.optimizations || [];
+      if (opts.length > 0) {
+        optList.innerHTML = opts.slice(0, 8).map(opt => `
+          <div class="algo-item">
+            <div class="algo-name">📌 ${opt.type.toUpperCase()}</div>
+            <div class="algo-status">${opt.description || opt.system || opt.issue}</div>
+          </div>
+        `).join('');
+      } else {
+        optList.innerHTML = '<div class="empty">لا توجد تحسينات معلقة</div>';
+      }
+
+      // Conflicts
+      const conflictList = document.getElementById('conflicts-list');
+      const conflicts = report.conflicts || [];
+      if (conflicts.length > 0) {
+        conflictList.innerHTML = conflicts.map(c => `
+          <div class="conflict-item">
+            <span class="conflict-severity severity-${c.severity}">⚠️ ${c.severity}</span>
+            <strong>${c.pair}</strong>
+            <div style="font-size: 12px; color: #888; margin-top: 5px;">
+              ${c.compatibility.issues.join(', ')}
+            </div>
+          </div>
+        `).join('');
+      } else {
+        conflictList.innerHTML = '<div class="empty">✅ لا توجد تضاربات</div>';
+      }
+
+      // Compatibility
+      const compatList = document.getElementById('compatibility-list');
+      const compat = Object.entries(report.compatibility || {}).slice(0, 10);
+      if (compat.length > 0) {
+        compatList.innerHTML = compat.map(([pair, info]) => `
+          <div class="algo-item" style="border-left-color: ${info.score > 80 ? '#4ade80' : info.score > 60 ? '#ffc107' : '#ff6b6b'};">
+            <div class="algo-name">${pair}</div>
+            <div class="algo-status">التوافق: ${info.score}% ${info.compatible ? '✅' : '⚠️'}</div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${info.score}%; background: ${info.score > 80 ? '#4ade80' : info.score > 60 ? '#ffc107' : '#ff6b6b'};"></div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function viewReport() {
+      const report = window.algorithmCompatibility?.getCompatibilityReport?.();
+      if (!report) return;
+      alert(`📊 تقرير الخوارزميات:\n\nإجمالي الخوارزميات: ${report.summary.totalAlgorithms}\nالأزواج المتوافقة: ${report.summary.compatiblePairs}/${report.summary.totalPairs}\nالتضاربات الحرجة: ${report.summary.criticalConflicts}\nالصحة العامة: ${report.summary.overallHealth}%`);
+    }
+
+    function exportReport() {
+      const report = window.algorithmCompatibility?.getCompatibilityReport?.();
+      if (!report) return;
+      
+      const json = JSON.stringify(report, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `algorithm-health-${new Date().toISOString()}.json`;
+      a.click();
+    }
+
+    refreshHealth();
+    setInterval(refreshHealth, 2000);
+  </script>
+</body>
+</html>
