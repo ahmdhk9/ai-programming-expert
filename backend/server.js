@@ -37,7 +37,6 @@ try {
     new Groq({ apiKey: process.env.GROQ_API_KEY });
   }
 } catch (e) {
-  console.warn('⚠️  Groq SDK تحذير:', e.message);
 }
 
 // Create Express app FIRST
@@ -81,11 +80,9 @@ const errorHandler = new LightErrorHandler(app, process.env.GITHUB_TOKEN);
 
 // Global error handling
 process.on('unhandledRejection', (reason, promise) => {
-  console.error('❌ Unhandled Rejection:', reason);
 });
 
 process.on('uncaughtException', (error) => {
-  console.error('❌ Uncaught Exception:', error);
 });
 
 // ========== ADVANCED SESSION MANAGEMENT ==========
@@ -127,14 +124,11 @@ function cleanupUser(socketId) {
 }
 
 io.on('connection', (socket) => {
-  console.log(`✅ اتصال جديد: ${socket.id}`);
 
   socket.on('error', (error) => {
-    console.error(`❌ خطأ في socket: ${error}`);
   });
 
   socket.on('connect_error', (error) => {
-    console.error(`❌ خطأ في الاتصال: ${error}`);
   });
 
   socket.on('register', (username) => {
@@ -152,7 +146,6 @@ io.on('connection', (socket) => {
     });
 
     socket.emit('registered', { username, userId: socket.id });
-    console.log(`📝 تسجيل: ${username} (${socket.id})`);
     io.emit('online-count', users.size);
   });
 
@@ -176,7 +169,6 @@ io.on('connection', (socket) => {
     if (!partnerSocketId) {
       waitingQueue.push(socket.id);
       socket.emit('searching');
-      console.log(`⏳ في انتظار: ${currentUser.username}`);
       return;
     }
 
@@ -203,8 +195,6 @@ io.on('connection', (socket) => {
     const idx = waitingQueue.indexOf(partnerSocketId);
     if (idx !== -1) waitingQueue.splice(idx, 1);
 
-    console.log(`🔗 جلسة جديدة: ${currentUser.username} ↔ ${partnerUser.username}`);
-    console.log(`📌 معرف الجلسة: ${sessionId}`);
 
     socket.emit('user-found', {
       username: partnerUser.username,
@@ -255,9 +245,6 @@ io.on('connection', (socket) => {
 
     session.messages.push(msgRecord);
 
-    console.log(`💬 رسالة من ${sender.username} إلى ${recipient.username}`);
-    console.log(`   المحتوى: ${message.trim()}`);
-    console.log(`   الجلسة: ${sender.sessionId}`);
 
     io.to(sender.partner).emit('receive-message', msgRecord);
 
@@ -277,7 +264,6 @@ io.on('connection', (socket) => {
     const msg = session.messages.find(m => m.id === msgId);
     if (msg) {
       msg.delivered = true;
-      console.log(`✅ تسليم: ${msg.id}`);
       io.to(msg.from.id).emit('message-delivered', { msgId });
     }
   });
@@ -292,7 +278,6 @@ io.on('connection', (socket) => {
     const msg = session.messages.find(m => m.id === msgId);
     if (msg) {
       msg.read = true;
-      console.log(`👁️ قراءة: ${msg.id}`);
       io.to(msg.from.id).emit('message-read', { msgId });
     }
   });
@@ -306,7 +291,6 @@ io.on('connection', (socket) => {
       if (session) {
         session.status = 'ended';
         session.endedAt = Date.now();
-        console.log(`⏹️ إنهاء الجلسة: ${session.id}`);
       }
 
       const partner = users.get(user.partner);
@@ -344,7 +328,6 @@ io.on('connection', (socket) => {
 
     user.searching = true;
     waitingQueue.push(socket.id);
-    console.log(`🔍 ${user.username} بدأ البحث`);
 
     // Try to find a match immediately
     if (waitingQueue.length >= 2) {
@@ -380,7 +363,6 @@ io.on('connection', (socket) => {
     user2.partner = user1Id;
     user2.searching = false;
 
-    console.log(`🔗 تم مطابقة: ${user1.username} ↔ ${user2.username}`);
 
     io.to(user1Id).emit('user-found', {
       username: user2.username,
@@ -413,13 +395,11 @@ io.on('connection', (socket) => {
     const user = users.get(socket.id);
     if (!user) return;
 
-    console.log(`❌ قطع: ${user.username}`);
     cleanupUser(socket.id);
     io.emit('online-count', users.size);
   });
 
   socket.on('reconnect_attempt', () => {
-    console.log(`🔄 محاولة إعادة اتصال: ${socket.id}`);
   });
 });
 
@@ -456,7 +436,6 @@ app.post('/api/ai/chat', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('❌ AI Chat Error:', error.message);
     
     const generationTime = Date.now() - startTime;
     const fallback = aiEngine.generateFallbackResponse('');
@@ -504,7 +483,6 @@ app.get('/api/errors', (req, res) => {
 
 app.post('/api/errors/fix', (req, res) => {
   const { errorType, suggestion } = req.body;
-  console.log(`🔧 Fix attempt: ${errorType} - ${suggestion}`);
   res.json({ fixed: true, suggestion });
 });
 
@@ -586,17 +564,13 @@ app.use((req, res) => {
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
-  console.log('⏹️ استقبال SIGTERM - إيقاف آمن...');
   server.close(() => {
-    console.log('✅ تم إيقاف الخادم بنجاح');
     process.exit(0);
   });
 });
 
 process.on('SIGINT', () => {
-  console.log('⏹️ استقبال SIGINT - إيقاف آمن...');
   server.close(() => {
-    console.log('✅ تم إيقاف الخادم بنجاح');
     process.exit(0);
   });
 });
@@ -604,7 +578,6 @@ process.on('SIGINT', () => {
 // Keepalive heartbeat
 setInterval(() => {
   const activeUsers = Array.from(users.values());
-  console.log(`💓 Heartbeat: ${activeUsers.length} مستخدم نشط، ${sessions.size} جلسات نشطة`);
 }, 30000);
 
 // Cleanup old sessions every 5 minutes
@@ -618,18 +591,11 @@ setInterval(() => {
     }
   }
   if (cleaned > 0) {
-    console.log(`🧹 تنظيف: تم حذف ${cleaned} جلسة قديمة`);
   }
 }, 300000);
 
 // Start server
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`\n🚀 منصة AI Programming Expert v5.0`);
-  console.log(`👥 نظام جلسات متقدم مع تأكيد التسليم`);
-  console.log(`📍 الخادم: http://0.0.0.0:${PORT}`);
-  console.log(`🌍 البيئة: ${NODE_ENV}`);
-  console.log(`⏰ الوقت: ${new Date().toLocaleString('ar-SA')}`);
-  console.log(`✅ الخادم يعمل بدون توقف...\n`);
 });
 
 // Simple fallback for Groq
