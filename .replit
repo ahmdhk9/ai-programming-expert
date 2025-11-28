@@ -17,7 +17,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd /home/runner/ai-programming-expert && NODE_ENV=production PORT=8000 node backend/server.js"
+args = "cd /home/runner/workspace && NODE_ENV=production PORT=8000 node backend/server.js"
 waitForPort = 8000
 
 [workflows.workflow.metadata]
