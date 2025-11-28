@@ -23,7 +23,6 @@ function getRandomColor() {
 async function initializeBackend() {
   if (window.configEngine) {
     BACKEND_URL = await window.configEngine.detectBackendUrl();
-    console.log('✅ تم تحميل التطبيق', { BACKEND_URL });
     window.configEngine.startHealthCheck();
     initSocket();
   }
@@ -31,7 +30,6 @@ async function initializeBackend() {
 
 function initSocket() {
   if (!BACKEND_URL) {
-    console.warn('⚠️ Backend URL not set yet');
     setTimeout(initSocket, 1000);
     return;
   }
@@ -52,7 +50,6 @@ function initSocket() {
   socket = io(BACKEND_URL, socketOptions);
 
   socket.on('connect', () => {
-    console.log('✅ Socket.IO متصل');
     reconnectAttempts = 0;
     currentUser = `User_${Math.random().toString(36).substr(2, 9)}`;
     userColor = getRandomColor();
@@ -63,7 +60,6 @@ function initSocket() {
   });
 
   socket.on('disconnect', () => {
-    console.warn('❌ Socket.IO قطع الاتصال');
     reconnectAttempts++;
   });
 
@@ -74,20 +70,17 @@ function initSocket() {
   });
 
   socket.on('error', (error) => {
-    console.error('❌ Socket.IO خطأ:', error);
+    // Silently handle errors
   });
 
   socket.on('connect_error', (error) => {
-    console.error('❌ Connection error:', error);
     if (reconnectAttempts > maxReconnectAttempts) {
-      console.warn('⚠️ Too many reconnection attempts, trying different backend...');
       handleSocketFailure();
     }
   });
 }
 
 async function handleSocketFailure() {
-  console.log('🔄 Attempting to recover Socket connection...');
   await new Promise(resolve => setTimeout(resolve, 2000));
   
   if (window.configEngine) {

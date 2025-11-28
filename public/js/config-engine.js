@@ -42,15 +42,12 @@ class ConfigEngine {
   }
 
   async detectBackendUrl() {
-    console.log('🔍 Detecting Backend URL...');
-    
     // أولاً: جرب جميع URLs المتاحة
     for (const url of this.backendUrls) {
       if (await this.testBackend(url)) {
         this.currentBackendUrl = url;
         this.config.lastWorking = url;
         this.saveConfig();
-        console.log('✅ Backend found at:', url);
         return url;
       }
     }
@@ -58,13 +55,11 @@ class ConfigEngine {
     // ثانياً: جرب آخر URL استخدمت
     if (this.config.lastWorking && await this.testBackend(this.config.lastWorking)) {
       this.currentBackendUrl = this.config.lastWorking;
-      console.log('✅ Using last working URL:', this.currentBackendUrl);
       return this.currentBackendUrl;
     }
 
     // إذا فشل كل شيء: استخدم الأول في القائمة
     this.currentBackendUrl = this.backendUrls[0];
-    console.warn('⚠️ Using default Backend:', this.currentBackendUrl);
     return this.currentBackendUrl;
   }
 
@@ -83,30 +78,21 @@ class ConfigEngine {
       });
 
       clearTimeout(timeoutId);
-      const isOk = response.ok || response.status === 200;
-      if (isOk) console.log(`✅ Backend OK: ${url}`);
-      return isOk;
+      return response.ok || response.status === 200;
     } catch (error) {
-      console.warn(`⚠️ Backend test failed for ${url}:`, error.message);
       return false;
     }
   }
 
   async startHealthCheck() {
-    console.log('🏥 Starting Health Check Service');
-    
     setInterval(async () => {
       // تخطي على الهاتف إذا كان الاتصال متأخر
       if (/Android|webOS|iPhone|iPad|iPod/i.test(navigator.userAgent) && Math.random() > 0.5) return;
-      if (!navigator.onLine) {
-        console.warn('📡 Offline - skipping health check');
-        return;
-      }
+      if (!navigator.onLine) return;
 
       const isHealthy = await this.testBackend(this.currentBackendUrl, 5000);
       
       if (!isHealthy) {
-        console.warn('❌ Backend unhealthy, attempting recovery...');
         await this.handleBackendFailure();
       } else {
         this.config.failureCount = 0;
@@ -120,8 +106,6 @@ class ConfigEngine {
     this.config.failureCount++;
     this.config.retryCount++;
     this.saveConfig();
-
-    console.log(`⚠️ Failure #${this.config.failureCount}, retrying...`);
 
     if (this.config.failureCount > 3) {
       console.log('🔄 Switching Backend...');
