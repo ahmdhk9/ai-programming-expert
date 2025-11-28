@@ -1,0 +1,17 @@
+
+# 🗑️ Log Files & Temp Files
+*.log
+*.tmp
+*.temp
+*.cache
+*.swp
+*~
+
+# 📱 Mobile Storage
+.DS_Store
+Thumbs.db
+
+# 🔧 Debug Files
+debug.js
+test.log
+
