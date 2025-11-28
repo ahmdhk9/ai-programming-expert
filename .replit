@@ -9,35 +9,19 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Backend Server"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Frontend Server"
+args = "Dev Server"
 
 [[workflows.workflow]]
-name = "Backend Server"
+name = "Dev Server"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd /home/runner/workspace && NODE_ENV=production PORT=8000 node backend/server.js"
-waitForPort = 8000
-
-[workflows.workflow.metadata]
-outputType = "console"
-
-[[workflows.workflow]]
-name = "Frontend Server"
-author = "agent"
+args = "cd /home/runner/workspace && bash -c 'cd backend && node server.js & cd public && npx http-server -p 5000 -c-1'"
+waitForPort = 5000
 
 [workflows.workflow.metadata]
 outputType = "webview"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd /home/runner/workspace && bash run-frontend.sh"
-waitForPort = 5000
 
 [[ports]]
 localPort = 3000
@@ -48,16 +32,16 @@ localPort = 5000
 externalPort = 80
 
 [[ports]]
-localPort = 8000
-externalPort = 8000
-
-[[ports]]
 localPort = 38597
 externalPort = 3001
 
 [[ports]]
 localPort = 39807
 externalPort = 3002
+
+[[ports]]
+localPort = 40427
+externalPort = 4200
 
 [[ports]]
 localPort = 44967
