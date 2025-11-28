@@ -1,0 +1,2013 @@
+{
+  "timestamp": "2025-11-28T22:24:49.379Z",
+  "version": "1.0",
+  "summary": {
+    "totalFiles": 160,
+    "usedFiles": 21,
+    "deadFiles": 0,
+    "duplicates": 0,
+    "orphans": 0,
+    "issues": 4,
+    "health": 60,
+    "status": "warning"
+  },
+  "details": {
+    "scan": {
+      "timestamp": 1764368687082,
+      "root": "/home/runner/workspace",
+      "files": [
+        {
+          "path": "/home/runner/workspace/.github/ISSUE_TEMPLATE/bug_report.md",
+          "relative": ".github/ISSUE_TEMPLATE/bug_report.md",
+          "name": "bug_report.md",
+          "size": 345,
+          "type": ".md",
+          "modified": "2025-11-28T11:00:14.839Z",
+          "created": "2025-11-28T11:00:14.838Z",
+          "hash": "df3337a"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/adaptive-deployment.yml",
+          "relative": ".github/workflows/adaptive-deployment.yml",
+          "name": "adaptive-deployment.yml",
+          "size": 5701,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.840Z",
+          "created": "2025-11-28T11:00:14.839Z",
+          "hash": "5e10eee3"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/auto-document.yml",
+          "relative": ".github/workflows/auto-document.yml",
+          "name": "auto-document.yml",
+          "size": 4541,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.841Z",
+          "created": "2025-11-28T11:00:14.840Z",
+          "hash": "d4d64b2"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/auto-track.yml",
+          "relative": ".github/workflows/auto-track.yml",
+          "name": "auto-track.yml",
+          "size": 6691,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.841Z",
+          "created": "2025-11-28T11:00:14.841Z",
+          "hash": "65a0d838"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/consciousness-monitor.yml",
+          "relative": ".github/workflows/consciousness-monitor.yml",
+          "name": "consciousness-monitor.yml",
+          "size": 2053,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.842Z",
+          "created": "2025-11-28T11:00:14.841Z",
+          "hash": "3a3ec0b5"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/deploy-all.yml",
+          "relative": ".github/workflows/deploy-all.yml",
+          "name": "deploy-all.yml",
+          "size": 811,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.843Z",
+          "created": "2025-11-28T11:00:14.842Z",
+          "hash": "7b3b2790"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/deploy-firebase.yml",
+          "relative": ".github/workflows/deploy-firebase.yml",
+          "name": "deploy-firebase.yml",
+          "size": 1603,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.844Z",
+          "created": "2025-11-28T11:00:14.843Z",
+          "hash": "1369f177"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/deploy-vercel.yml",
+          "relative": ".github/workflows/deploy-vercel.yml",
+          "name": "deploy-vercel.yml",
+          "size": 1784,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.844Z",
+          "created": "2025-11-28T11:00:14.844Z",
+          "hash": "2f527c1"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/deploy.yml",
+          "relative": ".github/workflows/deploy.yml",
+          "name": "deploy.yml",
+          "size": 1320,
+          "type": ".yml",
+          "modified": "2025-11-28T10:15:32.041Z",
+          "created": "2025-11-28T10:15:32.040Z",
+          "hash": "204f9986"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/quality-gate.yml",
+          "relative": ".github/workflows/quality-gate.yml",
+          "name": "quality-gate.yml",
+          "size": 8553,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.845Z",
+          "created": "2025-11-28T11:00:14.844Z",
+          "hash": "72d05e7a"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/sync-executor.yml",
+          "relative": ".github/workflows/sync-executor.yml",
+          "name": "sync-executor.yml",
+          "size": 5505,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.846Z",
+          "created": "2025-11-28T11:00:14.845Z",
+          "hash": "5cb95ceb"
+        },
+        {
+          "path": "/home/runner/workspace/.github/workflows/unified-system.yml",
+          "relative": ".github/workflows/unified-system.yml",
+          "name": "unified-system.yml",
+          "size": 2461,
+          "type": ".yml",
+          "modified": "2025-11-28T11:00:14.846Z",
+          "created": "2025-11-28T11:00:14.846Z",
+          "hash": "4405b90d"
+        },
+        {
+          "path": "/home/runner/workspace/CONTRIBUTING.md",
+          "relative": "CONTRIBUTING.md",
+          "name": "CONTRIBUTING.md",
+          "size": 244,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.099Z",
+          "created": "2025-11-28T10:51:25.577Z",
+          "hash": "68f39247"
+        },
+        {
+          "path": "/home/runner/workspace/Dockerfile",
+          "relative": "Dockerfile",
+          "name": "Dockerfile",
+          "size": 851,
+          "type": "no-extension",
+          "modified": "2025-11-28T10:59:55.168Z",
+          "created": "2025-11-28T10:51:25.584Z",
+          "hash": "693c8905"
+        },
+        {
+          "path": "/home/runner/workspace/PROJECT-OVERVIEW.md",
+          "relative": "PROJECT-OVERVIEW.md",
+          "name": "PROJECT-OVERVIEW.md",
+          "size": 17623,
+          "type": ".md",
+          "modified": "2025-11-28T22:19:07.104Z",
+          "created": "2025-11-28T22:19:07.086Z",
+          "hash": "447d4a4d"
+        },
+        {
+          "path": "/home/runner/workspace/README.md",
+          "relative": "README.md",
+          "name": "README.md",
+          "size": 1328,
+          "type": ".md",
+          "modified": "2025-11-28T22:15:54.016Z",
+          "created": "2025-11-28T11:00:04.486Z",
+          "hash": "117330ba"
+        },
+        {
+          "path": "/home/runner/workspace/SECURITY.md",
+          "relative": "SECURITY.md",
+          "name": "SECURITY.md",
+          "size": 246,
+          "type": ".md",
+          "modified": "2025-11-28T11:00:04.587Z",
+          "created": "2025-11-28T11:00:04.586Z",
+          "hash": "330a8ac9"
+        },
+        {
+          "path": "/home/runner/workspace/SYSTEM-MONITOR-GUIDE.md",
+          "relative": "SYSTEM-MONITOR-GUIDE.md",
+          "name": "SYSTEM-MONITOR-GUIDE.md",
+          "size": 6940,
+          "type": ".md",
+          "modified": "2025-11-28T22:24:27.392Z",
+          "created": "2025-11-28T22:24:27.382Z",
+          "hash": "e19f729"
+        },
+        {
+          "path": "/home/runner/workspace/archive/ARCHIVE-INDEX.md",
+          "relative": "archive/ARCHIVE-INDEX.md",
+          "name": "ARCHIVE-INDEX.md",
+          "size": 6594,
+          "type": ".md",
+          "modified": "2025-11-28T22:16:58.466Z",
+          "created": "2025-11-28T22:16:58.453Z",
+          "hash": "7ef4675e"
+        },
+        {
+          "path": "/home/runner/workspace/archive/QUICK-RESTORE.md",
+          "relative": "archive/QUICK-RESTORE.md",
+          "name": "QUICK-RESTORE.md",
+          "size": 2657,
+          "type": ".md",
+          "modified": "2025-11-28T22:17:15.924Z",
+          "created": "2025-11-28T22:17:15.915Z",
+          "hash": "5ac975d7"
+        },
+        {
+          "path": "/home/runner/workspace/archive/README.md",
+          "relative": "archive/README.md",
+          "name": "README.md",
+          "size": 1352,
+          "type": ".md",
+          "modified": "2025-11-28T22:02:19.020Z",
+          "created": "2025-11-28T22:02:19.011Z",
+          "hash": "729f1601"
+        },
+        {
+          "path": "/home/runner/workspace/archive/ai-diagnosis.html",
+          "relative": "archive/ai-diagnosis.html",
+          "name": "ai-diagnosis.html",
+          "size": 9390,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.365Z",
+          "created": "2025-11-28T11:00:04.364Z",
+          "hash": "629d168d"
+        },
+        {
+          "path": "/home/runner/workspace/archive/algorithm-health.html",
+          "relative": "archive/algorithm-health.html",
+          "name": "algorithm-health.html",
+          "size": 9686,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.366Z",
+          "created": "2025-11-28T11:00:04.365Z",
+          "hash": "2dfce7ff"
+        },
+        {
+          "path": "/home/runner/workspace/archive/auto-repair-dashboard.html",
+          "relative": "archive/auto-repair-dashboard.html",
+          "name": "auto-repair-dashboard.html",
+          "size": 10504,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.367Z",
+          "created": "2025-11-28T11:00:04.366Z",
+          "hash": "80c2bdf"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-routes/README.md",
+          "relative": "archive/backend-routes/README.md",
+          "name": "README.md",
+          "size": 303,
+          "type": ".md",
+          "modified": "2025-11-28T22:15:19.056Z",
+          "created": "2025-11-28T22:15:19.046Z",
+          "hash": "4cd0f5b8"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-routes/api.js",
+          "relative": "archive/backend-routes/api.js",
+          "name": "api.js",
+          "size": 1563,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.065Z",
+          "created": "2025-11-28T10:51:25.496Z",
+          "hash": "254c18ab"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-routes/automation.js",
+          "relative": "archive/backend-routes/automation.js",
+          "name": "automation.js",
+          "size": 1262,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.066Z",
+          "created": "2025-11-28T10:51:25.497Z",
+          "hash": "4e77ddda"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-routes/content.js",
+          "relative": "archive/backend-routes/content.js",
+          "name": "content.js",
+          "size": 1656,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.067Z",
+          "created": "2025-11-28T10:51:25.498Z",
+          "hash": "7c249243"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/README.md",
+          "relative": "archive/backend-services/README.md",
+          "name": "README.md",
+          "size": 273,
+          "type": ".md",
+          "modified": "2025-11-28T22:15:19.044Z",
+          "created": "2025-11-28T22:15:19.037Z",
+          "hash": "508669c7"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/ai-content-factory.js",
+          "relative": "archive/backend-services/ai-content-factory.js",
+          "name": "ai-content-factory.js",
+          "size": 6141,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.069Z",
+          "created": "2025-11-28T10:51:25.500Z",
+          "hash": "f1c3665"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/auth.js",
+          "relative": "archive/backend-services/auth.js",
+          "name": "auth.js",
+          "size": 1413,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.070Z",
+          "created": "2025-11-28T10:51:25.501Z",
+          "hash": "5379ac6b"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/auto-transfer.js",
+          "relative": "archive/backend-services/auto-transfer.js",
+          "name": "auto-transfer.js",
+          "size": 3035,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.071Z",
+          "created": "2025-11-28T10:51:25.501Z",
+          "hash": "2d43e9d3"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/autonomous.js",
+          "relative": "archive/backend-services/autonomous.js",
+          "name": "autonomous.js",
+          "size": 5434,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.072Z",
+          "created": "2025-11-28T10:51:25.502Z",
+          "hash": "405fd85"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/database.js",
+          "relative": "archive/backend-services/database.js",
+          "name": "database.js",
+          "size": 2282,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.072Z",
+          "created": "2025-11-28T10:51:25.503Z",
+          "hash": "4312672f"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/deployment.js",
+          "relative": "archive/backend-services/deployment.js",
+          "name": "deployment.js",
+          "size": 352,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.074Z",
+          "created": "2025-11-28T10:51:25.504Z",
+          "hash": "64e5dbc6"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/earnings.js",
+          "relative": "archive/backend-services/earnings.js",
+          "name": "earnings.js",
+          "size": 539,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.075Z",
+          "created": "2025-11-28T10:51:25.505Z",
+          "hash": "4dd06531"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/monitoring.js",
+          "relative": "archive/backend-services/monitoring.js",
+          "name": "monitoring.js",
+          "size": 1249,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.076Z",
+          "created": "2025-11-28T10:51:25.505Z",
+          "hash": "f58a3af"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/multi-source-publishing.js",
+          "relative": "archive/backend-services/multi-source-publishing.js",
+          "name": "multi-source-publishing.js",
+          "size": 3674,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.076Z",
+          "created": "2025-11-28T10:51:25.507Z",
+          "hash": "6a8bcc94"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/notifications.js",
+          "relative": "archive/backend-services/notifications.js",
+          "name": "notifications.js",
+          "size": 1792,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.077Z",
+          "created": "2025-11-28T10:51:25.508Z",
+          "hash": "4fd6d57b"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/passive-income-systems.js",
+          "relative": "archive/backend-services/passive-income-systems.js",
+          "name": "passive-income-systems.js",
+          "size": 5211,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.078Z",
+          "created": "2025-11-28T10:51:25.509Z",
+          "hash": "5a39b32f"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/payment.js",
+          "relative": "archive/backend-services/payment.js",
+          "name": "payment.js",
+          "size": 1218,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.079Z",
+          "created": "2025-11-28T10:51:25.509Z",
+          "hash": "347f8483"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/real-earning-integration.js",
+          "relative": "archive/backend-services/real-earning-integration.js",
+          "name": "real-earning-integration.js",
+          "size": 2996,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.080Z",
+          "created": "2025-11-28T10:51:25.510Z",
+          "hash": "6e2d31"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/real-earnings.js",
+          "relative": "archive/backend-services/real-earnings.js",
+          "name": "real-earnings.js",
+          "size": 3648,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.081Z",
+          "created": "2025-11-28T10:51:25.511Z",
+          "hash": "522da7fb"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/reporting.js",
+          "relative": "archive/backend-services/reporting.js",
+          "name": "reporting.js",
+          "size": 2135,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.082Z",
+          "created": "2025-11-28T10:51:25.512Z",
+          "hash": "18074bb5"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/sources.js",
+          "relative": "archive/backend-services/sources.js",
+          "name": "sources.js",
+          "size": 329,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.083Z",
+          "created": "2025-11-28T10:51:25.513Z",
+          "hash": "b33e987"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/wallet-connector.js",
+          "relative": "archive/backend-services/wallet-connector.js",
+          "name": "wallet-connector.js",
+          "size": 3143,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.084Z",
+          "created": "2025-11-28T10:51:25.514Z",
+          "hash": "b8cd63b"
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services/wallets.js",
+          "relative": "archive/backend-services/wallets.js",
+          "name": "wallets.js",
+          "size": 329,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.085Z",
+          "created": "2025-11-28T10:51:25.563Z",
+          "hash": "24094437"
+        },
+        {
+          "path": "/home/runner/workspace/archive/complete-system-dashboard.html",
+          "relative": "archive/complete-system-dashboard.html",
+          "name": "complete-system-dashboard.html",
+          "size": 11497,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.368Z",
+          "created": "2025-11-28T11:00:04.367Z",
+          "hash": "370eca72"
+        },
+        {
+          "path": "/home/runner/workspace/archive/comprehensive-monitor.html",
+          "relative": "archive/comprehensive-monitor.html",
+          "name": "comprehensive-monitor.html",
+          "size": 12434,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.369Z",
+          "created": "2025-11-28T11:00:04.368Z",
+          "hash": "1e073784"
+        },
+        {
+          "path": "/home/runner/workspace/archive/error-viewer.html",
+          "relative": "archive/error-viewer.html",
+          "name": "error-viewer.html",
+          "size": 6994,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.370Z",
+          "created": "2025-11-28T11:00:04.369Z",
+          "hash": "a6789b8"
+        },
+        {
+          "path": "/home/runner/workspace/archive/hybrid-monitor.html",
+          "relative": "archive/hybrid-monitor.html",
+          "name": "hybrid-monitor.html",
+          "size": 11546,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.371Z",
+          "created": "2025-11-28T11:00:04.370Z",
+          "hash": "34bc8e9d"
+        },
+        {
+          "path": "/home/runner/workspace/archive/install-guide.html",
+          "relative": "archive/install-guide.html",
+          "name": "install-guide.html",
+          "size": 3132,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.372Z",
+          "created": "2025-11-28T11:00:04.371Z",
+          "hash": "e58bbb8"
+        },
+        {
+          "path": "/home/runner/workspace/archive/monitoring-light.html",
+          "relative": "archive/monitoring-light.html",
+          "name": "monitoring-light.html",
+          "size": 4266,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.478Z",
+          "created": "2025-11-28T11:00:04.478Z",
+          "hash": "6613f532"
+        },
+        {
+          "path": "/home/runner/workspace/archive/revenue.html",
+          "relative": "archive/revenue.html",
+          "name": "revenue.html",
+          "size": 11432,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.479Z",
+          "created": "2025-11-28T11:00:04.478Z",
+          "hash": "56e7de33"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/README.md",
+          "relative": "archive/scripts-old/README.md",
+          "name": "README.md",
+          "size": 370,
+          "type": ".md",
+          "modified": "2025-11-28T22:15:19.035Z",
+          "created": "2025-11-28T22:15:19.024Z",
+          "hash": "6a9934b9"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/advanced-recovery.js",
+          "relative": "archive/scripts-old/advanced-recovery.js",
+          "name": "advanced-recovery.js",
+          "size": 10289,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.502Z",
+          "created": "2025-11-28T11:00:04.501Z",
+          "hash": "7b1d1e44"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/advanced-repair.js",
+          "relative": "archive/scripts-old/advanced-repair.js",
+          "name": "advanced-repair.js",
+          "size": 10888,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.512Z",
+          "created": "2025-11-28T11:00:04.511Z",
+          "hash": "2775366e"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/algorithm-linker.js",
+          "relative": "archive/scripts-old/algorithm-linker.js",
+          "name": "algorithm-linker.js",
+          "size": 7916,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.513Z",
+          "created": "2025-11-28T11:00:04.512Z",
+          "hash": "5ab4c8db"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/auto-corrector.js",
+          "relative": "archive/scripts-old/auto-corrector.js",
+          "name": "auto-corrector.js",
+          "size": 8751,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.514Z",
+          "created": "2025-11-28T11:00:04.513Z",
+          "hash": "5f9920ad"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/auto-deployment.js",
+          "relative": "archive/scripts-old/auto-deployment.js",
+          "name": "auto-deployment.js",
+          "size": 5917,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.516Z",
+          "created": "2025-11-28T11:00:04.515Z",
+          "hash": "5607a474"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/auto-fixer.js",
+          "relative": "archive/scripts-old/auto-fixer.js",
+          "name": "auto-fixer.js",
+          "size": 6893,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.517Z",
+          "created": "2025-11-28T11:00:04.516Z",
+          "hash": "55221b8c"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/auto-recovery.js",
+          "relative": "archive/scripts-old/auto-recovery.js",
+          "name": "auto-recovery.js",
+          "size": 2630,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.503Z",
+          "created": "2025-11-28T11:00:04.502Z",
+          "hash": "46bd11ae"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/awareness-engine.js",
+          "relative": "archive/scripts-old/awareness-engine.js",
+          "name": "awareness-engine.js",
+          "size": 7769,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.518Z",
+          "created": "2025-11-28T11:00:04.517Z",
+          "hash": "383da0cc"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/balancing-resolver.js",
+          "relative": "archive/scripts-old/balancing-resolver.js",
+          "name": "balancing-resolver.js",
+          "size": 6339,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.519Z",
+          "created": "2025-11-28T11:00:04.518Z",
+          "hash": "6d2fa8bf"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/compatibility-engine.js",
+          "relative": "archive/scripts-old/compatibility-engine.js",
+          "name": "compatibility-engine.js",
+          "size": 8200,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.504Z",
+          "created": "2025-11-28T11:00:04.503Z",
+          "hash": "28549f59"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/conflict-resolver.js",
+          "relative": "archive/scripts-old/conflict-resolver.js",
+          "name": "conflict-resolver.js",
+          "size": 7560,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.520Z",
+          "created": "2025-11-28T11:00:04.519Z",
+          "hash": "2a0a5753"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/consciousness-system.js",
+          "relative": "archive/scripts-old/consciousness-system.js",
+          "name": "consciousness-system.js",
+          "size": 6276,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.562Z",
+          "created": "2025-11-28T11:00:04.520Z",
+          "hash": "442b91dc"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/deploy-firebase.js",
+          "relative": "archive/scripts-old/deploy-firebase.js",
+          "name": "deploy-firebase.js",
+          "size": 1286,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.504Z",
+          "created": "2025-11-28T11:00:04.504Z",
+          "hash": "7ff6fdd4"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/deploy-flyio.js",
+          "relative": "archive/scripts-old/deploy-flyio.js",
+          "name": "deploy-flyio.js",
+          "size": 2270,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.505Z",
+          "created": "2025-11-28T11:00:04.504Z",
+          "hash": "3de3c782"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/deploy-vercel.js",
+          "relative": "archive/scripts-old/deploy-vercel.js",
+          "name": "deploy-vercel.js",
+          "size": 3743,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.507Z",
+          "created": "2025-11-28T11:00:04.506Z",
+          "hash": "7cee92d8"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/diagnostic-engine.js",
+          "relative": "archive/scripts-old/diagnostic-engine.js",
+          "name": "diagnostic-engine.js",
+          "size": 7155,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.563Z",
+          "created": "2025-11-28T11:00:04.562Z",
+          "hash": "60561a3"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/diff-tracker.js",
+          "relative": "archive/scripts-old/diff-tracker.js",
+          "name": "diff-tracker.js",
+          "size": 5099,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.564Z",
+          "created": "2025-11-28T11:00:04.563Z",
+          "hash": "57f0cee5"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/error-detector.js",
+          "relative": "archive/scripts-old/error-detector.js",
+          "name": "error-detector.js",
+          "size": 9763,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.565Z",
+          "created": "2025-11-28T11:00:04.564Z",
+          "hash": "6f6d1f7b"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/error-fixer.js",
+          "relative": "archive/scripts-old/error-fixer.js",
+          "name": "error-fixer.js",
+          "size": 4259,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.567Z",
+          "created": "2025-11-28T11:00:04.565Z",
+          "hash": "5b6952b1"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/git-sync-engine.js",
+          "relative": "archive/scripts-old/git-sync-engine.js",
+          "name": "git-sync-engine.js",
+          "size": 6218,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.568Z",
+          "created": "2025-11-28T11:00:04.567Z",
+          "hash": "23b93753"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/integrated-agents-system.js",
+          "relative": "archive/scripts-old/integrated-agents-system.js",
+          "name": "integrated-agents-system.js",
+          "size": 11054,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.570Z",
+          "created": "2025-11-28T11:00:04.569Z",
+          "hash": "2f0f8c09"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/integrated-system.js",
+          "relative": "archive/scripts-old/integrated-system.js",
+          "name": "integrated-system.js",
+          "size": 5814,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.571Z",
+          "created": "2025-11-28T11:00:04.570Z",
+          "hash": "38eff4c4"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/intelligent-deployment.js",
+          "relative": "archive/scripts-old/intelligent-deployment.js",
+          "name": "intelligent-deployment.js",
+          "size": 9159,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.508Z",
+          "created": "2025-11-28T11:00:04.507Z",
+          "hash": "75ac2c39"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/intelligent-solver.js",
+          "relative": "archive/scripts-old/intelligent-solver.js",
+          "name": "intelligent-solver.js",
+          "size": 3732,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.572Z",
+          "created": "2025-11-28T11:00:04.571Z",
+          "hash": "335d89d1"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/learning-system.js",
+          "relative": "archive/scripts-old/learning-system.js",
+          "name": "learning-system.js",
+          "size": 7887,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.573Z",
+          "created": "2025-11-28T11:00:04.572Z",
+          "hash": "40551f28"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/monitor.js",
+          "relative": "archive/scripts-old/monitor.js",
+          "name": "monitor.js",
+          "size": 3550,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.509Z",
+          "created": "2025-11-28T11:00:04.508Z",
+          "hash": "6805aaea"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/notification-system.js",
+          "relative": "archive/scripts-old/notification-system.js",
+          "name": "notification-system.js",
+          "size": 3002,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.574Z",
+          "created": "2025-11-28T11:00:04.573Z",
+          "hash": "7c9d3716"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/platform-instructions.js",
+          "relative": "archive/scripts-old/platform-instructions.js",
+          "name": "platform-instructions.js",
+          "size": 7724,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.575Z",
+          "created": "2025-11-28T11:00:04.574Z",
+          "hash": "2d7e1cd4"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/problem-classifier.js",
+          "relative": "archive/scripts-old/problem-classifier.js",
+          "name": "problem-classifier.js",
+          "size": 6697,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.576Z",
+          "created": "2025-11-28T11:00:04.575Z",
+          "hash": "d1a0b59"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/problem-solver.js",
+          "relative": "archive/scripts-old/problem-solver.js",
+          "name": "problem-solver.js",
+          "size": 10446,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.577Z",
+          "created": "2025-11-28T11:00:04.576Z",
+          "hash": "45d3b7e6"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/production-monitor.js",
+          "relative": "archive/scripts-old/production-monitor.js",
+          "name": "production-monitor.js",
+          "size": 3378,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.578Z",
+          "created": "2025-11-28T11:00:04.577Z",
+          "hash": "63b3c16b"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/recommendation-engine.js",
+          "relative": "archive/scripts-old/recommendation-engine.js",
+          "name": "recommendation-engine.js",
+          "size": 5925,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.579Z",
+          "created": "2025-11-28T11:00:04.578Z",
+          "hash": "248bc35c"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/smart-monitor.js",
+          "relative": "archive/scripts-old/smart-monitor.js",
+          "name": "smart-monitor.js",
+          "size": 6683,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.580Z",
+          "created": "2025-11-28T11:00:04.579Z",
+          "hash": "238135fc"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/smart-port-manager.js",
+          "relative": "archive/scripts-old/smart-port-manager.js",
+          "name": "smart-port-manager.js",
+          "size": 8058,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.510Z",
+          "created": "2025-11-28T11:00:04.509Z",
+          "hash": "7b7d8121"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/sync-analyzer.js",
+          "relative": "archive/scripts-old/sync-analyzer.js",
+          "name": "sync-analyzer.js",
+          "size": 3892,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.580Z",
+          "created": "2025-11-28T11:00:04.580Z",
+          "hash": "43a92a03"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/system-monitor.js",
+          "relative": "archive/scripts-old/system-monitor.js",
+          "name": "system-monitor.js",
+          "size": 3315,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.582Z",
+          "created": "2025-11-28T11:00:04.581Z",
+          "hash": "29658595"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/unified-solver.js",
+          "relative": "archive/scripts-old/unified-solver.js",
+          "name": "unified-solver.js",
+          "size": 4969,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.583Z",
+          "created": "2025-11-28T11:00:04.582Z",
+          "hash": "44e61540"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/update-status.js",
+          "relative": "archive/scripts-old/update-status.js",
+          "name": "update-status.js",
+          "size": 1765,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.511Z",
+          "created": "2025-11-28T11:00:04.510Z",
+          "hash": "57920481"
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old/user-display-engine.js",
+          "relative": "archive/scripts-old/user-display-engine.js",
+          "name": "user-display-engine.js",
+          "size": 7922,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.585Z",
+          "created": "2025-11-28T11:00:04.583Z",
+          "hash": "5a6bd401"
+        },
+        {
+          "path": "/home/runner/workspace/archive/smart-deployment.html",
+          "relative": "archive/smart-deployment.html",
+          "name": "smart-deployment.html",
+          "size": 9844,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.480Z",
+          "created": "2025-11-28T11:00:04.479Z",
+          "hash": "3462d780"
+        },
+        {
+          "path": "/home/runner/workspace/archive/unified-dashboard.html",
+          "relative": "archive/unified-dashboard.html",
+          "name": "unified-dashboard.html",
+          "size": 11932,
+          "type": ".html",
+          "modified": "2025-11-28T11:00:04.483Z",
+          "created": "2025-11-28T11:00:04.482Z",
+          "hash": "230d50ed"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/IMG_7985_1764153915946.jpeg",
+          "relative": "attached_assets/IMG_7985_1764153915946.jpeg",
+          "name": "IMG_7985_1764153915946.jpeg",
+          "size": 180398,
+          "type": ".jpeg",
+          "modified": "2025-11-28T10:59:54.993Z",
+          "created": "2025-11-28T10:51:25.463Z",
+          "hash": "776875c3"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/IMG_8005_1764293949929.png",
+          "relative": "attached_assets/IMG_8005_1764293949929.png",
+          "name": "IMG_8005_1764293949929.png",
+          "size": 553979,
+          "type": ".png",
+          "modified": "2025-11-28T10:59:54.995Z",
+          "created": "2025-11-28T10:51:25.465Z",
+          "hash": "66bd1f1c"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/IMG_8006_1764294653310.png",
+          "relative": "attached_assets/IMG_8006_1764294653310.png",
+          "name": "IMG_8006_1764294653310.png",
+          "size": 503818,
+          "type": ".png",
+          "modified": "2025-11-28T10:59:54.998Z",
+          "created": "2025-11-28T10:51:25.467Z",
+          "hash": "3590bdc3"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/IMG_8010_1764327249329.png",
+          "relative": "attached_assets/IMG_8010_1764327249329.png",
+          "name": "IMG_8010_1764327249329.png",
+          "size": 128630,
+          "type": ".png",
+          "modified": "2025-11-28T10:54:10.777Z",
+          "created": "2025-11-28T10:54:09.728Z",
+          "hash": "32daeed4"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/IMG_8011_1764328035764.jpeg",
+          "relative": "attached_assets/IMG_8011_1764328035764.jpeg",
+          "name": "IMG_8011_1764328035764.jpeg",
+          "size": 676933,
+          "type": ".jpeg",
+          "modified": "2025-11-28T11:07:19.502Z",
+          "created": "2025-11-28T11:07:16.262Z",
+          "hash": "79afb402"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/IMG_8012_1764331169371.png",
+          "relative": "attached_assets/IMG_8012_1764331169371.png",
+          "name": "IMG_8012_1764331169371.png",
+          "size": 233999,
+          "type": ".png",
+          "modified": "2025-11-28T11:59:32.164Z",
+          "created": "2025-11-28T11:59:30.066Z",
+          "hash": "5be4f358"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/IMG_8013_1764332339911.png",
+          "relative": "attached_assets/IMG_8013_1764332339911.png",
+          "name": "IMG_8013_1764332339911.png",
+          "size": 266572,
+          "type": ".png",
+          "modified": "2025-11-28T12:19:03.688Z",
+          "created": "2025-11-28T12:19:00.640Z",
+          "hash": "531d06e9"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/Pasted--1-Concept--1764122938513_1764122938514.txt",
+          "relative": "attached_assets/Pasted--1-Concept--1764122938513_1764122938514.txt",
+          "name": "Pasted--1-Concept--1764122938513_1764122938514.txt",
+          "size": 6370,
+          "type": ".txt",
+          "modified": "2025-11-28T10:59:55.001Z",
+          "created": "2025-11-28T10:51:25.470Z",
+          "hash": "17a28ea2"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/Pasted--AI-Programming-Expert-Full-System-Blue-1764147355702_1764147355702.txt",
+          "relative": "attached_assets/Pasted--AI-Programming-Expert-Full-System-Blue-1764147355702_1764147355702.txt",
+          "name": "Pasted--AI-Programming-Expert-Full-System-Blue-1764147355702_1764147355702.txt",
+          "size": 7664,
+          "type": ".txt",
+          "modified": "2025-11-28T10:59:55.002Z",
+          "created": "2025-11-28T10:51:25.471Z",
+          "hash": "4b9bb5b9"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/Pasted--UI--1764125920158_1764125920159.txt",
+          "relative": "attached_assets/Pasted--UI--1764125920158_1764125920159.txt",
+          "name": "Pasted--UI--1764125920158_1764125920159.txt",
+          "size": 3310,
+          "type": ".txt",
+          "modified": "2025-11-28T10:59:55.003Z",
+          "created": "2025-11-28T10:51:25.472Z",
+          "hash": "12344350"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/Pasted-flyctl-deploy-a-agent-backend-ahmd1-image-registry-fly-io-agent-backend-ahmd1-deployment-81aed608-1764282757554_1764282757555.txt",
+          "relative": "attached_assets/Pasted-flyctl-deploy-a-agent-backend-ahmd1-image-registry-fly-io-agent-backend-ahmd1-deployment-81aed608-1764282757554_1764282757555.txt",
+          "name": "Pasted-flyctl-deploy-a-agent-backend-ahmd1-image-registry-fly-io-agent-backend-ahmd1-deployment-81aed608-1764282757554_1764282757555.txt",
+          "size": 2021,
+          "type": ".txt",
+          "modified": "2025-11-28T10:59:55.005Z",
+          "created": "2025-11-28T10:51:25.474Z",
+          "hash": "76eb7fcd"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764326454806.jpg",
+          "relative": "attached_assets/image_1764326454806.jpg",
+          "name": "image_1764326454806.jpg",
+          "size": 2819086,
+          "type": ".jpg",
+          "modified": "2025-11-28T10:41:10.399Z",
+          "created": "2025-11-28T10:40:55.099Z",
+          "hash": "33b30687"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764326519758.jpg",
+          "relative": "attached_assets/image_1764326519758.jpg",
+          "name": "image_1764326519758.jpg",
+          "size": 2946022,
+          "type": ".jpg",
+          "modified": "2025-11-28T10:42:10.414Z",
+          "created": "2025-11-28T10:42:00.026Z",
+          "hash": "5219f8cf"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764331283319.jpg",
+          "relative": "attached_assets/image_1764331283319.jpg",
+          "name": "image_1764331283319.jpg",
+          "size": 3263031,
+          "type": ".jpg",
+          "modified": "2025-11-28T12:01:37.428Z",
+          "created": "2025-11-28T12:01:23.962Z",
+          "hash": "79763ffb"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764331444410.jpg",
+          "relative": "attached_assets/image_1764331444410.jpg",
+          "name": "image_1764331444410.jpg",
+          "size": 3180901,
+          "type": ".jpg",
+          "modified": "2025-11-28T12:04:23.022Z",
+          "created": "2025-11-28T12:04:05.025Z",
+          "hash": "4c03a344"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764331788496.jpg",
+          "relative": "attached_assets/image_1764331788496.jpg",
+          "name": "image_1764331788496.jpg",
+          "size": 3158756,
+          "type": ".jpg",
+          "modified": "2025-11-28T12:10:16.819Z",
+          "created": "2025-11-28T12:09:49.284Z",
+          "hash": "6ad9c8a6"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764332016508.jpg",
+          "relative": "attached_assets/image_1764332016508.jpg",
+          "name": "image_1764332016508.jpg",
+          "size": 3367677,
+          "type": ".jpg",
+          "modified": "2025-11-28T12:14:05.648Z",
+          "created": "2025-11-28T12:13:37.300Z",
+          "hash": "57cf2dcf"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764332143180.jpg",
+          "relative": "attached_assets/image_1764332143180.jpg",
+          "name": "image_1764332143180.jpg",
+          "size": 3395621,
+          "type": ".jpg",
+          "modified": "2025-11-28T12:15:57.256Z",
+          "created": "2025-11-28T12:15:43.983Z",
+          "hash": "3baffbce"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764332432725.jpg",
+          "relative": "attached_assets/image_1764332432725.jpg",
+          "name": "image_1764332432725.jpg",
+          "size": 3422629,
+          "type": ".jpg",
+          "modified": "2025-11-28T12:20:47.281Z",
+          "created": "2025-11-28T12:20:33.395Z",
+          "hash": "495dc193"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764332563734.jpg",
+          "relative": "attached_assets/image_1764332563734.jpg",
+          "name": "image_1764332563734.jpg",
+          "size": 3851382,
+          "type": ".jpg",
+          "modified": "2025-11-28T12:23:01.222Z",
+          "created": "2025-11-28T12:22:44.476Z",
+          "hash": "a18f40f"
+        },
+        {
+          "path": "/home/runner/workspace/attached_assets/image_1764332585542.jpg",
+          "relative": "attached_assets/image_1764332585542.jpg",
+          "name": "image_1764332585542.jpg",
+          "size": 3663991,
+          "type": ".jpg",
+          "modified": "2025-11-28T12:23:21.676Z",
+          "created": "2025-11-28T12:23:06.324Z",
+          "hash": "524afa02"
+        },
+        {
+          "path": "/home/runner/workspace/backend/Dockerfile",
+          "relative": "backend/Dockerfile",
+          "name": "Dockerfile",
+          "size": 218,
+          "type": "no-extension",
+          "modified": "2025-11-28T10:59:55.011Z",
+          "created": "2025-11-28T10:51:25.483Z",
+          "hash": "6c0cf25d"
+        },
+        {
+          "path": "/home/runner/workspace/backend/QUICK_START_DEPLOY.sh",
+          "relative": "backend/QUICK_START_DEPLOY.sh",
+          "name": "QUICK_START_DEPLOY.sh",
+          "size": 698,
+          "type": ".sh",
+          "modified": "2025-11-28T10:59:55.012Z",
+          "created": "2025-11-28T10:51:25.485Z",
+          "hash": "9c4f456"
+        },
+        {
+          "path": "/home/runner/workspace/backend/README.md",
+          "relative": "backend/README.md",
+          "name": "README.md",
+          "size": 4403,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.013Z",
+          "created": "2025-11-28T10:51:25.487Z",
+          "hash": "2cff25bc"
+        },
+        {
+          "path": "/home/runner/workspace/backend/ai-engine.js",
+          "relative": "backend/ai-engine.js",
+          "name": "ai-engine.js",
+          "size": 10030,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.016Z",
+          "created": "2025-11-28T10:51:25.490Z",
+          "hash": "1e378ab0"
+        },
+        {
+          "path": "/home/runner/workspace/backend/archive-search.js",
+          "relative": "backend/archive-search.js",
+          "name": "archive-search.js",
+          "size": 3336,
+          "type": ".js",
+          "modified": "2025-11-28T22:17:08.785Z",
+          "created": "2025-11-28T22:17:08.776Z",
+          "hash": "78fdb379"
+        },
+        {
+          "path": "/home/runner/workspace/backend/error-handler-light.js",
+          "relative": "backend/error-handler-light.js",
+          "name": "error-handler-light.js",
+          "size": 3478,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.017Z",
+          "created": "2025-11-28T10:51:25.491Z",
+          "hash": "6e5aa97"
+        },
+        {
+          "path": "/home/runner/workspace/backend/fly.toml",
+          "relative": "backend/fly.toml",
+          "name": "fly.toml",
+          "size": 419,
+          "type": ".toml",
+          "modified": "2025-11-28T10:59:55.019Z",
+          "created": "2025-11-28T10:51:25.492Z",
+          "hash": "7bc6280f"
+        },
+        {
+          "path": "/home/runner/workspace/backend/health-recovery.js",
+          "relative": "backend/health-recovery.js",
+          "name": "health-recovery.js",
+          "size": 5101,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.088Z",
+          "created": "2025-11-28T10:51:25.568Z",
+          "hash": "994e816"
+        },
+        {
+          "path": "/home/runner/workspace/backend/input-validator.js",
+          "relative": "backend/input-validator.js",
+          "name": "input-validator.js",
+          "size": 2305,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.020Z",
+          "created": "2025-11-28T10:51:25.493Z",
+          "hash": "e1a91ce"
+        },
+        {
+          "path": "/home/runner/workspace/backend/package.json",
+          "relative": "backend/package.json",
+          "name": "package.json",
+          "size": 558,
+          "type": ".json",
+          "modified": "2025-11-28T10:59:55.021Z",
+          "created": "2025-11-28T10:51:25.494Z",
+          "hash": "fa5b37"
+        },
+        {
+          "path": "/home/runner/workspace/backend/package.json.tmp",
+          "relative": "backend/package.json.tmp",
+          "name": "package.json.tmp",
+          "size": 0,
+          "type": ".tmp",
+          "modified": "2025-11-28T22:24:38.486Z",
+          "created": "2025-11-28T22:24:38.486Z",
+          "hash": "0"
+        },
+        {
+          "path": "/home/runner/workspace/backend/quality-scorer.js",
+          "relative": "backend/quality-scorer.js",
+          "name": "quality-scorer.js",
+          "size": 3572,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.061Z",
+          "created": "2025-11-28T10:51:25.495Z",
+          "hash": "77c350e7"
+        },
+        {
+          "path": "/home/runner/workspace/backend/rate-limiter.js",
+          "relative": "backend/rate-limiter.js",
+          "name": "rate-limiter.js",
+          "size": 1570,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.064Z",
+          "created": "2025-11-28T10:51:25.495Z",
+          "hash": "4ec351ca"
+        },
+        {
+          "path": "/home/runner/workspace/backend/security-headers.js",
+          "relative": "backend/security-headers.js",
+          "name": "security-headers.js",
+          "size": 861,
+          "type": ".js",
+          "modified": "2025-11-28T10:59:55.067Z",
+          "created": "2025-11-28T10:51:25.499Z",
+          "hash": "5e33749c"
+        },
+        {
+          "path": "/home/runner/workspace/backend/server.js",
+          "relative": "backend/server.js",
+          "name": "server.js",
+          "size": 15183,
+          "type": ".js",
+          "modified": "2025-11-28T22:02:14.595Z",
+          "created": "2025-11-28T22:02:14.592Z",
+          "hash": "51915a67"
+        },
+        {
+          "path": "/home/runner/workspace/backend/start.sh",
+          "relative": "backend/start.sh",
+          "name": "start.sh",
+          "size": 67,
+          "type": ".sh",
+          "modified": "2025-11-28T10:59:55.086Z",
+          "created": "2025-11-28T10:51:25.566Z",
+          "hash": "155c69d0"
+        },
+        {
+          "path": "/home/runner/workspace/backend/system-monitor/README.md",
+          "relative": "backend/system-monitor/README.md",
+          "name": "README.md",
+          "size": 6444,
+          "type": ".md",
+          "modified": "2025-11-28T22:24:10.417Z",
+          "created": "2025-11-28T22:24:10.408Z",
+          "hash": "48674d00"
+        },
+        {
+          "path": "/home/runner/workspace/backend/system-monitor/dependency-analyzer.js",
+          "relative": "backend/system-monitor/dependency-analyzer.js",
+          "name": "dependency-analyzer.js",
+          "size": 7490,
+          "type": ".js",
+          "modified": "2025-11-28T22:22:39.571Z",
+          "created": "2025-11-28T22:22:39.571Z",
+          "hash": "1dc8eb78"
+        },
+        {
+          "path": "/home/runner/workspace/backend/system-monitor/documentation-linker.js",
+          "relative": "backend/system-monitor/documentation-linker.js",
+          "name": "documentation-linker.js",
+          "size": 6646,
+          "type": ".js",
+          "modified": "2025-11-28T22:23:24.857Z",
+          "created": "2025-11-28T22:23:24.856Z",
+          "hash": "b3b33c"
+        },
+        {
+          "path": "/home/runner/workspace/backend/system-monitor/file-scanner.js",
+          "relative": "backend/system-monitor/file-scanner.js",
+          "name": "file-scanner.js",
+          "size": 8216,
+          "type": ".js",
+          "modified": "2025-11-28T22:22:26.789Z",
+          "created": "2025-11-28T22:22:26.789Z",
+          "hash": "17a3731d"
+        },
+        {
+          "path": "/home/runner/workspace/backend/system-monitor/run-monitor.sh",
+          "relative": "backend/system-monitor/run-monitor.sh",
+          "name": "run-monitor.sh",
+          "size": 1997,
+          "type": ".sh",
+          "modified": "2025-11-28T22:23:50.742Z",
+          "created": "2025-11-28T22:23:50.735Z",
+          "hash": "34d0422d"
+        },
+        {
+          "path": "/home/runner/workspace/backend/system-monitor/self-healing.js",
+          "relative": "backend/system-monitor/self-healing.js",
+          "name": "self-healing.js",
+          "size": 9236,
+          "type": ".js",
+          "modified": "2025-11-28T22:22:57.954Z",
+          "created": "2025-11-28T22:22:57.953Z",
+          "hash": "7d6f2b8e"
+        },
+        {
+          "path": "/home/runner/workspace/backend/system-monitor/system-monitor.js",
+          "relative": "backend/system-monitor/system-monitor.js",
+          "name": "system-monitor.js",
+          "size": 6706,
+          "type": ".js",
+          "modified": "2025-11-28T22:23:37.865Z",
+          "created": "2025-11-28T22:23:37.864Z",
+          "hash": "1d71ad31"
+        },
+        {
+          "path": "/home/runner/workspace/backend/system-monitor/system-reporter.js",
+          "relative": "backend/system-monitor/system-reporter.js",
+          "name": "system-reporter.js",
+          "size": 10056,
+          "type": ".js",
+          "modified": "2025-11-28T22:23:12.860Z",
+          "created": "2025-11-28T22:23:12.859Z",
+          "hash": "27203374"
+        },
+        {
+          "path": "/home/runner/workspace/docker-compose.yml",
+          "relative": "docker-compose.yml",
+          "name": "docker-compose.yml",
+          "size": 195,
+          "type": ".yml",
+          "modified": "2025-11-28T10:59:55.165Z",
+          "created": "2025-11-28T10:51:25.583Z",
+          "hash": "58b121a2"
+        },
+        {
+          "path": "/home/runner/workspace/docs/ADMIN_PANEL.md",
+          "relative": "docs/ADMIN_PANEL.md",
+          "name": "ADMIN_PANEL.md",
+          "size": 2286,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.170Z",
+          "created": "2025-11-28T10:51:25.586Z",
+          "hash": "254aa492"
+        },
+        {
+          "path": "/home/runner/workspace/docs/API.md",
+          "relative": "docs/API.md",
+          "name": "API.md",
+          "size": 923,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.171Z",
+          "created": "2025-11-28T10:51:25.587Z",
+          "hash": "7c60d15f"
+        },
+        {
+          "path": "/home/runner/workspace/docs/ARCHITECTURE.md",
+          "relative": "docs/ARCHITECTURE.md",
+          "name": "ARCHITECTURE.md",
+          "size": 1279,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.172Z",
+          "created": "2025-11-28T10:51:25.588Z",
+          "hash": "2d312bff"
+        },
+        {
+          "path": "/home/runner/workspace/docs/CENTRAL_SOURCE.md",
+          "relative": "docs/CENTRAL_SOURCE.md",
+          "name": "CENTRAL_SOURCE.md",
+          "size": 2747,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.177Z",
+          "created": "2025-11-28T10:51:25.593Z",
+          "hash": "6f7d92dc"
+        },
+        {
+          "path": "/home/runner/workspace/docs/DEPLOYMENT.md",
+          "relative": "docs/DEPLOYMENT.md",
+          "name": "DEPLOYMENT.md",
+          "size": 393,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.173Z",
+          "created": "2025-11-28T10:51:25.589Z",
+          "hash": "4f2a657d"
+        },
+        {
+          "path": "/home/runner/workspace/docs/DEVELOPER.md",
+          "relative": "docs/DEVELOPER.md",
+          "name": "DEVELOPER.md",
+          "size": 828,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.175Z",
+          "created": "2025-11-28T10:51:25.590Z",
+          "hash": "3c79bf1b"
+        },
+        {
+          "path": "/home/runner/workspace/docs/SECURITY_GUIDE.md",
+          "relative": "docs/SECURITY_GUIDE.md",
+          "name": "SECURITY_GUIDE.md",
+          "size": 2769,
+          "type": ".md",
+          "modified": "2025-11-28T10:59:55.175Z",
+          "created": "2025-11-28T10:51:25.591Z",
+          "hash": "4d1e2ed6"
+        },
+        {
+          "path": "/home/runner/workspace/fly.toml",
+          "relative": "fly.toml",
+          "name": "fly.toml",
+          "size": 497,
+          "type": ".toml",
+          "modified": "2025-11-28T10:59:55.198Z",
+          "created": "2025-11-28T10:51:25.666Z",
+          "hash": "929687b"
+        },
+        {
+          "path": "/home/runner/workspace/package-lock.json",
+          "relative": "package-lock.json",
+          "name": "package-lock.json",
+          "size": 54439,
+          "type": ".json",
+          "modified": "2025-11-28T11:00:04.311Z",
+          "created": "2025-11-28T10:17:55.082Z",
+          "hash": "454a50e5"
+        },
+        {
+          "path": "/home/runner/workspace/package.json",
+          "relative": "package.json",
+          "name": "package.json",
+          "size": 928,
+          "type": ".json",
+          "modified": "2025-11-28T13:19:58.925Z",
+          "created": "2025-11-28T13:19:58.919Z",
+          "hash": "231a5b80"
+        },
+        {
+          "path": "/home/runner/workspace/public/index.html",
+          "relative": "public/index.html",
+          "name": "index.html",
+          "size": 19955,
+          "type": ".html",
+          "modified": "2025-11-28T21:59:32.103Z",
+          "created": "2025-11-28T21:59:32.101Z",
+          "hash": "70520ed"
+        },
+        {
+          "path": "/home/runner/workspace/public/js/app.js",
+          "relative": "public/js/app.js",
+          "name": "app.js",
+          "size": 1647,
+          "type": ".js",
+          "modified": "2025-11-28T21:59:33.160Z",
+          "created": "2025-11-28T21:59:33.158Z",
+          "hash": "ee13315"
+        },
+        {
+          "path": "/home/runner/workspace/public/manifest.json",
+          "relative": "public/manifest.json",
+          "name": "manifest.json",
+          "size": 2077,
+          "type": ".json",
+          "modified": "2025-11-28T11:00:04.478Z",
+          "created": "2025-11-28T11:00:04.477Z",
+          "hash": "622da17a"
+        },
+        {
+          "path": "/home/runner/workspace/public/style.css",
+          "relative": "public/style.css",
+          "name": "style.css",
+          "size": 28106,
+          "type": ".css",
+          "modified": "2025-11-28T11:00:04.481Z",
+          "created": "2025-11-28T11:00:04.480Z",
+          "hash": "3259b4b8"
+        },
+        {
+          "path": "/home/runner/workspace/public/sw.js",
+          "relative": "public/sw.js",
+          "name": "sw.js",
+          "size": 1597,
+          "type": ".js",
+          "modified": "2025-11-28T11:00:04.481Z",
+          "created": "2025-11-28T11:00:04.481Z",
+          "hash": "5c4ef7a0"
+        },
+        {
+          "path": "/home/runner/workspace/replit.md",
+          "relative": "replit.md",
+          "name": "replit.md",
+          "size": 9527,
+          "type": ".md",
+          "modified": "2025-11-28T22:24:46.054Z",
+          "created": "2025-11-28T22:15:49.973Z",
+          "hash": "316ad2d1"
+        },
+        {
+          "path": "/home/runner/workspace/restore-from-archive.sh",
+          "relative": "restore-from-archive.sh",
+          "name": "restore-from-archive.sh",
+          "size": 1902,
+          "type": ".sh",
+          "modified": "2025-11-28T22:17:02.991Z",
+          "created": "2025-11-28T22:17:02.965Z",
+          "hash": "52ab4623"
+        },
+        {
+          "path": "/home/runner/workspace/run-frontend.sh",
+          "relative": "run-frontend.sh",
+          "name": "run-frontend.sh",
+          "size": 50,
+          "type": ".sh",
+          "modified": "2025-11-28T21:50:14.234Z",
+          "created": "2025-11-28T21:50:14.223Z",
+          "hash": "4968a190"
+        }
+      ],
+      "directories": [
+        {
+          "name": "archive",
+          "path": "/home/runner/workspace/archive",
+          "size": 417800,
+          "files": 78,
+          "modified": "2025-11-28T22:17:15.915Z"
+        },
+        {
+          "name": "attached_assets",
+          "path": "/home/runner/workspace/attached_assets",
+          "size": 35632790,
+          "files": 21,
+          "modified": "2025-11-28T12:23:22.170Z"
+        },
+        {
+          "name": "backend",
+          "path": "/home/runner/workspace/backend",
+          "size": 111654,
+          "files": 30,
+          "modified": "2025-11-28T22:24:38.486Z"
+        },
+        {
+          "name": "docs",
+          "path": "/home/runner/workspace/docs",
+          "size": 11225,
+          "files": 7,
+          "modified": "2025-11-28T10:51:25.593Z"
+        },
+        {
+          "name": "node_modules",
+          "path": "/home/runner/workspace/node_modules",
+          "size": 23636507,
+          "files": 3859,
+          "modified": "2025-11-28T10:51:33.102Z"
+        },
+        {
+          "name": "public",
+          "path": "/home/runner/workspace/public",
+          "size": 53382,
+          "files": 5,
+          "modified": "2025-11-28T22:02:02.392Z"
+        }
+      ],
+      "archives": [
+        {
+          "path": "/home/runner/workspace/archive/ARCHIVE-INDEX.md",
+          "name": "ARCHIVE-INDEX.md",
+          "type": "file",
+          "size": 6594,
+          "modified": "2025-11-28T22:16:58.466Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/QUICK-RESTORE.md",
+          "name": "QUICK-RESTORE.md",
+          "type": "file",
+          "size": 2657,
+          "modified": "2025-11-28T22:17:15.924Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/README.md",
+          "name": "README.md",
+          "type": "file",
+          "size": 1352,
+          "modified": "2025-11-28T22:02:19.020Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/ai-diagnosis.html",
+          "name": "ai-diagnosis.html",
+          "type": "file",
+          "size": 9390,
+          "modified": "2025-11-28T11:00:04.365Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/algorithm-health.html",
+          "name": "algorithm-health.html",
+          "type": "file",
+          "size": 9686,
+          "modified": "2025-11-28T11:00:04.366Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/auto-repair-dashboard.html",
+          "name": "auto-repair-dashboard.html",
+          "type": "file",
+          "size": 10504,
+          "modified": "2025-11-28T11:00:04.367Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-routes",
+          "name": "backend-routes",
+          "type": "folder",
+          "size": 4784,
+          "modified": "2025-11-28T22:15:19.046Z",
+          "files": 4
+        },
+        {
+          "path": "/home/runner/workspace/archive/backend-services",
+          "name": "backend-services",
+          "type": "folder",
+          "size": 45193,
+          "modified": "2025-11-28T22:15:19.037Z",
+          "files": 19
+        },
+        {
+          "path": "/home/runner/workspace/archive/complete-system-dashboard.html",
+          "name": "complete-system-dashboard.html",
+          "type": "file",
+          "size": 11497,
+          "modified": "2025-11-28T11:00:04.368Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/comprehensive-monitor.html",
+          "name": "comprehensive-monitor.html",
+          "type": "file",
+          "size": 12434,
+          "modified": "2025-11-28T11:00:04.369Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/error-viewer.html",
+          "name": "error-viewer.html",
+          "type": "file",
+          "size": 6994,
+          "modified": "2025-11-28T11:00:04.370Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/hybrid-monitor.html",
+          "name": "hybrid-monitor.html",
+          "type": "file",
+          "size": 11546,
+          "modified": "2025-11-28T11:00:04.371Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/install-guide.html",
+          "name": "install-guide.html",
+          "type": "file",
+          "size": 3132,
+          "modified": "2025-11-28T11:00:04.372Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/monitoring-light.html",
+          "name": "monitoring-light.html",
+          "type": "file",
+          "size": 4266,
+          "modified": "2025-11-28T11:00:04.478Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/revenue.html",
+          "name": "revenue.html",
+          "type": "file",
+          "size": 11432,
+          "modified": "2025-11-28T11:00:04.479Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/scripts-old",
+          "name": "scripts-old",
+          "type": "folder",
+          "size": 244563,
+          "modified": "2025-11-28T22:15:19.024Z",
+          "files": 40
+        },
+        {
+          "path": "/home/runner/workspace/archive/smart-deployment.html",
+          "name": "smart-deployment.html",
+          "type": "file",
+          "size": 9844,
+          "modified": "2025-11-28T11:00:04.480Z",
+          "files": 0
+        },
+        {
+          "path": "/home/runner/workspace/archive/unified-dashboard.html",
+          "name": "unified-dashboard.html",
+          "type": "file",
+          "size": 11932,
+          "modified": "2025-11-28T11:00:04.483Z",
+          "files": 0
+        }
+      ],
+      "backups": [
+        {
+          "path": "/home/runner/workspace/archive/scripts-old",
+          "name": "scripts-old",
+          "size": 244563,
+          "modified": "2025-11-28T22:15:19.024Z"
+        }
+      ],
+      "nodeModules": [
+        {
+          "path": "/home/runner/workspace/node_modules",
+          "size": 23636507,
+          "modified": "2025-11-28T10:51:33.102Z"
+        }
+      ],
+      "config": [
+        {
+          "name": "package.json",
+          "path": "/home/runner/workspace/package.json",
+          "size": 928,
+          "modified": "2025-11-28T13:19:58.925Z"
+        },
+        {
+          "name": "package-lock.json",
+          "path": "/home/runner/workspace/package-lock.json",
+          "size": 54439,
+          "modified": "2025-11-28T11:00:04.311Z"
+        },
+        {
+          "name": ".gitignore",
+          "path": "/home/runner/workspace/.gitignore",
+          "size": 152,
+          "modified": "2025-11-28T19:51:02.535Z"
+        },
+        {
+          "name": "fly.toml",
+          "path": "/home/runner/workspace/fly.toml",
+          "size": 497,
+          "modified": "2025-11-28T10:59:55.198Z"
+        },
+        {
+          "name": "replit.md",
+          "path": "/home/runner/workspace/replit.md",
+          "size": 9527,
+          "modified": "2025-11-28T22:24:46.054Z"
+        }
+      ],
+      "errors": []
+    },
+    "dependencies": {
+      "used": [
+        "/home/runner/workspace/backend/ai-engine.js",
+        "/home/runner/workspace/backend/archive-search.js",
+        "/home/runner/workspace/backend/error-handler-light.js",
+        "/home/runner/workspace/backend/health-recovery.js",
+        "/home/runner/workspace/backend/input-validator.js",
+        "/home/runner/workspace/backend/package.json",
+        "/home/runner/workspace/backend/quality-scorer.js",
+        "/home/runner/workspace/backend/rate-limiter.js",
+        "/home/runner/workspace/backend/security-headers.js",
+        "/home/runner/workspace/backend/server.js",
+        "/home/runner/workspace/backend/system-monitor/dependency-analyzer.js",
+        "/home/runner/workspace/backend/system-monitor/documentation-linker.js",
+        "/home/runner/workspace/backend/system-monitor/file-scanner.js",
+        "/home/runner/workspace/backend/system-monitor/self-healing.js",
+        "/home/runner/workspace/backend/system-monitor/system-monitor.js",
+        "/home/runner/workspace/backend/system-monitor/system-reporter.js",
+        "/home/runner/workspace/package-lock.json",
+        "/home/runner/workspace/package.json",
+        "/home/runner/workspace/public/js/app.js",
+        "/home/runner/workspace/public/manifest.json",
+        "/home/runner/workspace/public/sw.js"
+      ],
+      "dead": [],
+      "duplicates": [],
+      "orphans": [],
+      "imports": {
+        "/home/runner/workspace/backend/ai-engine.js": [
+          "groq-sdk"
+        ],
+        "/home/runner/workspace/backend/archive-search.js": [
+          "fs",
+          "path",
+          "./archive-search"
+        ],
+        "/home/runner/workspace/backend/error-handler-light.js": [],
+        "/home/runner/workspace/backend/health-recovery.js": [
+          "fs"
+        ],
+        "/home/runner/workspace/backend/input-validator.js": [],
+        "/home/runner/workspace/backend/package.json": [],
+        "/home/runner/workspace/backend/quality-scorer.js": [],
+        "/home/runner/workspace/backend/rate-limiter.js": [],
+        "/home/runner/workspace/backend/security-headers.js": [],
+        "/home/runner/workspace/backend/server.js": [
+          "express",
+          "path",
+          "cors",
+          "http",
+          "socket.io",
+          "./error-handler-light",
+          "./ai-engine",
+          "./quality-scorer",
+          "./rate-limiter",
+          "./input-validator",
+          "dotenv",
+          "groq-sdk",
+          "./security-headers"
+        ],
+        "/home/runner/workspace/backend/system-monitor/dependency-analyzer.js": [
+          "fs",
+          "path"
+        ],
+        "/home/runner/workspace/backend/system-monitor/documentation-linker.js": [
+          "fs",
+          "path"
+        ],
+        "/home/runner/workspace/backend/system-monitor/file-scanner.js": [
+          "fs",
+          "path"
+        ],
+        "/home/runner/workspace/backend/system-monitor/self-healing.js": [
+          "fs",
+          "path"
+        ],
+        "/home/runner/workspace/backend/system-monitor/system-monitor.js": [
+          "./file-scanner",
+          "./dependency-analyzer",
+          "./self-healing",
+          "./system-reporter",
+          "./documentation-linker"
+        ],
+        "/home/runner/workspace/backend/system-monitor/system-reporter.js": [
+          "fs",
+          "path"
+        ],
+        "/home/runner/workspace/package-lock.json": [],
+        "/home/runner/workspace/package.json": [],
+        "/home/runner/workspace/public/js/app.js": [],
+        "/home/runner/workspace/public/manifest.json": [],
+        "/home/runner/workspace/public/sw.js": []
+      },
+      "circular": [
+        [
+          "/home/runner/workspace/backend/archive-search.js",
+          "/home/runner/workspace/backend/archive-search.js"
+        ]
+      ],
+      "issues": []
+    },
+    "diagnosis": {
+      "timestamp": 1764368689332,
+      "issues": [
+        {
+          "type": "broken_link",
+          "severity": "warning",
+          "file": "/home/runner/workspace/archive/revenue.html",
+          "link": "/js/revenue-engine.js",
+          "message": "⚠️ رابط مكسور: /js/revenue-engine.js",
+          "solution": "تحقق من وجود الملف: /js/revenue-engine.js"
+        },
+        {
+          "type": "version_conflict",
+          "severity": "warning",
+          "package": "express",
+          "message": "⚠️ إصدار مختلف للمكتبة: express",
+          "solution": "وحد إصدارات express في كلا package.json"
+        },
+        {
+          "type": "version_conflict",
+          "severity": "warning",
+          "package": "dotenv",
+          "message": "⚠️ إصدار مختلف للمكتبة: dotenv",
+          "solution": "وحد إصدارات dotenv في كلا package.json"
+        },
+        {
+          "type": "dead_code",
+          "severity": "info",
+          "file": "backend/.flyrc.json",
+          "message": "ℹ️ ملف قديم قد يكون غير مستخدم: .flyrc.json",
+          "solution": "نقل الملف إلى archive/"
+        }
+      ],
+      "suggestions": [],
+      "health": 60,
+      "status": "warning"
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "high",
+      "category": "refactor",
+      "title": "إصلاح الدورات في الروابط",
+      "description": "تم العثور على 1 دورات",
+      "action": "إعادة هيكلة الروابط بين الملفات",
+      "cycles": [
+        [
+          "/home/runner/workspace/backend/archive-search.js",
+          "/home/runner/workspace/backend/archive-search.js"
+        ]
+      ]
+    }
+  ]
+}
