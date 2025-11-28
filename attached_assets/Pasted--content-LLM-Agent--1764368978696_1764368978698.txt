@@ -1,0 +1,190 @@
+<content>
+# مقدمة قصيرة
+هالدليل مخصّص حتى تقدر تُسند للذكاء الصناعي (LLM أو Agent) مهمة بناء المنصة خطوة بخطوة — من PRD وDesign لحدّ الكود، الاختبار، والنشر — مع ضمانات جودة، أمان، ومراجعة بشرية متكاملة.
+
+---
+
+## 1) الفكرة العامة: كيف تبي الذكاء الصناعي يشتغل
+- **قسم العمل إلى مهام صغيرة قابلة للتنفيذ** (epic → features → tasks).  
+- كل مهمة لازم تحتوي: عنوان، وصف واضح، مدخلات (inputs)، مخرجات متوقعة (deliverables)، معايير قبول (acceptance criteria)، زمن/أولوية (optional)، ومسؤول بشري للمراجعة.  
+- إستخدم تنسيق JSON أو YAML لكل مهمة حتى يقدر أي agent أو سيرفر يعالجها آليًا.
+
+---
+
+## 2) بنية تسليم المهام (JSON Template) — استخدمها مباشرة
+```json
+{
+  "task_id": "proj-mvp-001",
+  "title": "إنشاء مشروع جديد - قالب NodeJS",
+  "type": "feature",
+  "description": "API + UI لإنشاء مشروع جديد من قالب NodeJS. يولد هيكل المشروع، package.json، index.js، وملف README.",
+  "inputs": {
+    "user_id": "uuid",
+    "project_name": "string",
+    "template": "nodejs-basic"
+  },
+  "deliverables": [
+    "POST /projects/create API",
+    "Frontend: Create Project modal (React)",
+    "Project template files in repo/templates/nodejs-basic"
+  ],
+  "acceptance_criteria": [
+    "عند POST /projects/create بمدخل project_name يُنشأ سجل في projects وملفات القالب تُنسخ",
+    "UI يعرض المشروع الجديد ويقدر يفتحه في المحرر",
+    "unit tests >= 80% للـAPI"
+  ],
+  "priority": "high",
+  "reviewer": "product_owner@yourorg.com"
+}
+```
+
+---
+
+## 3) نموذج Prompt رئيسي (Master Prompt) للـAgent
+> استخدم هذا الـprompt كبداية لكل task أو كـsystem prompt للـagent:
+
+```
+أنت Agent هندسي/برمجي محترف. هدفك: تنفيذ المهمة الموصوفة في حقل "task" بصيغة JSON. اتبع الخطوات:
+1) اقرأ حقل "description" و"acceptance_criteria".
+2) اقسّم المهمة إلى خطوات تنفيذية (subtasks) واضحة.
+3) لكل خطوة اعطِ:
+   - عنوان قصير
+   - أمر تنفيذي قابل للتنفيذ (shell command أو تغييرات كود)
+   - ملفات/مسارات للتعديل
+   - اختبار قبول (unit/integration/e2e)
+4) أنشئ فرع git جديد باسم task_id/auto.
+5) نفّذ التغييرات البرمجية محليًا (أو اقترح التغييرات كسلاسل patch إذا الـagent لا يقدر يكتب على repo).
+6) شغّل الاختبارات أو أضف اختبارات تلقائياً، واطرح MR/PR إلى branch الـstaging.
+7) وثّق كل التغييرات في PR description مع قائمة تحقق (checklist) بناءً على acceptance_criteria.
+8) إذا خطوة ما تحتاج قرار بشري فاذكرها كـ"BLOCKED" مع الأسباب والخيارات.
+ارجو إخراج ناتج بصيغة JSON تحتوي على: subtasks[], git_branch, commands[], artifacts[], pr_body, status.
+```
+
+---
+
+## 4) آلية التنفيذ التلقائي (Execution Flow)
+1. **Task Queue**: أدخل كل JSON مهمة إلى نظام إدارة مهام (Jira/Trello/GitHub Issues أو خصوصي).  
+2. **Agent Worker**: Agent يلتقط مهمة من الـQueue، يقرأ الـJSON، ويبدأ تنفيذ steps داخلياً أو يولّد patch.  
+3. **إصدار فرع Git**: Agent ينشئ branch ويضع التعديلات.  
+4. **CI / Tests**: GitHub Actions (أو GitLab CI) تشغّل: lint → unit tests → integration tests → security scans.  
+5. **PR إلى staging**: إذا كل الاختبارات نجحت، Agent يفتح PR ويعلّق PR Body يحتوي checklist مطابق للـacceptance_criteria.  
+6. **مراجعة بشرية**: المراجع البشري يراجع ويعطي approve أو يرد مع fixes.  
+7. **Merge → deploy to staging**: بعد الموافقة، يندمج ويرفع إلى بيئة staging تلقائياً.  
+8. **Smoke tests**: تشغّل End-to-end smoke tests. إذا ناجحة → schedule release أو auto-deploy إلى production بناءً على سياسة release.
+
+---
+
+## 5) CI/CD مثال (مخطط عملي)
+- **CI pipeline** (on PR): checkout → install deps → lint → unit tests → build → security scan (Snyk/Trivy) → create artifact.  
+- **CD pipeline** (on merge to staging): deploy to staging → run e2e smoke → alert on failure.  
+- **Promote to prod**: تلقائي أو يدوي بناءً على readiness flag.
+
+---
+
+## 6) اختبارات وتحوّق الجودة (QA / Acceptance)
+- **Unit tests**: كل موديول لازم يكون له اختبارات وحدات.  
+- **Integration tests**: endpoints مهمة، DB interactions.  
+- **E2E tests**: أهم user flows (create project, run, share).  
+- **Security tests**: container scanning، dependency scanning، DAST.  
+- **Performance tests**: load test لعدة سيناريوهات (startup, concurrent runs).  
+- **Acceptance**: كل مهمة تُغلق فقط بعد تحقق كل نقطة في acceptance_criteria.
+
+---
+
+## 7) المراجعة البشرية (Human-in-the-loop)
+- **ماذا تراجع البشري؟**: تغييرات معمقة على الأمن، تصميم الواجهات الحساسة، قرارات بنيوية، أي تغييرات تكلفة تشغيلية عالية.  
+- **كيف تظهر القرارات؟**: Agent يجب أن يضع "BLOCKER" إذا: يتطلب API خارجي، يحتاج بيانات سرية خاصة، أو يتجاوز حدود الميزانية.  
+- **SLA للمراجعة**: عيّن وقت رد (مثلاً 24 ساعة للـcritical PRs).
+
+---
+
+## 8) المراقبة والقياس (Monitoring & KPIs)
+- **مؤشرات تقنية**: CI pass rate, test coverage, build time, deploy frequency, MTTR.  
+- **مؤشرات المنتج**: time-to-first-run, avg compute minutes, DAU/MAU, conversion rate.  
+- **مؤشرات AI**: success rate للـAI-generated features (الكود مقبول من المطور)، false positive rate للـfixes.  
+- **Logging**: احفظ logs لكل عملية agent — commands run, outputs, errors. لا تمسحها حتى لو نجح.
+
+---
+
+## 9) التتبع والتوثيق (Traceability)
+- كل متغير/قرار لازم يكون مرتبط بـtask_id.  
+- كل PR، كل build، وكل deploy لازم يذكر task_id في الcommit message وPR title.  
+- هذا يسهل الرجوع والتحقيق إذا صار خطأ.
+
+---
+
+## 10) إدارة مواصفات الذكاء الصناعي (LLM Ops Best Practices)
+- **System prompts versioning**: خزّن نسخ الـprompts واسم النموذج المستخدم (gpt-5X…) وتاريخه.  
+- **Rate limits & cost controls**: حطّ سقوف يومية/شهريّة لاستخدام الـLLM.  
+- **Safety filters**: راجع مخرجات الLLM آليًا قبل التطبيق (static checks)، لا تنفّذ أي سكربت shell بدون مراجعة أو تحقق من الأنماط الخبيثة.  
+- **Fine-tuning / retrieval**: خزّن knowledge base (PRDs, design system) واستخدم retrieval-augmented generation (RAG) حتى يطلع Agent معلومات دقيقة.
+
+---
+
+## 11) مثال عملي: تسلسل لإنشاء ميزة (concise)
+- **Input (task JSON)**: إنشاء API `POST /projects/create`.  
+- **Agent**:
+  1. يقرأ الـJSON ويولد subtasks (schema, backend impl, frontend modal, tests).  
+  2. ينشيء branch `proj-mvp-001/auto`.  
+  3. يولّد الشيفرة ويشغّل unit tests محلياً.  
+  4. يدفع branch، يفتح PR مع body يحتوي checklist (AC).  
+- **CI**: يشغّل pipeline.  
+- **Reviewer**: يراجع، يتبيّن بند تغيير → يعيد PR مع تعليق.  
+- **Agent**: يطبق fixes أو يطلب تدخل مطور إن لزم.  
+- **Merge → deploy → test**.
+
+---
+
+## 12) قوالب Prompt جاهزة (three quick templates)
+
+### A) Template - توليد كود
+```
+Task: {task_id} - {title}
+Context: {short PRD paragraph}
+Files available: {list repo paths}
+Goal: انتج تغييرات كود محددة فقط، ارفق patch بصيغة git diff أو PR branch URL.
+Constraints: لا تغيّر أي ملف خارج /services/projects و /frontend/src/projects.
+Acceptance: {list acceptance_criteria}
+```
+
+### B) Template - كتابة اختبار
+```
+Task: Write unit + integration tests for {module}
+Target coverage: >= 80% for this module
+Framework: Jest + Supertest
+Outputs: test files under __tests__/, updated coverage report, commands to run tests
+```
+
+### C) Template - فتح PR
+```
+PR Title: [task_id] {short title}
+PR Body:
+- Summary:
+- Changes:
+- How to test:
+- Acceptance checklist:
+- Notes (BLOCKERS):
+```
+
+---
+
+## 13) الحوكمة، الحقوق، والأمان
+- **Secrets**: لا تعطى للـagent غير مفاتيح قصيرة الأمد (temp tokens).  
+- **الحقوق**: كل كود يكتبه الـAI يجب أن يخضع لسياسة IP واضحة.  
+- **Rollback**: لكل عملية نشر لازم يكون rollback script جاهز.  
+- **Audit logs**: كل أمر تلقائي مُنفّذ بواسطة Agent يجب أن يُسجل بصيغة قابلة للبحث.
+
+---
+
+## 14) نصيحة أخيرة - كيف تضمن الدقة القصوى
+1. **ابدأ بمزايا موجّهة وصغيرة** (micro-MVP) حتى تضبط الـworkflows.  
+2. **عدّل الـprompts** بعد كل 1–2 sprint بناءً على الأخطاء والشوارد.  
+3. **اجمع تلخيصات يومية/أسبوعية** من الـAgent تحتوي على: ما أنجز، ما فشل، وقائمة blockers.  
+4. **اتّبع قاعدة: لا تنفيذ آلي بدون اختبار** — أي سكربت shell أو تعديل بنيوي يتطلب test pass قبل التنفيذ التلقائي.  
+5. **اجعل البشر مسؤولين عن القرارات الحرجة** (security, infra cost, major architecture).
+
+---
+
+### خاتمة سريعة
+إذا تبي أنفّذ وياك خطوة-خطوة: أقدر أطلعلك الآن ملفات JSON للمهمات كلها بناءً على PRD اللي عطيتني سابقاً، وأكتب لك system prompt وGitHub Actions pipeline جاهز للنسخ. تريد أبدأ أطلع الـJSONs والـprompts وملف CI كاملٍ الحين؟
+</content>
