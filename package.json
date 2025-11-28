@@ -4,7 +4,7 @@
   "description": "Advanced AI Programming Expert Platform - Real-time Social Chat + AI",
   "private": true,
   "scripts": {
-    "dev": "npm run backend &",
+    "dev": "npm run backend & npm run frontend",
     "start": "npm run backend",
     "build": "mkdir -p public && echo 'Static files ready'",
     "deploy:vercel": "vercel deploy --prod",
