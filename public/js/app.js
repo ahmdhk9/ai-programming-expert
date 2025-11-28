@@ -22,7 +22,7 @@ function initializeApp() {
       }
     });
   } catch(e) {
-    console.error('Connection error');
+    // Silent error handling
   }
 }
 

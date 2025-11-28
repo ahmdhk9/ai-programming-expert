@@ -12,30 +12,18 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='75' font-size='80' text-anchor='middle'>🤖</text></svg>">
   <script>
-    // تحديد Backend URL بشكل صحيح
     const hostname = window.location.hostname;
-    const port = window.location.port;
-    const protocol = window.location.protocol;
     const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
     const isReplit = hostname.includes('replit.dev') || hostname.includes('.replit');
-    const isVercel = hostname.includes('vercel.app');
-    const isFirebase = hostname.includes('firebaseapp.com');
-    const isProduction = isVercel || isFirebase;
+    const isProduction = hostname.includes('vercel.app') || hostname.includes('firebaseapp.com');
     
-    // حساب Backend URL - الحل الفعلي
     if (isReplit || isLocalhost) {
-      // على Replit: استخدم Backend مباشرة على port 8000
       window.BACKEND_URL = 'http://localhost:8000';
     } else if (isProduction) {
-      // للإنتاج (Vercel/Firebase): استخدم Fly.io Backend
       window.BACKEND_URL = 'https://agent-backend-ahmd1.fly.dev';
     } else {
-      // default fallback
       window.BACKEND_URL = 'https://agent-backend-ahmd1.fly.dev';
     }
-    
-    console.log('🌐 Backend URL:', window.BACKEND_URL);
-    window.DEBUG_CONN = { hostname, isLocalhost, isReplit, isProduction };
   </script>
   <!-- ⚡ الملفات الأساسية فقط - بدون overhead -->
   <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
