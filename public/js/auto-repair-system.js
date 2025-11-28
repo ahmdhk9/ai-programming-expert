@@ -522,11 +522,14 @@ class AdvancedAutoRepairSystem {
     // تبديل نقطة النهاية - اكتشف والـ fallback
     console.log('🔍 Detecting best Backend endpoint...');
     
-    const endpoints = [
-      `${window.location.protocol}//${window.location.hostname}:8000`,
-      'https://agent-backend-ahmd1.fly.dev',
-      'https://agent-backend-ahmd1.fly.dev'
-    ];
+    const isProduction = window.location.hostname.includes('vercel.app') || window.location.hostname.includes('firebaseapp.com');
+    const endpoints = isProduction ? 
+      ['https://agent-backend-ahmd1.fly.dev'] :
+      [
+        `${window.location.protocol}//${window.location.hostname}:8000`,
+        'http://localhost:8000',
+        'https://agent-backend-ahmd1.fly.dev'
+      ];
     
     let found = false;
     endpoints.forEach(endpoint => {

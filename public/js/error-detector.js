@@ -172,10 +172,10 @@ class ErrorDetector {
     console.log('🔧 Attempting port 5000 fix...');
     
     if (window.configEngine) {
-      window.configEngine.backendUrls = isProduction ? ['https://agent-backend-ahmd1.fly.dev'] : [
-        // Use production backend
-        'http://127.0.0.1:8000'
-      ];
+      const isProduction = window.location.hostname.includes('vercel.app') || window.location.hostname.includes('firebaseapp.com');
+      window.configEngine.backendUrls = isProduction ? 
+        ['https://agent-backend-ahmd1.fly.dev'] : 
+        ['http://localhost:8000', 'http://127.0.0.1:8000'];
       window.configEngine.detectBackendUrl();
       this.recordFix('CONFIG', 'Removed port 5000, using 8000');
       console.log('✅ Port 5000 fix applied');

@@ -169,9 +169,16 @@ class SmartAutoFixEngine {
   fixConnection() {
     console.log('🔌 Fixing connection error...');
     
-    // 1. الانتقال للـ local backend
-    window.BACKEND_URL = 'http://localhost:8000';
-    console.log('✅ Switched to local backend');
+    // 1. استخدام configEngine للكشف التلقائي عن Backend
+    if (window.configEngine) {
+      window.configEngine.detectBackendUrl().then(url => {
+        console.log('✅ Switched to backend:', url);
+      });
+    } else {
+      // fallback: استخدم Fly.io في الإنتاج
+      window.BACKEND_URL = 'https://agent-backend-ahmd1.fly.dev';
+      console.log('✅ Using default backend');
+    }
 
     // 2. إعادة تهيئة الاتصال
     if (window.initSocket) {

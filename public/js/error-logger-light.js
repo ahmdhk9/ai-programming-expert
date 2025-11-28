@@ -213,14 +213,8 @@ class LightweightErrorLogger {
     const batch = [...this.errorBatch];
     this.errorBatch = [];
 
-    // إرسال بدفعة واحدة - استخدم Backend المحلي
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    let backendUrl = isLocalhost ? 'http://localhost:8000' : `http://${window.location.hostname}:8000`;
-    
-    // إذا كنا على Replit
-    if (window.location.hostname.includes('replit')) {
-      backendUrl = `http://${window.location.hostname}:8000`;
-    }
+    // استخدم Backend URL الصحيح من window أو configEngine
+    let backendUrl = window.BACKEND_URL || 'https://agent-backend-ahmd1.fly.dev';
     
     fetch(`${backendUrl}/api/errors/batch`, {
       method: 'POST',
