@@ -1,0 +1,20 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid || root.child('users').child($uid).child('public').val() === true",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "chats": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "projects": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}

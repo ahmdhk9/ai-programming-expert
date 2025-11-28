@@ -1,0 +1,10 @@
+{
+  "timestamp": "2025-11-28T10:37:46.162Z",
+  "repairs": [
+    {
+      "type": "FRONTEND_RESILIENCE",
+      "status": "ADDED"
+    }
+  ],
+  "status": "REPAIRS_APPLIED"
+}

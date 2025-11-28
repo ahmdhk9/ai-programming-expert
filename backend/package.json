@@ -1,0 +1,26 @@
+{
+  "name": "ai-expert-backend",
+  "version": "5.0.0",
+  "description": "AI Programming Expert - Backend (Express)",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "watch": "nodemon --watch . --ext js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "groq-sdk": "^0.36.0",
+    "openai": "^6.9.1",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
