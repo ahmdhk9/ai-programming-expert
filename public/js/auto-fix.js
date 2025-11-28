@@ -112,7 +112,7 @@ class SmartAutoFixEngine {
     // 3. الانتقال للـ fallback
     if (window.configEngine) {
       console.log('🔌 Switching to local backend');
-      window.configEngine.setBackendUrl('http://localhost:8000');
+      window.configEngine.detectBackendUrl();
     }
 
     this.fixedCount++;

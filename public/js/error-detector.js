@@ -172,8 +172,8 @@ class ErrorDetector {
     console.log('🔧 Attempting port 5000 fix...');
     
     if (window.configEngine) {
-      window.configEngine.backendUrls = [
-        'http://localhost:8000',
+      window.configEngine.backendUrls = isProduction ? ['https://agent-backend-ahmd1.fly.dev'] : [
+        // Use production backend
         'http://127.0.0.1:8000'
       ];
       window.configEngine.detectBackendUrl();

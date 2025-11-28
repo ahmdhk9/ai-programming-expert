@@ -218,14 +218,10 @@ class AdvancedErrorMonitor {
 
   // ==================== 5. فحص Backend ====================
   checkBackendHealth() {
-    // استخدم Backend المحلي
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    let backendUrl = isLocalhost ? 'http://localhost:8000' : `http://${window.location.hostname}:8000`;
-    if (window.location.hostname.includes('replit')) {
-      backendUrl = `http://${window.location.hostname}:8000`;
-    }
+    // استخدم Backend URL الصحيح من index.html
+    let backendUrl = window.BACKEND_URL || 'https://agent-backend-ahmd1.fly.dev';
     
-    fetch(`${backendUrl}/health`, { 
+    fetch(`${backendUrl}/api/health`, { 
       method: 'GET',
       mode: 'cors'
     })
