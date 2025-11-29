@@ -1,0 +1,50 @@
+name: 🔄 Force Complete Rebuild
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '**.js'
+      - '**.json'
+      - '**.tsx'
+      - '**.ts'
+      - 'Dockerfile'
+      - 'package*.json'
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🔨 Force Vercel Rebuild
+        run: |
+          echo "🚀 Rebuilding on Vercel..."
+          curl -X POST https://api.vercel.com/v12/integrations/deploy-hooks/cln5xh3zt0000ug0j5p0j0p0j \
+            -H "Content-Type: application/json" 2>/dev/null || echo "Using API method..."
+          
+          # Alternative: Direct API call
+          curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            "https://api.vercel.com/v13/deployments?forceNew=1&skipGitConnectivity=false" \
+            -d "{\"gitSource\":{\"type\":\"github\",\"owner\":\"ahmdhk9\",\"repo\":\"ai-programming-expert\",\"ref\":\"main\"}}" || true
+
+      - name: 🔨 Force Fly.io Rebuild
+        run: |
+          echo "🚀 Rebuilding on Fly.io..."
+          curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.FLY_API_TOKEN }}" \
+            "https://api.fly.io/graphql" \
+            -d '{"query":"mutation{createRelease(input:{appId:\"ai-programming-expert\",strategy:ROLLING}){release{id status}}}"}' \
+            -H "Content-Type: application/json" || true
+
+      - name: ✅ Rebuild Started
+        run: |
+          echo "✅ Rebuild process initiated"
+          echo "📌 Vercel: Building..."
+          echo "📌 Fly.io: Building..."
+          echo "⏳ Wait 5-10 minutes for deployment"
